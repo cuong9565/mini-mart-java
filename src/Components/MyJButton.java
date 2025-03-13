@@ -21,7 +21,6 @@ public class MyJButton {
             public void mouseEntered(MouseEvent e) {
                 button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             }
-            public void mouseExited(MouseEvent e) {}
         });
         return button;
     }
