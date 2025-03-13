@@ -5,17 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/mini-mart-java.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MiniMartSystem/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MiniMartSystem/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MiniMartSystem/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MiniMartSystem/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MiniMartSystem/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MiniMartSystem/MiniMartSystem.iml" beforeDir="false" afterPath="$PROJECT_DIR$/mini-mart-java.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MiniMartSystem/src/LoginForm.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MiniMartSystem/src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LoginForm.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,22 +24,22 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "cuong9565"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;cuong9565&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/cuong9565/mini-mart-java.git",
-    "accountId": "f4c729e0-ab1e-41b9-93d0-47692b69cd9a"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/cuong9565/mini-mart-java.git&quot;,
+    &quot;accountId&quot;: &quot;f4c729e0-ab1e-41b9-93d0-47692b69cd9a&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 3
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2uDFNsALAkUONxtPiSRlBD3xvgC" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -58,6 +50,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.FixBug.executor": "Run",
     "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -71,14 +64,31 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="Main" />
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\mini-mart-java\src\GUI" />
+      <recent name="D:\mini-mart-java" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="FixBug" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="GUI.FixBug" />
       <module name="mini-mart-java" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="GUI.Main" />
+      <module name="mini-mart-java" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Application.FixBug" />
+    </list>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -96,7 +106,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1741775201356</updated>
-      <workItem from="1741775202454" duration="316000" />
+      <workItem from="1741775202454" duration="10084000" />
+      <workItem from="1741833106992" duration="4271000" />
+      <workItem from="1741874668727" duration="4553000" />
     </task>
     <servers />
   </component>
