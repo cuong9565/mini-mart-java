@@ -4,6 +4,8 @@ import Components.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class LoginForm extends JFrame {
     JPanel pnLeft = MyJPanel.GetJPanel("#66B2FF");
@@ -33,6 +35,32 @@ public class LoginForm extends JFrame {
         btnLogin.setBounds(580, 300, 280, 30);
         pnLeft.setBounds(0,0,550, 500);
         pnRight.setBounds(550,0,350,500);
+
+        tfUserName.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_ENTER, KeyEvent.VK_DOWN: pfPassword.requestFocus(); break;
+                }
+            }
+        });
+
+        pfPassword.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_ENTER, KeyEvent.VK_DOWN: btnLogin.requestFocus(); break;
+                    case KeyEvent.VK_UP: tfUserName.requestFocus(); break;
+                }
+            }
+        });
+
+        btnLogin.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_ENTER: break;
+                    case KeyEvent.VK_UP: pfPassword.requestFocus(); break;
+                }
+            }
+        });
 
         // add into JFrame
         add(lbWelcome);

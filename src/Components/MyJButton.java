@@ -2,6 +2,8 @@ package Components;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -15,11 +17,19 @@ public class MyJButton {
         button.setHorizontalTextPosition(Hor);
         button.setVerticalTextPosition(Ver);
         button.setFocusPainted(false);
-        button.setBorderPainted(false);
+        button.setBorder(null);
 
         button.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
                 button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+        });
+        button.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {
+                button.setBorder(BorderFactory.createLineBorder(Color.decode("#000000"), 2));
+            }
+            public void focusLost(FocusEvent e) {
+                button.setBorder(null);
             }
         });
         return button;
