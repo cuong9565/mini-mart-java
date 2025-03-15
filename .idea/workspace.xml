@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong update Login Form">
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong update Manager Form">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/MyJButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/MyJTextField.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJTextField.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/LoginForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/LoginForm.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +116,8 @@
       <workItem from="1741950383410" duration="7362000" />
       <workItem from="1742002807532" duration="640000" />
       <workItem from="1742003653485" duration="3289000" />
-      <workItem from="1742040014820" duration="12910000" />
+      <workItem from="1742040014820" duration="14084000" />
+      <workItem from="1742054396486" duration="27000" />
     </task>
     <task id="LOCAL-00001" summary="Cuong update Login Form">
       <option name="closed" value="true" />
@@ -153,7 +151,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741881420815</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Cuong update Manager Form">
+      <option name="closed" value="true" />
+      <created>1742053070122</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1742053070122</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -161,6 +167,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Cuong update Login Form" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cuong update Login Form" />
+    <MESSAGE value="Cuong update Manager Form" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cuong update Manager Form" />
   </component>
 </project>
