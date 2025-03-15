@@ -7,7 +7,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 public class MyJTextField {
-    public static JTextField GetJTextField(int style, int size) {
+    public static JTextField GetJTextFieldLine(int style, int size) {
         JTextField textField = new JTextField();
         textField.setFont(new Font("Arial", style, size));
         textField.setBorder(new MatteBorder(0,0,2,0, Color.BLACK));
@@ -23,6 +23,15 @@ public class MyJTextField {
 
         textField.addFocusListener(focusListener);
 
+        return textField;
+    }
+    public static JTextField GetJTextFieldInput(int style, int size,String text, int hor) {
+        JTextField textField = new JTextField();
+        textField.setFont(new Font("Arial", style, size));
+        textField.setForeground(Color.decode("#000000"));
+        textField.setHorizontalAlignment(hor);
+        textField.setText(text);
+        textField.setEditable(false);
         return textField;
     }
 }
