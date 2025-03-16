@@ -10,6 +10,7 @@ public class MyJPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new CardLayout());
         panel.setBackground(Color.decode(color));
+        panel.setBorder(null);
         panel.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 panel.requestFocus();
