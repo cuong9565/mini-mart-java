@@ -40,4 +40,37 @@ public class MyJButton {
         return button;
     }
 
+    public static JButton GetJButton(int style, int size, String fColor, String bColor, String text, int Hor, int Ver) {
+        JButton button = new JButton();
+        button.setFont(new Font("Arial", style, size));
+        button.setForeground(Color.decode(fColor));
+        button.setBackground(Color.decode(bColor));
+        button.setText(text);
+        button.setHorizontalTextPosition(Hor);
+        button.setVerticalTextPosition(Ver);
+        button.setFocusPainted(false);
+        button.setBorder(null);
+
+        button.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent e) {
+                button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+        });
+        return button;
+    }
+    public static JButton GetJButtonICon(ImageIcon icon) {
+        JButton button = new JButton();
+        button.setIcon(icon);
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.setContentAreaFilled(false);
+        button.setBorder(null);
+
+        button.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent e) {
+                button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+        });
+        return button;
+    }
 }

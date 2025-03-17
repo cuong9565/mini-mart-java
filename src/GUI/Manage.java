@@ -1,34 +1,36 @@
 package GUI;
-import Components.MyJButton;
-import Components.MyJLabel;
-import Components.MyJPanel;
+import Components.*;
 import pnForm.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Set;
+
 
 public class Manage extends JFrame {
     JPanel pnLeft = MyJPanel.GetJPanel("#FFFFFF");
-    JPanel pnRight = MyJPanel.GetJPanel("#00FF00");
+    JPanel pnRight = MyJPanel.GetJPanel("#FFFFFF");
     JPanel pnNav = MyJPanel.GetJPanel("#FFFFFF");
     JPanel pnMenu = MyJPanel.GetJPanel("#00FFFF");
     JLabel lbWelcome = MyJLabel.GetJLabel(Font.PLAIN, 16, "#000000", "<html>Xin chào<br>USER<br>ROLE<br><hr></html>", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnStatistic = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#00FFFF", "Thống kê", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnImport = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#00FFFF", "Nhập hàng", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnSell = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#00FFFF", "Bán hàng", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnProduct = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#00FFFF", "Sản phẩm", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnTypeProduct = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#00FFFF", "Loại sản phẩm", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnCustomer = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#00FFFF", "Khách hàng", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnBill = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#00FFFF", "Hóa đơn", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnDiscount = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#00FFFF", "Giảm giá", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnStaff = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#00FFFF", "Nhân viên", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnSupplier = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#00FFFF", "Nhà cung cấp", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnStatistic = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "Thống kê", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnImport = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "Nhập hàng", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnProduct = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "Sản phẩm", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnSell = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "Bán hàng", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnTypeProduct = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "Loại sản phẩm", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnCustomer = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "Khách hàng", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnBill = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "Hóa đơn", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnDiscount = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "Giảm giá", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnStaff = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF",  "Nhân viên", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnSupplier = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "Nhà cung cấp", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnSettingAccount = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#00FFFF", "Tài khoản", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnLogout = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#00FFFF", "Đăng xuất", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnLogout = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF","#00FFFF", "Đăng xuất", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton[] lsBtn = new JButton[]{btnStatistic, btnImport, btnSell, btnProduct, btnTypeProduct, btnCustomer, btnBill, btnDiscount, btnStaff, btnSupplier};
+    JPanel[] lsPn = new JPanel[]{new pnStatistic(), new pnImport(), new pnSell(), new pnProduct(), new pnTypeProduct(), new pnCustomer(), new pnBill(), new pnDiscount(), new pnStaff(), new pnSupplier()};
+
+    int currCursor = 0;
+    Manage currFrame = this;
 
     public Manage(LoginForm loginForm) {
         setTitle("Phần mềm quản lý siêu thị mini");
@@ -59,33 +61,22 @@ public class Manage extends JFrame {
         pnRight.setBounds(200,0,1000, 800);
         // endregion
 
-        JButton[] lsBtn = new JButton[]{btnStatistic, btnImport, btnSell, btnProduct, btnTypeProduct, btnCustomer, btnBill, btnDiscount, btnStaff, btnSupplier, btnSettingAccount};
-        JPanel[] lsPn = new JPanel[]{new pnStatistic(), new pnImport(), new pnSell(), new pnProduct(), new pnTypeProduct(), new pnCustomer(), new pnBill(), new pnDiscount(), new pnStaff(), new pnSupplier(), new pnSettingAccount()};
-        MouseListener[] listener = new MouseListener[lsBtn.length];
-        for (int i = 0; i < lsBtn.length; i++) {
-            final int I = i;
-            listener[i] = new MouseAdapter() {
-                public void mouseEntered(MouseEvent e) {
-                    lsBtn[I].setBackground(Color.decode("00FFFF"));
-                }
-                public void mouseExited(MouseEvent e) {
-                    lsBtn[I].setBackground(Color.decode("FFFFFF"));
-                }
-            };
-        }
-
-
         pnNav.setLayout(new BoxLayout(pnNav, BoxLayout.Y_AXIS));
         pnMenu.setLayout(new CardLayout());
         pnLeft.setLayout(null);
         pnRight.setLayout(null);
-
 
         // region Listener
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 dispose();
                 loginForm.setVisible(true);
+            }
+        });
+
+        btnSettingAccount.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new SettingAccountFrame(currFrame);
             }
         });
 
@@ -104,13 +95,27 @@ public class Manage extends JFrame {
             // add pnNav
             for(int i=0; i<lsBtn.length; i++){
                 final int I = i;
+                lsBtn[i].addMouseListener(new MouseAdapter() {
+                    public void mouseEntered(MouseEvent e) {
+                        lsBtn[I].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                        lsBtn[I].setBackground(Color.decode("#00FFFF"));
+                    }
+                    public void mouseExited(MouseEvent e) {
+                        lsBtn[I].setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                        if(I==currCursor) lsBtn[I].setBackground(Color.decode("#00FFFF"));
+                        else lsBtn[I].setBackground(Color.decode("#FFFFFF"));
+                    }
+                });
                 lsBtn[i].addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
+                        currCursor = I;
                         for(int j=0; j<lsPn.length; j++){
                             if(I==j){
+                                lsBtn[j].setBackground(Color.decode("#00FFFF"));
                                 lsPn[j].setVisible(true);
                             }
                             else{
+                                lsBtn[j].setBackground(Color.decode("#FFFFFF"));
                                 lsPn[j].setVisible(false);
                             }
                         }
@@ -118,6 +123,7 @@ public class Manage extends JFrame {
                 });
                 pnNav.add(lsBtn[i]);
             }
+            lsBtn[0].doClick();
 
 
             // add Frame
@@ -133,6 +139,3 @@ public class Manage extends JFrame {
         setVisible(true);
     }
 }
-/*
-* Chỉnh sửa MouseListener lại
-* */

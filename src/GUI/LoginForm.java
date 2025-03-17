@@ -10,15 +10,22 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class LoginForm extends JFrame {
+    ImageIcon iconEyeOpen = new ImageIcon(".\\src\\img\\eye_icon.png");
+    Image imgEyeOpen = iconEyeOpen.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+    ImageIcon img = new ImageIcon(imgEyeOpen);
+//    Icon eyeClose = new ImageIcon(".\\src\\img\\hidden_eye_icon.png");
+
+    String White = "#FFFFFF";
+    String Black = "#000000";
     JPanel pnLeft = MyJPanel.GetJPanel("#66B2FF");
-    JPanel pnRight = MyJPanel.GetJPanel("#FFFFFF");
-    JLabel lbWelcome = MyJLabel.GetJLabel(Font.BOLD, 32, "#FFFFFF", "<html>Chào mừng bạn đến với<br>Hệ thống quản lý siêu thị mini</html>", SwingConstants.LEFT, SwingConstants.TOP);
-    JLabel lbLogin = MyJLabel.GetJLabel(Font.PLAIN, 25, "#000000", "<html>Đăng nhập tài khoản</html>", SwingConstants.CENTER, SwingConstants.TOP);
-    JLabel lbUserName = MyJLabel.GetJLabel(Font.PLAIN, 14, "#000000", "<html>Tên đăng nhập hoặc Email</html>", SwingConstants.LEFT, SwingConstants.TOP);
-    JLabel lbPassword = MyJLabel.GetJLabel(Font.PLAIN, 14, "#000000", "<html>Mật khẩu</html>", SwingConstants.LEFT, SwingConstants.TOP);
+    JPanel pnRight = MyJPanel.GetJPanel(White);
+    JLabel lbWelcome = MyJLabel.GetJLabel(Font.BOLD, 32, White, "<html>Chào mừng bạn đến với<br>Hệ thống quản lý siêu thị mini</html>", SwingConstants.LEFT, SwingConstants.TOP);
+    JLabel lbLogin = MyJLabel.GetJLabel(Font.PLAIN, 25, Black, "<html>Đăng nhập tài khoản</html>", SwingConstants.CENTER, SwingConstants.TOP);
+    JLabel lbUserName = MyJLabel.GetJLabel(Font.PLAIN, 14, Black, "<html>Tên đăng nhập hoặc Email</html>", SwingConstants.LEFT, SwingConstants.TOP);
+    JLabel lbPassword = MyJLabel.GetJLabel(Font.PLAIN, 14, Black, "<html>Mật khẩu</html>", SwingConstants.LEFT, SwingConstants.TOP);
     JTextField tfUserName = MyJTextField.GetJTextFieldLine(Font.PLAIN, 12);
     JPasswordField pfPassword = MyJPasswordField.GetJPasswordField(Font.PLAIN, 12);
-    JButton btnLogin = MyJButton.GetJButton(Font.BOLD, 14, "#FFFFFF", "#0099FF","#64B4FF",  "Đăng nhập", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnLogin = MyJButton.GetJButton(Font.BOLD, 14, White, "#0099FF","#64B4FF",  "Đăng nhập", SwingConstants.CENTER, SwingConstants.CENTER);
 
     public LoginForm() {
         super("Phần mềm quản lý siêu thị mini");
@@ -27,6 +34,8 @@ public class LoginForm extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setLayout(null);
+
+        JButton btnEye = MyJButton.GetJButtonICon(img);
 
         // region setBounds
         lbWelcome.setBounds(50, 100, 450, 100);
@@ -39,6 +48,9 @@ public class LoginForm extends JFrame {
         pnLeft.setBounds(0,0,550, 500);
         pnRight.setBounds(550,0,350,500);
         // endregion
+
+
+//        btnEye.setBackground(Color.BLACK);
 
         // region Shortcut Key
         tfUserName.addKeyListener(new KeyAdapter() {
@@ -80,6 +92,7 @@ public class LoginForm extends JFrame {
         // endregion
 
         // region Add
+        add(btnEye);
         add(lbWelcome);
         add(lbLogin);
         add(lbUserName);

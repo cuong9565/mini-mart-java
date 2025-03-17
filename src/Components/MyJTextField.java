@@ -3,8 +3,7 @@ package Components;
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
 import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.*;
 
 public class MyJTextField {
     public static JTextField GetJTextFieldLine(int style, int size) {
@@ -31,7 +30,16 @@ public class MyJTextField {
         textField.setForeground(Color.decode("#000000"));
         textField.setHorizontalAlignment(hor);
         textField.setText(text);
-        textField.setEditable(false);
+
+        return textField;
+    }
+    public static JTextField GetJTextFieldInput(int style, int size, boolean editable) {
+        JTextField textField = new JTextField();
+        textField.setFont(new Font("Arial", style, size));
+        textField.setForeground(Color.decode("#000000"));
+        textField.setEditable(editable);
+        textField.setBorder(BorderFactory.createLineBorder(Color.decode("#000000"), 1));
+
         return textField;
     }
 }
