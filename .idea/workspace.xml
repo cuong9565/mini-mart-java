@@ -5,42 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong update">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJLabel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPanel$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPasswordField$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPasswordField$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPasswordField.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPasswordField.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJTextField$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJTextField$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJTextField.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJTextField.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/assets/img/minus.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/assets/img/xmark.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/pnForm/pnBill.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/pnForm/pnBill.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/pnForm/pnCustomer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/pnForm/pnCustomer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/pnForm/pnDiscount.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/pnForm/pnDiscount.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/pnForm/pnImport.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/pnForm/pnImport.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/pnForm/pnProduct.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/pnForm/pnProduct.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/pnForm/pnSell.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/pnForm/pnSell.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/pnForm/pnSettingAccount.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/pnForm/pnStaff.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/pnForm/pnStaff.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/pnForm/pnStatistic.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/pnForm/pnStatistic.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/pnForm/pnSupplier.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/pnForm/pnSupplier.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/pnForm/pnTypeProduct.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/pnForm/pnTypeProduct.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/Manage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Manage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -207,7 +174,23 @@
       <option name="project" value="LOCAL" />
       <updated>1742192856052</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Cuong update">
+      <option name="closed" value="true" />
+      <created>1742194393180</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1742194393180</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Cuong update">
+      <option name="closed" value="true" />
+      <created>1742194415816</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1742194415816</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
