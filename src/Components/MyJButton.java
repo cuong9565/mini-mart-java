@@ -58,4 +58,19 @@ public class MyJButton {
         });
         return button;
     }
+    public static JButton GetJButtonICon(ImageIcon icon) {
+        JButton button = new JButton();
+        button.setIcon(icon);
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.setContentAreaFilled(false);
+        button.setBorder(null);
+
+        button.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent e) {
+                button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+        });
+        return button;
+    }
 }

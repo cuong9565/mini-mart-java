@@ -24,7 +24,7 @@ public class Manage extends JFrame {
     JButton btnDiscount = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "Giảm giá", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnStaff = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF",  "Nhân viên", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnSupplier = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "Nhà cung cấp", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnSettingAccount = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "Tài khoản", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnSettingAccount = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#00FFFF", "Tài khoản", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnLogout = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF","#00FFFF", "Đăng xuất", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton[] lsBtn = new JButton[]{btnStatistic, btnImport, btnSell, btnProduct, btnTypeProduct, btnCustomer, btnBill, btnDiscount, btnStaff, btnSupplier};
     JPanel[] lsPn = new JPanel[]{new pnStatistic(), new pnImport(), new pnSell(), new pnProduct(), new pnTypeProduct(), new pnCustomer(), new pnBill(), new pnDiscount(), new pnStaff(), new pnSupplier()};
