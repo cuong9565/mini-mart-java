@@ -5,7 +5,3 @@ public class Main {
         new LoginForm();
     }
 }
-
-/*
-* Comment
-* */
