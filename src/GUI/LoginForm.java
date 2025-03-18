@@ -10,15 +10,15 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class LoginForm extends JFrame {
-    JPanel pnLeft = MyJPanel.GetJPanel(MyColor.LightBlue());
-    JPanel pnRight = MyJPanel.GetJPanel(MyColor.White());
-    JLabel lbWelcome = MyJLabel.GetJLabel(Font.BOLD, 32, MyColor.White(), "<html>Chào mừng bạn đến với<br>Hệ thống quản lý siêu thị mini</html>", SwingConstants.LEFT, SwingConstants.TOP);
-    JLabel lbLogin = MyJLabel.GetJLabel(Font.PLAIN, 25, MyColor.Black(), "<html>Đăng nhập tài khoản</html>", SwingConstants.CENTER, SwingConstants.TOP);
-    JLabel lbUserName = MyJLabel.GetJLabel(Font.PLAIN, 14, MyColor.Black(), "<html>Tên đăng nhập hoặc Email</html>", SwingConstants.LEFT, SwingConstants.TOP);
-    JLabel lbPassword = MyJLabel.GetJLabel(Font.PLAIN, 14, MyColor.Black(), "<html>Mật khẩu</html>", SwingConstants.LEFT, SwingConstants.TOP);
+    JPanel pnLeft = MyJPanel.GetJPanel(MyColor.LightBlue);
+    JPanel pnRight = MyJPanel.GetJPanel(MyColor.White);
+    JLabel lbWelcome = MyJLabel.GetJLabel(Font.BOLD, 32, MyColor.White, "<html>Chào mừng bạn đến với<br>Hệ thống quản lý siêu thị mini</html>", SwingConstants.LEFT, SwingConstants.TOP);
+    JLabel lbLogin = MyJLabel.GetJLabel(Font.PLAIN, 25, MyColor.Black, "<html>Đăng nhập tài khoản</html>", SwingConstants.CENTER, SwingConstants.TOP);
+    JLabel lbUserName = MyJLabel.GetJLabel(Font.PLAIN, 14, MyColor.Black, "<html>Tên đăng nhập hoặc Email</html>", SwingConstants.LEFT, SwingConstants.TOP);
+    JLabel lbPassword = MyJLabel.GetJLabel(Font.PLAIN, 14, MyColor.Black, "<html>Mật khẩu</html>", SwingConstants.LEFT, SwingConstants.TOP);
     JTextField tfUserName = MyJTextField.GetJTextFieldLine(Font.PLAIN, 12);
     JPasswordField pfPassword = MyJPasswordField.GetJPasswordField(Font.PLAIN, 12);
-    JButton btnLogin = MyJButton.GetJButton(Font.BOLD, 14, MyColor.White(), MyColor.DarkBlue(),MyColor.LightBlue(),  "Đăng nhập", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnLogin = MyJButton.GetJButton(Font.BOLD, 14, MyColor.White, MyColor.DarkBlue,MyColor.LightBlue,  "Đăng nhập", SwingConstants.CENTER, SwingConstants.CENTER);
 
     public LoginForm() {
         super("Phần mềm quản lý siêu thị mini");

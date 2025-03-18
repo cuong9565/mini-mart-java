@@ -9,23 +9,23 @@ import java.util.Set;
 
 
 public class Manage extends JFrame {
-    JPanel pnLeft = MyJPanel.GetJPanel(MyColor.White());
-    JPanel pnRight = MyJPanel.GetJPanel(MyColor.White());
-    JPanel pnNav = MyJPanel.GetJPanel(MyColor.White());
-    JPanel pnMenu = MyJPanel.GetJPanel(MyColor.White());
-    JLabel lbWelcome = MyJLabel.GetJLabel(Font.PLAIN, 16, MyColor.Black(), "<html>Xin chào<br>USER<br>ROLE<br><hr></html>", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnStatistic = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black(), MyColor.White(), "Thống kê", SwingConstants.LEFT, SwingConstants.CENTER);
-    JButton btnImport = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black(), MyColor.White(), "Nhập hàng", SwingConstants.LEFT, SwingConstants.CENTER);
-    JButton btnProduct = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black(), MyColor.White(), "Sản phẩm", SwingConstants.LEFT, SwingConstants.CENTER);
-    JButton btnSell = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black(), MyColor.White(), "Bán hàng", SwingConstants.LEFT, SwingConstants.CENTER);
-    JButton btnTypeProduct = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black(), MyColor.White(), "Loại sản phẩm", SwingConstants.LEFT, SwingConstants.CENTER);
-    JButton btnCustomer = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black(), MyColor.White(), "Khách hàng", SwingConstants.LEFT, SwingConstants.CENTER);
-    JButton btnBill = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black(), MyColor.White(), "Hóa đơn", SwingConstants.LEFT, SwingConstants.CENTER);
-    JButton btnDiscount = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black(), MyColor.White(), "Giảm giá", SwingConstants.LEFT, SwingConstants.CENTER);
-    JButton btnStaff = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black(), MyColor.White(),  "Nhân viên", SwingConstants.LEFT, SwingConstants.CENTER);
-    JButton btnSupplier = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black(), MyColor.White(), "Nhà cung cấp", SwingConstants.LEFT, SwingConstants.CENTER);
-    JButton btnSettingAccount = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black(), MyColor.White(), MyColor.HoverBlue(), "Tài khoản", SwingConstants.LEFT, SwingConstants.CENTER);
-    JButton btnLogout = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black(), MyColor.White(), MyColor.HoverBlue(), "Đăng xuất", SwingConstants.LEFT, SwingConstants.CENTER);
+    JPanel pnLeft = MyJPanel.GetJPanel(MyColor.White);
+    JPanel pnRight = MyJPanel.GetJPanel(MyColor.White);
+    JPanel pnNav = MyJPanel.GetJPanel(MyColor.White);
+    JPanel pnMenu = MyJPanel.GetJPanel(MyColor.White);
+    JLabel lbWelcome = MyJLabel.GetJLabel(Font.PLAIN, 16, MyColor.Black, "<html>Xin chào<br>USER<br>ROLE<br><hr></html>", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnStatistic = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, "Thống kê", SwingConstants.LEFT, SwingConstants.CENTER);
+    JButton btnImport = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, "Nhập hàng", SwingConstants.LEFT, SwingConstants.CENTER);
+    JButton btnProduct = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, "Sản phẩm", SwingConstants.LEFT, SwingConstants.CENTER);
+    JButton btnSell = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, "Bán hàng", SwingConstants.LEFT, SwingConstants.CENTER);
+    JButton btnTypeProduct = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, "Loại sản phẩm", SwingConstants.LEFT, SwingConstants.CENTER);
+    JButton btnCustomer = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, "Khách hàng", SwingConstants.LEFT, SwingConstants.CENTER);
+    JButton btnBill = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, "Hóa đơn", SwingConstants.LEFT, SwingConstants.CENTER);
+    JButton btnDiscount = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, "Giảm giá", SwingConstants.LEFT, SwingConstants.CENTER);
+    JButton btnStaff = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White,  "Nhân viên", SwingConstants.LEFT, SwingConstants.CENTER);
+    JButton btnSupplier = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, "Nhà cung cấp", SwingConstants.LEFT, SwingConstants.CENTER);
+    JButton btnSettingAccount = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.HoverBlue, "Tài khoản", SwingConstants.LEFT, SwingConstants.CENTER);
+    JButton btnLogout = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.HoverBlue, "Đăng xuất", SwingConstants.LEFT, SwingConstants.CENTER);
     JButton[] lsBtn = new JButton[]{btnStatistic, btnImport, btnSell, btnProduct, btnTypeProduct, btnCustomer, btnBill, btnDiscount, btnStaff, btnSupplier};
     JPanel[] lsPn = new JPanel[]{new pnStatistic(), new pnImport(), new pnSell(), new pnProduct(), new pnTypeProduct(), new pnCustomer(), new pnBill(), new pnDiscount(), new pnStaff(), new pnSupplier()};
 
@@ -98,27 +98,21 @@ public class Manage extends JFrame {
                 lsBtn[i].addMouseListener(new MouseAdapter() {
                     public void mouseEntered(MouseEvent e) {
                         lsBtn[I].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                        lsBtn[I].setBackground(MyColor.HoverBlue());
+                        lsBtn[I].setBackground(MyColor.HoverBlue);
                     }
                     public void mouseExited(MouseEvent e) {
                         lsBtn[I].setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-                        if(I==currCursor) lsBtn[I].setBackground(MyColor.HoverBlue());
-                        else lsBtn[I].setBackground(MyColor.White());
+                        if(I==currCursor) lsBtn[I].setBackground(MyColor.HoverBlue);
+                        else lsBtn[I].setBackground(MyColor.White);
                     }
                 });
                 lsBtn[i].addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
+                        lsBtn[currCursor].setBackground(MyColor.White);
+                        lsPn[currCursor].setVisible(false);
                         currCursor = I;
-                        for(int j=0; j<lsPn.length; j++){
-                            if(I==j){
-                                lsBtn[j].setBackground(MyColor.HoverBlue());
-                                lsPn[j].setVisible(true);
-                            }
-                            else{
-                                lsBtn[j].setBackground(MyColor.White());
-                                lsPn[j].setVisible(false);
-                            }
-                        }
+                        lsBtn[currCursor].setBackground(MyColor.HoverBlue);
+                        lsPn[currCursor].setVisible(true);
                     }
                 });
                 pnNav.add(lsBtn[i]);

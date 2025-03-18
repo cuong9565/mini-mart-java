@@ -4,23 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong update">
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong update Color + SettingAccountFrame">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJLabel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPasswordField.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPasswordField.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJTextField$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJTextField$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJTextField.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJTextField.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$4.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/MyColor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyColor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/MyJButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/MyJLabel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJLabel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/MyJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/MyJPasswordField.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJPasswordField.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/MyJTextField.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJTextField.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/LoginForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/LoginForm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/Manage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Manage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/SettingAccountFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/SettingAccountFrame.java" afterDir="false" />
@@ -137,6 +128,7 @@
       <workItem from="1742192648054" duration="169000" />
       <workItem from="1742192842680" duration="278000" />
       <workItem from="1742296320106" duration="3446000" />
+      <workItem from="1742301469088" duration="5513000" />
     </task>
     <task id="LOCAL-00001" summary="Cuong update Login Form">
       <option name="closed" value="true" />
@@ -226,7 +218,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742194992012</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Cuong update Color + SettingAccountFrame">
+      <option name="closed" value="true" />
+      <created>1742301545157</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1742301545157</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -248,6 +248,7 @@
     <MESSAGE value="Cuong update Manager Form" />
     <MESSAGE value="Cuong update Setting Account Panel" />
     <MESSAGE value="Cuong update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cuong update" />
+    <MESSAGE value="Cuong update Color + SettingAccountFrame" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cuong update Color + SettingAccountFrame" />
   </component>
 </project>

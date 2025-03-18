@@ -109,6 +109,7 @@ public class MyJButton {
         if(Hor == SwingConstants.LEFT){
             button.setBorder(BorderFactory.createEmptyBorder(0, 25, 0, 0));
         }
+        else button.setBorder(null);
 
         button.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
