@@ -9,7 +9,7 @@ import java.awt.event.FocusListener;
 public class MyJPasswordField {
     public static JPasswordField GetJPasswordField(int style, int size) {
         JPasswordField passwordField = new JPasswordField();
-        passwordField.setFont(new Font("Arial", style, size));
+        passwordField.setFont(new Font("Roboto", style, size));
 //        passwordField.setEchoChar((char) 0);
         passwordField.setEchoChar('*');
         passwordField.setBorder(new MatteBorder(0,0,2,0, Color.BLACK));

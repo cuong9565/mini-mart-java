@@ -12,7 +12,6 @@ import java.awt.event.*;
 
 public class SettingAccountFrame extends JDialog {
     String LightGray = "#D3D3D3";
-    String LightBlue = "#00FFFF";
     String DarkBlue = "#0D47A1";
     JPanel pnMain = MyJPanel.GetJPanel("#FFFFFF");
     JPanel pnNav = MyJPanel.GetJPanel("#FFFFFF");
@@ -28,21 +27,20 @@ public class SettingAccountFrame extends JDialog {
     public SettingAccountFrame(Manage parentFrame) {
         super(parentFrame,true);
         setTitle("Thông tin tài khoản");
-        setSize(600,600);
+        setSize(540,550);
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
-        pnMain.setBounds(0,0,600,600);
-        pnNav.setBounds(0,0,500, 30);
-        pnContent.setBounds(50,50,500,500);
+        pnMain.setBounds(0,0,540,550);
+        pnNav.setBounds(0,0,440, 30);
+        pnContent.setBounds(50,50,440,520);
         btnChangeInfo.setMaximumSize(new Dimension(150, 30));
         btnChangeInfo.setMinimumSize(new Dimension(150, 30));
         btnChangeInfo.setPreferredSize(new Dimension(150, 30));
         btnChangePassword.setPreferredSize(new Dimension(150, 30));
         btnChangePassword.setMaximumSize(new Dimension(150, 30));
         btnChangePassword.setMinimumSize(new Dimension(150, 30));
-
         pnNav.setLayout(new BoxLayout(pnNav,BoxLayout.X_AXIS));
         pnContent.setLayout(new CardLayout());
 
