@@ -5,12 +5,11 @@ import pnForm.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Set;
 
 
 public class Manage extends JFrame {
     JPanel pnLeft = MyJPanel.GetJPanel(MyColor.White);
-    JPanel pnRight = MyJPanel.GetJPanel(MyColor.White);
+    JPanel pnRight = MyJPanel.GetJPanel(MyColor.LightGray);
     JPanel pnNav = MyJPanel.GetJPanel(MyColor.White);
     JPanel pnMenu = MyJPanel.GetJPanel(MyColor.White);
     JLabel lbWelcome = MyJLabel.GetJLabel(Font.PLAIN, 16, MyColor.Black, "<html>Xin chào<br>USER<br>ROLE<br><hr></html>", SwingConstants.CENTER, SwingConstants.CENTER);
@@ -27,7 +26,7 @@ public class Manage extends JFrame {
     JButton btnSettingAccount = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.LightGreen, "Tài khoản", SwingConstants.LEFT, SwingConstants.CENTER);
     JButton btnLogout = MyJButton.GetJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.LightRed, "Đăng xuất", SwingConstants.LEFT, SwingConstants.CENTER);
     JButton[] lsBtn = new JButton[]{btnStatistic, btnImport, btnSell, btnProduct, btnTypeProduct, btnCustomer, btnBill, btnDiscount, btnStaff, btnSupplier};
-    JPanel[] lsPn = new JPanel[]{new pnStatistic(), new pnImport(), new pnSell(), new pnProduct(), new pnTypeProduct(), new pnCustomer(), new pnBill(), new pnDiscount(), new pnStaff(), new pnSupplier()};
+    JPanel[] lsPn = new JPanel[]{new pnStatistic(), new pnImport(), new pnSell(), new pnProduct(), new pnTypeProduct(), new pnCustomer(), new pnBill(), new pnDiscount(), new pnStaff(), new pnSupplier(this)};
 
     int currCursor = 0;
     Manage currFrame = this;

@@ -69,10 +69,6 @@ public class MyJButton {
         button.setHorizontalAlignment(Hor);
         button.setVerticalAlignment(Ver);
         button.setFocusPainted(false);
-        if(Hor == SwingConstants.LEFT){
-            button.setBorder(BorderFactory.createEmptyBorder(0, 25, 0, 0));
-        }
-
         button.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
                 button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -83,17 +79,22 @@ public class MyJButton {
                 button.setBackground(bColor);
             }
         });
-        button.addFocusListener(new FocusAdapter() {
-            public void focusGained(FocusEvent e) {
-                if(Hor == SwingConstants.LEFT){
-                    button.setBorder(BorderFactory.createEmptyBorder(0, 25, 0, 0));
+
+        if(Hor == SwingConstants.LEFT){
+            button.setBorder(BorderFactory.createEmptyBorder(0, 25, 0, 0));
+        }
+        else {
+            button.setBorder(null);
+            button.addFocusListener(new FocusAdapter() {
+                public void focusGained(FocusEvent e) {
+                    button.setBorder(BorderFactory.createLineBorder(Color.decode("#000000"), 2));
                 }
-                else button.setBorder(BorderFactory.createLineBorder(Color.decode("#000000"), 2));
-            }
-            public void focusLost(FocusEvent e) {
-                //
-            }
-        });
+                public void focusLost(FocusEvent e) {
+                    button.setBorder(null);
+                }
+            });
+        }
+
         return button;
     }
 

@@ -3,6 +3,8 @@ package pnForm;
 import Components.*;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +26,9 @@ public class pnChangeInfo extends JPanel {
     JTextField tfAddress = MyJTextField.GetJTextFieldInput(Font.PLAIN, 14 , true);
     JButton btnSave = MyJButton.GetJButton(Font.BOLD, 14, MyColor.White, MyColor.Green, MyColor.LightGreen, "Lưu thông tin", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnEsc = MyJButton.GetJButton(Font.BOLD, 14, MyColor.White, MyColor.Red, MyColor.LightRed, "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
+    JLabel lbEmptyPhone = MyJLabel.GetJLabelError(12, "Vui lòng không để trống trường này!");
+
+    JPanel thisPanel = this;
     public pnChangeInfo(JDialog dialog) {
         setBackground(MyColor.White);
         setLayout(null);
@@ -42,6 +47,7 @@ public class pnChangeInfo extends JPanel {
         tfUserName.setBounds(0,160,200,30);
         lbPhone.setBounds(220,140,200,20);
         tfPhone.setBounds(220,160,200,30);
+        lbEmptyPhone.setBounds(220,190,200,20);
 
         lbAddress.setBounds(0,210,420,20);
         tfAddress.setBounds(0,230,420,30);
@@ -55,7 +61,37 @@ public class pnChangeInfo extends JPanel {
                 dialog.dispose();
             }
         });
+        btnSave.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                boolean check = true;
+                if(tfPhone.getText().isEmpty()){
+                    lbEmptyPhone.setVisible(true);
+                    check = false;
+                } else lbEmptyPhone.setVisible(false);
+
+                if(check){
+                    JOptionPane.showMessageDialog(dialog, "Lưu thông tin thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+        tfPhone.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                lbEmptyPhone.setVisible(false);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+
+            }
+        });
         // endregion
+        add(lbEmptyPhone);
         add(lbId);
         add(lbUserName);
         add(lbFirstName);

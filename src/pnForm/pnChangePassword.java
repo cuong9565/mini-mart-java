@@ -22,13 +22,10 @@ public class pnChangePassword extends JPanel {
 
         lbPassword.setBounds(0,0,420,20);
         pfPassword.setBounds(0,20,420,30);
-
         lbNewPassword.setBounds(0,70,420,20);
         pfNewPassword.setBounds(0,90,420,30);
-
         lbConfirmPassword.setBounds(0,140,420,20);
         pfConfirmPassword.setBounds(0,160,420,30);
-
         btnSave.setBounds(50,220, 150, 40);
         btnEsc.setBounds(220,220, 150, 40);
 
@@ -36,6 +33,13 @@ public class pnChangePassword extends JPanel {
         btnEsc.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dialog.dispose();
+            }
+        });
+        btnSave.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                boolean check = true;
+
+                if(check) JOptionPane.showMessageDialog(dialog, "Đổi mật khẩu thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             }
         });
         // endregion
