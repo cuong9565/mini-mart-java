@@ -1,7 +1,6 @@
 package pnForm;
 
-import Components.MyJButton;
-import Components.MyJLabel;
+import Components.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -10,13 +9,13 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class pnImport extends JPanel{
-    //JButton button = MyJButton.GetJButton(Font.PLAIN, 16, "#000000", "#FFFFFF", "#FFFFFF", "Nhập hàng", SwingConstants.CENTER, SwingConstants.CENTER);
+    //JButton button = new MyJButton(Font.PLAIN, 16, "#000000", "#FFFFFF", "#FFFFFF", "Nhập hàng", SwingConstants.CENTER, SwingConstants.CENTER);
     DefaultTableModel model = new DefaultTableModel();
     DefaultTableModel model1 = new DefaultTableModel();
-    JButton btnRefresh = MyJButton.GetJButton(Font.PLAIN, 16, "#000000", "#FFFFFF", "#FFFFFF", "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
-    JLabel lbID = MyJLabel.GetJLabel(Font.PLAIN,12,"#000000","Mã phiếu nhập",SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbCreate = MyJLabel.GetJLabel(Font.PLAIN,12,"#000000","Người tạo phiếu",SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbSupply = MyJLabel.GetJLabel(Font.PLAIN,12,"#000000","Nhà cung cấp",SwingConstants.LEFT, SwingConstants.CENTER);
+    JButton btnRefresh = new MyJButton(Font.PLAIN, 16, MyColor.Black, MyColor.White, MyColor.White, "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
+    JLabel lbID = new MyJLabel(Font.PLAIN,12,MyColor.Black,"Mã phiếu nhập",SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbCreate = new MyJLabel(Font.PLAIN,12,MyColor.Black,"Người tạo phiếu",SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbSupply = new MyJLabel(Font.PLAIN,12,MyColor.Black,"Nhà cung cấp",SwingConstants.LEFT, SwingConstants.CENTER);
     JPanel panel1 = new JPanel();
     JPanel panel2 = new JPanel();
     JPanel tablePanel = new JPanel();

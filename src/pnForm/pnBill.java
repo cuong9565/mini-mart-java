@@ -1,5 +1,6 @@
 package pnForm;
 
+import Components.MyColor;
 import Components.MyJButton;
 
 import javax.swing.*;
@@ -14,12 +15,12 @@ import java.awt.Component;
 public class pnBill extends JPanel {
     private DefaultTableModel model = new DefaultTableModel();
     private JTable tbInvoice;
-    private JButton btnCancel = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#FFFFFF", "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
-    private JButton btnFind = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#FFFFFF", "Tìm", SwingConstants.CENTER, SwingConstants.CENTER);
-    private JButton btnAdd = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#FFFFFF", "Thêm", SwingConstants.CENTER, SwingConstants.CENTER);
-    private JButton btnEdit = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#FFFFFF", "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
-    private JButton btnReload = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#FFFFFF", "Tải lại", SwingConstants.CENTER, SwingConstants.CENTER);
-    private JButton btnLoad = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#FFFFFF", "Load", SwingConstants.CENTER, SwingConstants.CENTER);
+    private JButton btnCancel = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
+    private JButton btnFind = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Tìm", SwingConstants.CENTER, SwingConstants.CENTER);
+    private JButton btnAdd = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Thêm", SwingConstants.CENTER, SwingConstants.CENTER);
+    private JButton btnEdit = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
+    private JButton btnReload = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Tải lại", SwingConstants.CENTER, SwingConstants.CENTER);
+    private JButton btnLoad = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Load", SwingConstants.CENTER, SwingConstants.CENTER);
     JTextField txtFilter = new JTextField("Nhập nội dung");
 
     // panel

@@ -8,14 +8,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class pnChangePassword extends JPanel {
-    JLabel lbPassword = MyJLabel.GetJLabel(Font.PLAIN, 14, MyColor.Black, "Mật khẩu hiện tại", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbNewPassword = MyJLabel.GetJLabel(Font.PLAIN, 14, MyColor.Black, "Mật khẩu mới", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbConfirmPassword = MyJLabel.GetJLabel(Font.PLAIN, 14, MyColor.Black, "Xác nhận mật khẩu", SwingConstants.LEFT, SwingConstants.CENTER);
-    JPasswordField pfPassword = MyJPasswordField.GẹtJPasswordFieldInput(Font.PLAIN, 14);
-    JPasswordField pfNewPassword = MyJPasswordField.GẹtJPasswordFieldInput(Font.PLAIN, 14);
-    JPasswordField pfConfirmPassword = MyJPasswordField.GẹtJPasswordFieldInput(Font.PLAIN, 14);
-    JButton btnSave = MyJButton.GetJButton(Font.BOLD, 14, MyColor.White, MyColor.Green, MyColor.LightGreen, "Đổi mật khẩu", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnEsc = MyJButton.GetJButton(Font.BOLD, 14, MyColor.White, MyColor.Red, MyColor.LightRed, "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
+    JLabel lbPassword = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Mật khẩu hiện tại", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbNewPassword = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Mật khẩu mới", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbConfirmPassword = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Xác nhận mật khẩu", SwingConstants.LEFT, SwingConstants.CENTER);
+    JPasswordField pfPassword = new MyJPasswordFieldInput(Font.PLAIN, 14);
+    JPasswordField pfNewPassword = new MyJPasswordFieldInput(Font.PLAIN, 14);
+    JPasswordField pfConfirmPassword = new MyJPasswordFieldInput(Font.PLAIN, 14);
+    JButton btnSave = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Green, MyColor.LightGreen, "Đổi mật khẩu", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnEsc = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Red, MyColor.LightRed, "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
     public pnChangePassword(JDialog dialog) {
         setBackground(MyColor.White);
         setLayout(null);

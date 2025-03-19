@@ -1,5 +1,6 @@
 package pnForm;
 
+import Components.MyColor;
 import Components.MyJButton;
 
 import javax.swing.*;
@@ -10,11 +11,11 @@ import java.awt.*;
 public class pnStaff extends JPanel {
     private DefaultTableModel model = new DefaultTableModel();
     private JTable tbStaff;
-    private JButton btnblock = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#FFFFFF", "Khóa", SwingConstants.CENTER, SwingConstants.CENTER);
-    private JButton btnfind = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#FFFFFF", "Tìm", SwingConstants.CENTER, SwingConstants.CENTER);
-    private JButton btnadd = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#FFFFFF", "Thêm", SwingConstants.CENTER, SwingConstants.CENTER);
-    private JButton btnfix = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#FFFFFF", "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
-    private JButton btnload = MyJButton.GetJButton(Font.PLAIN, 14, "#000000", "#FFFFFF", "#FFFFFF", "Tải lại", SwingConstants.CENTER, SwingConstants.CENTER);
+    private JButton btnblock = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Khóa", SwingConstants.CENTER, SwingConstants.CENTER);
+    private JButton btnfind = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Tìm", SwingConstants.CENTER, SwingConstants.CENTER);
+    private JButton btnadd = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Thêm", SwingConstants.CENTER, SwingConstants.CENTER);
+    private JButton btnfix = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
+    private JButton btnload = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Tải lại", SwingConstants.CENTER, SwingConstants.CENTER);
     JTextField txtfiter = new JTextField("Nhập nội dung");
 
     // panel

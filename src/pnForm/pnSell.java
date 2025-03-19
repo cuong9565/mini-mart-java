@@ -1,12 +1,13 @@
 package pnForm;
 
+import Components.MyColor;
 import Components.MyJButton;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class pnSell extends JPanel {
-    JButton button = MyJButton.GetJButton(Font.PLAIN, 16, "#000000", "#FFFFFF", "#FFFFFF", "Bán hàng", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton button = new MyJButton(Font.PLAIN, 16, MyColor.Black, MyColor.White, MyColor.White, "Bán hàng", SwingConstants.CENTER, SwingConstants.CENTER);
     public pnSell() {
         setLayout(null);
         setBackground(Color.decode("#FF00FF"));

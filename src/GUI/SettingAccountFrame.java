@@ -1,9 +1,6 @@
 package GUI;
 
-import Components.MyColor;
-import Components.MyJButton;
-import Components.MyJLabel;
-import Components.MyJPanel;
+import Components.*;
 import pnForm.pnChangeInfo;
 import pnForm.pnChangePassword;
 
@@ -13,14 +10,14 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class SettingAccountFrame extends JDialog {
-    JPanel pnMain = MyJPanel.GetJPanel(MyColor.White);
-    JPanel pnNav = MyJPanel.GetJPanel(MyColor.LightGray);
-    JPanel pnContent = MyJPanel.GetJPanel(MyColor.White);
-    JButton btnChangeInfo = MyJButton.GetJButton(Font.PLAIN, 12, MyColor.Black, MyColor.LightGray, "Thay đổi thông tin", SwingConstants.CENTER,SwingConstants.CENTER);
-    JButton btnChangePassword = MyJButton.GetJButton(Font.PLAIN, 12, MyColor.Black, MyColor.LightGray, "Thay đổi mật khẩu", SwingConstants.CENTER,SwingConstants.CENTER);
+    JPanel pnMain = new MyJPanel(MyColor.White);
+    JPanel pnNav = new MyJPanel(MyColor.LightGray);
+    JPanel pnContent = new MyJPanel(MyColor.White);
+    JButton btnChangeInfo = new MyJButton(Font.PLAIN, 12, MyColor.Black, MyColor.LightGray, "Thay đổi thông tin", SwingConstants.CENTER,SwingConstants.CENTER);
+    JButton btnChangePassword = new MyJButton(Font.PLAIN, 12, MyColor.Black, MyColor.LightGray, "Thay đổi mật khẩu", SwingConstants.CENTER,SwingConstants.CENTER);
     JButton lsBtn[] = new JButton[]{btnChangeInfo, btnChangePassword};
     JPanel lsPn[] = new JPanel[]{new pnChangeInfo(this), new pnChangePassword(this)};
-    JLabel lbHeader = MyJLabel.GetJLabel(Font.BOLD, 24, MyColor.White, "", SwingConstants.CENTER, SwingConstants.CENTER);
+    JLabel lbHeader = new MyJLabel(Font.BOLD, 24, MyColor.White, "", SwingConstants.CENTER, SwingConstants.CENTER);
 
     int currCursor = 0;
 

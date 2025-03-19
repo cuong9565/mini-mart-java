@@ -12,17 +12,17 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class LoginForm extends JFrame {
-    JPanel pnLeft = MyJPanel.GetJPanel(MyColor.LightBlue);
-    JPanel pnRight = MyJPanel.GetJPanel(MyColor.White);
-    JLabel lbWelcome = MyJLabel.GetJLabel(Font.BOLD, 32, MyColor.White, "<html>Chào mừng bạn đến với<br>Hệ thống quản lý siêu thị mini</html>", SwingConstants.LEFT, SwingConstants.TOP);
-    JLabel lbLogin = MyJLabel.GetJLabel(Font.PLAIN, 25, MyColor.Black, "<html>Đăng nhập tài khoản</html>", SwingConstants.CENTER, SwingConstants.TOP);
-    JLabel lbUserName = MyJLabel.GetJLabel(Font.PLAIN, 14, MyColor.Black, "<html>Tên đăng nhập hoặc Email</html>", SwingConstants.LEFT, SwingConstants.TOP);
-    JLabel lbPassword = MyJLabel.GetJLabel(Font.PLAIN, 14, MyColor.Black, "<html>Mật khẩu</html>", SwingConstants.LEFT, SwingConstants.TOP);
-    JTextField tfUserName = MyJTextField.GetJTextFieldLine(Font.PLAIN, 12);
-    JPasswordField pfPassword = MyJPasswordField.GetJPasswordField(Font.PLAIN, 12);
-    JButton btnLogin = MyJButton.GetJButton(Font.BOLD, 14, MyColor.White, MyColor.DarkBlue,MyColor.LightBlue,  "Đăng nhập", SwingConstants.CENTER, SwingConstants.CENTER);
-    JLabel lbEmptyUserName = MyJLabel.GetJLabelError(10, "Vui lòng không để trống trường này!");
-    JLabel lbEmptyPassword = MyJLabel.GetJLabelError(10, "Vui lòng không để trống trường này!");
+    JPanel pnLeft = new MyJPanel(MyColor.LightBlue);
+    JPanel pnRight = new MyJPanel(MyColor.White);
+    JLabel lbWelcome = new MyJLabel(Font.BOLD, 32, MyColor.White, "<html>Chào mừng bạn đến với<br>Hệ thống quản lý siêu thị mini</html>", SwingConstants.LEFT, SwingConstants.TOP);
+    JLabel lbLogin = new MyJLabel(Font.PLAIN, 25, MyColor.Black, "<html>Đăng nhập tài khoản</html>", SwingConstants.CENTER, SwingConstants.TOP);
+    JLabel lbUserName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "<html>Tên đăng nhập hoặc Email</html>", SwingConstants.LEFT, SwingConstants.TOP);
+    JLabel lbPassword = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "<html>Mật khẩu</html>", SwingConstants.LEFT, SwingConstants.TOP);
+    JTextField tfUserName = new MyJTextFieldLine(Font.PLAIN, 12);
+    JPasswordField pfPassword = new MyJPasswordFieldLine(Font.PLAIN, 12);
+    JButton btnLogin = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.DarkBlue,MyColor.LightBlue,  "Đăng nhập", SwingConstants.CENTER, SwingConstants.CENTER);
+    JLabel lbEmptyUserName = new MyJLabelError(10, "Vui lòng không để trống trường này!");
+    JLabel lbEmptyPassword = new MyJLabelError(10, "Vui lòng không để trống trường này!");
 
     public LoginForm() {
         super("Phần mềm quản lý siêu thị mini");

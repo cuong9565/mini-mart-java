@@ -1,5 +1,6 @@
 package pnForm;
 
+import Components.MyColor;
 import Components.MyJButton;
 
 import javax.swing.*;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 public class pnStatistic extends JPanel {
     DefaultTableModel model = new DefaultTableModel();
     //ArrayList<Thongke> list = new ArrayList<>();
-    JButton button = MyJButton.GetJButton(Font.PLAIN, 16, "#000000", "#FFFFFF", "#FFFFFF", "Thống kê", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton button = new MyJButton(Font.PLAIN, 16, MyColor.Black, MyColor.White, MyColor.White, "Thống kê", SwingConstants.CENTER, SwingConstants.CENTER);
     JPanel jPanelLayout = new JPanel();
     JPanel jPanel1 = new JPanel();
     JPanel jPanel2 = new JPanel();

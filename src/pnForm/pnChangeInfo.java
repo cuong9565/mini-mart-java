@@ -10,23 +10,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class pnChangeInfo extends JPanel {
-    JLabel lbId = MyJLabel.GetJLabel(Font.PLAIN, 14, MyColor.Black, "Mã nhân viên", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbUserName = MyJLabel.GetJLabel(Font.PLAIN, 14, MyColor.Black, "Tên tài khoản", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbFirstName = MyJLabel.GetJLabel(Font.PLAIN, 14, MyColor.Black, "Họ", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbLastName = MyJLabel.GetJLabel(Font.PLAIN, 14, MyColor.Black, "Tên", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbPhone = MyJLabel.GetJLabel(Font.PLAIN, 14, MyColor.Black, "Số điện thoại *", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbType = MyJLabel.GetJLabel(Font.PLAIN, 14, MyColor.Black, "Vai trò", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbAddress = MyJLabel.GetJLabel(Font.PLAIN, 14, MyColor.Black, "Địa chỉ", SwingConstants.LEFT, SwingConstants.CENTER);
-    JTextField tfId = MyJTextField.GetJTextFieldInput(Font.PLAIN, 14, false);
-    JTextField tfUserName = MyJTextField.GetJTextFieldInput(Font.PLAIN, 14, true);
-    JTextField tfFirstName = MyJTextField.GetJTextFieldInput(Font.PLAIN, 14, true);
-    JTextField tfLastName = MyJTextField.GetJTextFieldInput(Font.PLAIN, 14, true);
-    JTextField tfPhone = MyJTextField.GetJTextFieldInput(Font.PLAIN, 14, true);
-    JTextField tfType = MyJTextField.GetJTextFieldInput(Font.PLAIN, 14 , false);
-    JTextField tfAddress = MyJTextField.GetJTextFieldInput(Font.PLAIN, 14 , true);
-    JButton btnSave = MyJButton.GetJButton(Font.BOLD, 14, MyColor.White, MyColor.Green, MyColor.LightGreen, "Lưu thông tin", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnEsc = MyJButton.GetJButton(Font.BOLD, 14, MyColor.White, MyColor.Red, MyColor.LightRed, "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
-    JLabel lbEmptyPhone = MyJLabel.GetJLabelError(12, "Vui lòng không để trống trường này!");
+    JLabel lbId = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Mã nhân viên", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbUserName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Tên tài khoản", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbFirstName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Họ", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbLastName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Tên", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbPhone = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Số điện thoại *", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbType = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Vai trò", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbAddress = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Địa chỉ", SwingConstants.LEFT, SwingConstants.CENTER);
+    JTextField tfId = new MyJTextFieldInput(Font.PLAIN, 14, false);
+    JTextField tfUserName = new MyJTextFieldInput(Font.PLAIN, 14, true);
+    JTextField tfFirstName = new MyJTextFieldInput(Font.PLAIN, 14, true);
+    JTextField tfLastName = new MyJTextFieldInput(Font.PLAIN, 14, true);
+    JTextField tfPhone = new MyJTextFieldInput(Font.PLAIN, 14, true);
+    JTextField tfType = new MyJTextFieldInput(Font.PLAIN, 14 , false);
+    JTextField tfAddress = new MyJTextFieldInput(Font.PLAIN, 14 , true);
+    JButton btnSave = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Green, MyColor.LightGreen, "Lưu thông tin", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnEsc = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Red, MyColor.LightRed, "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
+    JLabel lbEmptyPhone = new MyJLabelError(12, "Vui lòng không để trống trường này!");
 
     JPanel thisPanel = this;
     public pnChangeInfo(JDialog dialog) {
