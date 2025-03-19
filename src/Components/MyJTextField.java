@@ -26,15 +26,6 @@ public class MyJTextField {
 
         return textField;
     }
-    public static JTextField GetJTextFieldInput(int style, int size,String text, int hor) {
-        JTextField textField = new JTextField();
-        textField.setFont(new Font("Roboto", style, size));
-        textField.setForeground(Color.decode("#000000"));
-        textField.setHorizontalAlignment(hor);
-        textField.setText(text);
-
-        return textField;
-    }
     public static JTextField GetJTextFieldInput(int style, int size, boolean editable) {
         JTextField textField = new JTextField();
         textField.setFont(new Font("Roboto", style, size));

@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong update">
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong fix GetJPanel">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/MyJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pnForm/pnChangePassword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pnForm/pnChangePassword.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pnForm/pnSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pnForm/pnSupplier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/MyJTextField.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJTextField.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +120,7 @@
       <workItem from="1742296320106" duration="3446000" />
       <workItem from="1742301469088" duration="5513000" />
       <workItem from="1742307832870" duration="1012000" />
-      <workItem from="1742364859082" duration="1088000" />
+      <workItem from="1742364859082" duration="1182000" />
     </task>
     <task id="LOCAL-00001" summary="Cuong update Login Form">
       <option name="closed" value="true" />
@@ -252,7 +250,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742364887806</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Cuong fix GetJPanel">
+      <option name="closed" value="true" />
+      <created>1742366773670</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1742366773670</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -276,6 +282,7 @@
     <MESSAGE value="Cuong update Color + SettingAccountFrame" />
     <MESSAGE value="Cuong update SettingAccountFrame" />
     <MESSAGE value="Cuong update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cuong update" />
+    <MESSAGE value="Cuong fix GetJPanel" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cuong fix GetJPanel" />
   </component>
 </project>
