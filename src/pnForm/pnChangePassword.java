@@ -29,8 +29,8 @@ public class pnChangePassword extends JPanel {
         lbConfirmPassword.setBounds(0,140,420,20);
         pfConfirmPassword.setBounds(0,160,420,30);
 
-        btnSave.setBounds(50,210, 150, 40);
-        btnEsc.setBounds(220,210, 150, 40);
+        btnSave.setBounds(50,220, 150, 40);
+        btnEsc.setBounds(220,220, 150, 40);
 
         // region Event
         btnEsc.addActionListener(new ActionListener() {
