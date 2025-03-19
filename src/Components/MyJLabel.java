@@ -25,4 +25,16 @@ public class MyJLabel {
         label.setVerticalAlignment(Ver);
         return label;
     }
+
+    public static JLabel GetJLabelError(int size, String text){
+        JLabel label = new JLabel();
+        label.setFont(new Font("Roboto", Font.PLAIN, size));
+        label.setForeground(Color.RED);
+        label.setText(text);
+        label.setHorizontalAlignment(SwingConstants.LEFT);
+        label.setVerticalAlignment(SwingConstants.LEFT);
+        label.setOpaque(false);
+        label.setVisible(false);
+        return label;
+    }
 }
