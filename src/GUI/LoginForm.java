@@ -3,6 +3,8 @@ package GUI;
 import Components.*;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +21,8 @@ public class LoginForm extends JFrame {
     JTextField tfUserName = MyJTextField.GetJTextFieldLine(Font.PLAIN, 12);
     JPasswordField pfPassword = MyJPasswordField.GetJPasswordField(Font.PLAIN, 12);
     JButton btnLogin = MyJButton.GetJButton(Font.BOLD, 14, MyColor.White, MyColor.DarkBlue,MyColor.LightBlue,  "Đăng nhập", SwingConstants.CENTER, SwingConstants.CENTER);
+    JLabel lbEmptyUserName = MyJLabel.GetJLabelError(10, "Vui lòng không để trống trường này!");
+    JLabel lbEmptyPassword = MyJLabel.GetJLabelError(10, "Vui lòng không để trống trường này!");
 
     public LoginForm() {
         super("Phần mềm quản lý siêu thị mini");
@@ -34,7 +38,9 @@ public class LoginForm extends JFrame {
         lbUserName.setBounds(580, 120, 280, 20);
         lbPassword.setBounds(580, 201, 280, 20);
         tfUserName.setBounds(580, 140, 280, 20);
+        lbEmptyUserName.setBounds(580, 160, 280, 20);
         pfPassword.setBounds(580, 220, 280, 20);
+        lbEmptyPassword.setBounds(580, 240, 280, 20);
         btnLogin.setBounds(580, 300, 280, 30);
         pnLeft.setBounds(0,0,550, 500);
         pnRight.setBounds(550,0,350,500);
@@ -77,10 +83,33 @@ public class LoginForm extends JFrame {
                 Login();
             }
         });
+        tfUserName.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) {
+                lbEmptyUserName.setVisible(false);
+            }
+            public void removeUpdate(DocumentEvent e) {
+
+            }
+            public void changedUpdate(DocumentEvent e) {
+
+            }
+        });
+        pfPassword.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) {
+                lbEmptyPassword.setVisible(false);
+            }
+            public void removeUpdate(DocumentEvent e) {
+
+            }
+            public void changedUpdate(DocumentEvent e) {
+
+            }
+        });
         // endregion
 
-
         // region Add
+        add(lbEmptyUserName);
+        add(lbEmptyPassword);
         add(lbWelcome);
         add(lbLogin);
         add(lbUserName);
@@ -100,20 +129,17 @@ public class LoginForm extends JFrame {
         boolean check = true;
         String userName = tfUserName.getText();
         String password = String.valueOf(pfPassword.getPassword());
-        if(userName.isEmpty()){
-//            JOptionPane.showMessageDialog(tfUserName, "Trống");
-
+        if(userName.isEmpty()) {
+            lbEmptyUserName.setVisible(true);
             check = false;
-        }
+        } else lbEmptyUserName.setVisible(false);
 
         if(password.isEmpty()){
-//            JOptionPane.showMessageDialog(pfPassword, "Trống");
-
+            lbEmptyPassword.setVisible(true);
             check = false;
-        }
-        if(!check){
-            JOptionPane.showMessageDialog(pnRight, "Tên đăng nhập và mật khẩu không được để trống!!!");
-        }
+        } else lbEmptyPassword.setVisible(false);
+
+
         if(check){
             new Manage(this);
             setVisible(false);

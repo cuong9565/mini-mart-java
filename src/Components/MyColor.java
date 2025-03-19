@@ -12,6 +12,7 @@ public class MyColor {
     public static Color LightGray = Color.decode("#D3D3D3");
     public static Color Red = Color.decode("#DC0000");
     public static Color LightRed = Color.decode("#FF6464");
+    public static Color BrightRed = Color.decode("#FF0000");
     public static Color Green = Color.decode("#00C800");
     public static Color LightGreen = Color.decode("#64FF64");
 }

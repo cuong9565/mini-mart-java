@@ -29,10 +29,10 @@ public class MyJLabel {
     public static JLabel GetJLabelError(int size, String text){
         JLabel label = new JLabel();
         label.setFont(new Font("Roboto", Font.PLAIN, size));
-        label.setForeground(Color.RED);
+        label.setForeground(MyColor.BrightRed);
         label.setText(text);
         label.setHorizontalAlignment(SwingConstants.LEFT);
-        label.setVerticalAlignment(SwingConstants.LEFT);
+        label.setVerticalAlignment(SwingConstants.CENTER);
         label.setOpaque(false);
         label.setVisible(false);
         return label;
