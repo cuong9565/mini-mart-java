@@ -6,17 +6,19 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.RoundRectangle2D;
 
 public class MyJButton extends JButton {
     public MyJButton(int style, int size, Color fColor, Color bColor, Color hoverColor, String text, int Hor, int Ver) {
         super();
+        setFocusPainted(false);
         setFont(new Font("Roboto", style, size));
         setForeground(fColor);
         setBackground(bColor);
         setText(text);
         setHorizontalAlignment(Hor);
         setVerticalAlignment(Ver);
-        setFocusPainted(false);
+
         addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
                 setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -46,13 +48,15 @@ public class MyJButton extends JButton {
 
 
     public MyJButton(int style, int size, Color fColor, Color bColor, String text, int Hor, int Ver) {
+        super();
+        setFocusPainted(false);
         setFont(new Font("Roboto", style, size));
         setForeground(fColor);
         setBackground(bColor);
         setText(text);
         setHorizontalAlignment(Hor);
         setVerticalAlignment(Ver);
-        setFocusPainted(false);
+
         if(Hor == SwingConstants.LEFT){
             setBorder(BorderFactory.createEmptyBorder(0, 25, 0, 0));
         }
@@ -64,4 +68,5 @@ public class MyJButton extends JButton {
             }
         });
     }
+
 }

@@ -11,6 +11,7 @@ public class MyJComboBox<E> extends JComboBox<E> {
         setForeground(MyColor.Black);
         setMaximumRowCount(5);
         setOpaque(false);
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         for(E item : items)
             addItem(item);
         setBorder(null);
