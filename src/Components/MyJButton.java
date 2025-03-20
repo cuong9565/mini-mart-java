@@ -6,7 +6,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.RoundRectangle2D;
 
 public class MyJButton extends JButton {
     public MyJButton(int style, int size, Color fColor, Color bColor, Color hoverColor, String text, int Hor, int Ver) {
