@@ -27,6 +27,14 @@ public class MyJButton extends JButton {
                 setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                 setBackground(bColor);
             }
+            public void mousePressed(MouseEvent e) {
+                setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                setBackground(Color.decode("#b8cfe5"));
+            }
+            public void mouseReleased(MouseEvent e) {
+                setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                setBackground(bColor);
+            }
         });
 
         if(Hor == SwingConstants.LEFT){
