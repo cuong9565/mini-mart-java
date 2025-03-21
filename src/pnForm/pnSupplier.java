@@ -39,8 +39,8 @@ public class pnSupplier extends JPanel {
         tfSearch.setBounds(645, 30, 200, 30);
         btnRefresh.setBounds(855,30,100,30);
 
-        pnFooter.setBounds(0,100,970, 640);
-        tbSupplier.scrPn.setBounds(0,110,970,630);
+        pnFooter.setBounds(0,100,970, 650);
+        tbSupplier.scrPn.setBounds(0,100,970,650);
 
         tbSupplier.addRow(new Object[]{"1", "2", "3", "4", "5"});
         tbSupplier.addRow(new Object[]{"1", "2", "3", "4", "5"});

@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong update" />
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong update">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pnForm/pnSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pnForm/pnSupplier.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -123,6 +126,8 @@
       <workItem from="1742430878067" duration="289000" />
       <workItem from="1742434903214" duration="3430000" />
       <workItem from="1742470600441" duration="35000" />
+      <workItem from="1742560844835" duration="864000" />
+      <workItem from="1742562400985" duration="83000" />
     </task>
     <task id="LOCAL-00001" summary="Cuong update Login Form">
       <option name="closed" value="true" />
@@ -348,7 +353,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742557798948</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Cuong update">
+      <option name="closed" value="true" />
+      <created>1742560945357</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1742560945357</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
