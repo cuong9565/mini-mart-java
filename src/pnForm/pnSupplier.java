@@ -3,6 +3,7 @@ package pnForm;
 import Components.*;
 import javax.swing.*;
 import java.awt.*;
+import java.sql.*;
 
 
 public class pnSupplier extends JPanel {
@@ -34,8 +35,8 @@ public class pnSupplier extends JPanel {
         btnIn.setBounds(225,20,60,60);
         btnOut.setBounds(295,20,60,60);
 
-        pnSearch.setBounds(455,0,515,90);
-        cbSearch.setBounds(475, 30, 150, 30);
+        pnSearch.setBounds(470,0,500,90);
+        cbSearch.setBounds(485, 30, 150, 30);
         tfSearch.setBounds(645, 30, 200, 30);
         btnRefresh.setBounds(855,30,100,30);
 
