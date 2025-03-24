@@ -1,11 +1,9 @@
-package pnForm;
+package GUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class pnProduct extends JPanel {
     private JTable productTable;

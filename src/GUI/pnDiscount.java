@@ -1,4 +1,4 @@
-package pnForm;
+package GUI;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicComboBoxUI;

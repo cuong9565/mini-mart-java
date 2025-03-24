@@ -1,6 +1,5 @@
 package GUI;
 import Components.*;
-import pnForm.*;
 
 import javax.swing.*;
 import java.awt.*;

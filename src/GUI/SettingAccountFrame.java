@@ -1,8 +1,6 @@
 package GUI;
 
 import Components.*;
-import pnForm.pnChangeInfo;
-import pnForm.pnChangePassword;
 
 import javax.swing.*;
 import javax.swing.border.MatteBorder;

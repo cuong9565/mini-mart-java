@@ -146,7 +146,3 @@ public class LoginForm extends JFrame {
         }
     }
 }
-/*
-* Còn thiếu kiểm tra điều kiện Login
-* Thiếu phần báo lỗi (Một JLabel nằm bên dưới)
-* */

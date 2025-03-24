@@ -1,9 +1,8 @@
-package pnForm;
+package GUI;
 
 import Components.*;
 import javax.swing.*;
 import java.awt.*;
-import java.sql.*;
 
 
 public class pnSupplier extends JPanel {

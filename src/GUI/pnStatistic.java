@@ -1,14 +1,12 @@
-package pnForm;
+package GUI;
 
 import Components.MyColor;
-import Components.MyJButton;
 import Components.MyJLabel;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class pnStatistic extends JPanel {
     DefaultTableModel model = new DefaultTableModel(); // Model cho bảng sản phẩm

@@ -1,4 +1,4 @@
-package pnForm;
+package GUI;
 
 import Components.*;
 

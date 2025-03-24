@@ -1,4 +1,4 @@
-package pnForm;
+package GUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,7 +52,6 @@ public class pnTypeProduct extends JPanel {
                         {"SP002", "Nước ngọt", "15.000đ"},
                         {"SP003", "Nước tinh khiết", "8.000đ"}
                 };
-                break;
             case "Mì":
                 data = new Object[][]{
                         {"SP004", "Mì tôm", "5.000đ"},
