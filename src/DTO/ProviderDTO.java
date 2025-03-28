@@ -25,6 +25,7 @@ public class ProviderDTO {
             throw new RuntimeException(e);
         }
     }
+    // region GET SET
     public int getId() {return id;}
     public String getName() {return name;}
     public String getPhone() {return phone;}
@@ -35,6 +36,7 @@ public class ProviderDTO {
     public void setPhone(String phone) {this.phone = phone;}
     public void setAddress(String address) {this.address = address;}
     public void setEmail(String email) {this.email = email;}
+    // endregion
     public Object[] getObjects() {
         return new Object[]{id, name, phone, address, email};
     }
