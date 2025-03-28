@@ -1,8 +1,15 @@
 package GUI;
 
+import BUS.ProviderBUS;
 import Components.*;
+import DAO.ProviderDAO;
+import DTO.*;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.*;
 
 
 public class pnSupplier extends JPanel {
@@ -19,7 +26,7 @@ public class pnSupplier extends JPanel {
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Tất cả", "1", "2", "3", "4", "5"}, 12);
 
-    MyJTable tbSupplier = new MyJTable(new String[]{"1", "2", "3", "4", "5"});
+    MyJTable tbSupplier = new MyJTable(new String[]{"Mã số", "Tên", "Số điện thoại", "Địa chỉ", "Email"});
 
     public pnSupplier(JFrame frame) {
         setLayout(null);
@@ -42,11 +49,16 @@ public class pnSupplier extends JPanel {
         pnFooter.setBounds(0,100,970, 650);
         tbSupplier.scrPn.setBounds(0,100,970,650);
 
-        tbSupplier.addRow(new Object[]{"1", "2", "3", "4", "5"});
-        tbSupplier.addRow(new Object[]{"1", "2", "3", "4", "5"});
-        tbSupplier.addRow(new Object[]{"1", "2", "3", "4", "5"});
-        tbSupplier.addRow(new Object[]{"1", "2", "3", "4", "5"});
-        tbSupplier.addRow(new Object[]{"1", "2", "3", "4", "5"});
+        // region EVEN
+        btnAdd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tbSupplier.addRow(new Object[]{"1", 2, "3", "4", "5"});
+            }
+        });
+        // endregion
+
+        loadProvider();
 
         add(btnAdd);
         add(btnEdit);
@@ -63,5 +75,11 @@ public class pnSupplier extends JPanel {
 
         add(tbSupplier.scrPn);
         add(pnFooter);
+    }
+
+    public void loadProvider()  {
+        for(ProviderDTO provider: ProviderBUS.getInstance().getListProvider()){
+            tbSupplier.addRow(provider.getObjects());
+        }
     }
 }
