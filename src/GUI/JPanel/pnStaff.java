@@ -1,4 +1,4 @@
-package GUI;
+package GUI.JPanel;
 
 import BUS.Staff_BUS;
 import javax.swing.*;

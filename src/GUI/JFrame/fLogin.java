@@ -1,4 +1,4 @@
-package GUI;
+package GUI.JFrame;
 
 import Components.*;
 
@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class LoginForm extends JFrame {
+public class fLogin extends JFrame {
     JPanel pnLeft = new MyJPanel(MyColor.LightBlue);
     JPanel pnRight = new MyJPanel(MyColor.White);
     JLabel lbWelcome = new MyJLabel(Font.BOLD, 32, MyColor.White, "<html>Chào mừng bạn đến với<br>Hệ thống quản lý siêu thị mini</html>", SwingConstants.LEFT, SwingConstants.TOP);
@@ -24,7 +24,7 @@ public class LoginForm extends JFrame {
     JLabel lbEmptyUserName = new MyJLabelError(10, "Vui lòng không để trống trường này!");
     JLabel lbEmptyPassword = new MyJLabelError(10, "Vui lòng không để trống trường này!");
 
-    public LoginForm() {
+    public fLogin() {
         super("Phần mềm quản lý siêu thị mini");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(900,500);
@@ -141,7 +141,7 @@ public class LoginForm extends JFrame {
 
 
         if(check){
-            new Manage(this);
+            new fManage(this);
             setVisible(false);
         }
     }

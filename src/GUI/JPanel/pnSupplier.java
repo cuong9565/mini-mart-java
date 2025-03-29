@@ -1,8 +1,11 @@
-package GUI;
+package GUI.JPanel;
 
 import BUS.SupplierBUS;
 import Components.*;
 import DTO.*;
+import GUI.JDialog.dlAddSupplier;
+import GUI.JDialog.dlEditSupplier;
+import GUI.JFrame.fManage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +30,7 @@ public class pnSupplier extends JPanel {
 
     pnSupplier thisPanel = this;
 
-    public pnSupplier(Manage frame) {
+    public pnSupplier(fManage frame) {
         setLayout(null);
         setBackground(MyColor.LightGray);
 

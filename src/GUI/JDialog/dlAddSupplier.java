@@ -1,18 +1,15 @@
-package GUI;
+package GUI.JDialog;
 
 import BUS.SupplierBUS;
 import Components.*;
 import DTO.SupplierDTO;
+import GUI.JFrame.fManage;
+import GUI.JPanel.pnSupplier;
 
 import javax.swing.*;
-import javax.swing.border.MatteBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class dlAddSupplier extends JDialog {
     JPanel pnMain = new MyJPanel(MyColor.White);
@@ -32,7 +29,7 @@ public class dlAddSupplier extends JDialog {
 
     JDialog dialog = this;
 
-    public dlAddSupplier(Manage parentFrame, pnSupplier parentPanel) {
+    public dlAddSupplier(fManage parentFrame, pnSupplier parentPanel) {
         super(parentFrame,true);
         setTitle("Thêm nhà cung cấp");
         setSize(540,440);

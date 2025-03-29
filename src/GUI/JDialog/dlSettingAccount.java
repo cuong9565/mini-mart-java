@@ -1,13 +1,16 @@
-package GUI;
+package GUI.JDialog;
 
 import Components.*;
+import GUI.JPanel.pnChangeInfo;
+import GUI.JPanel.pnChangePassword;
+import GUI.JFrame.fManage;
 
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
 import java.awt.*;
 import java.awt.event.*;
 
-public class SettingAccountFrame extends JDialog {
+public class dlSettingAccount extends JDialog {
     JPanel pnMain = new MyJPanel(MyColor.White);
     JPanel pnNav = new MyJPanel(MyColor.LightGray);
     JPanel pnContent = new MyJPanel(MyColor.White);
@@ -19,7 +22,7 @@ public class SettingAccountFrame extends JDialog {
 
     int currCursor = 0;
 
-    public SettingAccountFrame(Manage parentFrame) {
+    public dlSettingAccount(fManage parentFrame) {
         super(parentFrame,true);
         setTitle("Thông tin tài khoản");
         setSize(540,550);

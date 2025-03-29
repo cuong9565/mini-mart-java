@@ -1,4 +1,4 @@
-package GUI;
+package GUI.JPanel;
 
 import Components.MyColor;
 import Components.MyJButton;
@@ -6,7 +6,6 @@ import Components.MyJTable;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.MouseAdapter;

@@ -1,22 +1,12 @@
-package GUI;
+package GUI.JPanel;
+
 
 import Components.*;
 import javax.swing.*;
 import java.awt.*;
-import Components.MyColor;
-import Components.MyJButton;
-
-import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.Component;
 
 
-public class pnCustomer extends JPanel {
+public class pnProduct extends JPanel {
     JPanel pnHeader = new MyJPanel(MyColor.White);
     JPanel pnFooter = new MyJPanel(MyColor.White);
     JPanel pnFunc = new MyJPanel(MyColor.White, "Chức năng");
@@ -30,9 +20,10 @@ public class pnCustomer extends JPanel {
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Tất cả", "1", "2", "3", "4", "5"}, 12);
 
-    MyJTable tbSupplier = new MyJTable(new String[]{"stt", "mã sản phẩm", "tên sản phẩm", "ngày mua gần nhất", "tôngr bill", "chi tiết"});
+    MyJTable tbSupplier = new MyJTable(new String[]{"stt", "mã sản phẩm", "tên sản phẩm", "số lượng", "giá"});
 
-    public pnCustomer() {
+
+    public pnProduct() {
         setLayout(null);
         setBackground(MyColor.LightGray);
 
@@ -53,11 +44,12 @@ public class pnCustomer extends JPanel {
         pnFooter.setBounds(0,100,970, 650);
         tbSupplier.scrPn.setBounds(0,100,970,650);
 
-        tbSupplier.addRow(new Object[]{"1", "KH001", "Nguyễn Văn A", "dd/mm/yyyy", "10"});
-        tbSupplier.addRow(new Object[]{"2", "KH002", "Nguyễn Văn B", "dd/mm/yyyy", "45"});
-        tbSupplier.addRow(new Object[]{"3", "KH004", "Nguyễn Văn C", "dd/mm/yyyy", "34"});
-        tbSupplier.addRow(new Object[]{"4", "KH004", "Nguyễn Văn D", "dd/mm/yyyy", "27"});
-        tbSupplier.addRow(new Object[]{"5", "KH005", "Nguyễn Văn E", "dd/mm/yyyy", "85"});
+        tbSupplier.addRow(new Object[]{"1", "SP001", "coca", "15.000 đ", "100"});
+        tbSupplier.addRow(new Object[]{"2", "SP002", "snack", "15.000 đ", "100"});
+        tbSupplier.addRow(new Object[]{"3", "SP003", "nước suối", "15.000 đ", "100"});
+        tbSupplier.addRow(new Object[]{"4", "SP004", "...", "15.000 đ", "100"});
+        tbSupplier.addRow(new Object[]{"5", "SP005", "...", "15.000 đ", "100"});
+
         add(btnAdd);
         add(btnEdit);
         add(btnDelete);
@@ -75,4 +67,3 @@ public class pnCustomer extends JPanel {
         add(pnFooter);
     }
 }
-

@@ -1,8 +1,10 @@
-package GUI;
+package GUI.JDialog;
 
 import BUS.SupplierBUS;
 import Components.*;
 import DTO.SupplierDTO;
+import GUI.JFrame.fManage;
+import GUI.JPanel.pnSupplier;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +29,7 @@ public class dlEditSupplier extends JDialog {
 
     JDialog dialog = this;
 
-    public dlEditSupplier(Manage parentFrame, pnSupplier parentPanel, SupplierDTO supplier) {
+    public dlEditSupplier(fManage parentFrame, pnSupplier parentPanel, SupplierDTO supplier) {
         super(parentFrame,true);
         setTitle("Thay đổi thông tin nhà cung cấp");
         setSize(540,440);

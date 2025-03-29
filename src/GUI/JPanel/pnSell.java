@@ -1,6 +1,8 @@
-package GUI;
+package GUI.JPanel;
 
-import Components.*;
+import Components.MyColor;
+import Components.MyJButton;
+import Components.MyJLabel;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -8,8 +10,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-public class pnImport extends JPanel{
-    //JButton button = new MyJButton(Font.PLAIN, 16, "#000000", "#FFFFFF", "#FFFFFF", "Nhập hàng", SwingConstants.CENTER, SwingConstants.CENTER);
+public class pnSell extends JPanel {
     DefaultTableModel model = new DefaultTableModel();
     DefaultTableModel model1 = new DefaultTableModel();
     JButton btnRefresh = new MyJButton(Font.PLAIN, 16, MyColor.Black, MyColor.White, MyColor.White, "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
@@ -18,7 +19,6 @@ public class pnImport extends JPanel{
     JButton btnEdit = new MyJButton(Font.PLAIN, 16, MyColor.Black, MyColor.White, MyColor.LightGray, "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
     JLabel lbID = new MyJLabel(Font.PLAIN,12,MyColor.Black,"Mã phiếu nhập",SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbCreate = new MyJLabel(Font.PLAIN,12,MyColor.Black,"Người tạo phiếu",SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbSupply = new MyJLabel(Font.PLAIN,12,MyColor.Black,"Nhà cung cấp",SwingConstants.LEFT, SwingConstants.CENTER);
     JPanel panel1 = new JPanel();
     JPanel panel2 = new JPanel();
     JPanel tablePanel = new JPanel();
@@ -29,21 +29,18 @@ public class pnImport extends JPanel{
     JTextField txtID = new JTextField();
     JTextField txtCreate = new JTextField();
     JTextField txtQuantity = new JTextField();
-    JComboBox cboSupplier = new JComboBox<>();
+
     JTable tbProduct;
     JTable tbImport;
     JPanel totalPanel = new JPanel();
     JLabel lbTotal = new MyJLabel(Font.BOLD, 16, Color.decode("#000000"), "Tổng tiền", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbAmount = new MyJLabel(Font.PLAIN, 16, Color.decode("#000000"), "1.000.000đ", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbQuantity = new MyJLabel(Font.PLAIN, 16, Color.decode("#000000"), "Số lượng", SwingConstants.LEFT, SwingConstants.CENTER);
-    JButton btnImport = new MyJButton(Font.PLAIN, 16, Color.decode("#FFFFFF"), Color.decode("#64a15c"), Color.decode("#00CC00"), "Nhập hàng", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnExport = new MyJButton(Font.PLAIN, 16, Color.decode("#FFFFFF"), Color.decode("#64a15c"), Color.decode("#00CC00"), "Xuất hàng", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnAdd = new MyJButton(Font.PLAIN, 16, Color.decode("#FFFFFF"), Color.decode("#64a15c"), Color.decode("#00CC00"), "Thêm", SwingConstants.CENTER, SwingConstants.CENTER);
 
 
-
-
-
-    public pnImport() {
+    public pnSell() {
         setLayout(null);
         setBackground(Color.decode("#FFFFFF"));
         Border border = BorderFactory.createLineBorder(Color.gray,1);
@@ -63,7 +60,6 @@ public class pnImport extends JPanel{
         panel2.setLayout(new GridLayout(3,2,10,10));
         panel2.add(lbID); panel2.add(txtID);
         panel2.add(lbCreate); panel2.add(txtCreate);
-        panel2.add(lbSupply); panel2.add(cboSupplier);
         panel2.setBounds(490,10,430,100);
 
         String[] columns = {"Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn giá"};
@@ -92,8 +88,8 @@ public class pnImport extends JPanel{
         tbImport.setDefaultRenderer(Object.class, centerRenderer);
         tablePanel1.setLayout(new GridLayout(1,1));
         tablePanel1.add(scrollPane1);
-        tablePanel1.setBounds(480,150,480,430);
-    //-----------Button chức năng-----------------
+        tablePanel1.setBounds(480,110,480,470);
+        //-----------Button chức năng-----------------
         buttonPanel.setBackground(Color.decode("#FFFFFF"));
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         buttonPanel.setBounds(480, 590, 480, 50);
@@ -109,7 +105,7 @@ public class pnImport extends JPanel{
         buttonPanel.add(btnDelete);
         buttonPanel.add(btnEdit);
 
-    //----Xuất hàng---------
+        //----Xuất hàng---------
         totalPanel.setLayout(null);
         totalPanel.setBackground(Color.decode("#FFFFFF"));
         totalPanel.setBounds(480, 660, 480, 60);
@@ -120,9 +116,9 @@ public class pnImport extends JPanel{
         lbAmount.setBounds(180, 15, 100, 30);
         totalPanel.add(lbAmount);
 
-       // btnExport.setBorder(BorderFactory.createLineBorder(Color.decode("#00CC00"), 1));
-        btnImport.setBounds(310, 15, 120, 30);
-        totalPanel.add(btnImport);
+        // btnExport.setBorder(BorderFactory.createLineBorder(Color.decode("#00CC00"), 1));
+        btnExport.setBounds(310, 15, 120, 30);
+        totalPanel.add(btnExport);
 
         //----Số lượng---------
         quantityPanel.setLayout(null);
@@ -152,6 +148,5 @@ public class pnImport extends JPanel{
         add(txtSearch);
         add(panel1);
         add(panel2);
-
     }
 }

@@ -1,4 +1,4 @@
-package GUI;
+package GUI.JPanel;
 
 import Components.MyJTable;
 import javax.swing.*;

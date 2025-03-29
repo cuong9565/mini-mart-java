@@ -1,12 +1,14 @@
-package GUI;
+package GUI.JFrame;
 import Components.*;
+import GUI.JDialog.dlSettingAccount;
+import GUI.JPanel.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 
-public class Manage extends JFrame {
+public class fManage extends JFrame {
     JPanel pnLeft = new MyJPanel(MyColor.White);
     JPanel pnRight = new MyJPanel(MyColor.LightGray);
     JPanel pnNav = new MyJPanel(MyColor.White);
@@ -27,11 +29,11 @@ public class Manage extends JFrame {
     JButton[] lsBtn = new JButton[]{btnStatistic, btnImport, btnSell, btnProduct, btnTypeProduct, btnCustomer, btnBill, btnDiscount, btnStaff, btnSupplier};
 
     int currCursor = 0;
-    Manage currFrame = this;
+    fManage currFrame = this;
 
     JPanel[] lsPn = new JPanel[]{new pnStatistic(), new pnImport(), new pnSell(), new pnProduct(), new pnTypeProduct(), new pnCustomer(), new pnBill(), new pnDiscount(), new pnStaff(), new pnSupplier(currFrame)};
 
-    public Manage(LoginForm loginForm) {
+    public fManage(fLogin loginForm) {
         setTitle("Phần mềm quản lý siêu thị mini");
         setSize(1200, 800);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -75,7 +77,7 @@ public class Manage extends JFrame {
 
         btnSettingAccount.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new SettingAccountFrame(currFrame);
+                new dlSettingAccount(currFrame);
             }
         });
 
@@ -88,45 +90,45 @@ public class Manage extends JFrame {
         // endregion
 
         // region Add
-            // add pnMenu
-            for(JPanel jPanel : lsPn) pnMenu.add(jPanel);
+        // add pnMenu
+        for(JPanel jPanel : lsPn) pnMenu.add(jPanel);
 
-            // add pnNav
-            for(int i=0; i<lsBtn.length; i++){
-                final int I = i;
-                lsBtn[i].addMouseListener(new MouseAdapter() {
-                    public void mouseEntered(MouseEvent e) {
-                        lsBtn[I].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                        lsBtn[I].setBackground(MyColor.HoverBlue);
-                    }
-                    public void mouseExited(MouseEvent e) {
-                        lsBtn[I].setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-                        if(I==currCursor) lsBtn[I].setBackground(MyColor.HoverBlue);
-                        else lsBtn[I].setBackground(MyColor.White);
-                    }
-                });
-                lsBtn[i].addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        lsBtn[currCursor].setBackground(MyColor.White);
-                        lsPn[currCursor].setVisible(false);
-                        currCursor = I;
-                        lsBtn[currCursor].setBackground(MyColor.HoverBlue);
-                        lsPn[currCursor].setVisible(true);
-                    }
-                });
-                pnNav.add(lsBtn[i]);
-            }
-            lsBtn[0].doClick();
+        // add pnNav
+        for(int i=0; i<lsBtn.length; i++){
+            final int I = i;
+            lsBtn[i].addMouseListener(new MouseAdapter() {
+                public void mouseEntered(MouseEvent e) {
+                    lsBtn[I].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                    lsBtn[I].setBackground(MyColor.HoverBlue);
+                }
+                public void mouseExited(MouseEvent e) {
+                    lsBtn[I].setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                    if(I==currCursor) lsBtn[I].setBackground(MyColor.HoverBlue);
+                    else lsBtn[I].setBackground(MyColor.White);
+                }
+            });
+            lsBtn[i].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    lsBtn[currCursor].setBackground(MyColor.White);
+                    lsPn[currCursor].setVisible(false);
+                    currCursor = I;
+                    lsBtn[currCursor].setBackground(MyColor.HoverBlue);
+                    lsPn[currCursor].setVisible(true);
+                }
+            });
+            pnNav.add(lsBtn[i]);
+        }
+        lsBtn[0].doClick();
 
 
-            // add Frame
-            add(lbWelcome);
-            add(btnSettingAccount);
-            add(btnLogout);
-            add(pnNav);
-            add(pnMenu);
-            add(pnLeft);
-            add(pnRight);
+        // add Frame
+        add(lbWelcome);
+        add(btnSettingAccount);
+        add(btnLogout);
+        add(pnNav);
+        add(pnMenu);
+        add(pnLeft);
+        add(pnRight);
         // endregion
 
         setVisible(true);

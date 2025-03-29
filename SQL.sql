@@ -155,13 +155,7 @@ CREATE TABLE BillInfo (
  ('Hòa Phát', '02462848866', '39 Nguyễn Đình Chiểu, Hai Bà Trưng, Hà Nội', 'contact@hoaphat.com.vn'),
  ('Sanaky Việt Nam', '02838569999', '48/9B Xa Lộ Hà Nội, Q.9, TP. HCM', 'support@sanaky.vn');
  
- -- ---------------- SELECT -----------
- select * from Provider;
- 
- -- ------------------------------------
- -- drop database mini_mart_java
-     
- -- Staff
+ -- -------------------------------------- Phu ---------------------------------------------------------
  INSERT INTO staff (phone, password, firstName, lastName, address, salary, type, status, gender)
  VALUES
  ('0955112233', 'securepass', 'Phu', 'Ng', 'Nha Trang', 19000000, 'Quản lý', 'Active', 'Nam'),
@@ -174,4 +168,11 @@ CREATE TABLE BillInfo (
  ('0922110099', 'abcd1234', 'Duc', 'Dang', 'Vũng Tàu', 20000000, 'Quản lý', 'Inactive', 'Nam'),
  ('0911009988', 'staffpass', 'Hoa', 'Ly', 'Biên Hòa', 17000000, 'Nhân viên', 'Active', 'Nữ'),
  ('0900998877', 'newpass', 'Tuan', 'Ho', 'Quảng Ninh', 19500000, 'Quản lý', 'Active', 'Nam');
+
+ -- ---------------- SELECT -----------
+ select * from Provider;
+
+ -- ------------------------------------
+ -- drop database mini_mart_java
+
 
