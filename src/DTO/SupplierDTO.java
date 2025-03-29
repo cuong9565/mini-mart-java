@@ -7,6 +7,13 @@ public class SupplierDTO {
     private int id;
     private String name, phone, address, email;
     public SupplierDTO() {}
+    public SupplierDTO(Object[] obj) {
+        this.id = (int) obj[0];
+        this.name = (String) obj[1];
+        this.phone =  (String) obj[2];
+        this.address = (String) obj[3];
+        this.email = (String) obj[4];
+    }
     public SupplierDTO(int id, String name, String phone, String address, String email) {
         this.id = id;
         this.name = name;

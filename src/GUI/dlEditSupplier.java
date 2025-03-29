@@ -5,18 +5,13 @@ import Components.*;
 import DTO.SupplierDTO;
 
 import javax.swing.*;
-import javax.swing.border.MatteBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
-public class dlAddSupplier extends JDialog {
+public class dlEditSupplier extends JDialog {
     JPanel pnMain = new MyJPanel(MyColor.White);
-    JLabel lbHeader = new MyJLabel(Font.BOLD, 24, MyColor.White, "Thêm nhà cung cấp", SwingConstants.CENTER, SwingConstants.CENTER);
+    JLabel lbHeader = new MyJLabel(Font.BOLD, 24, MyColor.White, "Thay đổi thông tin nhà cung cấp", SwingConstants.CENTER, SwingConstants.CENTER);
     JLabel lbName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Tên nhà cung cấp*", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbPhone = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Số điện thoại*", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbAddress = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Địa chỉ*", SwingConstants.LEFT, SwingConstants.CENTER);
@@ -32,9 +27,9 @@ public class dlAddSupplier extends JDialog {
 
     JDialog dialog = this;
 
-    public dlAddSupplier(Manage parentFrame, pnSupplier parentPanel) {
+    public dlEditSupplier(Manage parentFrame, pnSupplier parentPanel, SupplierDTO supplier) {
         super(parentFrame,true);
-        setTitle("Thêm nhà cung cấp");
+        setTitle("Thay đổi thông tin nhà cung cấp");
         setSize(540,440);
         setLayout(null);
         setLocationRelativeTo(null);
@@ -56,7 +51,12 @@ public class dlAddSupplier extends JDialog {
         lbHeader.setBackground(MyColor.DarkBlue);
         lbHeader.setBounds(0,0,540,60);
         // endregion
-
+        // region setText
+        tfName.setText(supplier.getName());
+        tfPhone.setText(supplier.getPhone());
+        tfAddress.setText(supplier.getAddress());
+        tfEmail.setText(supplier.getEmail());
+        // endregion
         // region Event
         btnEsc.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -65,11 +65,11 @@ public class dlAddSupplier extends JDialog {
         });
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                SupplierDTO supplier = new SupplierDTO(-1, tfName.getText(), tfPhone.getText(), tfAddress.getText(), tfEmail.getText());
-                boolean check = SupplierBUS.getInstance().addProvider(supplier);
+                SupplierDTO supplierNew = new SupplierDTO(supplier.getId(), tfName.getText(), tfPhone.getText(), tfAddress.getText(), tfEmail.getText());
+                boolean check = SupplierBUS.getInstance().editSupplier(supplierNew);
 
                 if(check){
-                    JOptionPane.showMessageDialog(dialog, "Thêm thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(dialog, "Thay đổi thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     parentPanel.loadSupplier();
                     dialog.dispose();
                 }

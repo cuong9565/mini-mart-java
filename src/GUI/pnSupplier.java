@@ -55,6 +55,33 @@ public class pnSupplier extends JPanel {
                 new dlAddSupplier(frame, thisPanel);
             }
         });
+        btnEdit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int i = tbSupplier.getSelectedRow();
+                if (i >=0){
+                    SupplierDTO supplier = new SupplierDTO(tbSupplier.getRowObject(i));
+                    new dlEditSupplier(frame, thisPanel, supplier);
+                }
+                else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin dòng cần sửa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        btnDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int i = tbSupplier.getSelectedRow();
+                if (i >=0){
+                    SupplierDTO supplierNew = new SupplierDTO(tbSupplier.getRowObject(i));
+                    if(SupplierBUS.getInstance().deleteSupplier(supplierNew)){
+                        JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        loadSupplier();
+                    }
+                    else JOptionPane.showMessageDialog(thisPanel, SupplierBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
+                }
+                else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin dòng cần xóa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
         // endregion
 
         loadSupplier();

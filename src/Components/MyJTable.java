@@ -36,4 +36,11 @@ public class MyJTable extends JTable {
     public void addRow(Object[] rows) {
         dftbModel.addRow(rows);
     }
+    public Object[] getRowObject(int row) {
+        Object[] rowObjects = new Object[dftbModel.getColumnCount()];
+        for(int i = 0; i < dftbModel.getColumnCount(); i++) {
+            rowObjects[i] = dftbModel.getValueAt(row, i);
+        }
+        return rowObjects;
+    }
 }

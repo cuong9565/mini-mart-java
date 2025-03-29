@@ -43,5 +43,42 @@ public class SupplierBUS {
         return false;
     }
 
+    public boolean editSupplier(SupplierDTO supplier) {
+        if(supplier.getName().isEmpty() || supplier.getPhone().isEmpty() || supplier.getAddress().isEmpty() || supplier.getEmail().isEmpty()) {
+            error = "Không được để trống thông tin!";
+            return false;
+        }
+        if(!supplier.getPhone().matches("^0[0-9]{8,10}$")){
+            error = "Số điện thoại không hợp lệ!";
+            return false;
+        }
+        if(!supplier.getEmail().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")){
+            error = "Email không hợp lệ!";
+            return false;
+        }
+        try{
+            if(SupplierDAO.getInstance().editSupplier(supplier)){
+                return true;
+            }
+        }catch (Exception e){
+            error = e.getMessage();
+            return false;
+        }
+        return false;
+    }
+
+    public boolean deleteSupplier(SupplierDTO supplier) {
+        try{
+            if(SupplierDAO.getInstance().deleteSupplier(supplier)){
+                return true;
+            }
+        }
+        catch (Exception e){
+            error = e.getMessage();
+            return false;
+        }
+        return false;
+    }
+
     public String getError(){return error;}
 }
