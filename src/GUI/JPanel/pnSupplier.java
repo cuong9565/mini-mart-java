@@ -8,9 +8,13 @@ import GUI.JDialog.dlEditSupplier;
 import GUI.JFrame.fManage;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class pnSupplier extends JPanel {
     JPanel pnHeader = new MyJPanel(MyColor.White);
@@ -24,11 +28,14 @@ public class pnSupplier extends JPanel {
     JButton btnOut = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Xuất<br>Exel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
-    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Tất cả", "Mã số", "Tên", "Số điện thoại", "Địa chỉ", "Email"}, 12);
+    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Tên", "Mã số", "Số điện thoại", "Địa chỉ", "Email"}, 12);
 
     MyJTable tbSupplier = new MyJTable(new String[]{"Mã số", "Tên", "Số điện thoại", "Địa chỉ", "Email"});
 
     pnSupplier thisPanel = this;
+    int posSelectedCB = 0;
+
+    String[] lsCombobox = {"name", "id", "phone", "address", "email"};
 
     public pnSupplier(fManage frame) {
         setLayout(null);
@@ -66,7 +73,7 @@ public class pnSupplier extends JPanel {
                     SupplierDTO supplier = new SupplierDTO(tbSupplier.getRowObject(i));
                     new dlEditSupplier(frame, thisPanel, supplier);
                 }
-                else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin dòng cần sửa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần sửa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
             }
         });
         btnDelete.addActionListener(new ActionListener() {
@@ -81,14 +88,37 @@ public class pnSupplier extends JPanel {
                     }
                     else JOptionPane.showMessageDialog(thisPanel, SupplierBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
                 }
-                else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin dòng cần xóa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xóa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
             }
         });
-
+        btnRefresh.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tfSearch.setText("");
+                cbSearch.setSelectedIndex(0);
+                loadSupplier();
+            }
+        });
+        cbSearch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int i = cbSearch.getSelectedIndex();
+                if(posSelectedCB !=i){
+                    posSelectedCB = i;
+                    tfSearch.setText("");
+                }
+            }
+        });
+        tfSearch.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) {loadSupplier();}
+            public void removeUpdate(DocumentEvent e) {loadSupplier();}
+            public void changedUpdate(DocumentEvent e) {loadSupplier();}
+        });
         // endregion
 
         loadSupplier();
 
+        // region add
         add(btnAdd);
         add(btnEdit);
         add(btnDelete);
@@ -104,11 +134,15 @@ public class pnSupplier extends JPanel {
 
         add(tbSupplier.scrPn);
         add(pnFooter);
+        // endregion
+
     }
 
     public void loadSupplier()  {
+        int i = posSelectedCB;
+        String whr = lsCombobox[i];
         tbSupplier.dftbModel.setRowCount(0);
-        for(SupplierDTO provider: SupplierBUS.getInstance().getListSupplier())
-            tbSupplier.addRow(provider.getObjects());
+        for(SupplierDTO supplier: SupplierBUS.getInstance().getListSupplierBy(whr, tfSearch.getText()))
+            tbSupplier.addRow(supplier.getObjects());
     }
 }

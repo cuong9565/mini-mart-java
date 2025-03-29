@@ -33,6 +33,22 @@ public class SupplierDAO {
         return list;
     }
 
+    public List<SupplierDTO> getListSupplierBy(String whr, String str) {
+        List<SupplierDTO> list = new ArrayList<>();
+        String sql = String.format("select * from provider where %s like ?", whr);
+        Connection con = DataProvider.getInstance().getConnection();
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + str + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) list.add(new SupplierDTO(rs));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return list;
+    }
+
     public boolean addSupplier(SupplierDTO supplier) throws Exception {
         int res = 0;
         String sql = "insert into Provider(name, phone, address, email) values(?, ?, ?, ?)";

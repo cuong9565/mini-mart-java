@@ -4,39 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong">
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong Big Update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$4.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JFrame/fManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JFrame/fManage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/LoginForm.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Manage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/SettingAccountFrame.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/dlAddSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddSupplier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/dlEditSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditSupplier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/pnBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnBill.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/pnChangeInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnChangeInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/pnChangePassword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnChangePassword.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/pnCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnCustomer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/pnDiscount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnDiscount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/pnImport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnImport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/pnProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/pnSell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnSell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/pnStaff.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStaff.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/pnStatistic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStatistic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/pnSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnSupplier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/pnTypeProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnTypeProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/SupplierBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/SupplierBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/MyJTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/SupplierDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/SupplierDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnSupplier.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,30 +54,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.FixBug.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Manage.executor&quot;: &quot;Run&quot;,
-    &quot;Application.demo.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;ShowUsagesActions.previewPropertyKey&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/mini-mart-java/mysql-connector-j-9.1.0/mysql-connector-j-9.1.0.jar&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.folding&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.FixBug.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.Manage.executor": "Run",
+    "Application.demo.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ShowUsagesActions.previewPropertyKey": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/mini-mart-java/mysql-connector-j-9.1.0/mysql-connector-j-9.1.0.jar",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "editor.preferences.folding",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\mini-mart-java\src\lib" />
@@ -541,7 +515,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743217625821</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="Cuong Big Update">
+      <option name="closed" value="true" />
+      <created>1743249640722</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1743249640722</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -573,6 +555,7 @@
     <MESSAGE value="Cuong update" />
     <MESSAGE value="Cuong insert lib" />
     <MESSAGE value="Cuong" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cuong" />
+    <MESSAGE value="Cuong Big Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cuong Big Update" />
   </component>
 </project>

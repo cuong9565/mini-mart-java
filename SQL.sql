@@ -170,7 +170,9 @@ CREATE TABLE BillInfo (
  ('0900998877', 'newpass', 'Tuan', 'Ho', 'Quảng Ninh', 19500000, 'Quản lý', 'Active', 'Nam');
 
  -- ---------------- SELECT -----------
+ use mini_mart_java;
  select * from Provider;
+ select * from provider where name like '%ệ%';
 
  -- ------------------------------------
  -- drop database mini_mart_java

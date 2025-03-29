@@ -18,18 +18,18 @@ public class MyJTable extends JTable {
         setModel(dftbModel);
 
         // Set cho header
-        getTableHeader().setFont(new Font("Roboto", Font.BOLD, 14));
-        getTableHeader().setBackground(MyColor.HoverBlue);
-        getTableHeader().setForeground(MyColor.Black);
+        getTableHeader().setFont(new Font("Roboto", Font.BOLD, 16));
+        getTableHeader().setBackground(MyColor.UnderLineBlue);
+        getTableHeader().setForeground(MyColor.White);
         getTableHeader().setReorderingAllowed(false);
         getTableHeader().setBorder(null);
-        getTableHeader().setPreferredSize(new Dimension(this.getTableHeader().getWidth(), 30));
+        getTableHeader().setPreferredSize(new Dimension(this.getTableHeader().getWidth(), 33));
 
         // Set cho content
-        setFont(new Font("Roboto", Font.PLAIN, 12));
+        setFont(new Font("Roboto", Font.PLAIN, 14));
         setBackground(MyColor.White);
         setForeground(MyColor.Black);
-        setRowHeight(20);
+        setRowHeight(23);
 
         scrPn = new JScrollPane(this);
     }
