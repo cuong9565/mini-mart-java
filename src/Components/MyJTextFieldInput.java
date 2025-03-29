@@ -29,7 +29,7 @@ public class MyJTextFieldInput extends JTextField {
                 setCaretPosition(0);
                 setBorder(BorderFactory.createCompoundBorder(
                         BorderFactory.createLineBorder(Color.decode("#000000")),
-                        new EmptyBorder(5, 5, 5, 5)
+                        new EmptyBorder(0, 5, 0, 5)
                 ));
             }
         });
