@@ -1,6 +1,8 @@
 package GUI;
 
+import BUS.SupplierBUS;
 import Components.*;
+import DTO.SupplierDTO;
 
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
@@ -15,10 +17,10 @@ import java.awt.event.WindowEvent;
 public class dlAddSupplier extends JDialog {
     JPanel pnMain = new MyJPanel(MyColor.White);
     JLabel lbHeader = new MyJLabel(Font.BOLD, 24, MyColor.White, "Thêm nhà cung cấp", SwingConstants.CENTER, SwingConstants.CENTER);
-    JLabel lbName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Tên nhà cung cấp", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbPhone = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Số điện thoại", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbAddress = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Địa chỉ", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbEmail = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Email", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Tên nhà cung cấp*", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbPhone = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Số điện thoại*", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbAddress = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Địa chỉ*", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbEmail = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Email*", SwingConstants.LEFT, SwingConstants.CENTER);
 
     JTextField tfName = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JTextField tfPhone = new MyJTextFieldInput(Font.PLAIN, 14, true);
@@ -30,7 +32,7 @@ public class dlAddSupplier extends JDialog {
 
     JDialog dialog = this;
 
-    public dlAddSupplier(Manage parentFrame) {
+    public dlAddSupplier(Manage parentFrame, pnSupplier parentPanel) {
         super(parentFrame,true);
         setTitle("Thêm nhà cung cấp");
         setSize(540,440);
@@ -63,12 +65,15 @@ public class dlAddSupplier extends JDialog {
         });
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                boolean check = true;
+                SupplierDTO supplier = new SupplierDTO(-1, tfName.getText(), tfPhone.getText(), tfAddress.getText(), tfEmail.getText());
+                boolean check = SupplierBUS.getInstance().addProvider(supplier);
 
                 if(check){
                     JOptionPane.showMessageDialog(dialog, "Thêm thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    parentPanel.loadSupplier();
                     dialog.dispose();
                 }
+                else JOptionPane.showMessageDialog(dialog, SupplierBUS.getInstance().getError(), "Thông báo", JOptionPane.WARNING_MESSAGE);
             }
         });
         // endregion11

@@ -25,6 +25,8 @@ public class pnSupplier extends JPanel {
 
     MyJTable tbSupplier = new MyJTable(new String[]{"Mã số", "Tên", "Số điện thoại", "Địa chỉ", "Email"});
 
+    pnSupplier thisPanel = this;
+
     public pnSupplier(Manage frame) {
         setLayout(null);
         setBackground(MyColor.LightGray);
@@ -50,7 +52,7 @@ public class pnSupplier extends JPanel {
         btnAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new dlAddSupplier(frame);
+                new dlAddSupplier(frame, thisPanel);
             }
         });
         // endregion
@@ -75,6 +77,7 @@ public class pnSupplier extends JPanel {
     }
 
     public void loadSupplier()  {
+        tbSupplier.dftbModel.setRowCount(0);
         for(SupplierDTO provider: SupplierBUS.getInstance().getListSupplier())
             tbSupplier.addRow(provider.getObjects());
     }

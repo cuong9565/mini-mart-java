@@ -32,4 +32,27 @@ public class SupplierDAO {
         DataProvider.getInstance().CloseConnection(con);
         return list;
     }
+
+    public boolean addSupplier(SupplierDTO supplier) throws Exception {
+        int res = 0;
+        String sql = "insert into Provider(name, phone, address, email) values(?, ?, ?, ?)";
+        try {
+            Connection con = DataProvider.getInstance().getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, supplier.getName());
+            ps.setString(2, supplier.getPhone());
+            ps.setString(3, supplier.getAddress());
+            ps.setString(4, supplier.getEmail());
+            res = ps.executeUpdate();
+            DataProvider.getInstance().CloseConnection(con);
+        }
+        catch (Exception e) {
+            throw new Exception("Lỗi SQL: " + e.getMessage());
+        }
+
+        if(res>0) return true;
+        else {
+            throw new Exception("Không thể thêm nhà cung cấp!");
+        }
+    }
 }

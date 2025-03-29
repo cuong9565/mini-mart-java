@@ -6,10 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/ProviderBUS.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/ProviderDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DTO/ProviderDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Manage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Manage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/SupplierBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/SupplierBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/MyJTextFieldInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJTextFieldInput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/SupplierDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/SupplierDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/dlAddSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/dlAddSupplier.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/pnSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/pnSupplier.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -152,7 +152,7 @@
       <workItem from="1743165785811" duration="658000" />
       <workItem from="1743169238790" duration="2901000" />
       <workItem from="1743172178240" duration="6126000" />
-      <workItem from="1743207858240" duration="5735000" />
+      <workItem from="1743207858240" duration="9296000" />
     </task>
     <task id="LOCAL-00001" summary="Cuong update Login Form">
       <option name="closed" value="true" />
@@ -474,7 +474,23 @@
       <option name="project" value="LOCAL" />
       <updated>1743178647766</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="Cuong">
+      <option name="closed" value="true" />
+      <created>1743213833565</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1743213833565</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Cuong">
+      <option name="closed" value="true" />
+      <created>1743213849517</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1743213849517</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

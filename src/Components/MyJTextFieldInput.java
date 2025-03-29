@@ -15,14 +15,14 @@ public class MyJTextFieldInput extends JTextField {
 
         setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.decode("#000000")),
-                new EmptyBorder(5, 5, 5, 5)
+                new EmptyBorder(0, 5, 5, 0)
         ));
 
         addFocusListener(new FocusAdapter() {
             public void focusGained(FocusEvent e) {
                 setBorder(BorderFactory.createCompoundBorder(
                         BorderFactory.createLineBorder(Color.decode("#4A90E2"), 2),
-                        new EmptyBorder(5, 5, 5, 5)
+                        new EmptyBorder(0, 5, 0, 5)
                 ));
             }
             public void focusLost(FocusEvent e) {
