@@ -2,6 +2,7 @@ package DTO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -28,7 +29,9 @@ public class connect_data {
 
     private void connect() {
         try {
+
             Class.forName("com.mysql.cj.jdbc.Driver");
+
             conn = DriverManager.getConnection(url, username, password);
             System.out.println("Kết nối cơ sở dữ liệu thành công!");
         } catch (ClassNotFoundException e) {
@@ -38,7 +41,6 @@ public class connect_data {
         }
     }
 
-    // Phương thức thực thi câu truy vấn SELECT
     public ResultSet executeQuery(String query) {
         ResultSet rs = null;
         try {
@@ -51,7 +53,37 @@ public class connect_data {
     }
 
 
-    // Phương thức đóng kết nối
+    public int executeUpdate(String query, Object... params) {
+        int rowsAffected = 0;
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            for (int i = 0; i < params.length; i++) {
+                pstmt.setObject(i + 1, params[i]);
+            }
+            rowsAffected = pstmt.executeUpdate();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.out.println("Lỗi khi thực thi câu truy vấn: " + e.getMessage());
+        }
+        return rowsAffected;
+    }
+
+    public ResultSet executeQueryWithParams(String query, Object... params) {
+        ResultSet rs = null;
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+
+            for (int i = 0; i < params.length; i++) {
+                pstmt.setObject(i + 1, params[i]);
+            }
+            rs = pstmt.executeQuery();
+        } catch (SQLException e) {
+            System.out.println("Lỗi khi thực thi câu truy vấn: " + e.getMessage());
+        }
+        return rs;
+    }
+
+
     public void closeConnection() {
         try {
             if (conn != null && !conn.isClosed()) {
