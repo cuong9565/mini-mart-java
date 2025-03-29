@@ -1,16 +1,13 @@
 package GUI;
 
-import BUS.ProviderBUS;
+import BUS.SupplierBUS;
 import Components.*;
-import DAO.ProviderDAO;
 import DTO.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.*;
-
 
 public class pnSupplier extends JPanel {
     JPanel pnHeader = new MyJPanel(MyColor.White);
@@ -24,11 +21,11 @@ public class pnSupplier extends JPanel {
     JButton btnOut = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Xuất<br>Exel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
-    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Tất cả", "1", "2", "3", "4", "5"}, 12);
+    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Tất cả", "Mã số", "Tên", "Số điện thoại", "Địa chỉ", "Email"}, 12);
 
     MyJTable tbSupplier = new MyJTable(new String[]{"Mã số", "Tên", "Số điện thoại", "Địa chỉ", "Email"});
 
-    public pnSupplier(JFrame frame) {
+    public pnSupplier(Manage frame) {
         setLayout(null);
         setBackground(MyColor.LightGray);
 
@@ -53,12 +50,12 @@ public class pnSupplier extends JPanel {
         btnAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                tbSupplier.addRow(new Object[]{"1", 2, "3", "4", "5"});
+                new dlAddSupplier(frame);
             }
         });
         // endregion
 
-        loadProvider();
+        loadSupplier();
 
         add(btnAdd);
         add(btnEdit);
@@ -77,9 +74,8 @@ public class pnSupplier extends JPanel {
         add(pnFooter);
     }
 
-    public void loadProvider()  {
-        for(ProviderDTO provider: ProviderBUS.getInstance().getListProvider()){
+    public void loadSupplier()  {
+        for(SupplierDTO provider: SupplierBUS.getInstance().getListSupplier())
             tbSupplier.addRow(provider.getObjects());
-        }
     }
 }
