@@ -6,12 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/SupplierBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/SupplierBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mini-mart-java.iml" beforeDir="false" afterPath="$PROJECT_DIR$/mini-mart-java.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/MyJTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/SupplierDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/SupplierDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DTO/SupplierDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/SupplierDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/dlAddSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/dlAddSupplier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/pnSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/pnSupplier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/pnBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/pnBill.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/pnDiscount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/pnDiscount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/pnStaff.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/pnStaff.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,9 +152,7 @@
       <workItem from="1743165635853" duration="137000" />
       <workItem from="1743165785811" duration="658000" />
       <workItem from="1743169238790" duration="2901000" />
-      <workItem from="1743172178240" duration="6126000" />
-      <workItem from="1743207858240" duration="9602000" />
-      <workItem from="1743218064872" duration="2870000" />
+      <workItem from="1743172178240" duration="5846000" />
     </task>
     <task id="LOCAL-00001" summary="Cuong update Login Form">
       <option name="closed" value="true" />
@@ -468,55 +466,7 @@
       <option name="project" value="LOCAL" />
       <updated>1743178131343</updated>
     </task>
-    <task id="LOCAL-00040" summary="Cuong">
-      <option name="closed" value="true" />
-      <created>1743178647766</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1743178647766</updated>
-    </task>
-    <task id="LOCAL-00041" summary="Cuong">
-      <option name="closed" value="true" />
-      <created>1743213833565</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1743213833565</updated>
-    </task>
-    <task id="LOCAL-00042" summary="Cuong">
-      <option name="closed" value="true" />
-      <created>1743213849517</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1743213849517</updated>
-    </task>
-    <task id="LOCAL-00043" summary="Cuong">
-      <option name="closed" value="true" />
-      <created>1743217481342</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1743217481342</updated>
-    </task>
-    <task id="LOCAL-00044" summary="Cuong">
-      <option name="closed" value="true" />
-      <created>1743217541074</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1743217541074</updated>
-    </task>
-    <task id="LOCAL-00045" summary="Cuong">
-      <option name="closed" value="true" />
-      <created>1743217625821</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1743217625821</updated>
-    </task>
-    <option name="localTasksCounter" value="46" />
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

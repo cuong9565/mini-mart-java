@@ -2,6 +2,7 @@ package GUI;
 
 import Components.MyColor;
 import Components.MyJButton;
+import Components.MyJTable;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -13,24 +14,24 @@ import java.awt.event.MouseEvent;
 import java.awt.Component;
 
 public class pnBill extends JPanel {
-    private DefaultTableModel model = new DefaultTableModel();
-    private JTable tbInvoice;
-    private JButton btnCancel = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
-    private JButton btnFind = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Tìm", SwingConstants.CENTER, SwingConstants.CENTER);
-    private JButton btnAdd = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Thêm", SwingConstants.CENTER, SwingConstants.CENTER);
-    private JButton btnEdit = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
-    private JButton btnReload = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Tải lại", SwingConstants.CENTER, SwingConstants.CENTER);
-    private JButton btnLoad = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Load", SwingConstants.CENTER, SwingConstants.CENTER);
-    JTextField txtFilter = new JTextField("Nhập nội dung");
+    private JTable tbInvoice = new  MyJTable(new String[]{"STT", "Mã HĐ", "ID Khách", "Khách hàng", "Ngày lập", "Tổng tiền", "Trạng thái", "Chi tiết"},
+            new Font("Roboto", Font.BOLD, 14),
+            new Color(159, 32, 243), // Màu chữ
+            new Color(159, 242, 115), // Màu nền header
+            new Color(255, 0, 239));
+    private JButton btnCancel = new MyJButton(Font.BOLD, 16, MyColor.White, new Color(220, 53, 69), new Color(255, 99, 132), "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
+    private JButton btnFind = new MyJButton(Font.BOLD, 16, MyColor.White, new Color(0, 123, 255), new Color(51, 153, 255), "Tìm", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnAdd = new MyJButton(Font.BOLD, 16, MyColor.White, new Color(40, 167, 69), new Color(72, 201, 95), "Thêm", SwingConstants.CENTER, SwingConstants.CENTER);
+    private JButton btnEdit = new MyJButton(Font.BOLD, 14, MyColor.White, new Color(108, 117, 125), new Color(150, 150, 150), "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
+    private JButton btnReload = new MyJButton(Font.BOLD, 14, MyColor.White, new Color(23, 162, 184), new Color(60, 179, 211), "Tải lại", SwingConstants.CENTER, SwingConstants.CENTER);
+    private JButton btnLoad = new MyJButton(Font.BOLD, 14, MyColor.White, new Color(23, 162, 184), new Color(60, 179, 211), "Load", SwingConstants.CENTER, SwingConstants.CENTER);
 
+    JTextField txtFilter = new JTextField("Nhập nội dung");
     // panel
-    JPanel panelFunction = new JPanel();  // them, sua, huy
-    JPanel panelFind = new JPanel();     // tim kiem, loc thong tin
+    JPanel panelFunction = new JPanel();
+    JPanel panelFind = new JPanel();
     JPanel panelHeader = new JPanel();
     JPanel panelDisplay = new JPanel();  // hien danh sach hoa don
-
-    // Dữ liệu gốc để tải lại
-    private Object[][] originalData;
 
     public pnBill() {
         setLayout(null);
@@ -62,15 +63,10 @@ public class pnBill extends JPanel {
         panelHeader.setLayout(new GridLayout(1, 2, 15, 25));
         panelHeader.setBounds(10, 54, 950, 80);
 
-        // panel display
-        String[] columns = {"STT", "Mã HĐ", "ID Khách", "Khách hàng", "Ngày lập", "Tổng tiền", "Trạng thái", "Chi tiết"};
-        model.setColumnIdentifiers(columns);
-        tbInvoice = new JTable(model) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return column == 7; // Chỉ cột "Chi tiết" có thể tương tác
-            }
-        };
+        tbInvoice.getTableHeader().setReorderingAllowed(false);
+        tbInvoice.setRowHeight(30);
+        tbInvoice.getTableHeader().setBackground(Color.cyan);
+        tbInvoice.getTableHeader().setFont(new Font("Arial",1,16));
         tbInvoice.getColumnModel().getColumn(7).setCellRenderer(new ButtonRenderer());
         tbInvoice.getColumnModel().getColumn(7).setCellEditor(new ButtonEditor(new JCheckBox()));
         JScrollPane scrollPane = new JScrollPane(tbInvoice);
@@ -80,169 +76,18 @@ public class pnBill extends JPanel {
         panelDisplay.setBounds(10, 170, 950, 550);
 
         add(panelHeader);
-        add(panelDisplay);
+       add(panelDisplay);
 
         // Sự kiện nhấp chuột cho txtFilter
         txtFilter.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1) { // Nhấp chuột trái
+                if (e.getButton() == MouseEvent.BUTTON1) { // chuột trái
                     txtFilter.setText("");
                 }
             }
         });
 
-        // Thêm sự kiện cho các button
-        btnAdd.addActionListener(e -> addInvoice());
-        btnEdit.addActionListener(e -> editInvoice());
-        btnCancel.addActionListener(e -> cancelInvoice());
-        btnFind.addActionListener(e -> findInvoice());
-        btnReload.addActionListener(e -> reloadData());
-        btnLoad.addActionListener(e -> loadOriginalData());
-        // Tải dữ liệu mẫu ban đầu
-        loadSampleData();
-    }
-
-    private void loadSampleData() {
-        originalData = new Object[][]{
-                {"HD001", "KH001", "Nguyễn Văn A", "2025-03-15", "1500000", "Hoàn thành"},
-                {"HD002", "KH002", "Trần Thị B", "2025-03-16", "2500000", "Đang xử lý"},
-                {"HD003", "KH003", "Lê Văn C", "2025-03-17", "800000", "Hoàn thành"},
-                {"HD004", "KH004", "Phạm Thị D", "2025-03-17", "1200000", "Đã hủy"},
-                {"HD005", "KH005", "Hoàng Văn E", "2025-03-18", "3000000", "Hoàn thành"}
-        };
-        updateTable(originalData);
-    }
-
-    private void updateTable(Object[][] data) {
-        model.setRowCount(0); // Xóa dữ liệu hiện tại
-        for (int i = 0; i < data.length; i++) {
-            Object[] row = new Object[8];
-            row[0] = String.valueOf(i + 1); // STT tự động tăng
-            System.arraycopy(data[i], 0, row, 1, data[i].length);
-            row[7] = "Xem"; // Nút trong cột Chi tiết
-            model.addRow(row);
-        }
-    }
-
-    private void addInvoice() {
-        JTextField[] fields = {
-                new JTextField(10), new JTextField(10), new JTextField(15),
-                new JTextField(15), new JTextField(15), new JTextField(15)
-        };
-        String[] labels = {"Mã HĐ", "ID Khách", "Khách hàng", "Ngày lập", "Tổng tiền", "Trạng thái"};
-
-        JPanel inputPanel = new JPanel(new GridLayout(6, 2, 10, 10));
-        for (int i = 0; i < labels.length; i++) {
-            inputPanel.add(new JLabel(labels[i] + ":"));
-            inputPanel.add(fields[i]);
-        }
-
-        int result = JOptionPane.showConfirmDialog(this, inputPanel, "Thêm hóa đơn mới",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-        if (result == JOptionPane.OK_OPTION) {
-            Object[] newRow = new Object[6];
-            for (int i = 0; i < fields.length; i++) {
-                newRow[i] = fields[i].getText();
-            }
-            Object[][] newData = new Object[originalData.length + 1][6];
-            System.arraycopy(originalData, 0, newData, 0, originalData.length);
-            newData[originalData.length] = newRow;
-            originalData = newData;
-            updateTable(originalData);
-        }
-    }
-
-    private void editInvoice() {
-        int selectedRow = tbInvoice.getSelectedRow();
-        if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn để sửa!",
-                    "Thông báo", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        JTextField[] fields = new JTextField[6];
-        String[] labels = {"Mã HĐ", "ID Khách", "Khách hàng", "Ngày lập", "Tổng tiền", "Trạng thái"};
-        for (int i = 0; i < 6; i++) {
-            fields[i] = new JTextField(model.getValueAt(selectedRow, i + 1).toString(), 15);
-        }
-
-        JPanel inputPanel = new JPanel(new GridLayout(6, 2, 10, 10));
-        for (int i = 0; i < labels.length; i++) {
-            inputPanel.add(new JLabel(labels[i] + ":"));
-            inputPanel.add(fields[i]);
-        }
-
-        int result = JOptionPane.showConfirmDialog(this, inputPanel, "Sửa thông tin hóa đơn",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-        if (result == JOptionPane.OK_OPTION) {
-            for (int i = 0; i < 6; i++) {
-                model.setValueAt(fields[i].getText(), selectedRow, i + 1);
-                originalData[selectedRow][i] = fields[i].getText();
-            }
-        }
-    }
-
-    private void cancelInvoice() {
-        int selectedRow = tbInvoice.getSelectedRow();
-        if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn để hủy!",
-                    "Thông báo", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        int confirm = JOptionPane.showConfirmDialog(this,
-                "Bạn có chắc muốn hủy hóa đơn này?", "Xác nhận hủy",
-                JOptionPane.YES_NO_OPTION);
-
-        if (confirm == JOptionPane.YES_OPTION) {
-            model.setValueAt("Đã hủy", selectedRow, 6); // Cột Trạng thái là cột 6
-            originalData[selectedRow][5] = "Đã hủy"; // Cột Trạng thái trong originalData
-            JOptionPane.showMessageDialog(this, "Đã hủy hóa đơn!",
-                    "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
-
-    private void findInvoice() {
-        String filterText = txtFilter.getText().trim().toLowerCase();
-        if (filterText.equals("Nhập nội dung") || filterText.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập nội dung tìm kiếm!",
-                    "Thông báo", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        Object[][] filteredData = new Object[originalData.length][];
-        int count = 0;
-        for (Object[] row : originalData) {
-            String customer = row[2].toString().toLowerCase(); // Khách hàng
-            String invoiceId = row[0].toString().toLowerCase(); // Mã HĐ
-            String customerId = row[1].toString().toLowerCase(); // ID Khách
-            if (customer.contains(filterText) || invoiceId.contains(filterText) || customerId.contains(filterText)) {
-                filteredData[count++] = row;
-            }
-        }
-
-        if (count == 0) {
-            JOptionPane.showMessageDialog(this, "Không tìm thấy hóa đơn!",
-                    "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-
-        Object[][] resultData = new Object[count][];
-        System.arraycopy(filteredData, 0, resultData, 0, count);
-        updateTable(resultData);
-    }
-
-    private void reloadData() {
-        updateTable(originalData);
-        txtFilter.setText("Nhập nội dung");
-    }
-
-    private void loadOriginalData() {
-        updateTable(originalData); // Tải lại danh sách ban đầu
-        txtFilter.setText("Nhập nội dung");
     }
 
     // Renderer cho nút "Xem chi tiết"
