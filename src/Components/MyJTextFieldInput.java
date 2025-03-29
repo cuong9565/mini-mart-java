@@ -15,7 +15,7 @@ public class MyJTextFieldInput extends JTextField {
 
         setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.decode("#000000")),
-                new EmptyBorder(0, 5, 5, 0)
+                new EmptyBorder(0, 5, 0, 5)
         ));
 
         addFocusListener(new FocusAdapter() {
