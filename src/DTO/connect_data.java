@@ -2,7 +2,6 @@ package DTO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -29,9 +28,7 @@ public class connect_data {
 
     private void connect() {
         try {
-            // Đăng ký driver JDBC (tùy thuộc vào phiên bản Java, bước này có thể không cần)
             Class.forName("com.mysql.cj.jdbc.Driver");
-            // Tạo kết nối
             conn = DriverManager.getConnection(url, username, password);
             System.out.println("Kết nối cơ sở dữ liệu thành công!");
         } catch (ClassNotFoundException e) {
@@ -53,38 +50,6 @@ public class connect_data {
         return rs;
     }
 
-    // Phương thức thực thi câu truy vấn INSERT, UPDATE, DELETE với PreparedStatement
-    public int executeUpdate(String query, Object... params) {
-        int rowsAffected = 0;
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            // Gán tham số cho câu truy vấn
-            for (int i = 0; i < params.length; i++) {
-                pstmt.setObject(i + 1, params[i]);
-            }
-            rowsAffected = pstmt.executeUpdate();
-            pstmt.close();
-        } catch (SQLException e) {
-            System.out.println("Lỗi khi thực thi câu truy vấn: " + e.getMessage());
-        }
-        return rowsAffected;
-    }
-
-    // Phương thức thực thi câu truy vấn SELECT với PreparedStatement
-    public ResultSet executeQueryWithParams(String query, Object... params) {
-        ResultSet rs = null;
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            // Gán tham số cho câu truy vấn
-            for (int i = 0; i < params.length; i++) {
-                pstmt.setObject(i + 1, params[i]);
-            }
-            rs = pstmt.executeQuery();
-        } catch (SQLException e) {
-            System.out.println("Lỗi khi thực thi câu truy vấn: " + e.getMessage());
-        }
-        return rs;
-    }
 
     // Phương thức đóng kết nối
     public void closeConnection() {
@@ -98,7 +63,6 @@ public class connect_data {
         }
     }
 
-    // Getter và Setter (nếu cần)
     public Connection getConnection() {
         return conn;
     }
