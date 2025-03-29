@@ -44,11 +44,11 @@ public class pnProduct extends JPanel {
         pnFooter.setBounds(0,100,970, 650);
         tbSupplier.scrPn.setBounds(0,100,970,650);
 
-        tbSupplier.addRow(new Object[]{"1", "SP001", "coca", "15.000 đ", "100"});
-        tbSupplier.addRow(new Object[]{"2", "SP002", "snack", "15.000 đ", "100"});
-        tbSupplier.addRow(new Object[]{"3", "SP003", "nước suối", "15.000 đ", "100"});
-        tbSupplier.addRow(new Object[]{"4", "SP004", "...", "15.000 đ", "100"});
-        tbSupplier.addRow(new Object[]{"5", "SP005", "...", "15.000 đ", "100"});
+        tbSupplier.dftbModel.addRow(new Object[]{"1", "SP001", "coca", "15.000 đ", "100"});
+        tbSupplier.dftbModel.addRow(new Object[]{"2", "SP002", "snack", "15.000 đ", "100"});
+        tbSupplier.dftbModel.addRow(new Object[]{"3", "SP003", "nước suối", "15.000 đ", "100"});
+        tbSupplier.dftbModel.addRow(new Object[]{"4", "SP004", "...", "15.000 đ", "100"});
+        tbSupplier.dftbModel.addRow(new Object[]{"5", "SP005", "...", "15.000 đ", "100"});
 
         add(btnAdd);
         add(btnEdit);

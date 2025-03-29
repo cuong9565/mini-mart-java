@@ -11,10 +11,7 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 
 public class pnSupplier extends JPanel {
     JPanel pnHeader = new MyJPanel(MyColor.White);
@@ -41,23 +38,29 @@ public class pnSupplier extends JPanel {
         setLayout(null);
         setBackground(MyColor.LightGray);
 
+        // region SET BOUNDS
         pnHeader.setBounds(0,0,970, 90);
-
         pnFunc.setBounds(0,0,370,90);
         btnAdd.setBounds(15,20,60,60);
         btnEdit.setBounds(85,20,60,60);
         btnDelete.setBounds(155,20,60,60);
         btnIn.setBounds(225,20,60,60);
         btnOut.setBounds(295,20,60,60);
-
         pnSearch.setBounds(470,0,500,90);
         cbSearch.setBounds(485, 30, 150, 30);
         tfSearch.setBounds(645, 30, 200, 30);
         btnRefresh.setBounds(855,30,100,30);
-
         pnFooter.setBounds(0,100,970, 650);
         tbSupplier.scrPn.setBounds(0,100,970,650);
-
+        // endregion
+        // region EVENT CHO PANEL NÀY
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                loadSupplier();
+            }
+        });
+        // endregion
         // region EVEN
         btnAdd.addActionListener(new ActionListener() {
             @Override
@@ -99,6 +102,12 @@ public class pnSupplier extends JPanel {
                 loadSupplier();
             }
         });
+        btnOut.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tbSupplier.ExportExel("Danh sách nhà cung cấp");
+            }
+        });
         cbSearch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -115,23 +124,18 @@ public class pnSupplier extends JPanel {
             public void changedUpdate(DocumentEvent e) {loadSupplier();}
         });
         // endregion
-
-        loadSupplier();
-
-        // region add
+        // region ADD
         add(btnAdd);
         add(btnEdit);
         add(btnDelete);
         add(btnIn);
         add(btnOut);
         add(pnFunc);
-
         add(btnRefresh);
         add(cbSearch);
         add(tfSearch);
         add(pnSearch);
         add(pnHeader);
-
         add(tbSupplier.scrPn);
         add(pnFooter);
         // endregion
@@ -143,6 +147,6 @@ public class pnSupplier extends JPanel {
         String whr = lsCombobox[i];
         tbSupplier.dftbModel.setRowCount(0);
         for(SupplierDTO supplier: SupplierBUS.getInstance().getListSupplierBy(whr, tfSearch.getText()))
-            tbSupplier.addRow(supplier.getObjects());
+            tbSupplier.dftbModel.addRow(supplier.getObjects());
     }
 }

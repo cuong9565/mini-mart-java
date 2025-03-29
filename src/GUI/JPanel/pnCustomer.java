@@ -44,11 +44,11 @@ public class pnCustomer extends JPanel {
         pnFooter.setBounds(0,100,970, 650);
         tbSupplier.scrPn.setBounds(0,100,970,650);
 
-        tbSupplier.addRow(new Object[]{"1", "KH001", "Nguyễn Văn A", "dd/mm/yyyy", "10"});
-        tbSupplier.addRow(new Object[]{"2", "KH002", "Nguyễn Văn B", "dd/mm/yyyy", "45"});
-        tbSupplier.addRow(new Object[]{"3", "KH004", "Nguyễn Văn C", "dd/mm/yyyy", "34"});
-        tbSupplier.addRow(new Object[]{"4", "KH004", "Nguyễn Văn D", "dd/mm/yyyy", "27"});
-        tbSupplier.addRow(new Object[]{"5", "KH005", "Nguyễn Văn E", "dd/mm/yyyy", "85"});
+        tbSupplier.dftbModel.addRow(new Object[]{"1", "KH001", "Nguyễn Văn A", "dd/mm/yyyy", "10"});
+        tbSupplier.dftbModel.addRow(new Object[]{"2", "KH002", "Nguyễn Văn B", "dd/mm/yyyy", "45"});
+        tbSupplier.dftbModel.addRow(new Object[]{"3", "KH004", "Nguyễn Văn C", "dd/mm/yyyy", "34"});
+        tbSupplier.dftbModel.addRow(new Object[]{"4", "KH004", "Nguyễn Văn D", "dd/mm/yyyy", "27"});
+        tbSupplier.dftbModel.addRow(new Object[]{"5", "KH005", "Nguyễn Văn E", "dd/mm/yyyy", "85"});
         add(btnAdd);
         add(btnEdit);
         add(btnDelete);
