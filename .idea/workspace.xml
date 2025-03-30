@@ -4,8 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Update offer SQL">
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/mysql_connector_j_9_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_j_9_1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/Staff_BUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/Staff_BUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/MyJTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/connect_data.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/connect_data.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddSupplier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnDiscount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnDiscount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStaff.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStaff.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -510,15 +518,7 @@
       <option name="project" value="LOCAL" />
       <updated>1743217625821</updated>
     </task>
-    <task id="LOCAL-00046" summary="Update offer SQL">
-      <option name="closed" value="true" />
-      <created>1743309925830</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1743309925830</updated>
-    </task>
-    <option name="localTasksCounter" value="47" />
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -550,8 +550,7 @@
     <MESSAGE value="Cuong update" />
     <MESSAGE value="Cuong insert lib" />
     <MESSAGE value="Cuong" />
-    <MESSAGE value="Update offer SQL" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update offer SQL" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cuong" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -40,6 +40,7 @@ public class MyJTable extends JTable {
         setBackground(MyColor.White);
         setForeground(MyColor.Black);
         setRowHeight(23);
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         scrPn = new JScrollPane(this);
     }
