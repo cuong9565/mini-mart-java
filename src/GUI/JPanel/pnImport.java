@@ -1,12 +1,13 @@
 package GUI.JPanel;
-
+import DAO.*;
 import Components.*;
-
+import DTO.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.List;
 
 public class pnImport extends JPanel{
     //JButton button = new MyJButton(Font.PLAIN, 16, "#000000", "#FFFFFF", "#FFFFFF", "Nhập hàng", SwingConstants.CENTER, SwingConstants.CENTER);
@@ -16,6 +17,7 @@ public class pnImport extends JPanel{
     JButton btnExportExcel = new MyJButton(Font.PLAIN, 16, MyColor.Black, MyColor.White, MyColor.LightGray, "Nhập Excel", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnDelete = new MyJButton(Font.PLAIN, 16, MyColor.Black, MyColor.White, MyColor.LightGray, "Xóa", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnEdit = new MyJButton(Font.PLAIN, 16, MyColor.Black, MyColor.White, MyColor.LightGray, "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnList = new MyJButton(Font.PLAIN, 16, MyColor.Black, MyColor.White, MyColor.LightGray, "Xem chi tiết", SwingConstants.CENTER, SwingConstants.CENTER);
     JLabel lbID = new MyJLabel(Font.PLAIN,12,MyColor.Black,"Mã phiếu nhập",SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbCreate = new MyJLabel(Font.PLAIN,12,MyColor.Black,"Người tạo phiếu",SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbSupply = new MyJLabel(Font.PLAIN,12,MyColor.Black,"Nhà cung cấp",SwingConstants.LEFT, SwingConstants.CENTER);
@@ -29,7 +31,7 @@ public class pnImport extends JPanel{
     JTextField txtID = new JTextField();
     JTextField txtCreate = new JTextField();
     JTextField txtQuantity = new JTextField();
-    JComboBox cboSupplier = new JComboBox<>();
+    JComboBox<Object> cboSupplier = new JComboBox<>();
     JTable tbProduct;
     JTable tbImport;
     JPanel totalPanel = new JPanel();
@@ -40,6 +42,14 @@ public class pnImport extends JPanel{
     JButton btnAdd = new MyJButton(Font.PLAIN, 16, Color.decode("#FFFFFF"), Color.decode("#64a15c"), Color.decode("#00CC00"), "Thêm", SwingConstants.CENTER, SwingConstants.CENTER);
 
 
+    private void loadSuppliers() {
+        List<SupplierDTO> suppliers = SupplierDAO.getInstance().getListSupplier();
+
+        cboSupplier.removeAllItems(); // Xóa dữ liệu cũ
+        for (SupplierDTO supplier : suppliers) {
+            cboSupplier.addItem(supplier.getId() + " - " + supplier.getName());
+        }
+    }
 
 
 
@@ -65,8 +75,9 @@ public class pnImport extends JPanel{
         panel2.add(lbCreate); panel2.add(txtCreate);
         panel2.add(lbSupply); panel2.add(cboSupplier);
         panel2.setBounds(490,10,430,100);
+        loadSuppliers();
 
-        String[] columns = {"Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn giá"};
+        String[] columns = {"Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn giá", "Đơn vị"};
         model.setColumnIdentifiers(columns);
         tbProduct = new JTable(model);
         JScrollPane scrollPane = new JScrollPane(tbProduct);
@@ -80,7 +91,7 @@ public class pnImport extends JPanel{
         tablePanel.add(scrollPane);
         tablePanel.setBounds(10,110,450,550);
 
-        String[] columns1 = {"STT", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn giá"};
+        String[] columns1 = {"STT", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn giá", "Đơn vị"};
         model1.setColumnIdentifiers(columns1);
         tbImport = new JTable(model1);
         JScrollPane scrollPane1 = new JScrollPane(tbImport);
@@ -99,15 +110,18 @@ public class pnImport extends JPanel{
         buttonPanel.setBounds(480, 590, 480, 50);
 
         btnExportExcel.setBorder(border);
-        btnExportExcel.setPreferredSize(new Dimension(120, 36));
+        btnExportExcel.setPreferredSize(new Dimension(100, 36));
         btnDelete.setBorder(border);
-        btnDelete.setPreferredSize(new Dimension(120, 36));
+        btnDelete.setPreferredSize(new Dimension(100, 36));
         btnEdit.setBorder(border);
-        btnEdit.setPreferredSize(new Dimension(120, 36));
+        btnEdit.setPreferredSize(new Dimension(100, 36));
+        btnList.setBorder(border);
+        btnList.setPreferredSize(new Dimension(100, 36));
 
         buttonPanel.add(btnExportExcel);
         buttonPanel.add(btnDelete);
         buttonPanel.add(btnEdit);
+        buttonPanel.add(btnList);
 
     //----Xuất hàng---------
         totalPanel.setLayout(null);
