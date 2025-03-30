@@ -1,6 +1,10 @@
 package GUI.JPanel;
 
+import BUS.Discount_BUS;
 import Components.MyJTable;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicComboBoxUI;
@@ -8,19 +12,27 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.Iterator;
 
 public class pnDiscount extends JPanel {
     private MyJTable tbDiscountCodes = new MyJTable(
-            new String[]{"STT", "ID mã", "Loại", "Hạn sử dụng", "Trạng thái"},
-            new Font("Roboto", Font.BOLD, 14),
+            new String[]{"STT", "ID mã", "Loại", "Ngày tạo", "Hạn sử dụng", "Số lượng", "Trạng thái"},
+            new Font("Roboto", Font.BOLD, 16),
             new Color(159, 32, 243), // Màu chữ
             new Color(159, 242, 115), // Màu nền header
             new Color(255, 0, 239) // Màu khi chọn hàng
     );
     private TableRowSorter<DefaultTableModel> sorter;
-
+    private Discount_BUS discountBus;
     // Các thành phần giao diện
     private JButton btnAdd = new JButton("Thêm");
     private JButton btnEdit = new JButton("Sửa");
@@ -30,23 +42,21 @@ public class pnDiscount extends JPanel {
     private JButton btnImportExcel = new JButton("Nhập Excel");
     private JButton btnExportExcel = new JButton("Xuất Excel");
     private JComboBox<String> sortComboBox;
-
     // Panels
-    private JPanel panelFunction = new JPanel(); // Chứa các nút chức năng
-    private JPanel panelSearch = new JPanel();   // Chứa tìm kiếm và sắp xếp
-    private JPanel panelHeader = new JPanel();   // Chứa panelFunction và panelSearch
-    private JPanel panelDisplay = new JPanel();  // Chứa bảng
+    private JPanel panelFunction = new JPanel();
+    private JPanel panelSearch = new JPanel();
+    private JPanel panelHeader = new JPanel();
+    private JPanel panelDisplay = new JPanel();
 
     public pnDiscount() {
+        discountBus = new Discount_BUS((DefaultTableModel) tbDiscountCodes.getModel());
         setLayout(new BorderLayout());
-        setBackground(Color.decode("#F5F5F5")); // Xám
+        setBackground(Color.decode("#F5F5F5"));
         Border border = BorderFactory.createLineBorder(Color.GRAY, 1);
-
         // panelFunction
         panelFunction.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 5));
         panelFunction.setBorder(BorderFactory.createTitledBorder(border, "Chức năng", 0, 0, new Font("Arial", Font.BOLD, 14)));
         panelFunction.setBackground(Color.WHITE);
-
         // Tùy chỉnh giao diện các nút
         customizeButton(btnAdd, new Color(50, 168, 82));    // Xanh lá
         customizeButton(btnEdit, new Color(255, 165, 0));   // Cam
@@ -115,8 +125,7 @@ public class pnDiscount extends JPanel {
         sorter = new TableRowSorter<>((DefaultTableModel) tbDiscountCodes.getModel());
         tbDiscountCodes.setRowSorter(sorter);
 
-        // Thêm dữ liệu mẫu
-        addSampleData();
+        discountBus.loadDiscountData();
 
         // Thêm sự kiện tìm kiếm
         txtSearch.addMouseListener(new MouseAdapter() {
@@ -137,7 +146,6 @@ public class pnDiscount extends JPanel {
             }
         });
 
-        // Thiết lập JScrollPane
         JScrollPane scrollPane = new JScrollPane(tbDiscountCodes);
         scrollPane.setBorder(null);
         scrollPane.setBackground(Color.WHITE);
@@ -146,10 +154,20 @@ public class pnDiscount extends JPanel {
         panelDisplay.add(scrollPane, BorderLayout.CENTER);
         panelDisplay.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panelDisplay.setBackground(Color.WHITE);
-
-        // Thêm các panel vào giao diện chính
         add(panelHeader, BorderLayout.NORTH);
         add(panelDisplay, BorderLayout.CENTER);
+
+        btnAdd.addActionListener(event -> discountBus.ShowAddDig(this));
+        btnEdit.addActionListener(event -> discountBus.ShowEditDig(this, tbDiscountCodes.getSelectedRow()));
+        btnDelete.addActionListener(event -> discountBus.DeleDig(this, tbDiscountCodes.getSelectedRow()));
+        btnRefresh.addActionListener(e -> refreshTable());
+        btnExportExcel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tbDiscountCodes.ExportExel("Danh sách mã giảm giá");
+            }
+        });
+        btnImportExcel.addActionListener((e ->importFromExcel()));
     }
 
     // Tùy chỉnh giao diện nút
@@ -162,18 +180,67 @@ public class pnDiscount extends JPanel {
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
-    // Thêm dữ liệu mẫu
-    private void addSampleData() {
-        DefaultTableModel model = (DefaultTableModel) tbDiscountCodes.getModel();
-        model.addRow(new Object[]{1, "CODE001", "Giảm giá sản phẩm", "2025-12-31", "Hoạt động"});
-        model.addRow(new Object[]{2, "CODE002", "Giảm giá hóa đơn", "2024-11-30", "Hết hạn"});
-        model.addRow(new Object[]{3, "CODE003", "Giảm giá sản phẩm", "2025-06-30", "Hoạt động"});
-    }
-
-    // Làm mới bảng
     private void refreshTable() {
         txtSearch.setText("Nhập ID mã hoặc loại...");
         sorter.setRowFilter(null);
         sortComboBox.setSelectedIndex(0);
+    }
+
+    private void importFromExcel() {
+        try {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter(
+                    "Excel files", "xlsx", "xls"));
+            int result = fileChooser.showOpenDialog(this);
+
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                FileInputStream fis = new FileInputStream(file);
+                XSSFWorkbook workbook = new XSSFWorkbook(fis);
+                Sheet sheet = workbook.getSheetAt(0);
+
+                DefaultTableModel model = (DefaultTableModel) tbDiscountCodes.getModel();
+                model.setRowCount(0);
+                Iterator<Row> rowIterator = sheet.iterator();
+                if (rowIterator.hasNext()) rowIterator.next();
+
+                // Đọc dữ liệu
+                while (rowIterator.hasNext()) {
+                    Row row = rowIterator.next();
+                    Object[] rowData = new Object[7];
+
+                    for (int i = 0; i < 7; i++) {
+                        Cell cell = row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                        switch (cell.getCellType()) {
+                            case STRING:
+                                rowData[i] = cell.getStringCellValue();
+                                break;
+                            case NUMERIC:
+                                rowData[i] = String.valueOf((int) cell.getNumericCellValue());
+                                break;
+                            default:
+                                rowData[i] = "";
+                        }
+                    }
+                    model.addRow(rowData);
+                }
+
+                workbook.close();
+                fis.close();
+
+                JOptionPane.showMessageDialog(this,
+                        "Nhập dữ liệu từ Excel thành công!",
+                        "Thông báo",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Lỗi khi nhập Excel: " + e.getMessage(),
+                    "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }
 }

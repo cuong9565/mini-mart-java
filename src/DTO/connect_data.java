@@ -33,7 +33,6 @@ public class connect_data {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             conn = DriverManager.getConnection(url, username, password);
-            System.out.println("Kết nối cơ sở dữ liệu thành công!");
         } catch (ClassNotFoundException e) {
             System.out.println("Không tìm thấy driver JDBC: " + e.getMessage());
         } catch (SQLException e) {
@@ -88,7 +87,6 @@ public class connect_data {
         try {
             if (conn != null && !conn.isClosed()) {
                 conn.close();
-                System.out.println("Đã đóng kết nối cơ sở dữ liệu!");
             }
         } catch (SQLException e) {
             System.out.println("Lỗi khi đóng kết nối: " + e.getMessage());

@@ -1,6 +1,8 @@
 package GUI.JPanel;
 
 import BUS.Staff_BUS;
+import Components.MyJTable;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicComboBoxUI;
@@ -9,21 +11,21 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.regex.Pattern;
 
 public class pnStaff extends JPanel {
-    private final DefaultTableModel model = new DefaultTableModel() {
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false;
-        }
-    };
-    private final JTable tbStaff;
-    private final TableRowSorter<DefaultTableModel> sorter;
-    private final Staff_BUS staffBUS;
-
+    private MyJTable tbStaff= new MyJTable(new String[]{"Mã NV", "SDT", "Mật Khẩu", "Họ", "Tên", "Địa chỉ", "Lương", "Role", "Trạng thái", "Giới tính"},
+            new Font("Roboto", Font.BOLD, 16),
+            new Color(159, 32, 243),
+            new Color(159, 242, 115),
+            new Color(255, 0, 239)
+    );
+    private  TableRowSorter<DefaultTableModel> sorter;
+    private  Staff_BUS staffBUS;
     // Các thành phần giao diện
     private final JButton btnAdd = new JButton("Thêm");
     private final JButton btnEdit = new JButton("Sửa");
@@ -40,7 +42,7 @@ public class pnStaff extends JPanel {
     private final JPanel panelDisplay = new JPanel();
 
     public pnStaff() {
-        staffBUS = new Staff_BUS(model); // Truyền model vào BUS
+        staffBUS = new Staff_BUS((DefaultTableModel) tbStaff.getModel()); // Truyền model vào BUs
         setLayout(new BorderLayout());
         setBackground(Color.decode("#F5F5F5"));
         Border border = BorderFactory.createLineBorder(Color.GRAY, 1);
@@ -112,60 +114,23 @@ public class pnStaff extends JPanel {
         panelHeader.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
 
         // Thiết lập bảng
-        String[] columns = {"Mã NV", "Số điện thoại", "Pass", "Họ", "Tên", "Địa chỉ", "Lương", "Role", "Trạng thái", "Giới tính"};
-        model.setColumnIdentifiers(columns);
-        tbStaff = new JTable(model);
-        tbStaff.setRowHeight(28);
-        tbStaff.setFont(new Font("Arial", Font.PLAIN, 14));
-        tbStaff.getTableHeader().setFont(new Font("Roboto", Font.BOLD, 14));
-        tbStaff.getTableHeader().setPreferredSize(new Dimension(0, 28));
-        tbStaff.getTableHeader().setBackground(new Color(178, 236, 255));
-        tbStaff.getTableHeader().setForeground(Color.BLACK);
-        tbStaff.getTableHeader().setReorderingAllowed(false);
-        tbStaff.setBorder(BorderFactory.createEmptyBorder());
-        tbStaff.setShowGrid(false);
-        tbStaff.getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                label.setBorder(null);
-                label.setHorizontalAlignment(SwingConstants.CENTER);
-                label.setBackground(new Color(66, 133, 244));
-                label.setForeground(Color.WHITE);
-                label.setFont(new Font("Roboto", Font.BOLD, 16));
-                return label;
-            }
-        });
-        tbStaff.setIntercellSpacing(new Dimension(0, 1));
-        tbStaff.setFocusable(false);
-        tbStaff.setShowVerticalLines(false);
-        tbStaff.setShowHorizontalLines(true);
-        tbStaff.setGridColor(new Color(240, 240, 240));
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        for (int i = 0; i < tbStaff.getColumnCount(); i++) {
-            tbStaff.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-        }
-
         JScrollPane scrollPane = new JScrollPane(tbStaff);
         scrollPane.setBorder(null);
         scrollPane.setBackground(Color.WHITE);
         TableColumnModel columnModel = tbStaff.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(30);
-        columnModel.getColumn(1).setPreferredWidth(70);
+        columnModel.getColumn(1).setPreferredWidth(90);
         columnModel.getColumn(2).setPreferredWidth(120);
         columnModel.getColumn(3).setPreferredWidth(60);
-        columnModel.getColumn(4).setPreferredWidth(60);
+        columnModel.getColumn( 4).setPreferredWidth(60);
         columnModel.getColumn(5).setPreferredWidth(170);
         columnModel.getColumn(6).setPreferredWidth(80);
         columnModel.getColumn(7).setPreferredWidth(95);
         columnModel.getColumn(8).setPreferredWidth(100);
         columnModel.getColumn(9).setPreferredWidth(70);
 
-        sorter = new TableRowSorter<>(model);
+        sorter = new TableRowSorter<>((DefaultTableModel) tbStaff.getModel());//
         tbStaff.setRowSorter(sorter);
-
-        // Xử lý cột Lương (nếu là String, cần Comparator để sắp xếp số)
         sorter.setComparator(6, (o1, o2) -> {
             try {
                 Double d1 = Double.parseDouble(o1.toString());
@@ -175,7 +140,6 @@ public class pnStaff extends JPanel {
                 return o1.toString().compareTo(o2.toString());
             }
         });
-
         // Load dữ liệu ban đầu
         staffBUS.loadStaffData();
 
@@ -238,12 +202,12 @@ public class pnStaff extends JPanel {
         // Sự kiện cho các nút
         btnAdd.addActionListener(e -> staffBUS.showAddDialog(this));
         btnEdit.addActionListener(e -> staffBUS.showEditDialog(this, tbStaff.getSelectedRow()));
-        tbStaff.getSelectedRow();
+       btnExportExcel.addActionListener(e-> tbStaff.ExportExel("Danh sách nhân sự"));
         btnBlock.addActionListener(e -> {
             int selectedRow = tbStaff.getSelectedRow();
             String status = (String) tbStaff.getValueAt(selectedRow,8);
             if (selectedRow >= 0) {
-                String id = (String) model.getValueAt(selectedRow, 0);
+                String id = (String) tbStaff.getValueAt(selectedRow, 0);
                 if (staffBUS.lockStaff(id,status)) {
                     if (status.equals("Active")) {
                         JOptionPane.showMessageDialog(this, "Đã khóa tài khoản!");
@@ -255,15 +219,11 @@ public class pnStaff extends JPanel {
                 }
             }
         });
-        // btnImportExcel.addActionListener(e -> staffBUS.importExcel(this));
-        btnExportExcel.addActionListener(e -> staffBUS.exportExcel(this));
         btnRefresh.addActionListener(e -> staffBUS.refreshTable(txtSearch, sorter, sortComboBox));
-
         panelDisplay.setLayout(new BorderLayout());
         panelDisplay.add(scrollPane, BorderLayout.CENTER);
         panelDisplay.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
         panelDisplay.setBackground(Color.WHITE);
-
         add(panelHeader, BorderLayout.NORTH);
         add(panelDisplay, BorderLayout.CENTER);
     }

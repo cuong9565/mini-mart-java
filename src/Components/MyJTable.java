@@ -47,9 +47,8 @@ public class MyJTable extends JTable {
     public void ExportExel(String name){
         Workbook wb = new XSSFWorkbook();
         Sheet sheet = wb.createSheet("Danh sách");
-
         Row rowTitle = sheet.createRow(0);
-        rowTitle.createCell(0).setCellValue(name);
+         rowTitle.createCell(0).setCellValue(name);
 
         Row rowHeader = sheet.createRow(1);
         for(int i = 0; i < dftbModel.getColumnCount(); i++)
@@ -115,7 +114,7 @@ public class MyJTable extends JTable {
         setFont(new Font("Arial",0,16));
         setBackground(Color.WHITE);
         setRowHeight(28);
-        getTableHeader().setPreferredSize(new Dimension(0, 28));
+        getTableHeader().setPreferredSize(new Dimension(0, 30));
 
         // Tùy chỉnh header
         getTableHeader().setReorderingAllowed(false);

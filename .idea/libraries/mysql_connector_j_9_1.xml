@@ -2,6 +2,7 @@
   <library name="mysql-connector-j-9.1">
     <CLASSES>
       <root url="file://$PROJECT_DIR$/lib/mysql-connector-j-9.1.0" />
+      <root url="file://$PROJECT_DIR$/lib/poi-bin-5.2.3" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
@@ -17,5 +18,6 @@
       <root url="file://$PROJECT_DIR$/lib/mysql-connector-j-9.1.0/src/test/java" />
     </SOURCES>
     <jarDirectory url="file://$PROJECT_DIR$/lib/mysql-connector-j-9.1.0" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lib/poi-bin-5.2.3" recursive="false" />
   </library>
 </component>

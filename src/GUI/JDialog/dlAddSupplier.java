@@ -18,7 +18,6 @@ public class dlAddSupplier extends JDialog {
     JLabel lbPhone = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Số điện thoại*", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbAddress = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Địa chỉ*", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbEmail = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Email*", SwingConstants.LEFT, SwingConstants.CENTER);
-
     JTextField tfName = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JTextField tfPhone = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JTextField tfAddress = new MyJTextFieldInput(Font.PLAIN, 14, true);
@@ -85,7 +84,6 @@ public class dlAddSupplier extends JDialog {
         add(tfEmail);
         add(btnSave);
         add(btnEsc);
-
         add(lbHeader);
         add(pnMain);
 

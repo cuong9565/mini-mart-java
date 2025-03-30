@@ -132,7 +132,7 @@ public class Staff_BUS {
         btnSave.addActionListener(e -> {
             try {
                 Staff_DTO staff = new Staff_DTO(
-                        "", // id (auto-incremented, can be empty or null)
+                        "",
                         txtPhone.getText(),
                         new String(txtPass.getPassword()),
                         txtFirstName.getText(),
@@ -156,7 +156,6 @@ public class Staff_BUS {
         btnCancel.addActionListener(e -> dialog.dispose());
         dialog.setVisible(true);
     }
-
     // Hiển thị dialog sửa nhân viên
     public void showEditDialog(Component parent, int selectedRow) {
         if (selectedRow < 0) {
@@ -247,19 +246,5 @@ public class Staff_BUS {
     }
 
 
-    public void exportExcel(Component parent) {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Chọn nơi lưu file Excel");
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Excel Files", "xlsx"));
-        int result = fileChooser.showSaveDialog(parent);
 
-        if (result == JFileChooser.APPROVE_OPTION) {
-            String filePath = fileChooser.getSelectedFile().getAbsolutePath();
-            if (!filePath.endsWith(".xlsx")) {
-                filePath += ".xlsx";
-            }
-
-        }
-
-    }
 }
