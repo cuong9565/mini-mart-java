@@ -26,10 +26,10 @@ public class pnCustomer extends JPanel {
     JButton btnIn = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Nhập<br>Exel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnOut = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Xuất<br>Exel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
-    JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 16, true);
-    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Tên", "Mã số", "Số điện thoại", "Mật khẩu" , "Họ", "Địa chỉ", "Giới tính", "Trạng thái"}, 12);
+    JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
+    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Tên", "Mã số", "Số điện thoại", "Họ", "Địa chỉ", "Giới tính", "Trạng thái"}, 12);
 
-    MyJTable tbCustomer = new MyJTable(new String[]{"Mã", "Số điện thoại", "Mật khẩu" , "Họ", "Tên", "Địa chỉ", "Giới tính", "Trang thái"});
+    MyJTable tbCustomer = new MyJTable(new String[]{"Mã", "Số điện thoại" , "Họ", "Tên", "Địa chỉ", "Giới tính", "Trang thái"});
     int currPosCB = 0;
     pnCustomer thisPanel = this;
 

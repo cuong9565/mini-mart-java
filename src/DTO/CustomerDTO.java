@@ -4,12 +4,11 @@ import java.sql.ResultSet;
 
 public class CustomerDTO{
     private int id;
-    private String phone, password, lastName, firstName, address, gender, state;
+    private String phone, lastName, firstName, address, gender, state;
     public CustomerDTO() {}
-    public CustomerDTO(int id, String phone, String password, String lastName, String firstName, String address, String gender, String state) {
+    public CustomerDTO(int id, String phone, String lastName, String firstName, String address, String gender, String state) {
         this.id = id;
         this.phone = phone;
-        this.password = password;
         this.lastName = lastName;
         this.firstName = firstName;
         this.address = address;
@@ -20,7 +19,6 @@ public class CustomerDTO{
         try {
             this.id = Integer.parseInt(rs.getString("id"));
             this.phone = rs.getString("phone");
-            this.password = rs.getString("password");
             this.lastName = rs.getString("lastName");
             this.firstName = rs.getString("firstName");
             this.address = rs.getString("address");
@@ -32,7 +30,6 @@ public class CustomerDTO{
     }
     public int getId() {return id;}
     public String getPhone() {return phone;}
-    public String getPassword() {return password;}
     public String getLastName() {return lastName;}
     public String getFirstName() {return firstName;}
     public String getAddress() {return address;}
@@ -41,13 +38,12 @@ public class CustomerDTO{
 
     public void setId(int id) {this.id = id;}
     public void setPhone(String phone) {this.phone = phone;}
-    public void setPassword(String password) {this.password = password;}
     public void setLastName(String lastName) {this.lastName = lastName;}
     public void setFirstName(String firstName) {this.firstName = firstName;}
     public void setAddress(String address) {this.address = address;}
     public void setGender(String gender) {this.gender = gender;}
     public void setState(String state) {this.state = state;}
     public Object[] getObjects() {
-        return new Object[]{id, phone, password, lastName, firstName, address, gender, state};
+        return new Object[]{id, phone, lastName, firstName, address, gender, state};
     }
 }
