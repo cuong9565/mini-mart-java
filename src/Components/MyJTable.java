@@ -6,13 +6,13 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyJTable extends JTable {
     public DefaultTableModel dftbModel;
@@ -42,7 +42,43 @@ public class MyJTable extends JTable {
         setRowHeight(23);
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
+        setAutoCreateRowSorter(false);
+
+
         scrPn = new JScrollPane(this);
+    }
+
+    public List<Object[]> ImportExel(){
+        List<Object[]> list = new ArrayList<Object[]>();
+        JFileChooser chooser = new JFileChooser();
+        chooser.setDialogTitle("Chọn tệp để mở");
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        chooser.setFileFilter(new FileNameExtensionFilter("Excel Files (*.xlsx, *.xls)", "xlsx", "xls"));
+
+        int result = chooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();
+            try(
+                FileInputStream fileInput = new FileInputStream(file.getAbsoluteFile());
+                Workbook wb = new XSSFWorkbook(fileInput);
+            ){
+                Sheet sheet = wb.getSheetAt(0);
+                int n = sheet.getLastRowNum();
+
+                for(int i=2; i<=n; i++){
+                    Row row = sheet.getRow(i);
+                    Object[] data = new Object[row.getLastCellNum()];
+                    for(int j=0; j<row.getLastCellNum(); j++)
+                        data[j] = row.getCell(j).getStringCellValue();
+                    list.add(data);
+                }
+            }catch (Exception e){
+                JOptionPane.showMessageDialog(null, "Lỗi: " + e.getMessage());
+            }
+        }
+        else list = null;
+
+        return list;
     }
 
     public void ExportExel(String name){

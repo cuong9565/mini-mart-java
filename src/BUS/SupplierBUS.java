@@ -7,7 +7,8 @@ import java.util.List;
 
 public class SupplierBUS {
     private static SupplierBUS instance = null;
-    private String error = null;
+    private static String error = null;
+    private static int numLine = 0;
 
     public SupplierBUS() {}
     public static SupplierBUS getInstance() {
@@ -45,6 +46,22 @@ public class SupplierBUS {
             return false;
         }
         return false;
+    }
+
+    public boolean addSuppliers(List<SupplierDTO>listSupplier) {
+        if(listSupplier == null || listSupplier.isEmpty()) {
+            error = "Không lấy được dữ liệu!!!";
+            return false;
+        }
+
+        try{
+            numLine = SupplierDAO.getInstance().addSuppliers(listSupplier);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+            return false;
+        }
+        return true;
     }
 
     public boolean editSupplier(SupplierDTO supplier) {
@@ -85,4 +102,5 @@ public class SupplierBUS {
     }
 
     public String getError(){return error;}
+    public int getNumLine(){return numLine;}
 }

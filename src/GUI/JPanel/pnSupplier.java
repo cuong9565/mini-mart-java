@@ -6,12 +6,15 @@ import DTO.*;
 import GUI.JDialog.dlAddSupplier;
 import GUI.JDialog.dlEditSupplier;
 import GUI.JFrame.fManage;
+import com.mysql.cj.protocol.Message;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class pnSupplier extends JPanel {
     JPanel pnHeader = new MyJPanel(MyColor.White);
@@ -100,6 +103,23 @@ public class pnSupplier extends JPanel {
                 tfSearch.setText("");
                 cbSearch.setSelectedIndex(0);
                 loadSupplier();
+            }
+        });
+        btnIn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<Object[]> list = tbSupplier.ImportExel();
+                if(list==null) return;
+                List<SupplierDTO> suppliers = new ArrayList<>();
+                for (Object[] ob : list)
+                    suppliers.add(new SupplierDTO(-1, ob[0].toString(), ob[1].toString(), ob[2].toString(), ob[3].toString()));
+                if(SupplierBUS.getInstance().addSuppliers(suppliers)){
+                    JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + SupplierBUS.getInstance().getNumLine() + " nhà cung cấp");
+                    loadSupplier();
+                }
+                else {
+                    JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + SupplierBUS.getInstance().getError());
+                }
             }
         });
         btnOut.addActionListener(new ActionListener() {
