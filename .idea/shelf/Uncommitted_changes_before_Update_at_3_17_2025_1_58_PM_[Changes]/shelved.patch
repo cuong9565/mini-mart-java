@@ -1,0 +1,149 @@
+Index: src/GUI/Manage.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package GUI;\r\nimport Components.*;\r\nimport pnForm.*;\r\n\r\nimport javax.swing.*;\r\nimport java.awt.*;\r\nimport java.awt.event.*;\r\nimport java.util.Set;\r\n\r\n\r\npublic class Manage extends JFrame {\r\n    JPanel pnLeft = MyJPanel.GetJPanel(\"#FFFFFF\");\r\n    JPanel pnRight = MyJPanel.GetJPanel(\"#FFFFFF\");\r\n    JPanel pnNav = MyJPanel.GetJPanel(\"#FFFFFF\");\r\n    JPanel pnMenu = MyJPanel.GetJPanel(\"#00FFFF\");\r\n    JLabel lbWelcome = MyJLabel.GetJLabel(Font.PLAIN, 16, \"#000000\", \"<html>Xin chào<br>USER<br>ROLE<br><hr></html>\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n    JButton btnStatistic = MyJButton.GetJButton(Font.PLAIN, 14, \"#000000\", \"#FFFFFF\", \"Thống kê\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n    JButton btnImport = MyJButton.GetJButton(Font.PLAIN, 14, \"#000000\", \"#FFFFFF\", \"Nhập hàng\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n    JButton btnProduct = MyJButton.GetJButton(Font.PLAIN, 14, \"#000000\", \"#FFFFFF\", \"Sản phẩm\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n    JButton btnSell = MyJButton.GetJButton(Font.PLAIN, 14, \"#000000\", \"#FFFFFF\", \"Bán hàng\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n    JButton btnTypeProduct = MyJButton.GetJButton(Font.PLAIN, 14, \"#000000\", \"#FFFFFF\", \"Loại sản phẩm\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n    JButton btnCustomer = MyJButton.GetJButton(Font.PLAIN, 14, \"#000000\", \"#FFFFFF\", \"Khách hàng\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n    JButton btnBill = MyJButton.GetJButton(Font.PLAIN, 14, \"#000000\", \"#FFFFFF\", \"Hóa đơn\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n    JButton btnDiscount = MyJButton.GetJButton(Font.PLAIN, 14, \"#000000\", \"#FFFFFF\", \"Giảm giá\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n    JButton btnStaff = MyJButton.GetJButton(Font.PLAIN, 14, \"#000000\", \"#FFFFFF\",  \"Nhân viên\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n    JButton btnSupplier = MyJButton.GetJButton(Font.PLAIN, 14, \"#000000\", \"#FFFFFF\", \"Nhà cung cấp\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n    JButton btnSettingAccount = MyJButton.GetJButton(Font.PLAIN, 14, \"#000000\", \"#FFFFFF\", \"#00FFFF\", \"Tài khoản\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n    JButton btnLogout = MyJButton.GetJButton(Font.PLAIN, 14, \"#000000\", \"#FFFFFF\",\"#00FFFF\", \"Đăng xuất\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n    JButton[] lsBtn = new JButton[]{btnStatistic, btnImport, btnSell, btnProduct, btnTypeProduct, btnCustomer, btnBill, btnDiscount, btnStaff, btnSupplier};\r\n    JPanel[] lsPn = new JPanel[]{new pnStatistic(), new pnImport(), new pnSell(), new pnProduct(), new pnTypeProduct(), new pnCustomer(), new pnBill(), new pnDiscount(), new pnStaff(), new pnSupplier()};\r\n\r\n    int currCursor = 0;\r\n    Manage currFrame = this;\r\n\r\n    public Manage(LoginForm loginForm) {\r\n        setTitle(\"Phần mềm quản lý siêu thị mini\");\r\n        setSize(1200, 800);\r\n        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);\r\n        setLocationRelativeTo(null);\r\n        setResizable(false);\r\n        setLayout(null);\r\n        setBackground(Color.decode(\"#FFFFFF\"));\r\n\r\n        // region setBounds + MaximumSize Button\r\n        lbWelcome.setBounds(10, 0, 180, 150);\r\n        btnStatistic.setMaximumSize(new Dimension(180, 30));\r\n        btnImport.setMaximumSize(new Dimension(180, 30));\r\n        btnSell.setMaximumSize(new Dimension(180, 30));\r\n        btnProduct.setMaximumSize(new Dimension(180, 30));\r\n        btnTypeProduct.setMaximumSize(new Dimension(180, 30));\r\n        btnCustomer.setMaximumSize(new Dimension(180, 30));\r\n        btnBill.setMaximumSize(new Dimension(180, 30));\r\n        btnDiscount.setMaximumSize(new Dimension(180, 30));\r\n        btnStaff.setMaximumSize(new Dimension(180, 30));\r\n        btnSupplier.setMaximumSize(new Dimension(180, 30));\r\n        btnSettingAccount.setBounds(10, 650, 180, 30);\r\n        btnLogout.setBounds(10, 680, 180, 30);\r\n        pnNav.setBounds(10,150,180, 500);\r\n        pnMenu.setBounds(210,10,970, 750);\r\n        pnLeft.setBounds(0,0,200,800);\r\n        pnRight.setBounds(200,0,1000, 800);\r\n        // endregion\r\n\r\n        pnNav.setLayout(new BoxLayout(pnNav, BoxLayout.Y_AXIS));\r\n        pnMenu.setLayout(new CardLayout());\r\n        pnLeft.setLayout(null);\r\n        pnRight.setLayout(null);\r\n\r\n        // region Listener\r\n        addWindowListener(new WindowAdapter() {\r\n            public void windowClosing(WindowEvent e) {\r\n                dispose();\r\n                loginForm.setVisible(true);\r\n            }\r\n        });\r\n\r\n        btnSettingAccount.addActionListener(new ActionListener() {\r\n            public void actionPerformed(ActionEvent e) {\r\n                new SettingAccountFrame(currFrame);\r\n            }\r\n        });\r\n\r\n        btnLogout.addActionListener(new ActionListener() {\r\n            public void actionPerformed(ActionEvent e) {\r\n                dispose();\r\n                loginForm.setVisible(true);\r\n            }\r\n        });\r\n        // endregion\r\n\r\n        // region Add\r\n            // add pnMenu\r\n            for(JPanel jPanel : lsPn) pnMenu.add(jPanel);\r\n\r\n            // add pnNav\r\n            for(int i=0; i<lsBtn.length; i++){\r\n                final int I = i;\r\n                lsBtn[i].addMouseListener(new MouseAdapter() {\r\n                    public void mouseEntered(MouseEvent e) {\r\n                        lsBtn[I].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));\r\n                        lsBtn[I].setBackground(Color.decode(\"#00FFFF\"));\r\n                    }\r\n                    public void mouseExited(MouseEvent e) {\r\n                        lsBtn[I].setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));\r\n                        if(I==currCursor) lsBtn[I].setBackground(Color.decode(\"#00FFFF\"));\r\n                        else lsBtn[I].setBackground(Color.decode(\"#FFFFFF\"));\r\n                    }\r\n                });\r\n                lsBtn[i].addActionListener(new ActionListener() {\r\n                    public void actionPerformed(ActionEvent e) {\r\n                        currCursor = I;\r\n                        for(int j=0; j<lsPn.length; j++){\r\n                            if(I==j){\r\n                                lsBtn[j].setBackground(Color.decode(\"#00FFFF\"));\r\n                                lsPn[j].setVisible(true);\r\n                            }\r\n                            else{\r\n                                lsBtn[j].setBackground(Color.decode(\"#FFFFFF\"));\r\n                                lsPn[j].setVisible(false);\r\n                            }\r\n                        }\r\n                    }\r\n                });\r\n                pnNav.add(lsBtn[i]);\r\n            }\r\n            lsBtn[0].doClick();\r\n\r\n\r\n            // add Frame\r\n            add(lbWelcome);\r\n            add(btnSettingAccount);\r\n            add(btnLogout);\r\n            add(pnNav);\r\n            add(pnMenu);\r\n            add(pnLeft);\r\n            add(pnRight);\r\n        // endregion\r\n\r\n        setVisible(true);\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/GUI/Manage.java b/src/GUI/Manage.java
+--- a/src/GUI/Manage.java	(revision 598d3f564f36fe9265d236bd6e1cbe320c7d0367)
++++ b/src/GUI/Manage.java	(date 1742194461108)
+@@ -7,7 +7,6 @@
+ import java.awt.event.*;
+ import java.util.Set;
+ 
+-
+ public class Manage extends JFrame {
+     JPanel pnLeft = MyJPanel.GetJPanel("#FFFFFF");
+     JPanel pnRight = MyJPanel.GetJPanel("#FFFFFF");
+@@ -37,7 +36,7 @@
+         setSize(1200, 800);
+         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+         setLocationRelativeTo(null);
+-        setResizable(false);
++        setResizable(false); // khong cho phep phong to
+         setLayout(null);
+         setBackground(Color.decode("#FFFFFF"));
+ 
+Index: src/GUI/LoginForm.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package GUI;\r\n\r\nimport Components.*;\r\n\r\nimport javax.swing.*;\r\nimport java.awt.*;\r\nimport java.awt.event.ActionEvent;\r\nimport java.awt.event.ActionListener;\r\nimport java.awt.event.KeyAdapter;\r\nimport java.awt.event.KeyEvent;\r\n\r\npublic class LoginForm extends JFrame {\r\n    ImageIcon iconEyeOpen = new ImageIcon(\".\\\\src\\\\img\\\\eye_icon.png\");\r\n    Image imgEyeOpen = iconEyeOpen.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);\r\n    ImageIcon img = new ImageIcon(imgEyeOpen);\r\n//    Icon eyeClose = new ImageIcon(\".\\\\src\\\\img\\\\hidden_eye_icon.png\");\r\n\r\n    String White = \"#FFFFFF\";\r\n    String Black = \"#000000\";\r\n    JPanel pnLeft = MyJPanel.GetJPanel(\"#66B2FF\");\r\n    JPanel pnRight = MyJPanel.GetJPanel(White);\r\n    JLabel lbWelcome = MyJLabel.GetJLabel(Font.BOLD, 32, White, \"<html>Chào mừng bạn đến với<br>Hệ thống quản lý siêu thị mini</html>\", SwingConstants.LEFT, SwingConstants.TOP);\r\n    JLabel lbLogin = MyJLabel.GetJLabel(Font.PLAIN, 25, Black, \"<html>Đăng nhập tài khoản</html>\", SwingConstants.CENTER, SwingConstants.TOP);\r\n    JLabel lbUserName = MyJLabel.GetJLabel(Font.PLAIN, 14, Black, \"<html>Tên đăng nhập hoặc Email</html>\", SwingConstants.LEFT, SwingConstants.TOP);\r\n    JLabel lbPassword = MyJLabel.GetJLabel(Font.PLAIN, 14, Black, \"<html>Mật khẩu</html>\", SwingConstants.LEFT, SwingConstants.TOP);\r\n    JTextField tfUserName = MyJTextField.GetJTextFieldLine(Font.PLAIN, 12);\r\n    JPasswordField pfPassword = MyJPasswordField.GetJPasswordField(Font.PLAIN, 12);\r\n    JButton btnLogin = MyJButton.GetJButton(Font.BOLD, 14, White, \"#0099FF\",\"#64B4FF\",  \"Đăng nhập\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n\r\n    public LoginForm() {\r\n        super(\"Phần mềm quản lý siêu thị mini\");\r\n        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);\r\n        setSize(900,500);\r\n        setLocationRelativeTo(null);\r\n        setResizable(false);\r\n        setLayout(null);\r\n\r\n        JButton btnEye = MyJButton.GetJButtonICon(img);\r\n\r\n        // region setBounds\r\n        lbWelcome.setBounds(50, 100, 450, 100);\r\n        lbLogin.setBounds(580, 50, 280, 30);\r\n        lbUserName.setBounds(580, 120, 280, 20);\r\n        lbPassword.setBounds(580, 201, 280, 20);\r\n        tfUserName.setBounds(580, 140, 280, 20);\r\n        pfPassword.setBounds(580, 220, 280, 20);\r\n        btnLogin.setBounds(580, 300, 280, 30);\r\n        pnLeft.setBounds(0,0,550, 500);\r\n        pnRight.setBounds(550,0,350,500);\r\n        // endregion\r\n\r\n\r\n//        btnEye.setBackground(Color.BLACK);\r\n\r\n        // region Shortcut Key\r\n        tfUserName.addKeyListener(new KeyAdapter() {\r\n            public void keyPressed(KeyEvent e) {\r\n                switch (e.getKeyCode()) {\r\n                    case KeyEvent.VK_ENTER, KeyEvent.VK_DOWN: pfPassword.requestFocus(); break;\r\n                }\r\n            }\r\n        });\r\n\r\n        pfPassword.addKeyListener(new KeyAdapter() {\r\n            public void keyPressed(KeyEvent e) {\r\n                switch (e.getKeyCode()) {\r\n                    case KeyEvent.VK_DOWN: btnLogin.requestFocus(); break;\r\n                    case KeyEvent.VK_UP: tfUserName.requestFocus(); break;\r\n                    case KeyEvent.VK_ENTER: Login(); break;\r\n                }\r\n            }\r\n        });\r\n\r\n        btnLogin.addKeyListener(new KeyAdapter() {\r\n            public void keyPressed(KeyEvent e) {\r\n                switch (e.getKeyCode()) {\r\n                    case KeyEvent.VK_ENTER: Login(); break;\r\n                    case KeyEvent.VK_UP: pfPassword.requestFocus(); break;\r\n                }\r\n            }\r\n        });\r\n\r\n\r\n        // endregion\r\n\r\n        // region Listener\r\n        btnLogin.addActionListener(new ActionListener() {\r\n            public void actionPerformed(ActionEvent e) {\r\n                Login();\r\n            }\r\n        });\r\n        // endregion\r\n\r\n        // region Add\r\n        add(btnEye);\r\n        add(lbWelcome);\r\n        add(lbLogin);\r\n        add(lbUserName);\r\n        add(lbPassword);\r\n        add(tfUserName);\r\n        add(btnLogin);\r\n        add(pfPassword);\r\n        add(pnLeft);\r\n        add(pnRight);\r\n        // endregion\r\n\r\n        setVisible(true);\r\n    }\r\n\r\n    public void Login() {\r\n        boolean check = true;\r\n        String userName = tfUserName.getText();\r\n        String password = String.valueOf(pfPassword.getPassword());\r\n        if(userName.isEmpty()){\r\n//            JOptionPane.showMessageDialog(tfUserName, \"Trống\");\r\n\r\n            check = false;\r\n        }\r\n\r\n        if(password.isEmpty()){\r\n//            JOptionPane.showMessageDialog(pfPassword, \"Trống\");\r\n\r\n            check = false;\r\n        }\r\n        if(!check){\r\n            JOptionPane.showMessageDialog(pnRight, \"Tên đăng nhập và mật khẩu không được để trống!!!\");\r\n        }\r\n        if(check){\r\n            new Manage(this);\r\n            setVisible(false);\r\n        }\r\n    }\r\n}\r\n/*\r\n* Còn thiếu kiểm tra điều kiện Login\r\n* Thiếu phần báo lỗi (Một JLabel nằm bên dưới)\r\n* */
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/GUI/LoginForm.java b/src/GUI/LoginForm.java
+--- a/src/GUI/LoginForm.java	(revision 598d3f564f36fe9265d236bd6e1cbe320c7d0367)
++++ b/src/GUI/LoginForm.java	(date 1742194395817)
+@@ -107,7 +107,7 @@
+         setVisible(true);
+     }
+ 
+-    public void Login() {
++    public void Login() -{
+         boolean check = true;
+         String userName = tfUserName.getText();
+         String password = String.valueOf(pfPassword.getPassword());
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_19\" default=\"true\" project-jdk-name=\"22\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/out\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 598d3f564f36fe9265d236bd6e1cbe320c7d0367)
++++ b/.idea/misc.xml	(date 1742193831826)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_19" default="true" project-jdk-name="22" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_22" default="true" project-jdk-name="22" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4\" name=\"Changes\" comment=\"Cuong update Setting Account Panel\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/Components/MyJButton.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Components/MyJButton.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/GUI/LoginForm.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/GUI/LoginForm.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/GUI/Manage.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/GUI/Manage.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/assets/img/minus.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/assets/img/xmark.png\" beforeDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;cuong9565&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/cuong9565/mini-mart-java.git&quot;,\r\n    &quot;accountId&quot;: &quot;f4c729e0-ab1e-41b9-93d0-47692b69cd9a&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProblemsViewState\">\r\n    <option name=\"selectedTabId\" value=\"CurrentFile\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;customColor&quot;: &quot;&quot;,\r\n  &quot;associatedIndex&quot;: 3\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2uDFNsALAkUONxtPiSRlBD3xvgC\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <ConfirmationsSetting value=\"1\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;Application.FixBug.executor&quot;: &quot;Run&quot;,\r\n    &quot;Application.Main.executor&quot;: &quot;Run&quot;,\r\n    &quot;Application.Manage.executor&quot;: &quot;Run&quot;,\r\n    &quot;Application.demo.executor&quot;: &quot;Run&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.folding&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\mini-mart-java\\src\\GUI\" />\r\n      <recent name=\"D:\\mini-mart-java\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"Main\" type=\"Application\" factoryName=\"Application\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"GUI.Main\" />\r\n      <module name=\"mini-mart-java\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142\" />\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4\" name=\"Changes\" comment=\"\" />\r\n      <created>1741775201356</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1741775201356</updated>\r\n      <workItem from=\"1741775202454\" duration=\"10084000\" />\r\n      <workItem from=\"1741833106992\" duration=\"4271000\" />\r\n      <workItem from=\"1741874668727\" duration=\"6718000\" />\r\n      <workItem from=\"1741949987194\" duration=\"115000\" />\r\n      <workItem from=\"1741950383410\" duration=\"7362000\" />\r\n      <workItem from=\"1742002807532\" duration=\"640000\" />\r\n      <workItem from=\"1742003653485\" duration=\"3289000\" />\r\n      <workItem from=\"1742040014820\" duration=\"14084000\" />\r\n      <workItem from=\"1742054396486\" duration=\"27000\" />\r\n      <workItem from=\"1742054913554\" duration=\"102000\" />\r\n      <workItem from=\"1742087696381\" duration=\"4726000\" />\r\n      <workItem from=\"1742108035139\" duration=\"13883000\" />\r\n      <workItem from=\"1742175629719\" duration=\"464000\" />\r\n      <workItem from=\"1742176493837\" duration=\"5597000\" />\r\n      <workItem from=\"1742192648054\" duration=\"169000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Cuong update Login Form\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1741879323699</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1741879323699</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Cuong update Login Form\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1741880404941</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1741880404941</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Cuong update Login Form\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1741880469885</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1741880469885</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Cuong update Login Form\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1741881420815</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1741881420815</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Cuong update Manager Form\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742053070122</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742053070122</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"Cuong update Setting Account Panel\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742122337132</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742122337132</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"7\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Cuong update Login Form\" />\r\n    <MESSAGE value=\"Cuong update Manager Form\" />\r\n    <MESSAGE value=\"Cuong update Setting Account Panel\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Cuong update Setting Account Panel\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 598d3f564f36fe9265d236bd6e1cbe320c7d0367)
++++ b/.idea/workspace.xml	(date 1742194396171)
+@@ -5,12 +5,10 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong update Setting Account Panel">
++      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Components/MyJButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJButton.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/GUI/LoginForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/LoginForm.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/GUI/Manage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Manage.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/assets/img/minus.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/assets/img/xmark.png" beforeDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -54,25 +52,26 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent">{
+-  &quot;keyToString&quot;: {
+-    &quot;Application.FixBug.executor&quot;: &quot;Run&quot;,
+-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+-    &quot;Application.Manage.executor&quot;: &quot;Run&quot;,
+-    &quot;Application.demo.executor&quot;: &quot;Run&quot;,
+-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.folding&quot;,
+-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "Application.FixBug.executor": "Run",
++    "Application.Main.executor": "Run",
++    "Application.Manage.executor": "Run",
++    "Application.demo.executor": "Run",
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "RunOnceActivity.git.unshallow": "true",
++    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
++    "git-widget-placeholder": "main",
++    "kotlin-language-version-configured": "true",
++    "node.js.detected.package.eslint": "true",
++    "node.js.detected.package.tslint": "true",
++    "node.js.selected.package.eslint": "(autodetect)",
++    "node.js.selected.package.tslint": "(autodetect)",
++    "nodejs_package_manager_path": "npm",
++    "settings.editor.selected.configurable": "editor.preferences.folding",
++    "vue.rearranger.settings.migration": "true"
+   }
+-}</component>
++}]]></component>
+   <component name="RecentsManager">
+     <key name="MoveFile.RECENT_KEYS">
+       <recent name="D:\mini-mart-java\src\GUI" />
+@@ -87,14 +86,6 @@
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-  </component>
+-  <component name="SharedIndexes">
+-    <attachedChunks>
+-      <set>
+-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
+-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
+-      </set>
+-    </attachedChunks>
+   </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">

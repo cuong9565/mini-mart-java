@@ -1,0 +1,59 @@
+ .getColumn(index).setPreferredWidth(width);   // Điều chỉnh kích thước col (dựa vào index)
+
+ .setPreferredSize(new Dimension(80, 35)); // Set kích thước mặc định cho button ,
+                                               nếu có layout kích thuớc sẽ dựa vào layout
+
+ .setBorder(BorderFactory.createEmptyBorder(); // xoá viền
+ .setBorder(BorderFactory.createEmptyBorder(top,left,bottom,right);  // pading
+
+ .getTableHeader().setBackground(Color);      // màu row title table
+   table.setShowGrid(false);  // ẩn lưới table
+  private DefaultTableModel model = new DefaultTableModel() {
+         @Override
+         public boolean isCellEditable(int row, int column) { // không cho thay đổi txt trực tiếp trongh table
+         }
+     }
+
+ table.getTableHeader().setReorderingAllowed(false);   //  khoá cột
+  table.setRowHeight(30); // chiều cao col
+
+  // Thêm MouseListener để xử lý hiệu ứng hover
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                button.setBackground(hoverColor); // Khi hover, đổi sang màu sáng hơn
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                button.setBackground(backgroundColor); // Khi rời chuột, trở về màu ban đầu
+            }
+        });
+    // Tùy chỉnh giao diện bảng: bỏ đường kẻ dọc, giữ đường kẻ ngang
+    tbStaff.setShowVerticalLines(false); // Tắt đường kẻ dọc
+    tbStaff.setShowHorizontalLines(true); // Giữ đường kẻ ngang
+    tbStaff.setGridColor(Color.LIGHT_GRAY); // Đặt màu cho đường kẻ ngang (tùy chọn)
+//////////////////////////////////////////////////////////////////////////
+Class pnStaff {
+        private DefaultTableModel model = new DefaultTableModel() {
+              @Override
+              public boolean isCellEditable(int row, int column) {
+                  return false;
+              }
+          };
+      private Staff_BUS staffBUS; // object để gọi các hàm triển khai khi listen event
+     public pnStaff() {
+        staffBUS = new Staff_BUS(model); //
+        }
+      }
+Class Staff_BUS {
+       private Staff_DAO staffDAO;
+        private DefaultTableModel model;
+        public Staff_BUS(DefaultTableModel model) {
+            this.staffDAO = new Staff_DAO();
+            this.model = model; // Nhận model từ GUI để cập nhật bảng
+        }
+
+      public boolean addStaff(Staff_DTO staff) {} // thêm nhân viên
+      public boolean updateStaff(Staff_DTO staff) {} // cập nhât
+}

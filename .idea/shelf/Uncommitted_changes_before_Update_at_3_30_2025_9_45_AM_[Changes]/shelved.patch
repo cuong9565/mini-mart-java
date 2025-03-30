@@ -1,0 +1,770 @@
+Index: src/BUS/Staff_BUS.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package BUS;\r\nimport javax.swing.table.TableRowSorter;\r\nimport DAO.Staff_DAO;\r\nimport DTO.Staff_DTO;\r\nimport javax.swing.*;\r\nimport javax.swing.table.DefaultTableModel;\r\nimport java.awt.*;\r\nimport java.util.List;\r\nimport javax.swing.JFileChooser;\r\nimport javax.swing.JOptionPane;\r\nimport javax.swing.filechooser.FileNameExtensionFilter;\r\n\r\n\r\npublic class Staff_BUS {\r\n    private Staff_DAO staffDAO;\r\n    private DefaultTableModel model;\r\n    public static List<Staff_DTO> staffList;\r\n\r\n    public Staff_BUS(DefaultTableModel model) {\r\n        this.staffDAO = new Staff_DAO();\r\n        this.model = model;\r\n        staffList = staffDAO.getAllStaff();\r\n    }\r\n\r\n    // Thêm nhân viên\r\n    public boolean addStaff(Staff_DTO staff) {\r\n\r\n        if (staff.getLastName().isEmpty() || staff.getFirstName().isEmpty()) {\r\n            JOptionPane.showMessageDialog(null, \"Họ và tên không được để trống!\");\r\n            return false;\r\n        }\r\n        if (staff.getSalary() < 0) {\r\n            JOptionPane.showMessageDialog(null, \"Lương không được âm!\");\r\n            return false;\r\n        }\r\n        if (!staff.getPhone().matches(\"\\\\d{10}\")) {\r\n            JOptionPane.showMessageDialog(null, \"Số điện thoại phải là 10 chữ số!\");\r\n            return false;\r\n        }\r\n        return staffDAO.addStaff(staff);\r\n    }\r\n\r\n    // Cập nhật nhân viên\r\n    public boolean updateStaff(Staff_DTO staff) {\r\n        if (staff.getLastName().isEmpty() || staff.getFirstName().isEmpty()) {\r\n            JOptionPane.showMessageDialog(null, \"Họ và tên không được để trống!\");\r\n            return false;\r\n        }\r\n        if (staff.getSalary() < 0) {\r\n            JOptionPane.showMessageDialog(null, \"Lương không được âm!\");\r\n            return false;\r\n        }\r\n        if (!staff.getPhone().matches(\"\\\\d{10}\")) {\r\n            JOptionPane.showMessageDialog(null, \"Số điện thoại phải là 10 chữ số!\");\r\n            return false;\r\n        }\r\n        return staffDAO.updateStaff(staff);\r\n    }\r\n\r\n    // Khóa nhân viên\r\n    public boolean lockStaff(String id,String status){\r\n        if (id == null || id.isEmpty()) {\r\n            JOptionPane.showMessageDialog(null, \"Vui lòng chọn nhân viên để khóa!\");\r\n            return false;\r\n        }\r\n        if(status.equals(\"Inactive\")){\r\n            return  staffDAO.lockStaff(id, \"Active\");\r\n             }\r\n       else {\r\n           return staffDAO.lockStaff(id,\"Inactive\");\r\n        }\r\n    }\r\n\r\n    // Load dữ liệu từ database vào bảng\r\n    public void loadStaffData() {\r\n        model.setRowCount(0); // Xóa dữ liệu cũ\r\n      List<Staff_DTO> staffList = staffDAO.getAllStaff();\r\n        for (Staff_DTO staff : staffList) {\r\n            model.addRow(new Object[]{\r\n                    staff.getId(),staff.getPhone(),staff.getPassword() ,staff.getFirstName(),staff.getLastName(), staff.getAddress(),\r\n                    staff.getSalary(),  staff.getRole(),\r\n                    staff.getStatus(),staff.getGender()});\r\n        }\r\n    }\r\n\r\n    // Hiển thị dialog thêm nhân viên\r\n    public void showAddDialog(Component parent) {\r\n        JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(parent), \"Thêm nhân viên\", true);\r\n        dialog.setLayout(new GridLayout(10, 2, 10, 10)); // 10 rows for 9 fields + buttons\r\n        dialog.setSize(400, 400);\r\n        dialog.setLocationRelativeTo(parent);\r\n\r\n        JTextField txtPhone = new JTextField();\r\n        JPasswordField txtPass = new JPasswordField();\r\n        JTextField txtFirstName = new JTextField();\r\n        JTextField txtLastName = new JTextField();\r\n        JTextField txtAddress = new JTextField();\r\n        JTextField txtSalary = new JTextField();\r\n        JComboBox<String> cbRole = new JComboBox<>(new String[]{\"Nhân viên\", \"Quản lý\"});\r\n        JComboBox<String> cbStatus = new JComboBox<>(new String[]{\"Đóng\", \"Mở\"});\r\n        JComboBox<String> cbGender = new JComboBox<>(new String[]{\"Nam\", \"Nữ\"});\r\n\r\n        dialog.add(new JLabel(\"Số điện thoại:\"));\r\n        dialog.add(txtPhone);\r\n        dialog.add(new JLabel(\"Mật khẩu:\"));\r\n        dialog.add(txtPass);\r\n        dialog.add(new JLabel(\"Tên:\"));\r\n        dialog.add(txtFirstName);\r\n        dialog.add(new JLabel(\"Họ:\"));\r\n        dialog.add(txtLastName);\r\n        dialog.add(new JLabel(\"Giới tính:\"));\r\n        dialog.add(cbGender);\r\n        dialog.add(new JLabel(\"Địa chỉ:\"));\r\n        dialog.add(txtAddress);\r\n        dialog.add(new JLabel(\"Loại:\"));\r\n        dialog.add(cbRole);\r\n        dialog.add(new JLabel(\"Lương:\"));\r\n        dialog.add(txtSalary);\r\n        dialog.add(new JLabel(\"Trạng thái:\"));\r\n        dialog.add(cbStatus);\r\n\r\n        JButton btnCancel = new JButton(\"Hủy\");\r\n        btnCancel.setBackground(new Color(255, 69, 58));\r\n        btnCancel.setForeground(Color.WHITE);\r\n        JButton btnSave = new JButton(\"Lưu\");\r\n        btnSave.setBackground(new Color(50, 168, 82));\r\n        btnSave.setForeground(Color.WHITE);\r\n\r\n        dialog.add(btnSave);\r\n        dialog.add(btnCancel);\r\n\r\n        btnSave.addActionListener(e -> {\r\n            try {\r\n                Staff_DTO staff = new Staff_DTO(\r\n                        \"\", // id (auto-incremented, can be empty or null)\r\n                        txtPhone.getText(),\r\n                        new String(txtPass.getPassword()),\r\n                        txtFirstName.getText(),\r\n                        txtLastName.getText(),\r\n                        (String) cbGender.getSelectedItem(),\r\n                        txtAddress.getText(),\r\n                        (String) cbRole.getSelectedItem(),\r\n                        Double.parseDouble(txtSalary.getText()),\r\n                        (String) cbStatus.getSelectedItem()\r\n                );\r\n                if (addStaff(staff)) {\r\n                    JOptionPane.showMessageDialog(dialog, \"Thêm nhân viên thành công!\");\r\n                    loadStaffData();\r\n                    dialog.dispose();\r\n                }\r\n            } catch (NumberFormatException ex) {\r\n                JOptionPane.showMessageDialog(dialog, \"Lương phải là số!\");\r\n            }\r\n        });\r\n\r\n        btnCancel.addActionListener(e -> dialog.dispose());\r\n        dialog.setVisible(true);\r\n    }\r\n\r\n    // Hiển thị dialog sửa nhân viên\r\n    public void showEditDialog(Component parent, int selectedRow) {\r\n        if (selectedRow < 0) {\r\n            JOptionPane.showMessageDialog(parent, \"Vui lòng chọn nhân viên để sửa!\");\r\n            return;\r\n        }\r\n\r\n        JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(parent), \"Sửa nhân viên\", true);\r\n        dialog.setLayout(new GridLayout(10, 2, 10, 10));\r\n        dialog.setSize(400, 400);\r\n        dialog.setLocationRelativeTo(parent);\r\n\r\n        JTextField txtId = new JTextField((String) model.getValueAt(selectedRow, 0));\r\n        JTextField txtPhone = new JTextField((String) model.getValueAt(selectedRow, 1));\r\n        JTextField txtFirstName = new JTextField((String) model.getValueAt(selectedRow, 4));\r\n        JTextField txtLastName = new JTextField((String) model.getValueAt(selectedRow, 3));\r\n        JComboBox<String> cbGender = new JComboBox<>(new String[]{\"Nam\", \"Nữ\"});\r\n        cbGender.setSelectedItem(model.getValueAt(selectedRow, 9));\r\n        JTextField txtAddress = new JTextField((String) model.getValueAt(selectedRow, 5));\r\n        JComboBox<String> cbRole = new JComboBox<>(new String[]{\"Nhân viên\", \"Quản lý\"});\r\n        cbRole.setSelectedItem(model.getValueAt(selectedRow, 7));\r\n        JTextField txtSalary = new JTextField(model.getValueAt(selectedRow, 6).toString());\r\n        JComboBox<String> cbStatus = new JComboBox<>(new String[]{\"Đóng\", \"Mở\"});\r\n        cbStatus.setSelectedItem(model.getValueAt(selectedRow, 8));\r\n\r\n        dialog.add(new JLabel(\"Số điện thoại:\"));\r\n        dialog.add(txtPhone);\r\n        dialog.add(new JLabel(\"Họ:\"));\r\n        dialog.add(txtLastName);\r\n        dialog.add(new JLabel(\"Tên:\"));\r\n        dialog.add(txtFirstName);\r\n        dialog.add(new JLabel(\"Giới tính:\"));\r\n        dialog.add(cbGender);\r\n        dialog.add(new JLabel(\"Địa chỉ:\"));\r\n        dialog.add(txtAddress);\r\n        dialog.add(new JLabel(\"Loại:\"));\r\n        dialog.add(cbRole);\r\n        dialog.add(new JLabel(\"Lương:\"));\r\n        dialog.add(txtSalary);\r\n        dialog.add(new JLabel(\"Trạng thái:\"));\r\n        dialog.add(cbStatus);\r\n\r\n\r\n        JButton btnCancel = new JButton(\"Hủy\");\r\n        btnCancel.setBackground(new Color(255, 69, 58));\r\n        btnCancel.setForeground(Color.WHITE);\r\n        JButton btnSave = new JButton(\"Lưu\");\r\n        btnSave.setBackground(new Color(50, 168, 82));\r\n        btnSave.setForeground(Color.WHITE);\r\n        dialog.add(btnCancel);\r\n        dialog.add(btnSave);\r\n\r\n\r\n        btnSave.addActionListener(e -> {\r\n            try {\r\n                Staff_DTO staff = new Staff_DTO(\r\n                        txtId.getText(),\r\n                        txtPhone.getText(),\r\n                        (String) model.getValueAt(selectedRow,2),\r\n                        txtFirstName.getText(),\r\n                        txtLastName.getText(),\r\n                        (String) cbGender.getSelectedItem(),\r\n                        txtAddress.getText(),\r\n                        (String) cbRole.getSelectedItem(),\r\n                        Double.parseDouble(txtSalary.getText()),\r\n                        (String) cbStatus.getSelectedItem()\r\n                );\r\n                if (updateStaff(staff)) {\r\n                    JOptionPane.showMessageDialog(dialog, \"Cập nhật nhân viên thành công!\");\r\n                    loadStaffData();\r\n                    dialog.dispose();\r\n                }\r\n            } catch (NumberFormatException ex) {\r\n                JOptionPane.showMessageDialog(dialog, \"Lương phải là số!\");\r\n            }\r\n        });\r\n\r\n        btnCancel.addActionListener(e -> dialog.dispose());\r\n        dialog.setVisible(true);\r\n    }\r\n\r\n    // Làm mới bảng\r\n    public void refreshTable(JTextField txtSearch, TableRowSorter<DefaultTableModel> sorter, JComboBox<String> sortComboBox) {\r\n        txtSearch.setText(\"Nhập mã NV hoặc tên...\");\r\n        sorter.setRowFilter(null);\r\n        sortComboBox.setSelectedIndex(0);\r\n        loadStaffData();\r\n    }\r\n\r\n\r\n    public void exportExcel(Component parent) {\r\n        JFileChooser fileChooser = new JFileChooser();\r\n        fileChooser.setDialogTitle(\"Chọn nơi lưu file Excel\");\r\n        fileChooser.setFileFilter(new FileNameExtensionFilter(\"Excel Files\", \"xlsx\"));\r\n        int result = fileChooser.showSaveDialog(parent);\r\n\r\n        if (result == JFileChooser.APPROVE_OPTION) {\r\n            String filePath = fileChooser.getSelectedFile().getAbsolutePath();\r\n            if (!filePath.endsWith(\".xlsx\")) {\r\n                filePath += \".xlsx\";\r\n            }\r\n\r\n        }\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/BUS/Staff_BUS.java b/src/BUS/Staff_BUS.java
+--- a/src/BUS/Staff_BUS.java	(revision 734f9f24bd05bda5c0f336779ce1be15e2cce0de)
++++ b/src/BUS/Staff_BUS.java	(date 1743260882956)
+@@ -132,7 +132,7 @@
+         btnSave.addActionListener(e -> {
+             try {
+                 Staff_DTO staff = new Staff_DTO(
+-                        "", // id (auto-incremented, can be empty or null)
++                        "",
+                         txtPhone.getText(),
+                         new String(txtPass.getPassword()),
+                         txtFirstName.getText(),
+@@ -156,7 +156,6 @@
+         btnCancel.addActionListener(e -> dialog.dispose());
+         dialog.setVisible(true);
+     }
+-
+     // Hiển thị dialog sửa nhân viên
+     public void showEditDialog(Component parent, int selectedRow) {
+         if (selectedRow < 0) {
+Index: src/GUI/JPanel/pnStaff.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package GUI.JPanel;\r\n\r\nimport BUS.Staff_BUS;\r\nimport javax.swing.*;\r\nimport javax.swing.border.Border;\r\nimport javax.swing.plaf.basic.BasicComboBoxUI;\r\nimport javax.swing.table.DefaultTableCellRenderer;\r\nimport javax.swing.table.DefaultTableModel;\r\nimport javax.swing.table.TableColumnModel;\r\nimport javax.swing.table.TableRowSorter;\r\nimport java.awt.*;\r\nimport java.awt.event.MouseAdapter;\r\nimport java.awt.event.MouseEvent;\r\nimport java.util.regex.Pattern;\r\n\r\npublic class pnStaff extends JPanel {\r\n    private final DefaultTableModel model = new DefaultTableModel() {\r\n        @Override\r\n        public boolean isCellEditable(int row, int column) {\r\n            return false;\r\n        }\r\n    };\r\n    private final JTable tbStaff;\r\n    private final TableRowSorter<DefaultTableModel> sorter;\r\n    private final Staff_BUS staffBUS;\r\n\r\n    // Các thành phần giao diện\r\n    private final JButton btnAdd = new JButton(\"Thêm\");\r\n    private final JButton btnEdit = new JButton(\"Sửa\");\r\n    private final JButton btnBlock = new JButton(\"Khóa\");\r\n    private final JButton btnExportExcel = new JButton(\"Xuất Excel\");\r\n    private final JButton btnRefresh = new JButton(\"Tải lại\");\r\n    private final JTextField txtSearch = new JTextField(\"Nhập mã NV hoặc tên...\");\r\n    private final JComboBox<String> sortComboBox;\r\n\r\n    // Panels\r\n    private final JPanel panelFunction = new JPanel();\r\n    private final JPanel panelSearch = new JPanel();\r\n    private final JPanel panelHeader = new JPanel();\r\n    private final JPanel panelDisplay = new JPanel();\r\n\r\n    public pnStaff() {\r\n        staffBUS = new Staff_BUS(model); // Truyền model vào BUS\r\n        setLayout(new BorderLayout());\r\n        setBackground(Color.decode(\"#F5F5F5\"));\r\n        Border border = BorderFactory.createLineBorder(Color.GRAY, 1);\r\n        customizeButton(btnAdd, new Color(50, 168, 82));\r\n        customizeButton(btnEdit, new Color(255, 165, 0));\r\n        customizeButton(btnBlock, new Color(255, 69, 58));\r\n        JButton btnImportExcel = new JButton(\"Nhập Excel\");\r\n        customizeButton(btnImportExcel, new Color(66, 133, 244));\r\n        customizeButton(btnExportExcel, new Color(66, 133, 244));\r\n        customizeButton(btnRefresh, new Color(66, 133, 244));\r\n\r\n        // Thiết lập panelFunction\r\n        panelFunction.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 5));\r\n        panelFunction.setBorder(BorderFactory.createTitledBorder(border, \"Chức năng\", 0, 0, new Font(\"Arial\", Font.BOLD, 14)));\r\n        panelFunction.setBackground(Color.WHITE);\r\n        panelFunction.add(btnAdd);\r\n        panelFunction.add(btnEdit);\r\n        panelFunction.add(btnBlock);\r\n        panelFunction.add(btnImportExcel);\r\n        panelFunction.add(btnExportExcel);\r\n\r\n        // Thiết lập panelSearch\r\n        panelSearch.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 5));\r\n        panelSearch.setBorder(BorderFactory.createTitledBorder(border, \"Tìm kiếm & Sắp xếp\", 0, 0, new Font(\"Arial\", Font.BOLD, 14)));\r\n        panelHeader.setBackground(new Color(230, 240, 255));\r\n        txtSearch.setPreferredSize(new Dimension(200, 30));\r\n        txtSearch.setBorder(BorderFactory.createCompoundBorder(\r\n                BorderFactory.createLineBorder(Color.GRAY, 1),\r\n                BorderFactory.createEmptyBorder(5, 5, 5, 5)\r\n        ));\r\n        txtSearch.setForeground(Color.GRAY);\r\n        txtSearch.setFont(new Font(\"Arial\", Font.PLAIN, 14));\r\n\r\n        // Cập nhật sortComboBox với các tùy chọn sắp xếp nâng cao\r\n        String[] sortOptions = {\r\n                \"Lương (tăng dần)\",\r\n                \"Lương (giảm dần)\",\r\n                \"NAM\",\r\n                \"NỮ\",\r\n                \"Quản lý\",\r\n                \"Nhân Viên\"\r\n        };\r\n        sortComboBox = new JComboBox<>(sortOptions);\r\n        sortComboBox.setPreferredSize(new Dimension(150, 30));\r\n        sortComboBox.setBackground(Color.WHITE);\r\n        sortComboBox.setForeground(Color.GRAY);\r\n        sortComboBox.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));\r\n        sortComboBox.setUI(new BasicComboBoxUI() {\r\n            @Override\r\n            protected JButton createArrowButton() {\r\n                JButton arrowButton = new JButton(\"V\");\r\n                arrowButton.setBackground(Color.WHITE);\r\n                arrowButton.setForeground(Color.GRAY);\r\n                arrowButton.setBorder(BorderFactory.createEmptyBorder());\r\n                arrowButton.setFocusPainted(false);\r\n                return arrowButton;\r\n            }\r\n        });\r\n\r\n        panelSearch.add(txtSearch);\r\n        panelSearch.add(sortComboBox);\r\n        panelSearch.add(btnRefresh);\r\n\r\n        // panelHeader\r\n        panelHeader.setLayout(new BorderLayout());\r\n        panelHeader.add(panelFunction, BorderLayout.WEST);\r\n        panelHeader.add(panelSearch, BorderLayout.EAST);\r\n        panelHeader.setBackground(Color.decode(\"#09D1C7\"));\r\n        panelHeader.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));\r\n\r\n        // Thiết lập bảng\r\n        String[] columns = {\"Mã NV\", \"Số điện thoại\", \"Pass\", \"Họ\", \"Tên\", \"Địa chỉ\", \"Lương\", \"Role\", \"Trạng thái\", \"Giới tính\"};\r\n        model.setColumnIdentifiers(columns);\r\n        tbStaff = new JTable(model);\r\n        tbStaff.setRowHeight(28);\r\n        tbStaff.setFont(new Font(\"Arial\", Font.PLAIN, 14));\r\n        tbStaff.getTableHeader().setFont(new Font(\"Roboto\", Font.BOLD, 14));\r\n        tbStaff.getTableHeader().setPreferredSize(new Dimension(0, 28));\r\n        tbStaff.getTableHeader().setBackground(new Color(178, 236, 255));\r\n        tbStaff.getTableHeader().setForeground(Color.BLACK);\r\n        tbStaff.getTableHeader().setReorderingAllowed(false);\r\n        tbStaff.setBorder(BorderFactory.createEmptyBorder());\r\n        tbStaff.setShowGrid(false);\r\n        tbStaff.getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {\r\n            @Override\r\n            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {\r\n                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);\r\n                label.setBorder(null);\r\n                label.setHorizontalAlignment(SwingConstants.CENTER);\r\n                label.setBackground(new Color(66, 133, 244));\r\n                label.setForeground(Color.WHITE);\r\n                label.setFont(new Font(\"Roboto\", Font.BOLD, 16));\r\n                return label;\r\n            }\r\n        });\r\n        tbStaff.setIntercellSpacing(new Dimension(0, 1));\r\n        tbStaff.setFocusable(false);\r\n        tbStaff.setShowVerticalLines(false);\r\n        tbStaff.setShowHorizontalLines(true);\r\n        tbStaff.setGridColor(new Color(240, 240, 240));\r\n        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();\r\n        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);\r\n        for (int i = 0; i < tbStaff.getColumnCount(); i++) {\r\n            tbStaff.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);\r\n        }\r\n\r\n        JScrollPane scrollPane = new JScrollPane(tbStaff);\r\n        scrollPane.setBorder(null);\r\n        scrollPane.setBackground(Color.WHITE);\r\n        TableColumnModel columnModel = tbStaff.getColumnModel();\r\n        columnModel.getColumn(0).setPreferredWidth(30);\r\n        columnModel.getColumn(1).setPreferredWidth(70);\r\n        columnModel.getColumn(2).setPreferredWidth(120);\r\n        columnModel.getColumn(3).setPreferredWidth(60);\r\n        columnModel.getColumn(4).setPreferredWidth(60);\r\n        columnModel.getColumn(5).setPreferredWidth(170);\r\n        columnModel.getColumn(6).setPreferredWidth(80);\r\n        columnModel.getColumn(7).setPreferredWidth(95);\r\n        columnModel.getColumn(8).setPreferredWidth(100);\r\n        columnModel.getColumn(9).setPreferredWidth(70);\r\n\r\n        sorter = new TableRowSorter<>(model);\r\n        tbStaff.setRowSorter(sorter);\r\n\r\n        // Xử lý cột Lương (nếu là String, cần Comparator để sắp xếp số)\r\n        sorter.setComparator(6, (o1, o2) -> {\r\n            try {\r\n                Double d1 = Double.parseDouble(o1.toString());\r\n                Double d2 = Double.parseDouble(o2.toString());\r\n                return d1.compareTo(d2);\r\n            } catch (NumberFormatException e) {\r\n                return o1.toString().compareTo(o2.toString());\r\n            }\r\n        });\r\n\r\n        // Load dữ liệu ban đầu\r\n        staffBUS.loadStaffData();\r\n\r\n        // Sự kiện tìm kiếm\r\n        txtSearch.addMouseListener(new MouseAdapter() {\r\n            @Override\r\n            public void mouseClicked(MouseEvent e) {\r\n                if (e.getButton() == MouseEvent.BUTTON1) {\r\n                    txtSearch.setText(\"\");\r\n                }\r\n            }\r\n        });\r\n\r\n        txtSearch.addActionListener(e -> {\r\n            String searchText = txtSearch.getText().trim().toLowerCase();\r\n            if (searchText.isEmpty() || searchText.equals(\"nhập nội dung tìm kiếm ...\")) {\r\n                sorter.setRowFilter(null);\r\n            } else {\r\n                sorter.setRowFilter(RowFilter.regexFilter(\"(?i)\" + Pattern.quote(searchText)));\r\n            }\r\n        });\r\n\r\n        // Sự kiện sắp xếp cho sortComboBox\r\n        sortComboBox.addActionListener(e -> {\r\n            int selectedIndex = sortComboBox.getSelectedIndex();\r\n            switch (selectedIndex) {\r\n                case 0: // Lương (tăng dần)\r\n                    sorter.setSortKeys(java.util.Collections.singletonList(\r\n                            new RowSorter.SortKey(6, SortOrder.ASCENDING)\r\n                    ));\r\n                    break;\r\n\r\n                case 1: // Lương (giảm dần)\r\n                    sorter.setSortKeys(java.util.Collections.singletonList(\r\n                            new RowSorter.SortKey(6, SortOrder.DESCENDING)\r\n                    ));\r\n                    break;\r\n                case 2: // Nam\r\n                    sorter.setRowFilter(RowFilter.regexFilter(\"(?i)^Nam$\", 9));\r\n                    break;\r\n                case 3: // Nữ\r\n                    sorter.setRowFilter(RowFilter.regexFilter(\"(?i)^Nữ$\", 9));\r\n                    sorter.setSortKeys(null); // Xóa sắp xếp\r\n                    break;\r\n                case 4: // Quản lý\r\n                    sorter.setRowFilter(RowFilter.regexFilter(\"(?i)^Quản lý$\", 7));\r\n                    sorter.setSortKeys(null);\r\n                    break;\r\n                case 5: // Nhân viên\r\n                    sorter.setRowFilter(RowFilter.regexFilter(\"(?i)^Nhân viên$\", 7));\r\n                    sorter.setSortKeys(null);\r\n                    break;\r\n                default:\r\n                    sorter.setSortKeys(null);\r\n                    break;\r\n            }\r\n            tbStaff.repaint();\r\n        });\r\n\r\n        // Sự kiện cho các nút\r\n        btnAdd.addActionListener(e -> staffBUS.showAddDialog(this));\r\n        btnEdit.addActionListener(e -> staffBUS.showEditDialog(this, tbStaff.getSelectedRow()));\r\n        tbStaff.getSelectedRow();\r\n        btnBlock.addActionListener(e -> {\r\n            int selectedRow = tbStaff.getSelectedRow();\r\n            String status = (String) tbStaff.getValueAt(selectedRow,8);\r\n            if (selectedRow >= 0) {\r\n                String id = (String) model.getValueAt(selectedRow, 0);\r\n                if (staffBUS.lockStaff(id,status)) {\r\n                    if (status.equals(\"Active\")) {\r\n                        JOptionPane.showMessageDialog(this, \"Đã khóa tài khoản!\");\r\n                    }\r\n                    else {\r\n                        JOptionPane.showMessageDialog(this,\"Đã mở khóa tài khoản!\");\r\n                    }\r\n                    staffBUS.loadStaffData();\r\n                }\r\n            }\r\n        });\r\n        // btnImportExcel.addActionListener(e -> staffBUS.importExcel(this));\r\n        btnExportExcel.addActionListener(e -> staffBUS.exportExcel(this));\r\n        btnRefresh.addActionListener(e -> staffBUS.refreshTable(txtSearch, sorter, sortComboBox));\r\n\r\n        panelDisplay.setLayout(new BorderLayout());\r\n        panelDisplay.add(scrollPane, BorderLayout.CENTER);\r\n        panelDisplay.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));\r\n        panelDisplay.setBackground(Color.WHITE);\r\n\r\n        add(panelHeader, BorderLayout.NORTH);\r\n        add(panelDisplay, BorderLayout.CENTER);\r\n    }\r\n\r\n    // Tùy chỉnh giao diện nút\r\n    private void customizeButton(JButton button, Color backgroundColor) {\r\n        button.setBackground(backgroundColor);\r\n        button.setForeground(Color.WHITE);\r\n        button.setFont(new Font(\"Arial\", Font.BOLD, 14));\r\n        button.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));\r\n        button.setFocusPainted(false);\r\n        button.setCursor(new Cursor(Cursor.HAND_CURSOR));\r\n        Color hoverColor = backgroundColor.brighter(); // Sáng hơn 20%\r\n        button.addMouseListener(new MouseAdapter() {\r\n            @Override\r\n            public void mouseEntered(MouseEvent e) {\r\n                button.setBackground(hoverColor);\r\n            }\r\n\r\n            @Override\r\n            public void mouseExited(MouseEvent e) {\r\n                button.setBackground(backgroundColor);\r\n            }\r\n        });\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/GUI/JPanel/pnStaff.java b/src/GUI/JPanel/pnStaff.java
+--- a/src/GUI/JPanel/pnStaff.java	(revision 734f9f24bd05bda5c0f336779ce1be15e2cce0de)
++++ b/src/GUI/JPanel/pnStaff.java	(date 1743261498998)
+@@ -22,7 +22,7 @@
+     };
+     private final JTable tbStaff;
+     private final TableRowSorter<DefaultTableModel> sorter;
+-    private final Staff_BUS staffBUS;
++    private  Staff_BUS staffBUS;
+ 
+     // Các thành phần giao diện
+     private final JButton btnAdd = new JButton("Thêm");
+@@ -155,7 +155,7 @@
+         columnModel.getColumn(1).setPreferredWidth(70);
+         columnModel.getColumn(2).setPreferredWidth(120);
+         columnModel.getColumn(3).setPreferredWidth(60);
+-        columnModel.getColumn(4).setPreferredWidth(60);
++        columnModel.getColumn( 4).setPreferredWidth(60);
+         columnModel.getColumn(5).setPreferredWidth(170);
+         columnModel.getColumn(6).setPreferredWidth(80);
+         columnModel.getColumn(7).setPreferredWidth(95);
+@@ -238,7 +238,7 @@
+         // Sự kiện cho các nút
+         btnAdd.addActionListener(e -> staffBUS.showAddDialog(this));
+         btnEdit.addActionListener(e -> staffBUS.showEditDialog(this, tbStaff.getSelectedRow()));
+-        tbStaff.getSelectedRow();
++//        tbStaff.getSelectedRow();
+         btnBlock.addActionListener(e -> {
+             int selectedRow = tbStaff.getSelectedRow();
+             String status = (String) tbStaff.getValueAt(selectedRow,8);
+Index: SQL.sql
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>CREATE DATABASE mini_mart_java;\r\nUSE mini_mart_java;\r\n\r\n-- Tạo bảng Customer\r\nCREATE TABLE Customer (\r\n    id INT AUTO_INCREMENT PRIMARY KEY,\r\n    phone VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,\r\n    password VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,\r\n    firstName VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,\r\n    lastName VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,\r\n    address VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,\r\n    status VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL, -- Đóng || Mở\r\n    gender VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL -- Nam || Nữ \r\n);\r\n\r\n-- Tạo bảng Staff\r\nCREATE TABLE Staff (\r\n    id INT AUTO_INCREMENT PRIMARY KEY,\r\n    phone VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,\r\n    password VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,\r\n    firstName VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,\r\n    lastName VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,\r\n    address VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,\r\n    salary DOUBLE NOT NULL,\r\n    type VARCHAR(100) CHARACTER SET UTF8MB4,\r\n    status VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL, -- Đóng || Mở\r\n    gender VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL -- Nam || Nữ\r\n);\r\n\r\n-- Tạo bảng Offer\r\nCREATE TABLE Offer (\r\n    id INT AUTO_INCREMENT PRIMARY KEY,\r\n    \r\n    startDate DATETIME,\r\n    endDate DATETIME\r\n);\r\n\r\n-- Tạo bảng OfferProduct\r\nCREATE TABLE OfferProduct (\r\n    id INT AUTO_INCREMENT PRIMARY KEY,\r\n    idOffer INT,\r\n    discount INT,\r\n    FOREIGN KEY (idOffer) REFERENCES Offer(id)\r\n);\r\n\r\n-- Tạo bảng OfferBill\r\nCREATE TABLE OfferBill (\r\n    id INT AUTO_INCREMENT PRIMARY KEY,\r\n    discount INT,\r\n    idOffer INT,\r\n    FOREIGN KEY (idOffer) REFERENCES Offer(id)\r\n);\r\n\r\n-- Tạo bảng Provider\r\nCREATE TABLE Provider (\r\n    id INT AUTO_INCREMENT PRIMARY KEY,\r\n    name VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,\r\n    phone VARCHAR(100) CHARACTER SET UTF8MB4,\r\n    address TEXT CHARACTER SET UTF8MB4,\r\n    email VARCHAR(100) CHARACTER SET UTF8MB4\r\n);\r\n\r\n-- Tạo bảng ProductDetail\r\nCREATE TABLE ProductDetail (\r\n    id INT AUTO_INCREMENT PRIMARY KEY,\r\n    detailInfo TEXT CHARACTER SET UTF8MB4\r\n);\r\n\r\n-- Tạo bảng ProductType\r\nCREATE TABLE ProductType (\r\n    id INT AUTO_INCREMENT PRIMARY KEY,\r\n    name VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL\r\n);\r\n\r\n-- Tạo bảng Product\r\nCREATE TABLE Product (\r\n    id INT AUTO_INCREMENT PRIMARY KEY,\r\n    idProductType INT,\r\n    idProductDetail INT,\r\n    idOfferProduct INT,\r\n    name VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,\r\n    price DOUBLE,\r\n    unit VARCHAR(100) CHARACTER SET UTF8MB4,\r\n    quantity INT,\r\n    FOREIGN KEY (idOfferProduct) REFERENCES OfferProduct(id),\r\n    FOREIGN KEY (idProductDetail) REFERENCES ProductDetail(id),\r\n    FOREIGN KEY (idProductType) REFERENCES ProductType(id)\r\n);\r\n\r\n-- Tạo bảng ImportOrder\r\nCREATE TABLE ImportOrder (\r\n    id INT AUTO_INCREMENT PRIMARY KEY,\r\n    idStaff INT,\r\n    idProvider INT,\r\n    dateCreate DATETIME NOT NULL,\r\n    total DOUBLE,\r\n    FOREIGN KEY (idStaff) REFERENCES Staff(id),\r\n    FOREIGN KEY (idProvider) REFERENCES Provider(id)\r\n);\r\n\r\n-- Tạo bảng ImportOrderDetail\r\nCREATE TABLE ImportOrderDetail (\r\n    id INT AUTO_INCREMENT PRIMARY KEY,\r\n    idProduct INT NOT NULL,\r\n    quantity INT,\r\n    price DOUBLE,\r\n    unit VARCHAR(100) CHARACTER SET UTF8MB4,\r\n    FOREIGN KEY (idProduct) REFERENCES Product(id)\r\n);\r\n\r\n-- Tạo bảng Bill\r\nCREATE TABLE Bill (\r\n    id INT AUTO_INCREMENT PRIMARY KEY,\r\n    idStaff INT,\r\n    idOfferBill INT,\r\n    idCustomer INT,\r\n    dateCreate DATETIME,\r\n    price DOUBLE,\r\n    FOREIGN KEY (idStaff) REFERENCES Staff(id),\r\n    FOREIGN KEY (idCustomer) REFERENCES Customer(id),\r\n    FOREIGN KEY (idOfferBill) REFERENCES OfferBill(id)\r\n);\r\n\r\n-- Tạo bảng BillInfo\r\nCREATE TABLE BillInfo (\r\n    id INT AUTO_INCREMENT PRIMARY KEY,\r\n    idBill INT,\r\n    idProduct INT,\r\n    price DOUBLE,\r\n    quantity INT,\r\n    unit VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,\r\n    FOREIGN KEY (idBill) REFERENCES Bill(id),\r\n    FOREIGN KEY (idProduct) REFERENCES Product(id)\r\n); \r\n -- -------------------------------------- CUONG ---------------------------------------------------------\r\n INSERT INTO Provider (name, phone, address, email) VALUES\r\n ('Vinamilk', '02854155555', '10 Tân Trào, P. Tân Phú, Q. 7, TP. HCM', 'contact@vinamilk.com.vn'),\r\n ('Nestlé Việt Nam', '02873008345', '5 Đường 17A, P. Bình Trị Đông B, Q. Bình Tân, TP. HCM', 'support@vn.nestle.com'),\r\n ('TH True Milk', '02462691111', '166 Nguyễn Thái Học, Ba Đình, Hà Nội', 'info@thmilk.vn'),\r\n ('Coca-Cola Việt Nam', '02838920017', '485 Xa Lộ Hà Nội, P. Linh Trung, Thủ Đức, TP. HCM', 'contact@coca-cola.com.vn'),\r\n ('PepsiCo Việt Nam', '02838233545', '88 Hàm Nghi, Q.1, TP. HCM', 'support@pepsico.vn'),\r\n ('Masan Consumer', '02837578899', '12 Nguyễn Bỉnh Khiêm, P. Đa Kao, Q.1, TP. HCM', 'info@masanconsumer.com'),\r\n ('Unilever Việt Nam', '02838238338', '156 Nguyễn Lương Bằng, Q.7, TP. HCM', 'customer@unilever.com'),\r\n ('P&G Việt Nam', '02838219999', '128 Trần Hưng Đạo, Q.1, TP. HCM', 'contact@pg.com'),\r\n ('Vissan', '02838555310', '420 Nơ Trang Long, P.13, Bình Thạnh, TP. HCM', 'support@vissan.com.vn'),\r\n ('CP Việt Nam', '02513836300', 'KCN Biên Hòa 2, Đồng Nai', 'info@cpvietnam.com'),\r\n ('Ba Huân', '02837593939', '9/1 Lê Thị Hồng, P.17, Gò Vấp, TP. HCM', 'contact@bahuan.vn'),\r\n ('San Hà', '02838580000', '229 Nguyễn Văn Cừ, Q.5, TP. HCM', 'info@sanha.vn'),\r\n ('Acecook Việt Nam', '02838152822', 'KCN Tân Bình, P. Tây Thạnh, Q. Tân Phú, TP. HCM', 'support@acecookvietnam.vn'),\r\n ('Miwon Việt Nam', '02838372626', 'KCN Biên Hòa 1, Đồng Nai', 'info@miwon.vn'),\r\n ('Ajinomoto Việt Nam', '02838151515', 'KCN Long Thành, Đồng Nai', 'contact@ajinomoto.com.vn'),\r\n ('Kinh Đô', '02837401565', '26 VSIP, Thuận An, Bình Dương', 'info@kinhdo.vn'),\r\n ('Orion Việt Nam', '02838984111', 'KCN Mỹ Phước, Bến Cát, Bình Dương', 'support@orion.vn'),\r\n ('Perfetti Van Melle', '02838993388', 'Số 10, Đường số 3, KCN Sóng Thần, Bình Dương', 'info@perfettivanmelle.vn'),\r\n ('Hòa Phát', '02462848866', '39 Nguyễn Đình Chiểu, Hai Bà Trưng, Hà Nội', 'contact@hoaphat.com.vn'),\r\n ('Sanaky Việt Nam', '02838569999', '48/9B Xa Lộ Hà Nội, Q.9, TP. HCM', 'support@sanaky.vn');\r\n \r\n -- -------------------------------------- Phu ---------------------------------------------------------\r\n INSERT INTO staff (phone, password, firstName, lastName, address, salary, type, status, gender)\r\n VALUES\r\n ('0955112233', 'securepass', 'Phu', 'Ng', 'Nha Trang', 19000000, 'Quản lý', 'Active', 'Nam'),\r\n ('0988776655', 'pass1234', 'An', 'Tran', 'Hà Nội', 15000000, 'Nhân viên', 'Active', 'Nữ'),\r\n ('0977665544', 'adminpass', 'Linh', 'Nguyen', 'Đà Nẵng', 21000000, 'Quản lý', 'Active', 'Nam'),\r\n ('0966554433', 'password1', 'Huy', 'Le', 'Hải Phòng', 18000000, 'Nhân viên', 'Inactive', 'Nam'),\r\n ('0955443322', 'mypassword', 'Trang', 'Pham', 'Cần Thơ', 16000000, 'Nhân viên', 'Active', 'Nữ'),\r\n ('0944332211', '123456', 'Binh', 'Do', 'Huế', 22000000, 'Quản lý', 'Active', 'Nam'),\r\n ('0933221100', 'nvpassword', 'Nga', 'Vo', 'Bình Dương', 14000000, 'Nhân viên', 'Active', 'Nữ'),\r\n ('0922110099', 'abcd1234', 'Duc', 'Dang', 'Vũng Tàu', 20000000, 'Quản lý', 'Inactive', 'Nam'),\r\n ('0911009988', 'staffpass', 'Hoa', 'Ly', 'Biên Hòa', 17000000, 'Nhân viên', 'Active', 'Nữ'),\r\n ('0900998877', 'newpass', 'Tuan', 'Ho', 'Quảng Ninh', 19500000, 'Quản lý', 'Active', 'Nam');\r\n\r\n -- ---------------- SELECT -----------\r\n select * from Provider;\r\n\r\n -- ------------------------------------\r\n -- drop database mini_mart_java\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/SQL.sql b/SQL.sql
+--- a/SQL.sql	(revision 734f9f24bd05bda5c0f336779ce1be15e2cce0de)
++++ b/SQL.sql	(date 1743250055867)
+@@ -1,5 +1,5 @@
+-CREATE DATABASE mini_mart_java;
+-USE mini_mart_java;
++create database mini_mart_java;
++use mini_mart_java;
+ 
+ -- Tạo bảng Customer
+ CREATE TABLE Customer (
+@@ -8,47 +8,20 @@
+     password VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,
+     firstName VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,
+     lastName VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,
+-    address VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,
+-    status VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL, -- Đóng || Mở
+-    gender VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL -- Nam || Nữ 
++    address VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL
+ );
+ 
+--- Tạo bảng Staff
+-CREATE TABLE Staff (
++-- Tạo bảng Account
++CREATE TABLE Account (
+     id INT AUTO_INCREMENT PRIMARY KEY,
+-    phone VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,
+     password VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,
+     firstName VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,
+     lastName VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,
+     address VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,
+-    salary DOUBLE NOT NULL,
++    salary DOUBLE,
+     type VARCHAR(100) CHARACTER SET UTF8MB4,
+-    status VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL, -- Đóng || Mở
+-    gender VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL -- Nam || Nữ
+-);
+-
+--- Tạo bảng Offer
+-CREATE TABLE Offer (
+-    id INT AUTO_INCREMENT PRIMARY KEY,
+-    
+-    startDate DATETIME,
+-    endDate DATETIME
+-);
+-
+--- Tạo bảng OfferProduct
+-CREATE TABLE OfferProduct (
+-    id INT AUTO_INCREMENT PRIMARY KEY,
+-    idOffer INT,
+-    discount INT,
+-    FOREIGN KEY (idOffer) REFERENCES Offer(id)
+-);
+-
+--- Tạo bảng OfferBill
+-CREATE TABLE OfferBill (
+-    id INT AUTO_INCREMENT PRIMARY KEY,
+-    discount INT,
+-    idOffer INT,
+-    FOREIGN KEY (idOffer) REFERENCES Offer(id)
++    idCustomer INT,
++    FOREIGN KEY (idCustomer) REFERENCES Customer(id)
+ );
+ 
+ -- Tạo bảng Provider
+@@ -56,14 +29,20 @@
+     id INT AUTO_INCREMENT PRIMARY KEY,
+     name VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,
+     phone VARCHAR(100) CHARACTER SET UTF8MB4,
+-    address TEXT CHARACTER SET UTF8MB4,
+-    email VARCHAR(100) CHARACTER SET UTF8MB4
++    address TEXT CHARACTER SET UTF8MB4
+ );
+ 
+--- Tạo bảng ProductDetail
+-CREATE TABLE ProductDetail (
++-- Tạo bảng ImportOrder
++CREATE TABLE ImportOrder (
+     id INT AUTO_INCREMENT PRIMARY KEY,
+-    detailInfo TEXT CHARACTER SET UTF8MB4
++    quantity INT,
++    price DOUBLE,
++    dateCreate DATETIME,
++    unit VARCHAR(100) CHARACTER SET UTF8MB4,
++    idAccount INT,
++    idProvider INT,
++    FOREIGN KEY (idAccount) REFERENCES Account(id),
++    FOREIGN KEY (idProvider) REFERENCES Provider(id)
+ );
+ 
+ -- Tạo bảng ProductType
+@@ -75,104 +54,160 @@
+ -- Tạo bảng Product
+ CREATE TABLE Product (
+     id INT AUTO_INCREMENT PRIMARY KEY,
+-    idProductType INT,
+-    idProductDetail INT,
+-    idOfferProduct INT,
+     name VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,
+     price DOUBLE,
+     unit VARCHAR(100) CHARACTER SET UTF8MB4,
+     quantity INT,
+-    FOREIGN KEY (idOfferProduct) REFERENCES OfferProduct(id),
+-    FOREIGN KEY (idProductDetail) REFERENCES ProductDetail(id),
++    idProductType INT,
+     FOREIGN KEY (idProductType) REFERENCES ProductType(id)
+ );
+ 
+--- Tạo bảng ImportOrder
+-CREATE TABLE ImportOrder (
++-- Tạo bảng ProductDetail
++CREATE TABLE ProductDetail (
+     id INT AUTO_INCREMENT PRIMARY KEY,
+-    idStaff INT,
+-    idProvider INT,
+-    dateCreate DATETIME NOT NULL,
+-    total DOUBLE,
+-    FOREIGN KEY (idStaff) REFERENCES Staff(id),
+-    FOREIGN KEY (idProvider) REFERENCES Provider(id)
++    detailInfo TEXT CHARACTER SET UTF8MB4,
++    idImportOrder INT,
++    idProduct INT,
++    FOREIGN KEY (idImportOrder) REFERENCES ImportOrder(id),
++    FOREIGN KEY (idProduct) REFERENCES Product(id)
++);
++
++-- Tạo bảng Offer
++CREATE TABLE Offer (
++    id INT AUTO_INCREMENT PRIMARY KEY,
++    startDate DATETIME,
++    endDate DATETIME
+ );
+ 
+--- Tạo bảng ImportOrderDetail
+-CREATE TABLE ImportOrderDetail (
++-- Tạo bảng OfferProduct
++CREATE TABLE OfferProduct (
+     id INT AUTO_INCREMENT PRIMARY KEY,
+-    idProduct INT NOT NULL,
+-    quantity INT,
+-    price DOUBLE,
+-    unit VARCHAR(100) CHARACTER SET UTF8MB4,
++    discount INT,
++    idOffer INT,
++    idProduct INT,
++    FOREIGN KEY (idOffer) REFERENCES Offer(id),
+     FOREIGN KEY (idProduct) REFERENCES Product(id)
+ );
+ 
+ -- Tạo bảng Bill
+ CREATE TABLE Bill (
+     id INT AUTO_INCREMENT PRIMARY KEY,
+-    idStaff INT,
+-    idOfferBill INT,
+-    idCustomer INT,
+     dateCreate DATETIME,
+     price DOUBLE,
+-    FOREIGN KEY (idStaff) REFERENCES Staff(id),
+-    FOREIGN KEY (idCustomer) REFERENCES Customer(id),
+-    FOREIGN KEY (idOfferBill) REFERENCES OfferBill(id)
++    idAccount INT,
++    FOREIGN KEY (idAccount) REFERENCES Account(id)
+ );
+ 
+ -- Tạo bảng BillInfo
+ CREATE TABLE BillInfo (
+     id INT AUTO_INCREMENT PRIMARY KEY,
++    dateCreate DATETIME,
++    price DOUBLE,
+     idBill INT,
+     idProduct INT,
+-    price DOUBLE,
+-    quantity INT,
+-    unit VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,
+     FOREIGN KEY (idBill) REFERENCES Bill(id),
+     FOREIGN KEY (idProduct) REFERENCES Product(id)
+-); 
+- -- -------------------------------------- CUONG ---------------------------------------------------------
+- INSERT INTO Provider (name, phone, address, email) VALUES
+- ('Vinamilk', '02854155555', '10 Tân Trào, P. Tân Phú, Q. 7, TP. HCM', 'contact@vinamilk.com.vn'),
+- ('Nestlé Việt Nam', '02873008345', '5 Đường 17A, P. Bình Trị Đông B, Q. Bình Tân, TP. HCM', 'support@vn.nestle.com'),
+- ('TH True Milk', '02462691111', '166 Nguyễn Thái Học, Ba Đình, Hà Nội', 'info@thmilk.vn'),
+- ('Coca-Cola Việt Nam', '02838920017', '485 Xa Lộ Hà Nội, P. Linh Trung, Thủ Đức, TP. HCM', 'contact@coca-cola.com.vn'),
+- ('PepsiCo Việt Nam', '02838233545', '88 Hàm Nghi, Q.1, TP. HCM', 'support@pepsico.vn'),
+- ('Masan Consumer', '02837578899', '12 Nguyễn Bỉnh Khiêm, P. Đa Kao, Q.1, TP. HCM', 'info@masanconsumer.com'),
+- ('Unilever Việt Nam', '02838238338', '156 Nguyễn Lương Bằng, Q.7, TP. HCM', 'customer@unilever.com'),
+- ('P&G Việt Nam', '02838219999', '128 Trần Hưng Đạo, Q.1, TP. HCM', 'contact@pg.com'),
+- ('Vissan', '02838555310', '420 Nơ Trang Long, P.13, Bình Thạnh, TP. HCM', 'support@vissan.com.vn'),
+- ('CP Việt Nam', '02513836300', 'KCN Biên Hòa 2, Đồng Nai', 'info@cpvietnam.com'),
+- ('Ba Huân', '02837593939', '9/1 Lê Thị Hồng, P.17, Gò Vấp, TP. HCM', 'contact@bahuan.vn'),
+- ('San Hà', '02838580000', '229 Nguyễn Văn Cừ, Q.5, TP. HCM', 'info@sanha.vn'),
+- ('Acecook Việt Nam', '02838152822', 'KCN Tân Bình, P. Tây Thạnh, Q. Tân Phú, TP. HCM', 'support@acecookvietnam.vn'),
+- ('Miwon Việt Nam', '02838372626', 'KCN Biên Hòa 1, Đồng Nai', 'info@miwon.vn'),
+- ('Ajinomoto Việt Nam', '02838151515', 'KCN Long Thành, Đồng Nai', 'contact@ajinomoto.com.vn'),
+- ('Kinh Đô', '02837401565', '26 VSIP, Thuận An, Bình Dương', 'info@kinhdo.vn'),
+- ('Orion Việt Nam', '02838984111', 'KCN Mỹ Phước, Bến Cát, Bình Dương', 'support@orion.vn'),
+- ('Perfetti Van Melle', '02838993388', 'Số 10, Đường số 3, KCN Sóng Thần, Bình Dương', 'info@perfettivanmelle.vn'),
+- ('Hòa Phát', '02462848866', '39 Nguyễn Đình Chiểu, Hai Bà Trưng, Hà Nội', 'contact@hoaphat.com.vn'),
+- ('Sanaky Việt Nam', '02838569999', '48/9B Xa Lộ Hà Nội, Q.9, TP. HCM', 'support@sanaky.vn');
+- 
+- -- -------------------------------------- Phu ---------------------------------------------------------
+- INSERT INTO staff (phone, password, firstName, lastName, address, salary, type, status, gender)
+- VALUES
+- ('0955112233', 'securepass', 'Phu', 'Ng', 'Nha Trang', 19000000, 'Quản lý', 'Active', 'Nam'),
+- ('0988776655', 'pass1234', 'An', 'Tran', 'Hà Nội', 15000000, 'Nhân viên', 'Active', 'Nữ'),
+- ('0977665544', 'adminpass', 'Linh', 'Nguyen', 'Đà Nẵng', 21000000, 'Quản lý', 'Active', 'Nam'),
+- ('0966554433', 'password1', 'Huy', 'Le', 'Hải Phòng', 18000000, 'Nhân viên', 'Inactive', 'Nam'),
+- ('0955443322', 'mypassword', 'Trang', 'Pham', 'Cần Thơ', 16000000, 'Nhân viên', 'Active', 'Nữ'),
+- ('0944332211', '123456', 'Binh', 'Do', 'Huế', 22000000, 'Quản lý', 'Active', 'Nam'),
+- ('0933221100', 'nvpassword', 'Nga', 'Vo', 'Bình Dương', 14000000, 'Nhân viên', 'Active', 'Nữ'),
+- ('0922110099', 'abcd1234', 'Duc', 'Dang', 'Vũng Tàu', 20000000, 'Quản lý', 'Inactive', 'Nam'),
+- ('0911009988', 'staffpass', 'Hoa', 'Ly', 'Biên Hòa', 17000000, 'Nhân viên', 'Active', 'Nữ'),
+- ('0900998877', 'newpass', 'Tuan', 'Ho', 'Quảng Ninh', 19500000, 'Quản lý', 'Active', 'Nam');
++);
++
++-- Tạo bảng OfferBill
++CREATE TABLE OfferBill (
++    id INT AUTO_INCREMENT PRIMARY KEY,
++    discount INT,
++    idOffer INT,
++    idBill INT,
++    FOREIGN KEY (idOffer) REFERENCES Offer(id),
++    FOREIGN KEY (idBill) REFERENCES Bill(id)
++);
++
++-- Insert dữ liệu cho bảng Customer (10 bản ghi)
++INSERT INTO Customer (phone, password, firstName, lastName, address) VALUES
++('0905123456', 'P@ssw0rd123', 'Nguyễn Văn', 'Hùng', '123 Đường Láng, Hà Nội'),
++('0987654321', 'Secure789!', 'Trần Thị', 'Mai', '45 Lê Lợi, TP. HCM'),
++('0912345678', 'Abcd1234', 'Lê Minh', 'Tuấn', '78 Hùng Vương, Đà Nẵng'),
++('0938765432', 'Password99$', 'Phạm Hồng', 'Nhung', '12 Trần Phú, Nha Trang'),
++('0971234567', 'Xyz7890#', 'Hoàng', 'Anh', '56 Nguyễn Huệ, Huế'),
++('0945678901', 'Qwerty2023', 'Đỗ Thị', 'Lan', '89 Kim Mã, Hà Nội'),
++('0923456789', 'StrongPass88', 'Vũ Quang', 'Huy', '34 Nguyễn Trãi, Thanh Hóa'),
++('0967891234', '12345Pass!', 'Bùi', 'Ngọc', '67 Phạm Văn Đồng, Cần Thơ'),
++('0954321876', 'HelloWorld99', 'Đặng Minh', 'Khôi', '23 Lý Thường Kiệt, Vinh'),
++('0998765432', 'Secret007$', 'Lý Thanh', 'Tâm', '90 Cách Mạng Tháng 8, Đà Lạt');
++
++-- Insert dữ liệu mẫu cho các bảng khác
++-- Bảng Account
++INSERT INTO Account (password, firstName, lastName, address, salary, type, idCustomer) VALUES
++('AccPass123!', 'Nguyễn', 'Hùng', '123 Đường Láng, Hà Nội', 15000000, 'Admin', 1),
++('AccPass456!', 'Trần', 'Mai', '45 Lê Lợi, TP. HCM', 12000000, 'Staff', 2);
++
++-- Bảng Provider
++INSERT INTO Provider (name, phone, address) VALUES
++('Công ty ABC', '0912345678', '123 Nguyễn Trãi, Hà Nội'),
++('Công ty XYZ', '0987654321', '456 Lê Lợi, TP. HCM');
++
++-- Bảng ProductType
++INSERT INTO ProductType (name) VALUES
++('Điện tử'),
++('Thời trang');
++
++-- Bảng Product
++INSERT INTO Product (name, price, unit, quantity, idProductType) VALUES
++('Điện thoại Samsung', 15000000, 'Cái', 100, 1),
++('Áo thun nam', 200000, 'Cái', 500, 2);
++
++-- Bảng ImportOrder
++INSERT INTO ImportOrder (quantity, price, dateCreate, unit, idAccount, idProvider) VALUES
++(50, 750000000, '2025-03-24 10:00:00', 'Cái', 1, 1),
++(200, 40000000, '2025-03-24 11:00:00', 'Cái', 2, 2);
++
++-- Bảng ProductDetail
++INSERT INTO ProductDetail (detailInfo, idImportOrder, idProduct) VALUES
++('Điện thoại Samsung Galaxy S23, màu đen', 1, 1),
++('Áo thun nam, size M, màu trắng', 2, 2);
++
++-- Bảng Offer
++INSERT INTO Offer (startDate, endDate) VALUES
++('2025-03-24 00:00:00', '2025-04-24 23:59:59'),
++('2025-03-25 00:00:00', '2025-04-25 23:59:59');
++
++-- Bảng OfferProduct
++INSERT INTO OfferProduct (discount, idOffer, idProduct) VALUES
++(10, 1, 1),
++(20, 2, 2);
++
++-- Bảng Bill
++INSERT INTO Bill (dateCreate, price, idAccount) VALUES
++('2025-03-24 14:00:00', 15000000, 1),
++('2025-03-24 15:00:00', 400000, 2);
++
++-- Bảng BillInfo
++INSERT INTO BillInfo (dateCreate, price, idBill, idProduct) VALUES
++('2025-03-24 14:00:00', 15000000, 1, 1),
++('2025-03-24 15:00:00', 200000, 2, 2);
++
++-- Bảng OfferBill
++INSERT INTO OfferBill (discount, idOffer, idBill) VALUES
++(5, 1, 1),
++(10, 2, 2);
++
++
++
++
++
++
++
++
++
++-- Staff
++INSERT INTO staff (phone, password, firstName, lastName, address, salary, type, status, gender)
++VALUES
++('0955112233', 'securepass', 'Phu', 'Ng', 'Nha Trang', 19000000, 'Quản lý', 'Active', 'Nam'),
++('0988776655', 'pass1234', 'An', 'Tran', 'Hà Nội', 15000000, 'Nhân viên', 'Active', 'Nữ'),
++('0977665544', 'adminpass', 'Linh', 'Nguyen', 'Đà Nẵng', 21000000, 'Quản lý', 'Active', 'Nam'),
++('0966554433', 'password1', 'Huy', 'Le', 'Hải Phòng', 18000000, 'Nhân viên', 'Inactive', 'Nam'),
++('0955443322', 'mypassword', 'Trang', 'Pham', 'Cần Thơ', 16000000, 'Nhân viên', 'Active', 'Nữ'),
++('0944332211', '123456', 'Binh', 'Do', 'Huế', 22000000, 'Quản lý', 'Active', 'Nam'),
++('0933221100', 'nvpassword', 'Nga', 'Vo', 'Bình Dương', 14000000, 'Nhân viên', 'Active', 'Nữ'),
++('0922110099', 'abcd1234', 'Duc', 'Dang', 'Vũng Tàu', 20000000, 'Quản lý', 'Inactive', 'Nam'),
++('0911009988', 'staffpass', 'Hoa', 'Ly', 'Biên Hòa', 17000000, 'Nhân viên', 'Active', 'Nữ'),
++('0900998877', 'newpass', 'Tuan', 'Ho', 'Quảng Ninh', 19500000, 'Quản lý', 'Active', 'Nam');
+ 
+- -- ---------------- SELECT -----------
+- select * from Provider;
+-
+- -- ------------------------------------
+- -- drop database mini_mart_java
+-
+-
++select * from provider;
+\ No newline at end of file
+Index: src/GUI/JPanel/pnDiscount.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package GUI.JPanel;\r\n\r\nimport Components.MyJTable;\r\nimport javax.swing.*;\r\nimport javax.swing.border.Border;\r\nimport javax.swing.plaf.basic.BasicComboBoxUI;\r\nimport javax.swing.table.DefaultTableModel;\r\nimport javax.swing.table.TableColumnModel;\r\nimport javax.swing.table.TableRowSorter;\r\nimport java.awt.*;\r\nimport java.awt.event.MouseAdapter;\r\nimport java.awt.event.MouseEvent;\r\n\r\npublic class pnDiscount extends JPanel {\r\n    private MyJTable tbDiscountCodes = new MyJTable(\r\n            new String[]{\"STT\", \"ID mã\", \"Loại\", \"Hạn sử dụng\", \"Trạng thái\"},\r\n            new Font(\"Roboto\", Font.BOLD, 14),\r\n            new Color(159, 32, 243), // Màu chữ\r\n            new Color(159, 242, 115), // Màu nền header\r\n            new Color(255, 0, 239) // Màu khi chọn hàng\r\n    );\r\n    private TableRowSorter<DefaultTableModel> sorter;\r\n\r\n    // Các thành phần giao diện\r\n    private JButton btnAdd = new JButton(\"Thêm\");\r\n    private JButton btnEdit = new JButton(\"Sửa\");\r\n    private JButton btnDelete = new JButton(\"Xóa\");\r\n    private JButton btnRefresh = new JButton(\"Tải lại\");\r\n    private JTextField txtSearch = new JTextField(\"Nhập ID mã hoặc loại...\");\r\n    private JButton btnImportExcel = new JButton(\"Nhập Excel\");\r\n    private JButton btnExportExcel = new JButton(\"Xuất Excel\");\r\n    private JComboBox<String> sortComboBox;\r\n\r\n    // Panels\r\n    private JPanel panelFunction = new JPanel(); // Chứa các nút chức năng\r\n    private JPanel panelSearch = new JPanel();   // Chứa tìm kiếm và sắp xếp\r\n    private JPanel panelHeader = new JPanel();   // Chứa panelFunction và panelSearch\r\n    private JPanel panelDisplay = new JPanel();  // Chứa bảng\r\n\r\n    public pnDiscount() {\r\n        setLayout(new BorderLayout());\r\n        setBackground(Color.decode(\"#F5F5F5\")); // Xám\r\n        Border border = BorderFactory.createLineBorder(Color.GRAY, 1);\r\n\r\n        // panelFunction\r\n        panelFunction.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 5));\r\n        panelFunction.setBorder(BorderFactory.createTitledBorder(border, \"Chức năng\", 0, 0, new Font(\"Arial\", Font.BOLD, 14)));\r\n        panelFunction.setBackground(Color.WHITE);\r\n\r\n        // Tùy chỉnh giao diện các nút\r\n        customizeButton(btnAdd, new Color(50, 168, 82));    // Xanh lá\r\n        customizeButton(btnEdit, new Color(255, 165, 0));   // Cam\r\n        customizeButton(btnDelete, new Color(255, 69, 58)); // Đỏ\r\n        customizeButton(btnRefresh, new Color(66, 133, 244)); // Xanh dương\r\n        customizeButton(btnImportExcel, new Color(66, 133, 244)); // Xanh dương\r\n        customizeButton(btnExportExcel, new Color(66, 133, 244)); // Xanh dương\r\n\r\n        panelFunction.add(btnAdd);\r\n        panelFunction.add(btnEdit);\r\n        panelFunction.add(btnDelete);\r\n        panelFunction.add(btnImportExcel);\r\n        panelFunction.add(btnExportExcel);\r\n\r\n        // Thiết lập panelSearch (Tìm kiếm và sắp xếp)\r\n        panelSearch.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 5));\r\n        panelSearch.setBorder(BorderFactory.createTitledBorder(border, \"Tìm kiếm & Sắp xếp\", 0, 0, new Font(\"Arial\", Font.BOLD, 14)));\r\n        panelSearch.setBackground(Color.WHITE);\r\n\r\n        txtSearch.setPreferredSize(new Dimension(200, 30));\r\n        txtSearch.setBorder(BorderFactory.createCompoundBorder(\r\n                BorderFactory.createLineBorder(Color.GRAY, 1),\r\n                BorderFactory.createEmptyBorder(5, 5, 5, 5)\r\n        ));\r\n        txtSearch.setForeground(Color.GRAY);\r\n        txtSearch.setFont(new Font(\"Arial\", Font.PLAIN, 14));\r\n\r\n        String[] sortOptions = {\"STT (tăng dần)\", \"Hạn sử dụng\", \"Trạng thái\"};\r\n        sortComboBox = new JComboBox<>(sortOptions);\r\n        sortComboBox.setPreferredSize(new Dimension(150, 30));\r\n        sortComboBox.setBackground(Color.WHITE);\r\n        sortComboBox.setForeground(Color.GRAY);\r\n        sortComboBox.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));\r\n        sortComboBox.setUI(new BasicComboBoxUI() {\r\n            @Override\r\n            protected JButton createArrowButton() {\r\n                JButton arrowButton = new JButton(\"V\");\r\n                arrowButton.setBackground(Color.WHITE);\r\n                arrowButton.setForeground(Color.GRAY);\r\n                arrowButton.setBorder(BorderFactory.createEmptyBorder());\r\n                arrowButton.setFocusPainted(false);\r\n                return arrowButton;\r\n            }\r\n        });\r\n\r\n        panelSearch.add(txtSearch);\r\n        panelSearch.add(sortComboBox);\r\n        panelSearch.add(btnRefresh);\r\n\r\n        // panelHeader\r\n        panelHeader.setLayout(new BorderLayout());\r\n        panelHeader.add(panelFunction, BorderLayout.WEST);\r\n        panelHeader.add(panelSearch, BorderLayout.EAST);\r\n        panelHeader.setBackground(Color.WHITE);\r\n        panelHeader.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));\r\n\r\n        // Điều chỉnh chiều rộng cột\r\n        TableColumnModel columnModel = tbDiscountCodes.getColumnModel();\r\n        columnModel.getColumn(0).setPreferredWidth(50);  // STT\r\n        columnModel.getColumn(1).setPreferredWidth(100); // ID mã\r\n        columnModel.getColumn(2).setPreferredWidth(150); // Loại\r\n        columnModel.getColumn(3).setPreferredWidth(120); // Hạn sử dụng\r\n        columnModel.getColumn(4).setPreferredWidth(100); // Trạng thái\r\n\r\n        // Thiết lập TableRowSorter\r\n        sorter = new TableRowSorter<>((DefaultTableModel) tbDiscountCodes.getModel());\r\n        tbDiscountCodes.setRowSorter(sorter);\r\n\r\n        // Thêm dữ liệu mẫu\r\n        addSampleData();\r\n\r\n        // Thêm sự kiện tìm kiếm\r\n        txtSearch.addMouseListener(new MouseAdapter() {\r\n            @Override\r\n            public void mouseClicked(MouseEvent e) {\r\n                if (e.getButton() == MouseEvent.BUTTON1) {\r\n                    txtSearch.setText(\"\");\r\n                }\r\n            }\r\n        });\r\n\r\n        txtSearch.addActionListener(e -> {\r\n            String searchText = txtSearch.getText().trim().toLowerCase();\r\n            if (searchText.isEmpty() || searchText.equals(\"nhập id mã hoặc loại...\")) {\r\n                sorter.setRowFilter(null);\r\n            } else {\r\n                sorter.setRowFilter(RowFilter.regexFilter(\"(?i)\" + searchText, 1, 2)); // Tìm kiếm ở cột ID mã và Loại\r\n            }\r\n        });\r\n\r\n        // Thiết lập JScrollPane\r\n        JScrollPane scrollPane = new JScrollPane(tbDiscountCodes);\r\n        scrollPane.setBorder(null);\r\n        scrollPane.setBackground(Color.WHITE);\r\n\r\n        panelDisplay.setLayout(new BorderLayout());\r\n        panelDisplay.add(scrollPane, BorderLayout.CENTER);\r\n        panelDisplay.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));\r\n        panelDisplay.setBackground(Color.WHITE);\r\n\r\n        // Thêm các panel vào giao diện chính\r\n        add(panelHeader, BorderLayout.NORTH);\r\n        add(panelDisplay, BorderLayout.CENTER);\r\n    }\r\n\r\n    // Tùy chỉnh giao diện nút\r\n    private void customizeButton(JButton button, Color backgroundColor) {\r\n        button.setBackground(backgroundColor);\r\n        button.setForeground(Color.WHITE);\r\n        button.setFont(new Font(\"Arial\", Font.BOLD, 14));\r\n        button.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));\r\n        button.setFocusPainted(false);\r\n        button.setCursor(new Cursor(Cursor.HAND_CURSOR));\r\n    }\r\n\r\n    // Thêm dữ liệu mẫu\r\n    private void addSampleData() {\r\n        DefaultTableModel model = (DefaultTableModel) tbDiscountCodes.getModel();\r\n        model.addRow(new Object[]{1, \"CODE001\", \"Giảm giá sản phẩm\", \"2025-12-31\", \"Hoạt động\"});\r\n        model.addRow(new Object[]{2, \"CODE002\", \"Giảm giá hóa đơn\", \"2024-11-30\", \"Hết hạn\"});\r\n        model.addRow(new Object[]{3, \"CODE003\", \"Giảm giá sản phẩm\", \"2025-06-30\", \"Hoạt động\"});\r\n    }\r\n\r\n    // Làm mới bảng\r\n    private void refreshTable() {\r\n        txtSearch.setText(\"Nhập ID mã hoặc loại...\");\r\n        sorter.setRowFilter(null);\r\n        sortComboBox.setSelectedIndex(0);\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/GUI/JPanel/pnDiscount.java b/src/GUI/JPanel/pnDiscount.java
+--- a/src/GUI/JPanel/pnDiscount.java	(revision 734f9f24bd05bda5c0f336779ce1be15e2cce0de)
++++ b/src/GUI/JPanel/pnDiscount.java	(date 1743302140434)
+@@ -1,5 +1,6 @@
+ package GUI.JPanel;
+ 
++import BUS.Discount_BUS;
+ import Components.MyJTable;
+ import javax.swing.*;
+ import javax.swing.border.Border;
+@@ -8,19 +9,20 @@
+ import javax.swing.table.TableColumnModel;
+ import javax.swing.table.TableRowSorter;
+ import java.awt.*;
++import java.awt.event.ActionEvent;
+ import java.awt.event.MouseAdapter;
+ import java.awt.event.MouseEvent;
+ 
+ public class pnDiscount extends JPanel {
+     private MyJTable tbDiscountCodes = new MyJTable(
+-            new String[]{"STT", "ID mã", "Loại", "Hạn sử dụng", "Trạng thái"},
++            new String[]{"STT", "ID mã", "Loại", "Ngày tạo", "Hạn sử dụng","Số lượng", "Trạng thái"},
+             new Font("Roboto", Font.BOLD, 14),
+             new Color(159, 32, 243), // Màu chữ
+             new Color(159, 242, 115), // Màu nền header
+             new Color(255, 0, 239) // Màu khi chọn hàng
+     );
+     private TableRowSorter<DefaultTableModel> sorter;
+-
++    private Discount_BUS discountBus;
+     // Các thành phần giao diện
+     private JButton btnAdd = new JButton("Thêm");
+     private JButton btnEdit = new JButton("Sửa");
+@@ -30,23 +32,21 @@
+     private JButton btnImportExcel = new JButton("Nhập Excel");
+     private JButton btnExportExcel = new JButton("Xuất Excel");
+     private JComboBox<String> sortComboBox;
+-
+     // Panels
+-    private JPanel panelFunction = new JPanel(); // Chứa các nút chức năng
+-    private JPanel panelSearch = new JPanel();   // Chứa tìm kiếm và sắp xếp
+-    private JPanel panelHeader = new JPanel();   // Chứa panelFunction và panelSearch
+-    private JPanel panelDisplay = new JPanel();  // Chứa bảng
++    private JPanel panelFunction = new JPanel();
++    private JPanel panelSearch = new JPanel();
++    private JPanel panelHeader = new JPanel();
++    private JPanel panelDisplay = new JPanel();
+ 
+     public pnDiscount() {
++        discountBus = new Discount_BUS((DefaultTableModel) tbDiscountCodes.getModel());
+         setLayout(new BorderLayout());
+-        setBackground(Color.decode("#F5F5F5")); // Xám
++        setBackground(Color.decode("#F5F5F5"));
+         Border border = BorderFactory.createLineBorder(Color.GRAY, 1);
+-
+         // panelFunction
+         panelFunction.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 5));
+         panelFunction.setBorder(BorderFactory.createTitledBorder(border, "Chức năng", 0, 0, new Font("Arial", Font.BOLD, 14)));
+         panelFunction.setBackground(Color.WHITE);
+-
+         // Tùy chỉnh giao diện các nút
+         customizeButton(btnAdd, new Color(50, 168, 82));    // Xanh lá
+         customizeButton(btnEdit, new Color(255, 165, 0));   // Cam
+@@ -115,8 +115,7 @@
+         sorter = new TableRowSorter<>((DefaultTableModel) tbDiscountCodes.getModel());
+         tbDiscountCodes.setRowSorter(sorter);
+ 
+-        // Thêm dữ liệu mẫu
+-        addSampleData();
++        discountBus.loadDiscountData();
+ 
+         // Thêm sự kiện tìm kiếm
+         txtSearch.addMouseListener(new MouseAdapter() {
+@@ -137,7 +136,6 @@
+             }
+         });
+ 
+-        // Thiết lập JScrollPane
+         JScrollPane scrollPane = new JScrollPane(tbDiscountCodes);
+         scrollPane.setBorder(null);
+         scrollPane.setBackground(Color.WHITE);
+@@ -146,12 +144,14 @@
+         panelDisplay.add(scrollPane, BorderLayout.CENTER);
+         panelDisplay.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+         panelDisplay.setBackground(Color.WHITE);
+-
+-        // Thêm các panel vào giao diện chính
+         add(panelHeader, BorderLayout.NORTH);
+         add(panelDisplay, BorderLayout.CENTER);
+-    }
+ 
++        btnAdd.addActionListener( event-> discountBus.ShowAddDig(this));
++        btnEdit.addActionListener(event ->discountBus.ShowEditDig(this,tbDiscountCodes.getSelectedRow()));
++        btnDelete.addActionListener(event-> discountBus.DeleDig(this,tbDiscountCodes.getSelectedRow()));
++        btnRefresh.addActionListener(e ->  refreshTable());
++}
+     // Tùy chỉnh giao diện nút
+     private void customizeButton(JButton button, Color backgroundColor) {
+         button.setBackground(backgroundColor);
+@@ -162,15 +162,6 @@
+         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+     }
+ 
+-    // Thêm dữ liệu mẫu
+-    private void addSampleData() {
+-        DefaultTableModel model = (DefaultTableModel) tbDiscountCodes.getModel();
+-        model.addRow(new Object[]{1, "CODE001", "Giảm giá sản phẩm", "2025-12-31", "Hoạt động"});
+-        model.addRow(new Object[]{2, "CODE002", "Giảm giá hóa đơn", "2024-11-30", "Hết hạn"});
+-        model.addRow(new Object[]{3, "CODE003", "Giảm giá sản phẩm", "2025-06-30", "Hoạt động"});
+-    }
+-
+-    // Làm mới bảng
+     private void refreshTable() {
+         txtSearch.setText("Nhập ID mã hoặc loại...");
+         sorter.setRowFilter(null);
+Index: src/DTO/connect_data.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package DTO;\r\n\r\nimport java.sql.Connection;\r\nimport java.sql.DriverManager;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport java.sql.Statement;\r\n\r\npublic class connect_data {\r\n    private Connection conn;\r\n    private String url;\r\n    private String username;\r\n    private String password;\r\n\r\n    public connect_data() {\r\n        this.url = \"jdbc:mysql://localhost:3306/mini_mart_java\";\r\n        this.username = \"root\";\r\n        this.password = \"\";\r\n        connect();\r\n    }\r\n\r\n    public connect_data(String url, String username, String password) {\r\n        this.url = url;\r\n        this.username = username;\r\n        this.password = password;\r\n        connect();\r\n    }\r\n\r\n    private void connect() {\r\n        try {\r\n\r\n            Class.forName(\"com.mysql.cj.jdbc.Driver\");\r\n\r\n            conn = DriverManager.getConnection(url, username, password);\r\n            System.out.println(\"Kết nối cơ sở dữ liệu thành công!\");\r\n        } catch (ClassNotFoundException e) {\r\n            System.out.println(\"Không tìm thấy driver JDBC: \" + e.getMessage());\r\n        } catch (SQLException e) {\r\n            System.out.println(\"Lỗi kết nối cơ sở dữ liệu: \" + e.getMessage());\r\n        }\r\n    }\r\n\r\n    public ResultSet executeQuery(String query) {\r\n        ResultSet rs = null;\r\n        try {\r\n            Statement stmt = conn.createStatement();\r\n            rs = stmt.executeQuery(query);\r\n        } catch (SQLException e) {\r\n            System.out.println(\"Lỗi khi thực thi câu truy vấn: \" + e.getMessage());\r\n        }\r\n        return rs;\r\n    }\r\n\r\n\r\n    public int executeUpdate(String query, Object... params) {\r\n        int rowsAffected = 0;\r\n        try {\r\n            PreparedStatement pstmt = conn.prepareStatement(query);\r\n            for (int i = 0; i < params.length; i++) {\r\n                pstmt.setObject(i + 1, params[i]);\r\n            }\r\n            rowsAffected = pstmt.executeUpdate();\r\n            pstmt.close();\r\n        } catch (SQLException e) {\r\n            System.out.println(\"Lỗi khi thực thi câu truy vấn: \" + e.getMessage());\r\n        }\r\n        return rowsAffected;\r\n    }\r\n\r\n    public ResultSet executeQueryWithParams(String query, Object... params) {\r\n        ResultSet rs = null;\r\n        try {\r\n            PreparedStatement pstmt = conn.prepareStatement(query);\r\n\r\n            for (int i = 0; i < params.length; i++) {\r\n                pstmt.setObject(i + 1, params[i]);\r\n            }\r\n            rs = pstmt.executeQuery();\r\n        } catch (SQLException e) {\r\n            System.out.println(\"Lỗi khi thực thi câu truy vấn: \" + e.getMessage());\r\n        }\r\n        return rs;\r\n    }\r\n\r\n\r\n    public void closeConnection() {\r\n        try {\r\n            if (conn != null && !conn.isClosed()) {\r\n                conn.close();\r\n                System.out.println(\"Đã đóng kết nối cơ sở dữ liệu!\");\r\n            }\r\n        } catch (SQLException e) {\r\n            System.out.println(\"Lỗi khi đóng kết nối: \" + e.getMessage());\r\n        }\r\n    }\r\n\r\n    public Connection getConnection() {\r\n        return conn;\r\n    }\r\n\r\n    public void setUrl(String url) {\r\n        this.url = url;\r\n    }\r\n\r\n    public void setUsername(String username) {\r\n        this.username = username;\r\n    }\r\n\r\n    public void setPassword(String password) {\r\n        this.password = password;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/DTO/connect_data.java b/src/DTO/connect_data.java
+--- a/src/DTO/connect_data.java	(revision 734f9f24bd05bda5c0f336779ce1be15e2cce0de)
++++ b/src/DTO/connect_data.java	(date 1743300953155)
+@@ -33,7 +33,6 @@
+             Class.forName("com.mysql.cj.jdbc.Driver");
+ 
+             conn = DriverManager.getConnection(url, username, password);
+-            System.out.println("Kết nối cơ sở dữ liệu thành công!");
+         } catch (ClassNotFoundException e) {
+             System.out.println("Không tìm thấy driver JDBC: " + e.getMessage());
+         } catch (SQLException e) {
+@@ -88,7 +87,6 @@
+         try {
+             if (conn != null && !conn.isClosed()) {
+                 conn.close();
+-                System.out.println("Đã đóng kết nối cơ sở dữ liệu!");
+             }
+         } catch (SQLException e) {
+             System.out.println("Lỗi khi đóng kết nối: " + e.getMessage());
+Index: src/GUI/JDialog/dlAddSupplier.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package GUI.JDialog;\r\n\r\nimport BUS.SupplierBUS;\r\nimport Components.*;\r\nimport DTO.SupplierDTO;\r\nimport GUI.JFrame.fManage;\r\nimport GUI.JPanel.pnSupplier;\r\n\r\nimport javax.swing.*;\r\nimport java.awt.*;\r\nimport java.awt.event.ActionEvent;\r\nimport java.awt.event.ActionListener;\r\n\r\npublic class dlAddSupplier extends JDialog {\r\n    JPanel pnMain = new MyJPanel(MyColor.White);\r\n    JLabel lbHeader = new MyJLabel(Font.BOLD, 24, MyColor.White, \"Thêm nhà cung cấp\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n    JLabel lbName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, \"Tên nhà cung cấp*\", SwingConstants.LEFT, SwingConstants.CENTER);\r\n    JLabel lbPhone = new MyJLabel(Font.PLAIN, 14, MyColor.Black, \"Số điện thoại*\", SwingConstants.LEFT, SwingConstants.CENTER);\r\n    JLabel lbAddress = new MyJLabel(Font.PLAIN, 14, MyColor.Black, \"Địa chỉ*\", SwingConstants.LEFT, SwingConstants.CENTER);\r\n    JLabel lbEmail = new MyJLabel(Font.PLAIN, 14, MyColor.Black, \"Email*\", SwingConstants.LEFT, SwingConstants.CENTER);\r\n\r\n    JTextField tfName = new MyJTextFieldInput(Font.PLAIN, 14, true);\r\n    JTextField tfPhone = new MyJTextFieldInput(Font.PLAIN, 14, true);\r\n    JTextField tfAddress = new MyJTextFieldInput(Font.PLAIN, 14, true);\r\n    JTextField tfEmail = new MyJTextFieldInput(Font.PLAIN, 14, true);\r\n\r\n    JButton btnSave = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Green, MyColor.LightGreen, \"Xác nhận\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n    JButton btnEsc = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Red, MyColor.LightRed, \"Hủy\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n\r\n    JDialog dialog = this;\r\n\r\n    public dlAddSupplier(fManage parentFrame, pnSupplier parentPanel) {\r\n        super(parentFrame,true);\r\n        setTitle(\"Thêm nhà cung cấp\");\r\n        setSize(540,440);\r\n        setLayout(null);\r\n        setLocationRelativeTo(null);\r\n        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);\r\n\r\n        // region setBounds\r\n        pnMain.setBounds(0,0,540,440);\r\n        lbName.setBounds(50,80,200,20);\r\n        tfName.setBounds(50,100,200,30);\r\n        lbPhone.setBounds(270,80,200,20);\r\n        tfPhone.setBounds(270,100,200,30);\r\n        lbAddress.setBounds(50,150,420,20);\r\n        tfAddress.setBounds(50,170,420,30);\r\n        lbEmail.setBounds(50,220,420,20);\r\n        tfEmail.setBounds(50,240,420,30);\r\n        btnSave.setBounds(100,300,150,40);\r\n        btnEsc.setBounds(270,300,150,40);\r\n        lbHeader.setOpaque(true);\r\n        lbHeader.setBackground(MyColor.DarkBlue);\r\n        lbHeader.setBounds(0,0,540,60);\r\n        // endregion\r\n\r\n        // region Event\r\n        btnEsc.addActionListener(new ActionListener() {\r\n            public void actionPerformed(ActionEvent e) {\r\n                dialog.dispose();\r\n            }\r\n        });\r\n        btnSave.addActionListener(new ActionListener() {\r\n            public void actionPerformed(ActionEvent e) {\r\n                SupplierDTO supplier = new SupplierDTO(-1, tfName.getText(), tfPhone.getText(), tfAddress.getText(), tfEmail.getText());\r\n                boolean check = SupplierBUS.getInstance().addProvider(supplier);\r\n\r\n                if(check){\r\n                    JOptionPane.showMessageDialog(dialog, \"Thêm thông tin thành công!\", \"Thông báo\", JOptionPane.INFORMATION_MESSAGE);\r\n                    parentPanel.loadSupplier();\r\n                    dialog.dispose();\r\n                }\r\n                else JOptionPane.showMessageDialog(dialog, SupplierBUS.getInstance().getError(), \"Thông báo\", JOptionPane.WARNING_MESSAGE);\r\n            }\r\n        });\r\n        // endregion11\r\n\r\n        add(lbName);\r\n        add(tfName);\r\n        add(lbPhone);\r\n        add(tfPhone);\r\n        add(lbAddress);\r\n        add(tfAddress);\r\n        add(lbEmail);\r\n        add(tfEmail);\r\n        add(btnSave);\r\n        add(btnEsc);\r\n\r\n        add(lbHeader);\r\n        add(pnMain);\r\n\r\n        setVisible(true);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/GUI/JDialog/dlAddSupplier.java b/src/GUI/JDialog/dlAddSupplier.java
+--- a/src/GUI/JDialog/dlAddSupplier.java	(revision 734f9f24bd05bda5c0f336779ce1be15e2cce0de)
++++ b/src/GUI/JDialog/dlAddSupplier.java	(date 1743254825617)
+@@ -18,7 +18,6 @@
+     JLabel lbPhone = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Số điện thoại*", SwingConstants.LEFT, SwingConstants.CENTER);
+     JLabel lbAddress = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Địa chỉ*", SwingConstants.LEFT, SwingConstants.CENTER);
+     JLabel lbEmail = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Email*", SwingConstants.LEFT, SwingConstants.CENTER);
+-
+     JTextField tfName = new MyJTextFieldInput(Font.PLAIN, 14, true);
+     JTextField tfPhone = new MyJTextFieldInput(Font.PLAIN, 14, true);
+     JTextField tfAddress = new MyJTextFieldInput(Font.PLAIN, 14, true);
+@@ -85,7 +84,6 @@
+         add(tfEmail);
+         add(btnSave);
+         add(btnEsc);
+-
+         add(lbHeader);
+         add(pnMain);
+ 
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4\" name=\"Changes\" comment=\"Cuong\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/SQL.sql\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/SQL.sql\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$1.class\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$2.class\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$3.class\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$4.class\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm.class\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/mini-mart-java/GUI/Main.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/mini-mart-java/GUI/Main.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$1.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$1.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$2.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$2.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$3.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$3.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$4.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$4.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/GUI/JFrame/fManage.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/GUI/JFrame/fManage.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/GUI/LoginForm.java\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/GUI/Main.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/GUI/Main.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/GUI/Manage.java\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/GUI/SettingAccountFrame.java\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/GUI/dlAddSupplier.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/GUI/JDialog/dlAddSupplier.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/GUI/dlEditSupplier.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/GUI/JDialog/dlEditSupplier.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/GUI/pnBill.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/GUI/JPanel/pnBill.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/GUI/pnChangeInfo.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/GUI/JPanel/pnChangeInfo.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/GUI/pnChangePassword.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/GUI/JPanel/pnChangePassword.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/GUI/pnCustomer.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/GUI/JPanel/pnCustomer.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/GUI/pnDiscount.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/GUI/JPanel/pnDiscount.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/GUI/pnImport.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/GUI/JPanel/pnImport.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/GUI/pnProduct.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/GUI/pnSell.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/GUI/JPanel/pnSell.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/GUI/pnStaff.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/GUI/JPanel/pnStaff.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/GUI/pnStatistic.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/GUI/JPanel/pnStatistic.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/GUI/pnSupplier.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/GUI/JPanel/pnSupplier.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/GUI/pnTypeProduct.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/GUI/JPanel/pnTypeProduct.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;cuong9565&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/cuong9565/mini-mart-java.git&quot;,\r\n    &quot;accountId&quot;: &quot;f4c729e0-ab1e-41b9-93d0-47692b69cd9a&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProblemsViewState\">\r\n    <option name=\"selectedTabId\" value=\"CurrentFile\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;customColor&quot;: &quot;&quot;,\r\n  &quot;associatedIndex&quot;: 3\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2uDFNsALAkUONxtPiSRlBD3xvgC\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <ConfirmationsSetting value=\"1\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;Application.FixBug.executor&quot;: &quot;Run&quot;,\r\n    &quot;Application.Main.executor&quot;: &quot;Run&quot;,\r\n    &quot;Application.Manage.executor&quot;: &quot;Run&quot;,\r\n    &quot;Application.demo.executor&quot;: &quot;Run&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;ShowUsagesActions.previewPropertyKey&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;D:/mini-mart-java/mysql-connector-j-9.1.0/mysql-connector-j-9.1.0.jar&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.folding&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\mini-mart-java\\src\\lib\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\mini-mart-java\\src\\GUI\" />\r\n      <recent name=\"D:\\mini-mart-java\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"Main\" type=\"Application\" factoryName=\"Application\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"GUI.Main\" />\r\n      <module name=\"mini-mart-java\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142\" />\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4\" name=\"Changes\" comment=\"\" />\r\n      <created>1741775201356</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1741775201356</updated>\r\n      <workItem from=\"1741775202454\" duration=\"10084000\" />\r\n      <workItem from=\"1741833106992\" duration=\"4271000\" />\r\n      <workItem from=\"1741874668727\" duration=\"6718000\" />\r\n      <workItem from=\"1741949987194\" duration=\"115000\" />\r\n      <workItem from=\"1741950383410\" duration=\"7362000\" />\r\n      <workItem from=\"1742002807532\" duration=\"640000\" />\r\n      <workItem from=\"1742003653485\" duration=\"3289000\" />\r\n      <workItem from=\"1742040014820\" duration=\"14084000\" />\r\n      <workItem from=\"1742054396486\" duration=\"27000\" />\r\n      <workItem from=\"1742054913554\" duration=\"102000\" />\r\n      <workItem from=\"1742087696381\" duration=\"4726000\" />\r\n      <workItem from=\"1742108035139\" duration=\"13883000\" />\r\n      <workItem from=\"1742175629719\" duration=\"464000\" />\r\n      <workItem from=\"1742176493837\" duration=\"5597000\" />\r\n      <workItem from=\"1742192648054\" duration=\"169000\" />\r\n      <workItem from=\"1742192842680\" duration=\"278000\" />\r\n      <workItem from=\"1742296320106\" duration=\"3446000\" />\r\n      <workItem from=\"1742301469088\" duration=\"5513000\" />\r\n      <workItem from=\"1742307832870\" duration=\"1012000\" />\r\n      <workItem from=\"1742364859082\" duration=\"10498000\" />\r\n      <workItem from=\"1742386176467\" duration=\"7491000\" />\r\n      <workItem from=\"1742430878067\" duration=\"289000\" />\r\n      <workItem from=\"1742434903214\" duration=\"3430000\" />\r\n      <workItem from=\"1742470600441\" duration=\"35000\" />\r\n      <workItem from=\"1742560844835\" duration=\"864000\" />\r\n      <workItem from=\"1742562400985\" duration=\"165000\" />\r\n      <workItem from=\"1742770836092\" duration=\"63000\" />\r\n      <workItem from=\"1742778591951\" duration=\"470000\" />\r\n      <workItem from=\"1742780921166\" duration=\"82000\" />\r\n      <workItem from=\"1742797277049\" duration=\"1209000\" />\r\n      <workItem from=\"1742798626536\" duration=\"28000\" />\r\n      <workItem from=\"1742798673903\" duration=\"938000\" />\r\n      <workItem from=\"1742800167665\" duration=\"5035000\" />\r\n      <workItem from=\"1742808258375\" duration=\"735000\" />\r\n      <workItem from=\"1742874718765\" duration=\"84000\" />\r\n      <workItem from=\"1743037141636\" duration=\"620000\" />\r\n      <workItem from=\"1743165635853\" duration=\"137000\" />\r\n      <workItem from=\"1743165785811\" duration=\"658000\" />\r\n      <workItem from=\"1743169238790\" duration=\"2901000\" />\r\n      <workItem from=\"1743172178240\" duration=\"6126000\" />\r\n      <workItem from=\"1743207858240\" duration=\"9602000\" />\r\n      <workItem from=\"1743218064872\" duration=\"2870000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Cuong update Login Form\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1741879323699</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1741879323699</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Cuong update Login Form\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1741880404941</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1741880404941</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Cuong update Login Form\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1741880469885</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1741880469885</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Cuong update Login Form\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1741881420815</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1741881420815</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Cuong update Manager Form\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742053070122</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742053070122</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"Cuong update Setting Account Panel\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742122337132</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742122337132</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"Cuong update\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742192856052</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742192856052</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"Cuong update\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742194393180</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742194393180</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"Cuong update\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742194415816</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742194415816</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"Cuong update\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742194552637</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742194552637</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00011\" summary=\"Cuong update\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742194992012</created>\r\n      <option name=\"number\" value=\"00011\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742194992012</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00012\" summary=\"Cuong update Color + SettingAccountFrame\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742301545157</created>\r\n      <option name=\"number\" value=\"00012\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00012\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742301545157</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00013\" summary=\"Cuong update SettingAccountFrame\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742307896067</created>\r\n      <option name=\"number\" value=\"00013\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00013\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742307896067</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00014\" summary=\"Cuong update SettingAccountFrame\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742308296761</created>\r\n      <option name=\"number\" value=\"00014\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00014\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742308296761</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00015\" summary=\"Cuong update SettingAccountFrame\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742308848826</created>\r\n      <option name=\"number\" value=\"00015\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00015\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742308848826</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00016\" summary=\"Cuong update\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742364887806</created>\r\n      <option name=\"number\" value=\"00016\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00016\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742364887806</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00017\" summary=\"Cuong fix GetJPanel\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742366773670</created>\r\n      <option name=\"number\" value=\"00017\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00017\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742366773670</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00018\" summary=\"Cuong fix MyJTextField\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742366880101</created>\r\n      <option name=\"number\" value=\"00018\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00018\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742366880101</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00019\" summary=\"Cuong add JLableError\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742367134203</created>\r\n      <option name=\"number\" value=\"00019\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00019\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742367134203</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00020\" summary=\"Cuong add JLableError\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742367168329</created>\r\n      <option name=\"number\" value=\"00020\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00020\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742367168329</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00021\" summary=\"Cuong add Error Login\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742368801675</created>\r\n      <option name=\"number\" value=\"00021\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00021\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742368801675</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00022\" summary=\"Cuong add GetJPanelTitle\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742380734312</created>\r\n      <option name=\"number\" value=\"00022\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00022\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742380734312</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00023\" summary=\"Cuong update\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742394158787</created>\r\n      <option name=\"number\" value=\"00023\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00023\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742394158787</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00024\" summary=\"Cuong update\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742394166352</created>\r\n      <option name=\"number\" value=\"00024\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00024\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742394166352</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00025\" summary=\"Cuong update\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742438306939</created>\r\n      <option name=\"number\" value=\"00025\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00025\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742438306939</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00026\" summary=\"Cuong update\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742438325681</created>\r\n      <option name=\"number\" value=\"00026\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00026\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742438325681</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00027\" summary=\"Cuong update JTable\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742556044547</created>\r\n      <option name=\"number\" value=\"00027\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00027\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742556044547</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00028\" summary=\"Cuong update\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742557798948</created>\r\n      <option name=\"number\" value=\"00028\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00028\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742557798948</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00029\" summary=\"Cuong update\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742560945357</created>\r\n      <option name=\"number\" value=\"00029\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00029\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742560945357</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00030\" summary=\"Cuong update\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742562523235</created>\r\n      <option name=\"number\" value=\"00030\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00030\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742562523235</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00031\" summary=\"Cuong insert lib\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742798967009</created>\r\n      <option name=\"number\" value=\"00031\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00031\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742798967009</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00032\" summary=\"Cuong insert lib\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742799211070</created>\r\n      <option name=\"number\" value=\"00032\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00032\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742799211070</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00033\" summary=\"Cuong insert lib\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742799422846</created>\r\n      <option name=\"number\" value=\"00033\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00033\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742799422846</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00034\" summary=\"Cuong\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742802127435</created>\r\n      <option name=\"number\" value=\"00034\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00034\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742802127435</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00035\" summary=\"Cuong\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742808339986</created>\r\n      <option name=\"number\" value=\"00035\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00035\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742808339986</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00036\" summary=\"Cuong\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742874729731</created>\r\n      <option name=\"number\" value=\"00036\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00036\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742874729731</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00037\" summary=\"Cuong\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1743165737217</created>\r\n      <option name=\"number\" value=\"00037\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00037\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1743165737217</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00038\" summary=\"Cuong\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1743169275278</created>\r\n      <option name=\"number\" value=\"00038\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00038\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1743169275278</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00039\" summary=\"Cuong\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1743178131343</created>\r\n      <option name=\"number\" value=\"00039\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00039\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1743178131343</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00040\" summary=\"Cuong\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1743178647766</created>\r\n      <option name=\"number\" value=\"00040\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00040\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1743178647766</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00041\" summary=\"Cuong\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1743213833565</created>\r\n      <option name=\"number\" value=\"00041\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00041\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1743213833565</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00042\" summary=\"Cuong\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1743213849517</created>\r\n      <option name=\"number\" value=\"00042\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00042\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1743213849517</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00043\" summary=\"Cuong\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1743217481342</created>\r\n      <option name=\"number\" value=\"00043\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00043\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1743217481342</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00044\" summary=\"Cuong\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1743217541074</created>\r\n      <option name=\"number\" value=\"00044\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00044\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1743217541074</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00045\" summary=\"Cuong\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1743217625821</created>\r\n      <option name=\"number\" value=\"00045\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00045\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1743217625821</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"46\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Cuong update Login Form\" />\r\n    <MESSAGE value=\"Cuong update Manager Form\" />\r\n    <MESSAGE value=\"Cuong update Setting Account Panel\" />\r\n    <MESSAGE value=\"Cuong update Color + SettingAccountFrame\" />\r\n    <MESSAGE value=\"Cuong update SettingAccountFrame\" />\r\n    <MESSAGE value=\"Cuong fix GetJPanel\" />\r\n    <MESSAGE value=\"Cuong fix MyJTextField\" />\r\n    <MESSAGE value=\"Cuong add JLableError\" />\r\n    <MESSAGE value=\"Cuong add Error Login\" />\r\n    <MESSAGE value=\"Cuong add GetJPanelTitle\" />\r\n    <MESSAGE value=\"Cuong update JTable\" />\r\n    <MESSAGE value=\"Cuong update\" />\r\n    <MESSAGE value=\"Cuong insert lib\" />\r\n    <MESSAGE value=\"Cuong\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Cuong\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 734f9f24bd05bda5c0f336779ce1be15e2cce0de)
++++ b/.idea/workspace.xml	(date 1743300953611)
+@@ -4,39 +4,14 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong">
++    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="P Commit">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/SQL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL.sql" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$1.class" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$2.class" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$3.class" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm$4.class" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/LoginForm.class" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Main.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$1.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$2.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$3.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage$4.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/GUI/Manage.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/GUI/JFrame/fManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JFrame/fManage.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/GUI/LoginForm.java" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/GUI/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Main.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/GUI/Manage.java" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/GUI/SettingAccountFrame.java" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/GUI/dlAddSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddSupplier.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/GUI/dlEditSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditSupplier.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/GUI/pnBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnBill.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/GUI/pnChangeInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnChangeInfo.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/GUI/pnChangePassword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnChangePassword.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/GUI/pnCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnCustomer.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/GUI/pnDiscount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnDiscount.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/GUI/pnImport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnImport.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/GUI/pnProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/GUI/pnSell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnSell.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/GUI/pnStaff.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStaff.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/GUI/pnStatistic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStatistic.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/GUI/pnSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnSupplier.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/GUI/pnTypeProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnTypeProduct.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/BUS/Staff_BUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/Staff_BUS.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/DTO/connect_data.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/connect_data.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddSupplier.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnDiscount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnDiscount.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStaff.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStaff.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -62,7 +37,7 @@
+   <component name="GithubPullRequestsUISettings">{
+   &quot;selectedUrlAndAccountId&quot;: {
+     &quot;url&quot;: &quot;https://github.com/cuong9565/mini-mart-java.git&quot;,
+-    &quot;accountId&quot;: &quot;f4c729e0-ab1e-41b9-93d0-47692b69cd9a&quot;
++    &quot;accountId&quot;: &quot;841f6dbc-65b0-4d01-920f-e01d8a5e3138&quot;
+   }
+ }</component>
+   <component name="ProblemsViewState">
+@@ -87,6 +62,7 @@
+     &quot;Application.Manage.executor&quot;: &quot;Run&quot;,
+     &quot;Application.demo.executor&quot;: &quot;Run&quot;,
+     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+     &quot;ShowUsagesActions.previewPropertyKey&quot;: &quot;true&quot;,
+     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+@@ -121,14 +97,6 @@
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-  </component>
+-  <component name="SharedIndexes">
+-    <attachedChunks>
+-      <set>
+-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
+-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
+-      </set>
+-    </attachedChunks>
+   </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+@@ -177,9 +145,7 @@
+       <workItem from="1743165635853" duration="137000" />
+       <workItem from="1743165785811" duration="658000" />
+       <workItem from="1743169238790" duration="2901000" />
+-      <workItem from="1743172178240" duration="6126000" />
+-      <workItem from="1743207858240" duration="9602000" />
+-      <workItem from="1743218064872" duration="2870000" />
++      <workItem from="1743172178240" duration="5846000" />
+     </task>
+     <task id="LOCAL-00001" summary="Cuong update Login Form">
+       <option name="closed" value="true" />
+@@ -493,55 +459,31 @@
+       <option name="project" value="LOCAL" />
+       <updated>1743178131343</updated>
+     </task>
+-    <task id="LOCAL-00040" summary="Cuong">
++    <task id="LOCAL-00040" summary="P Commit">
+       <option name="closed" value="true" />
+-      <created>1743178647766</created>
++      <created>1743227665281</created>
+       <option name="number" value="00040" />
+       <option name="presentableId" value="LOCAL-00040" />
+       <option name="project" value="LOCAL" />
+-      <updated>1743178647766</updated>
++      <updated>1743227665281</updated>
+     </task>
+-    <task id="LOCAL-00041" summary="Cuong">
++    <task id="LOCAL-00041" summary="P Commit">
+       <option name="closed" value="true" />
+-      <created>1743213833565</created>
++      <created>1743227813160</created>
+       <option name="number" value="00041" />
+       <option name="presentableId" value="LOCAL-00041" />
+       <option name="project" value="LOCAL" />
+-      <updated>1743213833565</updated>
++      <updated>1743227813160</updated>
+     </task>
+-    <task id="LOCAL-00042" summary="Cuong">
++    <task id="LOCAL-00042" summary="P Commit">
+       <option name="closed" value="true" />
+-      <created>1743213849517</created>
++      <created>1743227975148</created>
+       <option name="number" value="00042" />
+       <option name="presentableId" value="LOCAL-00042" />
+       <option name="project" value="LOCAL" />
+-      <updated>1743213849517</updated>
+-    </task>
+-    <task id="LOCAL-00043" summary="Cuong">
+-      <option name="closed" value="true" />
+-      <created>1743217481342</created>
+-      <option name="number" value="00043" />
+-      <option name="presentableId" value="LOCAL-00043" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1743217481342</updated>
++      <updated>1743227975148</updated>
+     </task>
+-    <task id="LOCAL-00044" summary="Cuong">
+-      <option name="closed" value="true" />
+-      <created>1743217541074</created>
+-      <option name="number" value="00044" />
+-      <option name="presentableId" value="LOCAL-00044" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1743217541074</updated>
+-    </task>
+-    <task id="LOCAL-00045" summary="Cuong">
+-      <option name="closed" value="true" />
+-      <created>1743217625821</created>
+-      <option name="number" value="00045" />
+-      <option name="presentableId" value="LOCAL-00045" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1743217625821</updated>
+-    </task>
+-    <option name="localTasksCounter" value="46" />
++    <option name="localTasksCounter" value="43" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -573,6 +515,32 @@
+     <MESSAGE value="Cuong update" />
+     <MESSAGE value="Cuong insert lib" />
+     <MESSAGE value="Cuong" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Cuong" />
++    <MESSAGE value="P Commit" />
++    <option name="LAST_COMMIT_MESSAGE" value="P Commit" />
++  </component>
++  <component name="XDebuggerManager">
++    <breakpoint-manager>
++      <breakpoints>
++        <line-breakpoint enabled="true" type="java-line">
++          <url>file://$PROJECT_DIR$/src/GUI/JPanel/pnDiscount.java</url>
++          <line>76</line>
++          <option name="timeStamp" value="2" />
++        </line-breakpoint>
++        <line-breakpoint enabled="true" type="java-line">
++          <url>file://$PROJECT_DIR$/src/BUS/Staff_BUS.java</url>
++          <line>87</line>
++          <option name="timeStamp" value="4" />
++        </line-breakpoint>
++        <line-breakpoint enabled="true" type="java-method">
++          <url>file://$PROJECT_DIR$/src/BUS/Staff_BUS.java</url>
++          <line>86</line>
++          <properties class="BUS.Staff_BUS" method="showAddDialog">
++            <option name="EMULATED" value="true" />
++            <option name="WATCH_EXIT" value="false" />
++          </properties>
++          <option name="timeStamp" value="3" />
++        </line-breakpoint>
++      </breakpoints>
++    </breakpoint-manager>
+   </component>
+ </project>
+\ No newline at end of file

@@ -1,0 +1,477 @@
+Index: src/pnForm/pnStaff.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package pnForm;\r\n\r\nimport Components.MyColor;\r\nimport Components.MyJButton;\r\n\r\nimport javax.swing.*;\r\nimport javax.swing.border.Border;\r\nimport javax.swing.plaf.basic.BasicComboBoxUI;\r\nimport javax.swing.table.DefaultTableModel;\r\nimport javax.swing.table.TableColumnModel;\r\nimport javax.swing.table.TableRowSorter;\r\nimport java.awt.*;\r\nimport java.awt.event.ActionEvent;\r\nimport java.awt.event.ActionListener;\r\n\r\npublic class pnStaff extends JPanel {\r\n    private DefaultTableModel model = new DefaultTableModel();\r\n    private JTable tbStaff;\r\n    private JButton btnblock = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, \"Khóa\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n    private JButton btnfind = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, \"Tìm\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n    private JButton btnadd = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, \"Thêm\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n    private JButton btnfix = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, \"Sửa\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n    private JButton btnload = new MyJButton(Font.PLAIN, 14, MyColor.White, MyColor.DarkBlue, MyColor.HoverBlue, \"Tải lại\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n    // Thêm hai nút mới\r\n    private JButton btnImportExcel = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, \"Nhập Excel\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n    private JButton btnExportExcel = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, \"Xuất Excel\", SwingConstants.CENTER, SwingConstants.CENTER);\r\n\r\n    private JComboBox<String> sortComboBox;\r\n    private TableRowSorter<DefaultTableModel> sorter;\r\n\r\n    JTextField txtfiter = new JTextField(\"Nhập nội dung\");\r\n\r\n    // panel\r\n    JPanel panelfunction = new JPanel();  // them sua block\r\n    JPanel panelfind = new JPanel();     // tim kiem, loc thong tin\r\n    JPanel panelheader = new JPanel();\r\n    JPanel paneldisplay = new JPanel();  // hien danh sach\r\n    JPanel panelexcel = new JPanel();\r\n    public pnStaff() {\r\n        setLayout(null);\r\n        setBackground(Color.decode(\"#FFFFFF\"));\r\n        Border border = BorderFactory.createLineBorder(Color.gray, 1);\r\n\r\n        // panel function\r\n        panelfunction.add(btnadd);\r\n        panelfunction.add(btnfix);\r\n        panelfunction.add(btnblock);\r\n        panelexcel.add(btnImportExcel);\r\n        panelexcel.add(btnExportExcel);\r\n\r\n        // JComboBox sắp xếp\r\n        String[] sortOptions = {\"ID (tăng dần)\", \"Giới tính\", \"Lương\"};\r\n        sortComboBox = new JComboBox<>(sortOptions);\r\n        sortComboBox.setPreferredSize(new Dimension(150, 30));\r\n        //\r\n        sortComboBox.setBackground(Color.WHITE);\r\n        sortComboBox.setForeground(Color.GRAY);\r\n        sortComboBox.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1)); // Viền xám\r\n\r\n        sortComboBox.setUI(new BasicComboBoxUI() {\r\n            @Override\r\n            protected JButton createArrowButton() {\r\n                JButton arrowButton = new JButton(\"v\");\r\n                arrowButton.setBackground(Color.WHITE);\r\n                arrowButton.setForeground(Color.GRAY);\r\n                arrowButton.setBorder(BorderFactory.createEmptyBorder());\r\n                arrowButton.setFocusPainted(false);\r\n                arrowButton.setFont(new Font(\"Arial\", Font.PLAIN, 12)); // Điều chỉnh kích thước chữ\r\n                return arrowButton;\r\n            }\r\n\r\n            @Override\r\n            protected void installDefaults() {\r\n                super.installDefaults();\r\n                comboBox.setOpaque(true);\r\n            }\r\n        });\r\n\r\n        // Tùy chỉnh renderer để danh sách thả xuống cũng có giao diện tương tự\r\n        sortComboBox.setRenderer(new DefaultListCellRenderer() {\r\n            @Override\r\n            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {\r\n                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);\r\n                setBackground(isSelected ? Color.LIGHT_GRAY : Color.WHITE); // Nền khi chọn\r\n                setForeground(Color.GRAY); // Chữ xám nhạt\r\n                setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));\r\n\r\n                return this;\r\n            }\r\n        });\r\n\r\n        panelfunction.add(sortComboBox);\r\n\r\n        panelfunction.setLayout(new FlowLayout());\r\n        panelfunction.setBorder(BorderFactory.createTitledBorder(border, \"Chức năng\"));\r\n\r\n        // Điều chỉnh kích thước button trong panelfunction\r\n        btnadd.setPreferredSize(new Dimension(80, 35));\r\n        btnfix.setPreferredSize(new Dimension(100, 35));\r\n        btnblock.setPreferredSize(new Dimension(100, 35));\r\n        btnImportExcel.setPreferredSize(new Dimension(80, 35));\r\n        btnExportExcel.setPreferredSize(new Dimension(80, 35));\r\n\r\n        // Thêm sự kiện cho nút Nhập Excel\r\n        btnImportExcel.addActionListener(new ActionListener() {\r\n            @Override\r\n            public void actionPerformed(ActionEvent e) {\r\n                JOptionPane.showMessageDialog(pnStaff.this, \"Chức năng Nhập Excel được gọi!\");\r\n                // Thêm logic nhập Excel tại đây\r\n            }\r\n        });\r\n\r\n        // Thêm sự kiện cho nút Xuất Excel\r\n        btnExportExcel.addActionListener(new ActionListener() {\r\n            @Override\r\n            public void actionPerformed(ActionEvent e) {\r\n                JOptionPane.showMessageDialog(pnStaff.this, \"Chức năng Xuất Excel được gọi!\");\r\n                // Thêm logic xuất Excel tại đây\r\n            }\r\n        });\r\n\r\n        // panel find\r\n        panelfind.add(txtfiter);\r\n        panelfind.add(btnfind);\r\n        panelfind.add(btnload);\r\n        panelfind.setBorder(BorderFactory.createTitledBorder(border, \"Tìm kiếm\"));\r\n\r\n        // Set kích thước button và textfield trong panelfind\r\n        txtfiter.setPreferredSize(new Dimension(200, 33));\r\n        btnfind.setPreferredSize(new Dimension(80, 30));\r\n        btnload.setPreferredSize(new Dimension(80, 30));\r\n\r\n        // panel header\r\n        panelheader.add(panelfunction);\r\n        panelheader.add(panelfind);\r\n        panelheader.setLayout(new GridLayout(1, 2, 15, 25));\r\n        panelheader.setBounds(10, 20, 950, 80);\r\n        panelheader.setBackground(Color.decode(\"#FFFFFF\"));\r\n        panelexcel.setBounds(785,110,175,45 );\r\n\r\n        // panel display\r\n        String[] columns = {\"STT\", \"Mã NV\", \"Họ-Lót\", \"Tên\", \"Giới tính\", \"Địa chỉ\", \"Role\", \"Lương\", \"Trạng thái\"};\r\n        model.setColumnIdentifiers(columns);\r\n        tbStaff = new JTable(model);\r\n\r\n        // Thiết lập TableRowSorter\r\n        sorter = new TableRowSorter<>(model);\r\n        tbStaff.setRowSorter(sorter);\r\n\r\n        // Điều chỉnh chiều rộng cột\r\n        TableColumnModel columnModel = tbStaff.getColumnModel();\r\n        columnModel.getColumn(0).setPreferredWidth(50);  // Cột \"STT\"\r\n        columnModel.getColumn(1).setPreferredWidth(80);  // Cột \"Mã NV\"\r\n        columnModel.getColumn(2).setPreferredWidth(100); // Cột \"Họ-Lót\"\r\n        columnModel.getColumn(3).setPreferredWidth(80);  // Cột \"Tên\"\r\n        columnModel.getColumn(4).setPreferredWidth(80);  // Cột \"Giới tính\"\r\n        columnModel.getColumn(5).setPreferredWidth(150); // Cột \"Địa chỉ\"\r\n        columnModel.getColumn(6).setPreferredWidth(80);  // Cột \"Role\"\r\n        columnModel.getColumn(7).setPreferredWidth(100); // Cột \"Lương\"\r\n        columnModel.getColumn(8).setPreferredWidth(80);  // Cột \"Trạng thái\"\r\n\r\n//        // Thêm sự kiện cho JComboBox\r\n//        sortComboBox.addActionListener(new ActionListener() {\r\n//            @Override\r\n//            public void actionPerformed(ActionEvent e) {\r\n//                String selectedOption = (String) sortComboBox.getSelectedItem();\r\n//                switch (selectedOption) {\r\n//                    case \"ID (tăng dần)\":\r\n//                        sorter.setSortKeys(java.util.Collections.singletonList(\r\n//                                new RowSorter.SortKey(0, SortOrder.ASCENDING)));\r\n//                        break;\r\n//                    case \"Giới tính\":\r\n//                        sorter.setSortKeys(java.util.Collections.singletonList(\r\n//                                new RowSorter.SortKey(4, SortOrder.ASCENDING)));\r\n//                        break;\r\n//                    case \"Lương\":\r\n//                        sorter.setSortKeys(java.util.Collections.singletonList(\r\n//                                new RowSorter.SortKey(7, SortOrder.ASCENDING)));\r\n//                        break;\r\n//                }\r\n//            }\r\n//        });\r\n\r\n        JScrollPane scrollPane = new JScrollPane(tbStaff);\r\n        paneldisplay.setBackground(Color.decode(\"#FFFFFF\"));\r\n        paneldisplay.setLayout(new GridLayout(1, 1));\r\n        paneldisplay.add(scrollPane);\r\n        paneldisplay.setBounds(10, 170, 950, 550);\r\n\r\n        add(panelheader);\r\n        add(panelexcel);\r\n        add(paneldisplay);\r\n    }\r\n}
+===================================================================
+diff --git a/src/pnForm/pnStaff.java b/src/pnForm/pnStaff.java
+--- a/src/pnForm/pnStaff.java	(revision 0fa0c0ef78e3426305291e38b5033eb9837ca8ba)
++++ b/src/pnForm/pnStaff.java	(date 1742655027121)
+@@ -1,8 +1,5 @@
+ package pnForm;
+ 
+-import Components.MyColor;
+-import Components.MyJButton;
+-
+ import javax.swing.*;
+ import javax.swing.border.Border;
+ import javax.swing.plaf.basic.BasicComboBoxUI;
+@@ -16,179 +13,255 @@
+ public class pnStaff extends JPanel {
+     private DefaultTableModel model = new DefaultTableModel();
+     private JTable tbStaff;
+-    private JButton btnblock = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Khóa", SwingConstants.CENTER, SwingConstants.CENTER);
+-    private JButton btnfind = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Tìm", SwingConstants.CENTER, SwingConstants.CENTER);
+-    private JButton btnadd = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Thêm", SwingConstants.CENTER, SwingConstants.CENTER);
+-    private JButton btnfix = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
+-    private JButton btnload = new MyJButton(Font.PLAIN, 14, MyColor.White, MyColor.DarkBlue, MyColor.HoverBlue, "Tải lại", SwingConstants.CENTER, SwingConstants.CENTER);
+-    // Thêm hai nút mới
+-    private JButton btnImportExcel = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Nhập Excel", SwingConstants.CENTER, SwingConstants.CENTER);
+-    private JButton btnExportExcel = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.White, "Xuất Excel", SwingConstants.CENTER, SwingConstants.CENTER);
+-
+-    private JComboBox<String> sortComboBox;
+     private TableRowSorter<DefaultTableModel> sorter;
+ 
+-    JTextField txtfiter = new JTextField("Nhập nội dung");
++    // Các thành phần giao diện
++    private JButton btnAdd = new JButton("Thêm");
++    private JButton btnEdit = new JButton("Sửa");
++    private JButton btnDelete = new JButton("Khóa");
++    private JButton btnImportExcel = new JButton("Nhập Excel");
++    private JButton btnExportExcel = new JButton("Xuất Excel");
++    private JButton btnRefresh = new JButton("Tải lại");
++    private JTextField txtSearch = new JTextField("Nhập mã NV hoặc tên...");
++    private JComboBox<String> sortComboBox;
+ 
+-    // panel
+-    JPanel panelfunction = new JPanel();  // them sua block
+-    JPanel panelfind = new JPanel();     // tim kiem, loc thong tin
+-    JPanel panelheader = new JPanel();
+-    JPanel paneldisplay = new JPanel();  // hien danh sach
+-    JPanel panelexcel = new JPanel();
++    // Panels
++    private JPanel panelFunction = new JPanel(); // Chứa các nút chức năng
++    private JPanel panelSearch = new JPanel();   // Chứa tìm kiếm và sắp xếp
++    private JPanel panelHeader = new JPanel();   // Chứa panelFunction và panelSearch
++    private JPanel panelDisplay = new JPanel();  // Chứa bảng
++
+     public pnStaff() {
+-        setLayout(null);
+-        setBackground(Color.decode("#FFFFFF"));
+-        Border border = BorderFactory.createLineBorder(Color.gray, 1);
++        setLayout(new BorderLayout());
++        setBackground(Color.decode("#F5F5F5")); // Nền xám nhạt nhẹ nhàng
++        Border border = BorderFactory.createLineBorder(Color.GRAY, 1);
++
++        // Thiết lập panelFunction (Chứa các nút chức năng)
++        panelFunction.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 5));
++        panelFunction.setBorder(BorderFactory.createTitledBorder(border, "Chức năng", 0, 0, new Font("Arial", Font.BOLD, 14)));
++        panelFunction.setBackground(Color.WHITE);
++
++        // Tùy chỉnh giao diện các nút
++        customizeButton(btnAdd, new Color(50, 168, 82));    // Xanh lá
++        customizeButton(btnEdit, new Color(255, 165, 0));   // Cam
++        customizeButton(btnDelete, new Color(255, 69, 58)); // Đỏ
++        customizeButton(btnImportExcel, new Color(66, 133, 244)); // Xanh dương (Nhập Excel)
++        customizeButton(btnExportExcel, new Color(66, 133, 244)); // Xanh dương (Xuất Excel)
++        customizeButton(btnRefresh, new Color(66, 133, 244)); // Xanh dương
++
++        panelFunction.add(btnAdd);
++        panelFunction.add(btnEdit);
++        panelFunction.add(btnDelete);
++        panelFunction.add(btnImportExcel);
++        panelFunction.add(btnExportExcel);
+ 
+-        // panel function
+-        panelfunction.add(btnadd);
+-        panelfunction.add(btnfix);
+-        panelfunction.add(btnblock);
+-        panelexcel.add(btnImportExcel);
+-        panelexcel.add(btnExportExcel);
++        // Thiết lập panelSearch (Tìm kiếm và sắp xếp)
++        panelSearch.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 5));
++        panelSearch.setBorder(BorderFactory.createTitledBorder(border, "Tìm kiếm & Sắp xếp", 0, 0, new Font("Arial", Font.BOLD, 14)));
++        panelSearch.setBackground(Color.WHITE);
+ 
+-        // JComboBox sắp xếp
++        txtSearch.setPreferredSize(new Dimension(200, 30));
++        txtSearch.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
++        txtSearch.setForeground(Color.GRAY);
++        txtSearch.setFont(new Font("Arial", Font.PLAIN, 14));
++        txtSearch.setBorder(BorderFactory.createCompoundBorder(
++                BorderFactory.createLineBorder(Color.GRAY, 1),
++                BorderFactory.createEmptyBorder(5, 5, 5, 5)
++        ));
++
+         String[] sortOptions = {"ID (tăng dần)", "Giới tính", "Lương"};
+         sortComboBox = new JComboBox<>(sortOptions);
+         sortComboBox.setPreferredSize(new Dimension(150, 30));
+-        //
+         sortComboBox.setBackground(Color.WHITE);
+         sortComboBox.setForeground(Color.GRAY);
+-        sortComboBox.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1)); // Viền xám
++        sortComboBox.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+ 
++        // Tùy chỉnh giao diện JComboBox
+         sortComboBox.setUI(new BasicComboBoxUI() {
+             @Override
+             protected JButton createArrowButton() {
+-                JButton arrowButton = new JButton("v");
++                JButton arrowButton = new JButton(">");
+                 arrowButton.setBackground(Color.WHITE);
+                 arrowButton.setForeground(Color.GRAY);
+                 arrowButton.setBorder(BorderFactory.createEmptyBorder());
+                 arrowButton.setFocusPainted(false);
+-                arrowButton.setFont(new Font("Arial", Font.PLAIN, 12)); // Điều chỉnh kích thước chữ
++                arrowButton.setFont(new Font("Arial", Font.PLAIN, 12));
+                 return arrowButton;
+             }
+-
+-            @Override
+-            protected void installDefaults() {
+-                super.installDefaults();
+-                comboBox.setOpaque(true);
+-            }
+         });
+ 
+-        // Tùy chỉnh renderer để danh sách thả xuống cũng có giao diện tương tự
+         sortComboBox.setRenderer(new DefaultListCellRenderer() {
+             @Override
+             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+-                setBackground(isSelected ? Color.LIGHT_GRAY : Color.WHITE); // Nền khi chọn
+-                setForeground(Color.GRAY); // Chữ xám nhạt
++                setBackground(isSelected ? Color.LIGHT_GRAY : Color.WHITE);
++                setForeground(Color.GRAY);
+                 setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+-
+                 return this;
+             }
+         });
+ 
+-        panelfunction.add(sortComboBox);
+-
+-        panelfunction.setLayout(new FlowLayout());
+-        panelfunction.setBorder(BorderFactory.createTitledBorder(border, "Chức năng"));
+-
+-        // Điều chỉnh kích thước button trong panelfunction
+-        btnadd.setPreferredSize(new Dimension(80, 35));
+-        btnfix.setPreferredSize(new Dimension(100, 35));
+-        btnblock.setPreferredSize(new Dimension(100, 35));
+-        btnImportExcel.setPreferredSize(new Dimension(80, 35));
+-        btnExportExcel.setPreferredSize(new Dimension(80, 35));
+-
+-        // Thêm sự kiện cho nút Nhập Excel
+-        btnImportExcel.addActionListener(new ActionListener() {
+-            @Override
+-            public void actionPerformed(ActionEvent e) {
+-                JOptionPane.showMessageDialog(pnStaff.this, "Chức năng Nhập Excel được gọi!");
+-                // Thêm logic nhập Excel tại đây
+-            }
+-        });
+-
+-        // Thêm sự kiện cho nút Xuất Excel
+-        btnExportExcel.addActionListener(new ActionListener() {
+-            @Override
+-            public void actionPerformed(ActionEvent e) {
+-                JOptionPane.showMessageDialog(pnStaff.this, "Chức năng Xuất Excel được gọi!");
+-                // Thêm logic xuất Excel tại đây
+-            }
+-        });
++        panelSearch.add(txtSearch);
++        panelSearch.add(sortComboBox);
++        panelSearch.add(btnRefresh);
+ 
+-        // panel find
+-        panelfind.add(txtfiter);
+-        panelfind.add(btnfind);
+-        panelfind.add(btnload);
+-        panelfind.setBorder(BorderFactory.createTitledBorder(border, "Tìm kiếm"));
++        // Thiết lập panelHeader
++        panelHeader.setLayout(new BorderLayout());
++        panelHeader.add(panelFunction, BorderLayout.WEST);
++        panelHeader.add(panelSearch, BorderLayout.EAST);
++        panelHeader.setBackground(Color.WHITE);
++        panelHeader.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+ 
+-        // Set kích thước button và textfield trong panelfind
+-        txtfiter.setPreferredSize(new Dimension(200, 33));
+-        btnfind.setPreferredSize(new Dimension(80, 30));
+-        btnload.setPreferredSize(new Dimension(80, 30));
+-
+-        // panel header
+-        panelheader.add(panelfunction);
+-        panelheader.add(panelfind);
+-        panelheader.setLayout(new GridLayout(1, 2, 15, 25));
+-        panelheader.setBounds(10, 20, 950, 80);
+-        panelheader.setBackground(Color.decode("#FFFFFF"));
+-        panelexcel.setBounds(785,110,175,45 );
+-
+-        // panel display
+-        String[] columns = {"STT", "Mã NV", "Họ-Lót", "Tên", "Giới tính", "Địa chỉ", "Role", "Lương", "Trạng thái"};
++        // Thiết lập bảng
++        String[] columns = {"STT", "Mã NV", "Họ-Lót", "Tên", "Giới tính", "Địa chỉ", "Role", "Lương", "Số điện thoại", "Trạng thái"};
+         model.setColumnIdentifiers(columns);
+         tbStaff = new JTable(model);
+-
+-        // Thiết lập TableRowSorter
+-        sorter = new TableRowSorter<>(model);
+-        tbStaff.setRowSorter(sorter);
++        tbStaff.setRowHeight(30);
++        tbStaff.setFont(new Font("Arial", Font.PLAIN, 14));
++        tbStaff.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
++        tbStaff.getTableHeader().setBackground(new Color(66, 133, 244));
++        tbStaff.getTableHeader().setForeground(Color.WHITE);
+ 
+         // Điều chỉnh chiều rộng cột
+         TableColumnModel columnModel = tbStaff.getColumnModel();
+-        columnModel.getColumn(0).setPreferredWidth(50);  // Cột "STT"
++        columnModel.getColumn(0).setPreferredWidth(30);  // Cột "STT"
+         columnModel.getColumn(1).setPreferredWidth(80);  // Cột "Mã NV"
+-        columnModel.getColumn(2).setPreferredWidth(100); // Cột "Họ-Lót"
++        columnModel.getColumn(2).setPreferredWidth(120); // Cột "Họ-Lót"
+         columnModel.getColumn(3).setPreferredWidth(80);  // Cột "Tên"
+-        columnModel.getColumn(4).setPreferredWidth(80);  // Cột "Giới tính"
+-        columnModel.getColumn(5).setPreferredWidth(150); // Cột "Địa chỉ"
++        columnModel.getColumn(4).setPreferredWidth(50);  // Cột "Giới tính"
++        columnModel.getColumn(5).setPreferredWidth(170); // Cột "Địa chỉ"
+         columnModel.getColumn(6).setPreferredWidth(80);  // Cột "Role"
+-        columnModel.getColumn(7).setPreferredWidth(100); // Cột "Lương"
+-        columnModel.getColumn(8).setPreferredWidth(80);  // Cột "Trạng thái"
++        columnModel.getColumn(7).setPreferredWidth(80);  // Cột "Lương"
++        columnModel.getColumn(8).setPreferredWidth(100); // Cột "Số điện thoại"
++        columnModel.getColumn(9).setPreferredWidth(70);  // Cột "Trạng thái"
++
++        // Thiết lập TableRowSorter
++        sorter = new TableRowSorter<>(model);
++        tbStaff.setRowSorter(sorter);
+ 
+-//        // Thêm sự kiện cho JComboBox
+-//        sortComboBox.addActionListener(new ActionListener() {
+-//            @Override
+-//            public void actionPerformed(ActionEvent e) {
+-//                String selectedOption = (String) sortComboBox.getSelectedItem();
+-//                switch (selectedOption) {
+-//                    case "ID (tăng dần)":
+-//                        sorter.setSortKeys(java.util.Collections.singletonList(
+-//                                new RowSorter.SortKey(0, SortOrder.ASCENDING)));
+-//                        break;
+-//                    case "Giới tính":
+-//                        sorter.setSortKeys(java.util.Collections.singletonList(
+-//                                new RowSorter.SortKey(4, SortOrder.ASCENDING)));
+-//                        break;
+-//                    case "Lương":
+-//                        sorter.setSortKeys(java.util.Collections.singletonList(
+-//                                new RowSorter.SortKey(7, SortOrder.ASCENDING)));
+-//                        break;
+-//                }
+-//            }
+-//        });
++        // Thêm dữ liệu mẫu
++        addSampleData();
++
++        // Thêm sự kiện tìm kiếm
++        txtSearch.addActionListener(new ActionListener() {
++            @Override
++            public void actionPerformed(ActionEvent e) {
++                String searchText = txtSearch.getText().trim().toLowerCase();
++                if (searchText.isEmpty()) {
++                    sorter.setRowFilter(null);
++                } else {
++                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText, 1, 3)); // Tìm kiếm ở cột Mã NV và Tên
++                }
++            }
++        });
++
++        // Thêm sự kiện cho các nút
++        btnAdd.addActionListener(e -> showAddDialog());
++        btnRefresh.addActionListener(e -> refreshTable());
+ 
+         JScrollPane scrollPane = new JScrollPane(tbStaff);
+-        paneldisplay.setBackground(Color.decode("#FFFFFF"));
+-        paneldisplay.setLayout(new GridLayout(1, 1));
+-        paneldisplay.add(scrollPane);
+-        paneldisplay.setBounds(10, 170, 950, 550);
++        panelDisplay.setLayout(new BorderLayout());
++        panelDisplay.add(scrollPane, BorderLayout.CENTER);
++        panelDisplay.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
++
++        // Thêm các panel vào giao diện chính
++        add(panelHeader, BorderLayout.NORTH);
++        add(panelDisplay, BorderLayout.CENTER);
++    }
++
++    // Tùy chỉnh giao diện nút
++    private void customizeButton(JButton button, Color backgroundColor) {
++        button.setBackground(backgroundColor);
++        button.setForeground(Color.WHITE);
++        button.setFont(new Font("Arial", Font.BOLD, 14));
++        button.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
++        button.setFocusPainted(false);
++        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
++    }
++
++    // Thêm dữ liệu mẫu
++    private void addSampleData() {
++        model.addRow(new Object[]{1, "NV001", "Nguyễn", "Văn A", "Nam", "Hà Nội", "Nhân viên", "5000000", "0901234567", "Hoạt động"});
++        model.addRow(new Object[]{2, "NV002", "Trần", "Thị B", "Nữ", "TP.HCM", "Quản lý", "8000000", "0912345678", "Khóa"});
++        model.addRow(new Object[]{3, "NV003", "Lê", "Văn C", "Nam", "Đà Nẵng", "Nhân viên", "6000000", "0923456789", "Hoạt động"});
++    }
+ 
+-        add(panelheader);
+-        add(panelexcel);
+-        add(paneldisplay);
++    // Hiển thị dialog để thêm nhân viên
++    private void showAddDialog() {
++        JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Thêm nhân viên", true);
++        dialog.setLayout(new GridLayout(11, 2, 10, 10)); // Tăng số hàng lên 11 để chứa thêm trường Số điện thoại
++        dialog.setSize(400, 450); // Tăng chiều cao dialog để chứa thêm trường
++        dialog.setLocationRelativeTo(this);
++
++        JTextField txtId = new JTextField();
++        JTextField txtLastName = new JTextField();
++        JTextField txtFirstName = new JTextField();
++        JComboBox<String> cbGender = new JComboBox<>(new String[]{"Nam", "Nữ"});
++        JTextField txtAddress = new JTextField();
++        JComboBox<String> cbRole = new JComboBox<>(new String[]{"Nhân viên", "Quản lý"});
++        JTextField txtSalary = new JTextField();
++        JTextField txtPhone = new JTextField(); // Thêm trường Số điện thoại
++        JComboBox<String> cbStatus = new JComboBox<>(new String[]{"Hoạt động", "Khóa"});
++
++        dialog.add(new JLabel("Mã NV:"));
++        dialog.add(txtId);
++        dialog.add(new JLabel("Họ-Lót:"));
++        dialog.add(txtLastName);
++        dialog.add(new JLabel("Tên:"));
++        dialog.add(txtFirstName);
++        dialog.add(new JLabel("Giới tính:"));
++        dialog.add(cbGender);
++        dialog.add(new JLabel("Địa chỉ:"));
++        dialog.add(txtAddress);
++        dialog.add(new JLabel("Role:"));
++        dialog.add(cbRole);
++        dialog.add(new JLabel("Lương:"));
++        dialog.add(txtSalary);
++        dialog.add(new JLabel("Số điện thoại:"));
++        dialog.add(txtPhone); // Thêm nhãn và trường Số điện thoại
++        dialog.add(new JLabel("Trạng thái:"));
++        dialog.add(cbStatus);
++
++        JButton btnSave = new JButton("Lưu");
++        btnSave.setBackground(new Color(50, 168, 82));
++        btnSave.setForeground(Color.WHITE);
++        JButton btnCancel = new JButton("Hủy");
++        btnCancel.setBackground(new Color(255, 69, 58));
++        btnCancel.setForeground(Color.WHITE);
++
++        dialog.add(btnSave);
++        dialog.add(btnCancel);
++
++        btnSave.addActionListener(e -> {
++            String id = txtId.getText();
++            String lastName = txtLastName.getText();
++            String firstName = txtFirstName.getText();
++            String gender = (String) cbGender.getSelectedItem();
++            String address = txtAddress.getText();
++            String role = (String) cbRole.getSelectedItem();
++            String salary = txtSalary.getText();
++            String phone = txtPhone.getText(); // Lấy giá trị Số điện thoại
++            String status = (String) cbStatus.getSelectedItem();
++
++            if (id.isEmpty() || lastName.isEmpty() || firstName.isEmpty() || address.isEmpty() || salary.isEmpty() || phone.isEmpty()) {
++                JOptionPane.showMessageDialog(dialog, "Vui lòng điền đầy đủ thông tin!");
++                return;
++            }
++
++            int stt = model.getRowCount() + 1;
++            model.addRow(new Object[]{stt, id, lastName, firstName, gender, address, role, salary, phone, status});
++            dialog.dispose();
++        });
++
++        btnCancel.addActionListener(e -> dialog.dispose());
++
++        dialog.setVisible(true);
++    }
++
++    // Làm mới bảng
++    private void refreshTable() {
++        txtSearch.setText("Nhập mã NV hoặc tên...");
++        sorter.setRowFilter(null);
++        sortComboBox.setSelectedIndex(0); // Đặt lại về sắp xếp mặc định
+     }
+ }
+\ No newline at end of file
+Index: src/pnForm/pnDiscount.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package pnForm;\r\nimport javax.swing.*;\r\nimport javax.swing.border.Border;\r\nimport javax.swing.plaf.basic.BasicComboBoxUI;\r\nimport javax.swing.table.DefaultTableModel;\r\nimport javax.swing.table.TableColumnModel;\r\nimport javax.swing.table.TableRowSorter;\r\nimport java.awt.*;\r\nimport java.awt.event.ActionEvent;\r\nimport java.awt.event.ActionListener;\r\n\r\npublic class pnDiscount extends JPanel {\r\n    private DefaultTableModel model = new DefaultTableModel();\r\n    private JTable tbDiscountCodes;\r\n    private TableRowSorter<DefaultTableModel> sorter;\r\n\r\n    // Các thành phần giao diện\r\n    private JButton btnAdd = new JButton(\"Thêm\");\r\n    private JButton btnEdit = new JButton(\"Sửa\");\r\n    private JButton btnDelete = new JButton(\"Xóa\");\r\n    private JButton btnRefresh = new JButton(\"Tải lại\");\r\n    private JTextField txtSearch = new JTextField(\"Nhập ID mã hoặc loại...\");\r\n    private JButton btnImportExcel = new JButton(\"Nhập Excel\");\r\n    private JButton btnExportExcel = new JButton(\"Xuất Excel\");\r\n    private JComboBox<String> sortComboBox;\r\n\r\n    // Panels\r\n    private JPanel panelFunction = new JPanel(); // Chứa các nút chức năng\r\n    private JPanel panelSearch = new JPanel();   // Chứa tìm kiếm và sắp xếp\r\n    private JPanel panelHeader = new JPanel();   // Chứa panelFunction và panelSearch\r\n    private JPanel panelDisplay = new JPanel();  // Chứa bảng\r\n\r\n    public pnDiscount() {\r\n        setLayout(new BorderLayout());\r\n        setBackground(Color.decode(\"#F5F5F5\")); // xám\r\n        Border border = BorderFactory.createLineBorder(Color.GRAY, 1);\r\n        // panelFunction\r\n        panelFunction.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 5));\r\n        panelFunction.setBorder(BorderFactory.createTitledBorder(border, \"Chức năng\", 0, 0, new Font(\"Arial\", Font.BOLD, 14)));\r\n        panelFunction.setBackground(Color.WHITE);\r\n\r\n        // Tùy chỉnh giao diện các nút\r\n        customizeButton(btnAdd, new Color(50, 168, 82));    // Xanh lá\r\n        customizeButton(btnEdit, new Color(255, 165, 0));   // Cam\r\n        customizeButton(btnDelete, new Color(255, 69, 58)); // Đỏ\r\n        customizeButton(btnRefresh, new Color(66, 133, 244)); // Xanh dương\r\n        customizeButton(btnImportExcel, new Color(66, 133, 244)); // Xanh dương\r\n        customizeButton(btnExportExcel, new Color(66, 133, 244));\r\n\r\n\r\n        panelFunction.add(btnAdd);\r\n        panelFunction.add(btnEdit);\r\n        panelFunction.add(btnDelete);\r\n        panelFunction.add(btnImportExcel); // Thêm nút Nhập Excel\r\n        panelFunction.add(btnExportExcel);\r\n\r\n\r\n        // Thiết lập panelSearch (Tìm kiếm và sắp xếp)\r\n        panelSearch.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 5));\r\n        panelSearch.setBorder(BorderFactory.createTitledBorder(border, \"Tìm kiếm & Sắp xếp\", 0, 0, new Font(\"Arial\", Font.BOLD, 14)));\r\n        panelSearch.setBackground(Color.WHITE);\r\n\r\n        txtSearch.setPreferredSize(new Dimension(200, 30));\r\n        txtSearch.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));\r\n        txtSearch.setForeground(Color.GRAY);\r\n\r\n        String[] sortOptions = {\"STT (tăng dần)\", \"Hạn sử dụng\", \"Trạng thái\"};\r\n        sortComboBox = new JComboBox<>(sortOptions);\r\n        sortComboBox.setPreferredSize(new Dimension(150, 30));\r\n        sortComboBox.setBackground(Color.WHITE);\r\n        sortComboBox.setForeground(Color.GRAY);\r\n        sortComboBox.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));\r\n\r\n        // Tùy chỉnh giao diện JComboBox\r\n        sortComboBox.setUI(new BasicComboBoxUI() {\r\n            @Override\r\n            protected JButton createArrowButton() {\r\n                JButton arrowButton = new JButton(\"v\");\r\n                arrowButton.setBackground(Color.WHITE);\r\n                arrowButton.setForeground(Color.GRAY);\r\n                arrowButton.setBorder(BorderFactory.createEmptyBorder());\r\n                arrowButton.setFocusPainted(false);\r\n                arrowButton.setFont(new Font(\"Arial\", Font.PLAIN, 12));\r\n                return arrowButton;\r\n            }\r\n        });\r\n\r\n        sortComboBox.setRenderer(new DefaultListCellRenderer() {\r\n            @Override\r\n            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {\r\n                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);\r\n                setBackground(isSelected ? Color.LIGHT_GRAY : Color.WHITE);\r\n                setForeground(Color.GRAY);\r\n                setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));\r\n                return this;\r\n            }\r\n        });\r\n\r\n        panelSearch.add(txtSearch);\r\n        panelSearch.add(sortComboBox);\r\n        panelSearch.add(btnRefresh);\r\n\r\n        // panelHeader\r\n        panelHeader.setLayout(new BorderLayout());\r\n        panelHeader.add(panelFunction, BorderLayout.WEST);\r\n        panelHeader.add(panelSearch, BorderLayout.EAST);\r\n        panelHeader.setBackground(Color.WHITE);\r\n        panelHeader.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));\r\n\r\n        // Thiết lập bảng\r\n        String[] columns = {\"STT\", \"ID mã\", \"Loại\", \"Hạn sử dụng\", \"Trạng thái\"};\r\n        model.setColumnIdentifiers(columns);\r\n        tbDiscountCodes = new JTable(model);\r\n        tbDiscountCodes.setRowHeight(30);\r\n        tbDiscountCodes.setFont(new Font(\"Arial\", Font.PLAIN, 14));\r\n        tbDiscountCodes.getTableHeader().setFont(new Font(\"Arial\", Font.BOLD, 14));\r\n        tbDiscountCodes.getTableHeader().setBackground(new Color(66, 133, 244));\r\n        tbDiscountCodes.getTableHeader().setForeground(Color.WHITE);\r\n\r\n        // Điều chỉnh chiều rộng cột\r\n        TableColumnModel columnModel = tbDiscountCodes.getColumnModel();\r\n        columnModel.getColumn(0).setPreferredWidth(50);\r\n        columnModel.getColumn(1).setPreferredWidth(100);\r\n        columnModel.getColumn(2).setPreferredWidth(150);\r\n        columnModel.getColumn(3).setPreferredWidth(120);\r\n        columnModel.getColumn(4).setPreferredWidth(100);\r\n\r\n        // Thiết lập TableRowSorter\r\n        sorter = new TableRowSorter<>(model);\r\n        tbDiscountCodes.setRowSorter(sorter);\r\n\r\n        // Thêm dữ liệu mẫu\r\n        addSampleData();\r\n        // Thêm sự kiện cho JComboBox\r\n//        sortComboBox.addActionListener(new ActionListener() {\r\n//            @Override\r\n//            public void actionPerformed(ActionEvent e) {\r\n//                String selectedOption = (String) sortComboBox.getSelectedItem();\r\n//                switch (selectedOption) {\r\n//                    case \"STT (tăng dần)\":\r\n//                        sorter.setSortKeys(java.util.Collections.singletonList(\r\n//                                new RowSorter.SortKey(0, SortOrder.ASCENDING)));\r\n//                        break;\r\n//                    case \"Hạn sử dụng\":\r\n//                        sorter.setSortKeys(java.util.Collections.singletonList(\r\n//                                new RowSorter.SortKey(3, SortOrder.ASCENDING)));\r\n//                        break;\r\n//                    case \"Trạng thái\":\r\n//                        sorter.setSortKeys(java.util.Collections.singletonList(\r\n//                                new RowSorter.SortKey(4, SortOrder.ASCENDING)));\r\n//                        break;\r\n//                }\r\n//            }\r\n//        });\r\n\r\n        // Thêm sự kiện tìm kiếm\r\n        txtSearch.addActionListener(new ActionListener() {\r\n            @Override\r\n            public void actionPerformed(ActionEvent e) {\r\n                String searchText = txtSearch.getText().trim().toLowerCase();\r\n                if (searchText.isEmpty()) {\r\n                    sorter.setRowFilter(null);\r\n                } else {\r\n                    sorter.setRowFilter(RowFilter.regexFilter(\"(?i)\" + searchText, 1, 2)); // Tìm kiếm ở cột ID mã và Loại\r\n                }\r\n            }\r\n        });\r\n\r\n        // Thêm sự kiện cho các nút\r\n        btnAdd.addActionListener(e -> showAddDialog());\r\n        btnEdit.addActionListener(e -> showEditDialog());\r\n        btnDelete.addActionListener(e -> deleteSelectedRow());\r\n        btnRefresh.addActionListener(e -> refreshTable());\r\n        btnImportExcel.addActionListener(e -> importFromExcel()); // Sự kiện Nhập Excel\r\n        btnExportExcel.addActionListener(e -> exportToExcel());\r\n\r\n        JScrollPane scrollPane = new JScrollPane(tbDiscountCodes);\r\n        panelDisplay.setLayout(new BorderLayout());\r\n        panelDisplay.add(scrollPane, BorderLayout.CENTER);\r\n        panelDisplay.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));\r\n\r\n        // Thêm các panel vào giao diện chính\r\n        add(panelHeader, BorderLayout.NORTH);\r\n        add(panelDisplay, BorderLayout.CENTER);\r\n    }\r\n\r\n    // Tùy chỉnh giao diện nút\r\n    private void customizeButton(JButton button, Color backgroundColor) {\r\n        button.setBackground(backgroundColor);\r\n        button.setForeground(Color.WHITE);\r\n        button.setFont(new Font(\"Arial\", Font.BOLD, 14));\r\n        button.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));\r\n        button.setFocusPainted(false);\r\n        button.setCursor(new Cursor(Cursor.HAND_CURSOR));\r\n    }\r\n\r\n    // Thêm dữ liệu mẫu\r\n    private void addSampleData() {\r\n        model.addRow(new Object[]{1, \"CODE001\", \"Giảm giá sản phẩm\", \"2025-12-31\", \"Hoạt động\"});\r\n        model.addRow(new Object[]{2, \"CODE002\", \"Giảm giá hóa đơn\", \"2024-11-30\", \"Hết hạn\"});\r\n        model.addRow(new Object[]{3, \"CODE003\", \"Giảm giá sản phẩm\", \"2025-06-30\", \"Hoạt động\"});\r\n    }\r\n\r\n    // Hiển thị dialog để thêm mã giảm giá\r\n    private void showAddDialog() {\r\n        JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), \"Thêm mã giảm giá\", true);\r\n        dialog.setLayout(new GridLayout(5, 2, 10, 10));\r\n        dialog.setSize(300, 250);\r\n        dialog.setLocationRelativeTo(this);\r\n\r\n        JTextField txtId = new JTextField();\r\n        JComboBox<String> cbType = new JComboBox<>(new String[]{\"Giảm giá sản phẩm\", \"Giảm giá hóa đơn\"});\r\n        JTextField txtExpiry = new JTextField(\"YYYY-MM-DD\");\r\n        JComboBox<String> cbStatus = new JComboBox<>(new String[]{\"Hoạt động\", \"Hết hạn\"});\r\n\r\n        dialog.add(new JLabel(\"ID mã:\"));\r\n        dialog.add(txtId);\r\n        dialog.add(new JLabel(\"Loại:\"));\r\n        dialog.add(cbType);\r\n        dialog.add(new JLabel(\"Hạn sử dụng:\"));\r\n        dialog.add(txtExpiry);\r\n        dialog.add(new JLabel(\"Trạng thái:\"));\r\n        dialog.add(cbStatus);\r\n\r\n        JButton btnSave = new JButton(\"Lưu\");\r\n        btnSave.setBackground(new Color(50, 168, 82));\r\n        btnSave.setForeground(Color.WHITE);\r\n        JButton btnCancel = new JButton(\"Hủy\");\r\n        btnCancel.setBackground(new Color(255, 69, 58));\r\n        btnCancel.setForeground(Color.WHITE);\r\n\r\n        dialog.add(btnSave);\r\n        dialog.add(btnCancel);\r\n\r\n        btnSave.addActionListener(e -> {\r\n            String id = txtId.getText();\r\n            String type = (String) cbType.getSelectedItem();\r\n            String expiry = txtExpiry.getText();\r\n            String status = (String) cbStatus.getSelectedItem();\r\n\r\n            if (id.isEmpty() || expiry.isEmpty()) {\r\n                JOptionPane.showMessageDialog(dialog, \"Vui lòng điền đầy đủ thông tin!\");\r\n                return;\r\n            }\r\n\r\n            int stt = model.getRowCount() + 1;\r\n            model.addRow(new Object[]{stt, id, type, expiry, status});\r\n            dialog.dispose();\r\n        });\r\n\r\n        btnCancel.addActionListener(e -> dialog.dispose());\r\n\r\n        dialog.setVisible(true);\r\n    }\r\n\r\n    // Hiển thị dialog để sửa mã giảm giá\r\n    private void showEditDialog() {\r\n        int selectedRow = tbDiscountCodes.getSelectedRow();\r\n        if (selectedRow == -1) {\r\n            JOptionPane.showMessageDialog(this, \"Vui lòng chọn một mã giảm giá để sửa!\");\r\n            return;\r\n        }\r\n\r\n        JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), \"Sửa mã giảm giá\", true);\r\n        dialog.setLayout(new GridLayout(5, 2, 10, 10));\r\n        dialog.setSize(300, 250);\r\n        dialog.setLocationRelativeTo(this);\r\n\r\n        JTextField txtId = new JTextField((String) model.getValueAt(selectedRow, 1));\r\n        JComboBox<String> cbType = new JComboBox<>(new String[]{\"Giảm giá sản phẩm\", \"Giảm giá hóa đơn\"});\r\n        cbType.setSelectedItem(model.getValueAt(selectedRow, 2));\r\n        JTextField txtExpiry = new JTextField((String) model.getValueAt(selectedRow, 3));\r\n        JComboBox<String> cbStatus = new JComboBox<>(new String[]{\"Hoạt động\", \"Hết hạn\"});\r\n        cbStatus.setSelectedItem(model.getValueAt(selectedRow, 4));\r\n\r\n        dialog.add(new JLabel(\"ID mã:\"));\r\n        dialog.add(txtId);\r\n        dialog.add(new JLabel(\"Loại:\"));\r\n        dialog.add(cbType);\r\n        dialog.add(new JLabel(\"Hạn sử dụng:\"));\r\n        dialog.add(txtExpiry);\r\n        dialog.add(new JLabel(\"Trạng thái:\"));\r\n        dialog.add(cbStatus);\r\n\r\n        JButton btnSave = new JButton(\"Lưu\");\r\n        btnSave.setBackground(new Color(50, 168, 82));\r\n        btnSave.setForeground(Color.WHITE);\r\n        JButton btnCancel = new JButton(\"Hủy\");\r\n        btnCancel.setBackground(new Color(255, 69, 58));\r\n        btnCancel.setForeground(Color.WHITE);\r\n\r\n        dialog.add(btnSave);\r\n        dialog.add(btnCancel);\r\n\r\n        btnSave.addActionListener(e -> {\r\n            String id = txtId.getText();\r\n            String type = (String) cbType.getSelectedItem();\r\n            String expiry = txtExpiry.getText();\r\n            String status = (String) cbStatus.getSelectedItem();\r\n\r\n            if (id.isEmpty() || expiry.isEmpty()) {\r\n                JOptionPane.showMessageDialog(dialog, \"Vui lòng điền đầy đủ thông tin!\");\r\n                return;\r\n            }\r\n\r\n            model.setValueAt(id, selectedRow, 1);\r\n            model.setValueAt(type, selectedRow, 2);\r\n            model.setValueAt(expiry, selectedRow, 3);\r\n            model.setValueAt(status, selectedRow, 4);\r\n            dialog.dispose();\r\n        });\r\n\r\n        btnCancel.addActionListener(e -> dialog.dispose());\r\n\r\n        dialog.setVisible(true);\r\n    }\r\n\r\n    // Xóa dòng được chọn\r\n    private void deleteSelectedRow() {\r\n        int selectedRow = tbDiscountCodes.getSelectedRow();\r\n        if (selectedRow == -1) {\r\n            JOptionPane.showMessageDialog(this, \"Vui lòng chọn một mã giảm giá để xóa!\");\r\n            return;\r\n        }\r\n\r\n        int confirm = JOptionPane.showConfirmDialog(this, \"Bạn có chắc muốn xóa mã này?\", \"Xác nhận xóa\", JOptionPane.YES_NO_OPTION);\r\n        if (confirm == JOptionPane.YES_OPTION) {\r\n            model.removeRow(selectedRow);\r\n            // Cập nhật lại STT\r\n            for (int i = 0; i < model.getRowCount(); i++) {\r\n                model.setValueAt(i + 1, i, 0);\r\n            }\r\n        }\r\n    }\r\n    private void exportToExcel() {\r\n\r\n    }\r\n\r\n    private void importFromExcel() {\r\n\r\n    }\r\n    // Làm mới bảng\r\n    private void refreshTable() {\r\n        txtSearch.setText(\"Nhập ID mã hoặc loại...\");\r\n        sorter.setRowFilter(null);\r\n        sortComboBox.setSelectedIndex(0);\r\n    }\r\n\r\n}
+===================================================================
+diff --git a/src/pnForm/pnDiscount.java b/src/pnForm/pnDiscount.java
+--- a/src/pnForm/pnDiscount.java	(revision 0fa0c0ef78e3426305291e38b5033eb9837ca8ba)
++++ b/src/pnForm/pnDiscount.java	(date 1742650947367)
+@@ -10,14 +10,20 @@
+ import java.awt.event.ActionListener;
+ 
+ public class pnDiscount extends JPanel {
+-    private DefaultTableModel model = new DefaultTableModel();
++
++    private DefaultTableModel model = new DefaultTableModel() {
++        @Override
++        public boolean isCellEditable(int row, int column) {
++            return false;
++        }
++    };
+     private JTable tbDiscountCodes;
+     private TableRowSorter<DefaultTableModel> sorter;
+ 
+     // Các thành phần giao diện
+     private JButton btnAdd = new JButton("Thêm");
+     private JButton btnEdit = new JButton("Sửa");
+-    private JButton btnDelete = new JButton("Xóa");
++    private JButton btnDelete = new JButton("Khóa");
+     private JButton btnRefresh = new JButton("Tải lại");
+     private JTextField txtSearch = new JTextField("Nhập ID mã hoặc loại...");
+     private JButton btnImportExcel = new JButton("Nhập Excel");
+@@ -48,6 +54,7 @@
+         customizeButton(btnExportExcel, new Color(66, 133, 244));
+ 
+ 
++        panelFunction.add(btnAdd);
+         panelFunction.add(btnAdd);
+         panelFunction.add(btnEdit);
+         panelFunction.add(btnDelete);
+@@ -105,7 +112,7 @@
+         panelHeader.add(panelFunction, BorderLayout.WEST);
+         panelHeader.add(panelSearch, BorderLayout.EAST);
+         panelHeader.setBackground(Color.WHITE);
+-        panelHeader.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
++        panelHeader.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
+ 
+         // Thiết lập bảng
+         String[] columns = {"STT", "ID mã", "Loại", "Hạn sử dụng", "Trạng thái"};
+@@ -125,6 +132,9 @@
+         columnModel.getColumn(3).setPreferredWidth(120);
+         columnModel.getColumn(4).setPreferredWidth(100);
+ 
++
++
++
+         // Thiết lập TableRowSorter
+         sorter = new TableRowSorter<>(model);
+         tbDiscountCodes.setRowSorter(sorter);
+@@ -178,7 +188,7 @@
+         panelDisplay.setLayout(new BorderLayout());
+         panelDisplay.add(scrollPane, BorderLayout.CENTER);
+         panelDisplay.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+-
++        panelDisplay.setBackground(Color.WHITE);
+         // Thêm các panel vào giao diện chính
+         add(panelHeader, BorderLayout.NORTH);
+         add(panelDisplay, BorderLayout.CENTER);
+@@ -199,6 +209,7 @@
+         model.addRow(new Object[]{1, "CODE001", "Giảm giá sản phẩm", "2025-12-31", "Hoạt động"});
+         model.addRow(new Object[]{2, "CODE002", "Giảm giá hóa đơn", "2024-11-30", "Hết hạn"});
+         model.addRow(new Object[]{3, "CODE003", "Giảm giá sản phẩm", "2025-06-30", "Hoạt động"});
++
+     }
+ 
+     // Hiển thị dialog để thêm mã giảm giá

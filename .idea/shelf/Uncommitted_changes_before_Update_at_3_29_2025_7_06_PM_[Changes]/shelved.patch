@@ -1,0 +1,58 @@
+Index: src/GUI/pnDiscount.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package GUI;\r\n\r\nimport Components.MyJTable;\r\nimport javax.swing.*;\r\nimport javax.swing.border.Border;\r\nimport javax.swing.plaf.basic.BasicComboBoxUI;\r\nimport javax.swing.table.DefaultTableModel;\r\nimport javax.swing.table.TableColumnModel;\r\nimport javax.swing.table.TableRowSorter;\r\nimport java.awt.*;\r\nimport java.awt.event.MouseAdapter;\r\nimport java.awt.event.MouseEvent;\r\n\r\npublic class pnDiscount extends JPanel {\r\n    private MyJTable tbDiscountCodes = new MyJTable(\r\n            new String[]{\"STT\", \"ID mã\", \"Loại\", \"Hạn sử dụng\", \"Trạng thái\"},\r\n            new Font(\"Roboto\", Font.BOLD, 14),\r\n            new Color(159, 32, 243), // Màu chữ\r\n            new Color(159, 242, 115), // Màu nền header\r\n            new Color(255, 0, 239) // Màu khi chọn hàng\r\n    );\r\n    private TableRowSorter<DefaultTableModel> sorter;\r\n\r\n    // Các thành phần giao diện\r\n    private JButton btnAdd = new JButton(\"Thêm\");\r\n    private JButton btnEdit = new JButton(\"Sửa\");\r\n    private JButton btnDelete = new JButton(\"Xóa\");\r\n    private JButton btnRefresh = new JButton(\"Tải lại\");\r\n    private JTextField txtSearch = new JTextField(\"Nhập ID mã hoặc loại...\");\r\n    private JButton btnImportExcel = new JButton(\"Nhập Excel\");\r\n    private JButton btnExportExcel = new JButton(\"Xuất Excel\");\r\n    private JComboBox<String> sortComboBox;\r\n\r\n    // Panels\r\n    private JPanel panelFunction = new JPanel(); // Chứa các nút chức năng\r\n    private JPanel panelSearch = new JPanel();   // Chứa tìm kiếm và sắp xếp\r\n    private JPanel panelHeader = new JPanel();   // Chứa panelFunction và panelSearch\r\n    private JPanel panelDisplay = new JPanel();  // Chứa bảng\r\n\r\n    public pnDiscount() {\r\n        setLayout(new BorderLayout());\r\n        setBackground(Color.decode(\"#F5F5F5\")); // Xám\r\n        Border border = BorderFactory.createLineBorder(Color.GRAY, 1);\r\n\r\n        // panelFunction\r\n        panelFunction.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 5));\r\n        panelFunction.setBorder(BorderFactory.createTitledBorder(border, \"Chức năng\", 0, 0, new Font(\"Arial\", Font.BOLD, 14)));\r\n        panelFunction.setBackground(Color.WHITE);\r\n\r\n        // Tùy chỉnh giao diện các nút\r\n        customizeButton(btnAdd, new Color(50, 168, 82));    // Xanh lá\r\n        customizeButton(btnEdit, new Color(255, 165, 0));   // Cam\r\n        customizeButton(btnDelete, new Color(255, 69, 58)); // Đỏ\r\n        customizeButton(btnRefresh, new Color(66, 133, 244)); // Xanh dương\r\n        customizeButton(btnImportExcel, new Color(66, 133, 244)); // Xanh dương\r\n        customizeButton(btnExportExcel, new Color(66, 133, 244)); // Xanh dương\r\n\r\n        panelFunction.add(btnAdd);\r\n        panelFunction.add(btnEdit);\r\n        panelFunction.add(btnDelete);\r\n        panelFunction.add(btnImportExcel);\r\n        panelFunction.add(btnExportExcel);\r\n\r\n        // Thiết lập panelSearch (Tìm kiếm và sắp xếp)\r\n        panelSearch.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 5));\r\n        panelSearch.setBorder(BorderFactory.createTitledBorder(border, \"Tìm kiếm & Sắp xếp\", 0, 0, new Font(\"Arial\", Font.BOLD, 14)));\r\n        panelSearch.setBackground(Color.WHITE);\r\n\r\n        txtSearch.setPreferredSize(new Dimension(200, 30));\r\n        txtSearch.setBorder(BorderFactory.createCompoundBorder(\r\n                BorderFactory.createLineBorder(Color.GRAY, 1),\r\n                BorderFactory.createEmptyBorder(5, 5, 5, 5)\r\n        ));\r\n        txtSearch.setForeground(Color.GRAY);\r\n        txtSearch.setFont(new Font(\"Arial\", Font.PLAIN, 14));\r\n\r\n        String[] sortOptions = {\"STT (tăng dần)\", \"Hạn sử dụng\", \"Trạng thái\"};\r\n        sortComboBox = new JComboBox<>(sortOptions);\r\n        sortComboBox.setPreferredSize(new Dimension(150, 30));\r\n        sortComboBox.setBackground(Color.WHITE);\r\n        sortComboBox.setForeground(Color.GRAY);\r\n        sortComboBox.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));\r\n        sortComboBox.setUI(new BasicComboBoxUI() {\r\n            @Override\r\n            protected JButton createArrowButton() {\r\n                JButton arrowButton = new JButton(\"V\");\r\n                arrowButton.setBackground(Color.WHITE);\r\n                arrowButton.setForeground(Color.GRAY);\r\n                arrowButton.setBorder(BorderFactory.createEmptyBorder());\r\n                arrowButton.setFocusPainted(false);\r\n                return arrowButton;\r\n            }\r\n        });\r\n\r\n        panelSearch.add(txtSearch);\r\n        panelSearch.add(sortComboBox);\r\n        panelSearch.add(btnRefresh);\r\n\r\n        // panelHeader\r\n        panelHeader.setLayout(new BorderLayout());\r\n        panelHeader.add(panelFunction, BorderLayout.WEST);\r\n        panelHeader.add(panelSearch, BorderLayout.EAST);\r\n        panelHeader.setBackground(Color.WHITE);\r\n        panelHeader.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));\r\n\r\n        // Điều chỉnh chiều rộng cột\r\n        TableColumnModel columnModel = tbDiscountCodes.getColumnModel();\r\n        columnModel.getColumn(0).setPreferredWidth(50);  // STT\r\n        columnModel.getColumn(1).setPreferredWidth(100); // ID mã\r\n        columnModel.getColumn(2).setPreferredWidth(150); // Loại\r\n        columnModel.getColumn(3).setPreferredWidth(120); // Hạn sử dụng\r\n        columnModel.getColumn(4).setPreferredWidth(100); // Trạng thái\r\n\r\n        // Thiết lập TableRowSorter\r\n        sorter = new TableRowSorter<>((DefaultTableModel) tbDiscountCodes.getModel());\r\n        tbDiscountCodes.setRowSorter(sorter);\r\n\r\n        // Thêm dữ liệu mẫu\r\n        addSampleData();\r\n\r\n        // Thêm sự kiện tìm kiếm\r\n        txtSearch.addMouseListener(new MouseAdapter() {\r\n            @Override\r\n            public void mouseClicked(MouseEvent e) {\r\n                if (e.getButton() == MouseEvent.BUTTON1) {\r\n                    txtSearch.setText(\"\");\r\n                }\r\n            }\r\n        });\r\n\r\n        txtSearch.addActionListener(e -> {\r\n            String searchText = txtSearch.getText().trim().toLowerCase();\r\n            if (searchText.isEmpty() || searchText.equals(\"nhập id mã hoặc loại...\")) {\r\n                sorter.setRowFilter(null);\r\n            } else {\r\n                sorter.setRowFilter(RowFilter.regexFilter(\"(?i)\" + searchText, 1, 2)); // Tìm kiếm ở cột ID mã và Loại\r\n            }\r\n        });\r\n\r\n        // Thiết lập JScrollPane\r\n        JScrollPane scrollPane = new JScrollPane(tbDiscountCodes);\r\n        scrollPane.setBorder(null);\r\n        scrollPane.setBackground(Color.WHITE);\r\n\r\n        panelDisplay.setLayout(new BorderLayout());\r\n        panelDisplay.add(scrollPane, BorderLayout.CENTER);\r\n        panelDisplay.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));\r\n        panelDisplay.setBackground(Color.WHITE);\r\n\r\n        // Thêm các panel vào giao diện chính\r\n        add(panelHeader, BorderLayout.NORTH);\r\n        add(panelDisplay, BorderLayout.CENTER);\r\n    }\r\n\r\n    // Tùy chỉnh giao diện nút\r\n    private void customizeButton(JButton button, Color backgroundColor) {\r\n        button.setBackground(backgroundColor);\r\n        button.setForeground(Color.WHITE);\r\n        button.setFont(new Font(\"Arial\", Font.BOLD, 14));\r\n        button.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));\r\n        button.setFocusPainted(false);\r\n        button.setCursor(new Cursor(Cursor.HAND_CURSOR));\r\n    }\r\n\r\n    // Thêm dữ liệu mẫu\r\n    private void addSampleData() {\r\n        DefaultTableModel model = (DefaultTableModel) tbDiscountCodes.getModel();\r\n        model.addRow(new Object[]{1, \"CODE001\", \"Giảm giá sản phẩm\", \"2025-12-31\", \"Hoạt động\"});\r\n        model.addRow(new Object[]{2, \"CODE002\", \"Giảm giá hóa đơn\", \"2024-11-30\", \"Hết hạn\"});\r\n        model.addRow(new Object[]{3, \"CODE003\", \"Giảm giá sản phẩm\", \"2025-06-30\", \"Hoạt động\"});\r\n    }\r\n\r\n    // Làm mới bảng\r\n    private void refreshTable() {\r\n        txtSearch.setText(\"Nhập ID mã hoặc loại...\");\r\n        sorter.setRowFilter(null);\r\n        sortComboBox.setSelectedIndex(0);\r\n    }\r\n}
+===================================================================
+diff --git a/src/GUI/pnDiscount.java b/src/GUI/pnDiscount.java
+--- a/src/GUI/pnDiscount.java	(revision 3aa7a10360a3785ade04a618553646223d45c2b3)
++++ b/src/GUI/pnDiscount.java	(date 1743243093896)
+@@ -1,5 +1,6 @@
+ package GUI;
+ 
++import BUS.Discount_BUS;
+ import Components.MyJTable;
+ import javax.swing.*;
+ import javax.swing.border.Border;
+@@ -20,7 +21,7 @@
+             new Color(255, 0, 239) // Màu khi chọn hàng
+     );
+     private TableRowSorter<DefaultTableModel> sorter;
+-
++    private Discount_BUS discountBus ;
+     // Các thành phần giao diện
+     private JButton btnAdd = new JButton("Thêm");
+     private JButton btnEdit = new JButton("Sửa");
+@@ -115,8 +116,7 @@
+         sorter = new TableRowSorter<>((DefaultTableModel) tbDiscountCodes.getModel());
+         tbDiscountCodes.setRowSorter(sorter);
+ 
+-        // Thêm dữ liệu mẫu
+-        addSampleData();
++
+ 
+         // Thêm sự kiện tìm kiếm
+         txtSearch.addMouseListener(new MouseAdapter() {
+@@ -150,6 +150,9 @@
+         // Thêm các panel vào giao diện chính
+         add(panelHeader, BorderLayout.NORTH);
+         add(panelDisplay, BorderLayout.CENTER);
++
++        discountBus.loadStaffData();
++
+     }
+ 
+     // Tùy chỉnh giao diện nút
+@@ -162,13 +165,6 @@
+         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+     }
+ 
+-    // Thêm dữ liệu mẫu
+-    private void addSampleData() {
+-        DefaultTableModel model = (DefaultTableModel) tbDiscountCodes.getModel();
+-        model.addRow(new Object[]{1, "CODE001", "Giảm giá sản phẩm", "2025-12-31", "Hoạt động"});
+-        model.addRow(new Object[]{2, "CODE002", "Giảm giá hóa đơn", "2024-11-30", "Hết hạn"});
+-        model.addRow(new Object[]{3, "CODE003", "Giảm giá sản phẩm", "2025-06-30", "Hoạt động"});
+-    }
+ 
+     // Làm mới bảng
+     private void refreshTable() {
