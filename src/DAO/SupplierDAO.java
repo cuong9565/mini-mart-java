@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SupplierDAO {
-    private static SupplierDAO instance;
+    private static SupplierDAO instance = null;
 
     public SupplierDAO() {}
     public static SupplierDAO getInstance() {

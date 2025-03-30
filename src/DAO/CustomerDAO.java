@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDAO {
-    private static CustomerDAO instance;
+    private static CustomerDAO instance = null;
     public CustomerDAO() {}
     public static CustomerDAO getInstance() {
         if(instance == null) instance = new CustomerDAO();

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerBUS {
-    private static CustomerBUS instance;
+    private static CustomerBUS instance = null;
 
     public CustomerBUS() {}
     public static CustomerBUS getInstance() {

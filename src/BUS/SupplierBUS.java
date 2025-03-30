@@ -6,7 +6,7 @@ import DTO.SupplierDTO;
 import java.util.List;
 
 public class SupplierBUS {
-    private static SupplierBUS instance;
+    private static SupplierBUS instance = null;
     private String error = null;
 
     public SupplierBUS() {}
