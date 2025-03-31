@@ -108,7 +108,7 @@ public class pnSupplier extends JPanel {
         btnIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                List<Object[]> list = tbSupplier.ImportExel();
+                List<Object[]> list = tbSupplier.ImportExel(4);
                 if(list==null) return;
                 List<SupplierDTO> suppliers = new ArrayList<>();
                 for (Object[] ob : list)

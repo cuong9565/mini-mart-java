@@ -37,7 +37,7 @@ public class CustomerDAO {
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, str);
+            ps.setString(1, "%" + str + "%");
             ResultSet rs = ps.executeQuery();
             while(rs.next()) list.add(new CustomerDTO(rs));
         }
@@ -48,6 +48,31 @@ public class CustomerDAO {
         DataProvider.getInstance().CloseConnection(con);
         return list;
     }
+
+    public int adds(List<CustomerDTO>list){
+        int res = 0, pos = 1;
+        Connection con = DataProvider.getInstance().getConnection();
+        String sql = "insert into customer(phone, lastName, firstName, address, gender) values(?,?,?,?,?)";
+        for(int i=1; i<list.size(); i++)
+            sql += ",(?,?,?,?,?)";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            for(CustomerDTO customer : list){
+                ps.setString(pos++, customer.getPhone());
+                ps.setString(pos++, customer.getLastName());
+                ps.setString(pos++, customer.getFirstName());
+                ps.setString(pos++, customer.getAddress());
+                ps.setString(pos++, customer.getGender());
+            }
+            res = ps.executeUpdate();
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return res;
+    }
+
     public int add(CustomerDTO customer) {
         int res = 0;
         String sql = "insert into customer(phone, lastName, firstName, address, gender) values(?,?,?,?,?)";

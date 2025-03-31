@@ -48,7 +48,7 @@ public class MyJTable extends JTable {
         scrPn = new JScrollPane(this);
     }
 
-    public List<Object[]> ImportExel(){
+    public List<Object[]> ImportExel(int col){
         List<Object[]> list = new ArrayList<Object[]>();
         JFileChooser chooser = new JFileChooser();
         chooser.setDialogTitle("Chọn tệp để mở");
@@ -68,7 +68,7 @@ public class MyJTable extends JTable {
                 for(int i=2; i<=n; i++){
                     Row row = sheet.getRow(i);
                     Object[] data = new Object[row.getLastCellNum()];
-                    for(int j=0; j<row.getLastCellNum(); j++)
+                    for(int j=0; j<col; j++)
                         data[j] = row.getCell(j).getStringCellValue();
                     list.add(data);
                 }

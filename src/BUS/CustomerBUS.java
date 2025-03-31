@@ -10,6 +10,7 @@ import java.util.List;
 public class CustomerBUS {
     private static CustomerBUS instance = null;
     private static String error = null;
+    private static int numLine = 0;
 
     public CustomerBUS() {}
     public static CustomerBUS getInstance() {
@@ -44,6 +45,21 @@ public class CustomerBUS {
         return true;
     }
 
+    public boolean adds(List<CustomerDTO> customers) {
+        if(customers.isEmpty() || customers==null) {
+            error = "Dữ liệu không hợp lệ";
+            return false;
+        }
+        try{
+            numLine = CustomerDAO.getInstance().adds(customers);
+        }
+        catch (Exception e) {
+            error = "Lỗi " + e.getMessage();
+            return false;
+        }
+        return true;
+    }
+
     public boolean update(CustomerDTO customer) {
         if(customer.getPhone().isEmpty() || customer.getLastName().isEmpty() || customer.getFirstName().isEmpty() || customer.getAddress().isEmpty()) {
             error = "Dữ liệu không được để trống!!!";
@@ -73,4 +89,5 @@ public class CustomerBUS {
     }
 
     public String getError(){return error;}
+    public int getNumLine(){return numLine;}
 }
