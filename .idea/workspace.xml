@@ -5,16 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong Big Update">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJLabel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPanel$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/DataProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/DataProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnImport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnImport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/ImportDtlDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/ImportDtlDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/ProductDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/ProductDAO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

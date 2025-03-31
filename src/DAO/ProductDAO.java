@@ -13,7 +13,7 @@ public class ProductDAO {
         try {
             String url = "jdbc:mysql://localhost:3306/mini_mart_java";
             String user = "root";
-            String password = "chibaolun"; // Update with your credentials
+            String password = ""; // Update with your credentials
             conn = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             throw new RuntimeException("Failed to connect to database!", e);

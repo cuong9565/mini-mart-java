@@ -14,7 +14,7 @@ public class ImportDtlDAO {
         try {
             String url = "jdbc:mysql://localhost:3306/mini_mart_java";
             String user = "root";
-            String password = "chibaolun";
+            String password = "";
             conn = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             throw new RuntimeException("Failed to connect to database!", e);
