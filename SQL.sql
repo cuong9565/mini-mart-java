@@ -227,5 +227,17 @@ INSERT INTO Customer (phone, lastName, firstName, address, gender) VALUES
 
  -- ------------------------------------
  -- drop database mini_mart_java
+-- Sample Data for ProductType
+INSERT INTO ProductType (name) VALUES
+('Đồ uống'), ('Thực phẩm'), ('Hàng gia dụng');
 
+-- Sample Data for ProductDetail
+INSERT INTO ProductDetail (detailInfo) VALUES
+('Nước ngọt có ga'), ('Snack ăn vặt'), ('Dụng cụ vệ sinh');
+
+-- Sample Data for Product
+INSERT INTO Product (idProductType, idProductDetail, name, price, unit, quantity) VALUES
+(1, 1, 'Coca Cola', 10000, 'lon', 100),
+(2, 2, 'Bánh Snack', 5000, 'gói', 200),
+(3, 3, 'Chổi quét nhà', 25000, 'cái', 50);
 
