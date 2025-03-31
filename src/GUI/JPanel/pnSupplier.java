@@ -35,8 +35,6 @@ public class pnSupplier extends JPanel {
     pnSupplier thisPanel = this;
     int posSelectedCB = 0;
 
-    String[] lsCombobox = {"name", "id", "phone", "address", "email"};
-
     public pnSupplier(fManage frame) {
         setLayout(null);
         setBackground(MyColor.LightGray);
@@ -133,15 +131,21 @@ public class pnSupplier extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int i = cbSearch.getSelectedIndex();
                 if(posSelectedCB !=i){
-                    posSelectedCB = i;
                     tfSearch.setText("");
                 }
             }
         });
         tfSearch.getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e) {loadSupplier();}
-            public void removeUpdate(DocumentEvent e) {loadSupplier();}
-            public void changedUpdate(DocumentEvent e) {loadSupplier();}
+            public void insertUpdate(DocumentEvent e) {textChange();}
+            public void removeUpdate(DocumentEvent e) {textChange();}
+            public void changedUpdate(DocumentEvent e) {textChange();}
+            public void textChange(){
+                tbSupplier.dftbModel.setRowCount(0);
+                int col = cbSearch.getSelectedIndex();
+                String txt = tfSearch.getText();
+                for(SupplierDTO supplier: SupplierBUS.getInstance().getSupplierListBy(col, txt))
+                    tbSupplier.dftbModel.addRow(supplier.getObjects());
+            }
         });
         // endregion
         // region ADD
@@ -163,10 +167,8 @@ public class pnSupplier extends JPanel {
     }
 
     public void loadSupplier()  {
-        int i = posSelectedCB;
-        String whr = lsCombobox[i];
         tbSupplier.dftbModel.setRowCount(0);
-        for(SupplierDTO supplier: SupplierBUS.getInstance().getListSupplierBy(whr, tfSearch.getText()))
+        for(SupplierDTO supplier: SupplierBUS.getInstance().getListSupplier())
             tbSupplier.dftbModel.addRow(supplier.getObjects());
     }
 }

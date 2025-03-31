@@ -3,12 +3,14 @@ package BUS;
 import DAO.SupplierDAO;
 import DTO.SupplierDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SupplierBUS {
     private static SupplierBUS instance = null;
     private static String error = null;
     private static int numLine = 0;
+    private static List<SupplierDTO>supplierList;
 
     public SupplierBUS() {}
     public static SupplierBUS getInstance() {
@@ -17,7 +19,8 @@ public class SupplierBUS {
     }
 
     public List<SupplierDTO> getListSupplier() {
-        return SupplierDAO.getInstance().getListSupplier();
+        supplierList = SupplierDAO.getInstance().getListSupplier();
+        return supplierList;
     }
 
     public List<SupplierDTO> getListSupplierBy(String whr, String str){
@@ -103,4 +106,38 @@ public class SupplierBUS {
 
     public String getError(){return error;}
     public int getNumLine(){return numLine;}
+    public List<SupplierDTO>getSupplierList(){return supplierList;}
+    public List<SupplierDTO>getSupplierListBy(int col, String txt){
+        List<SupplierDTO>list = new ArrayList<>();
+
+        switch (col){
+            case 0:
+                for(SupplierDTO supplier : supplierList)
+                    if(supplier.getName().equals(txt))
+                        list.add(supplier);
+                break;
+            case 1:
+                for(SupplierDTO supplier : supplierList)
+                    if(String.valueOf(supplier.getId()).equals(txt))
+                        list.add(supplier);
+                break;
+            case 2:
+                for(SupplierDTO supplier : supplierList)
+                    if(supplier.getPhone().equals(txt))
+                        list.add(supplier);
+                break;
+            case 3:
+                for(SupplierDTO supplier : supplierList)
+                    if(supplier.getAddress().equals(txt))
+                        list.add(supplier);
+                break;
+            case 4:
+                for(SupplierDTO supplier : supplierList)
+                    if(supplier.getEmail().equals(txt))
+                        list.add(supplier);
+                break;
+        }
+
+        return list;
+    }
 }

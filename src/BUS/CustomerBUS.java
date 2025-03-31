@@ -2,6 +2,7 @@ package BUS;
 
 import DAO.CustomerDAO;
 import DTO.CustomerDTO;
+import DTO.SupplierDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ public class CustomerBUS {
     private static CustomerBUS instance = null;
     private static String error = null;
     private static int numLine = 0;
+    private static List<CustomerDTO>customerList;
 
     public CustomerBUS() {}
     public static CustomerBUS getInstance() {
@@ -19,11 +21,8 @@ public class CustomerBUS {
     }
 
     public List<CustomerDTO>getAllList(){
-        return CustomerDAO.getInstance().getAllList();
-    }
-
-    public List<CustomerDTO>getSearch(String whr, String str){
-        return CustomerDAO.getInstance().getSearch(whr, str);
+        customerList = CustomerDAO.getInstance().getAllList();
+        return customerList;
     }
 
     public boolean add(CustomerDTO customer) {
@@ -90,4 +89,46 @@ public class CustomerBUS {
 
     public String getError(){return error;}
     public int getNumLine(){return numLine;}
+    public List<CustomerDTO>getSupplierListBy(int col, String txt){
+        List<CustomerDTO>list = new ArrayList<>();
+
+        switch (col){
+            case 0:
+                for (CustomerDTO customerDTO : customerList)
+                    if (customerDTO.getFirstName().equals(txt))
+                        list.add(customerDTO);
+                break;
+            case 1:
+                for (CustomerDTO customerDTO : customerList)
+                    if(String.valueOf(customerDTO.getId()).equals(txt))
+                        list.add(customerDTO);
+                break;
+            case 2:
+                for (CustomerDTO customerDTO : customerList)
+                    if (customerDTO.getPhone().equals(txt))
+                        list.add(customerDTO);
+                break;
+            case 3:
+                for (CustomerDTO customerDTO : customerList)
+                    if (customerDTO.getLastName().equals(txt))
+                        list.add(customerDTO);
+                break;
+            case 4:
+                for (CustomerDTO customerDTO : customerList)
+                    if (customerDTO.getAddress().equals(txt))
+                        list.add(customerDTO);
+                break;
+            case 5:
+                for (CustomerDTO customerDTO : customerList)
+                    if (customerDTO.getGender().equals(txt))
+                        list.add(customerDTO);
+                break;
+            case 6:
+                for (CustomerDTO customerDTO : customerList)
+                    if (customerDTO.getState().equals(txt))
+                        list.add(customerDTO);
+                break;
+        }
+        return list;
+    }
 }

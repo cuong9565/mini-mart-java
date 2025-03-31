@@ -36,10 +36,9 @@ public class pnCustomer extends JPanel {
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Tên", "Mã số", "Số điện thoại", "Họ", "Địa chỉ", "Giới tính", "Trạng thái"}, 12);
 
-    MyJTable tbCustomer = new MyJTable(new String[]{"Mã", "Số điện thoại" , "Họ", "Tên", "Địa chỉ", "Giới tính", "Trạng thái"});
+    MyJTable tbCustomer = new MyJTable(new String[]{"Mã số", "Số điện thoại" , "Họ", "Tên", "Địa chỉ", "Giới tính", "Trạng thái"});
     int currPosCB = 0;
     pnCustomer thisPanel = this;
-    String[] lsComboBox = new String[]{"firstName", "id", "phone", "lastName", "address", "gender", "state"};
 
     int posSelectedCB = 0;
 
@@ -145,9 +144,16 @@ public class pnCustomer extends JPanel {
             }
         });
         tfSearch.getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e) {loadCustomer();}
-            public void removeUpdate(DocumentEvent e) {loadCustomer();}
-            public void changedUpdate(DocumentEvent e) {loadCustomer();}
+            public void insertUpdate(DocumentEvent e) {textChange();}
+            public void removeUpdate(DocumentEvent e) {textChange();}
+            public void changedUpdate(DocumentEvent e) {textChange();}
+            public void textChange(){
+                tbCustomer.dftbModel.setRowCount(0);
+                int col = cbSearch.getSelectedIndex();
+                String txt = tfSearch.getText();
+                for(CustomerDTO customer: CustomerBUS.getInstance().getSupplierListBy(col, txt))
+                    tbCustomer.dftbModel.addRow(customer.getObjects());
+            }
         });
         // endregion
         // region ADD
@@ -168,10 +174,8 @@ public class pnCustomer extends JPanel {
     }
 
     public void loadCustomer(){
-        int i = posSelectedCB;
-        String whr = lsComboBox[i];
         tbCustomer.dftbModel.setRowCount(0);
-        for(CustomerDTO customer: CustomerBUS.getInstance().getSearch(whr, tfSearch.getText()))
+        for(CustomerDTO customer: CustomerBUS.getInstance().getAllList())
             tbCustomer.dftbModel.addRow(customer.getObjects());
     }
 }
