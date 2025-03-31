@@ -1,3 +1,4 @@
+DROP DATABASE mini_mart_java;
 CREATE DATABASE mini_mart_java;
 USE mini_mart_java;
 
@@ -8,7 +9,7 @@ CREATE TABLE Customer (
     lastName VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,
     firstName VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,
     address VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,
-    state VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL default 'Mở', -- Khóa || Mở
+    state VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL default 'Đang hoạt động', -- Đã bị Khóa || Hoạt động
     gender VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL -- Nam || Nữ 
 );
 
@@ -222,10 +223,11 @@ INSERT INTO Customer (phone, lastName, firstName, address, gender) VALUES
 
  -- ---------------- SELECT -----------
  use mini_mart_java;
- select * from Provider;
- select * from provider where name like '%ệ%';
+ select * from provider;
+ select * from customer;
+ select * from staff;
 
  -- ------------------------------------
- -- drop database mini_mart_java
+
 
 

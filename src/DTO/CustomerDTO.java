@@ -28,6 +28,15 @@ public class CustomerDTO{
            System.out.println("Lỗi SQL: " + e.getMessage());
         }
     }
+    public CustomerDTO(Object[] ojs){
+        id = Integer.parseInt(ojs[0].toString());
+        phone = ojs[1].toString();
+        lastName = ojs[2].toString();
+        firstName = ojs[3].toString();
+        address = ojs[4].toString();
+        gender = ojs[5].toString();
+        state = ojs[6].toString();
+    }
     public int getId() {return id;}
     public String getPhone() {return phone;}
     public String getLastName() {return lastName;}

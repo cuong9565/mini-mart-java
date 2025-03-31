@@ -3,6 +3,8 @@ package GUI.JPanel;
 import BUS.CustomerBUS;
 import Components.*;
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +15,7 @@ import Components.MyColor;
 import Components.MyJButton;
 import DTO.CustomerDTO;
 import GUI.JDialog.dlAddCustomer;
+import GUI.JDialog.dlEditCustomer;
 import GUI.JFrame.fManage;
 
 public class pnCustomer extends JPanel {
@@ -29,9 +32,10 @@ public class pnCustomer extends JPanel {
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Tên", "Mã số", "Số điện thoại", "Họ", "Địa chỉ", "Giới tính", "Trạng thái"}, 12);
 
-    MyJTable tbCustomer = new MyJTable(new String[]{"Mã", "Số điện thoại" , "Họ", "Tên", "Địa chỉ", "Giới tính", "Trang thái"});
+    MyJTable tbCustomer = new MyJTable(new String[]{"Mã", "Số điện thoại" , "Họ", "Tên", "Địa chỉ", "Giới tính", "Trạng thái"});
     int currPosCB = 0;
     pnCustomer thisPanel = this;
+    String[] lsComboBox = new String[]{"firstName", "id", "phone", "lastName", "address", "gender", "state"};
 
     public pnCustomer(fManage fmanage) {
         setLayout(null);
@@ -67,6 +71,45 @@ public class pnCustomer extends JPanel {
                 new dlAddCustomer(fmanage, thisPanel);
             }
         });
+        btnEdit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int i = tbCustomer.getSelectedRow();
+                if(i==-1) JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn tài khoản để sửa thông tin!!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                else {
+                    CustomerDTO customer = new CustomerDTO(tbCustomer.getRowObject(i));
+                    new dlEditCustomer(fmanage, thisPanel, customer);
+                }
+            }
+        });
+        btnDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int i = tbCustomer.getSelectedRow();
+                if(i==-1) JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn khách hàng cần xóa!!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                else {
+                    CustomerDTO customer = new CustomerDTO(tbCustomer.getRowObject(i));
+                    if(CustomerBUS.getInstance().delete(customer)){
+                        JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin khách hàng thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        loadCustomer();
+                    }
+                    else JOptionPane.showMessageDialog(thisPanel, CustomerBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        tfSearch.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) {loadCustomer();}
+            public void removeUpdate(DocumentEvent e) {loadCustomer();}
+            public void changedUpdate(DocumentEvent e) {loadCustomer();}
+        });
+        btnRefresh.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cbSearch.setSelectedIndex(0);
+                tfSearch.setText("");
+                loadCustomer();
+            }
+        });
         // endregion
         // region ADD
         add(btnAdd);
@@ -87,8 +130,11 @@ public class pnCustomer extends JPanel {
 
     public void loadCustomer(){
         tbCustomer.dftbModel.setRowCount(0);
-        for(CustomerDTO customer: CustomerBUS.getInstance().getAllList())
+//        int i = cbSearch.getSelectedIndex();
+//        String whr = lsComboBox[i];
+//        for(CustomerDTO customer: CustomerBUS.getInstance().getSearch(whr, tfSearch.getText()))
+//            tbCustomer.dftbModel.addRow(customer.getObjects());
+        for (CustomerDTO customer: CustomerBUS.getInstance().getAllList())
             tbCustomer.dftbModel.addRow(customer.getObjects());
     }
 }
-

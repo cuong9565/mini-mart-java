@@ -14,34 +14,53 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class dlAddCustomer extends JDialog {
+public class dlEditCustomer extends JDialog {
     JPanel pnMain = new MyJPanel(MyColor.White);
-    JLabel lbHeader = new MyJLabel(Font.BOLD, 24, MyColor.White, "Thêm khách hàng", SwingConstants.CENTER, SwingConstants.CENTER);
+    JLabel lbHeader = new MyJLabel(Font.BOLD, 24, MyColor.White, "Sửa thông tin khách hàng", SwingConstants.CENTER, SwingConstants.CENTER);
     JLabel lbLastName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Họ*", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbFirstName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Tên*", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbGender = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Giới tính*", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbPhone = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Số điện thoại*", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbAddress = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Địa chỉ*", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbState = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Trạng thái*", SwingConstants.LEFT, SwingConstants.CENTER);
 
     JTextField tfLastName = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JTextField tfFirstName = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JTextField tfAddress = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JTextField tfPhone = new MyJTextFieldInput(Font.PLAIN, 14, true);
+    JTextField tfState = new MyJTextFieldInput(Font.PLAIN, 14, false);
 
     MyButtonGroup bgGender = new MyButtonGroup(new String[]{"Nam", "Nữ"});
 
+    JButton btnState = new MyJButton(Font.BOLD, 12, MyColor.White, MyColor.LightRed, "", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnSave = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Green, MyColor.LightGreen, "Xác nhận", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnEsc = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Red, MyColor.LightRed, "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
 
     JDialog dialog = this;
 
-    public dlAddCustomer(fManage parentFrame, pnCustomer parentPanel) {
+    public dlEditCustomer(fManage parentFrame, pnCustomer parentPanel, CustomerDTO customer) {
         super(parentFrame,true);
-        setTitle("Thêm khách hàng");
-        setSize(540,440);
+        setTitle("Sửa thông tin khách hàng");
+        setSize(540,510);
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+        tfLastName.setText(customer.getLastName());
+        tfFirstName.setText(customer.getFirstName());
+        tfPhone.setText(customer.getPhone());
+        if(customer.getGender().compareTo("Nam")==0) bgGender.radioButtons[0].setSelected(true);
+        else bgGender.radioButtons[1].setSelected(true);
+        tfAddress.setText(customer.getAddress());
+        tfState.setText(customer.getState());
+        if(customer.getState().compareTo("Đang hoạt động")==0){
+            btnState.setText("Khóa tài khoản");
+            btnState.setBackground(MyColor.LightRed);
+        }
+        else {
+            btnState.setText("Mở tài khoản");
+            btnState.setBackground(MyColor.LightBlue);
+        }
 
         // region setBounds
         pnMain.setBounds(0,0,540,440);
@@ -59,13 +78,16 @@ public class dlAddCustomer extends JDialog {
         lbAddress.setBounds(50,220,420,20);
         tfAddress.setBounds(50,240,420,30);
 
-        btnSave.setBounds(100,300,150,40);
-        btnEsc.setBounds(270,300,150,40);
+        lbState.setBounds(50,290,420,20);
+        tfState.setBounds(50,310,250,30);
+        btnState.setBounds(320, 310, 150, 30);
+
+        btnSave.setBounds(100,370,150,40);
+        btnEsc.setBounds(270,370,150,40);
         lbHeader.setOpaque(true);
         lbHeader.setBackground(MyColor.DarkBlue);
         lbHeader.setBounds(0,0,540,60);
         // endregion
-
         // region Event
         btnEsc.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -74,13 +96,27 @@ public class dlAddCustomer extends JDialog {
         });
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                CustomerDTO customer = new CustomerDTO(-1, tfPhone.getText(), tfLastName.getText(), tfFirstName.getText(), tfAddress.getText(), ((bgGender.radioButtons[0].isSelected())?"Nam":"Nữ"), "Mở");
-                if(CustomerBUS.getInstance().add(customer)){
-                    JOptionPane.showMessageDialog(dialog, "Thêm khách hàng thành công!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+                CustomerDTO customerNew = new CustomerDTO(customer.getId(), tfPhone.getText(), tfLastName.getText(), tfFirstName.getText(), tfAddress.getText(), ((bgGender.radioButtons[0].isSelected())?"Nam":"Nữ"), tfState.getText());
+                if(CustomerBUS.getInstance().update(customerNew)){
+                    JOptionPane.showMessageDialog(dialog, "Sửa thông tin khách hàng thành công!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
                     parentPanel.loadCustomer();
                     dialog.dispose();
                 }
                 else JOptionPane.showMessageDialog(dialog, CustomerBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        btnState.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if(tfState.getText().compareTo("Đang hoạt động")==0){
+                    btnState.setText("Mở tài khoản");
+                    btnState.setBackground(MyColor.LightBlue);
+                    tfState.setText("Đã bị khóa");
+                }
+                else {
+                    btnState.setText("Khóa tài khoản");
+                    btnState.setBackground(MyColor.LightRed);
+                    tfState.setText("Đang hoạt động");
+                }
             }
         });
         // endregion11
@@ -89,12 +125,16 @@ public class dlAddCustomer extends JDialog {
         add(tfLastName);
         add(lbFirstName);
         add(tfFirstName);
-        add(lbAddress);
-        add(tfAddress);
         add(lbPhone);
-        add(lbGender);
         add(tfPhone);
         for(JRadioButton rb: bgGender.radioButtons) add(rb);
+        add(lbGender);
+        add(lbAddress);
+        add(tfAddress);
+        add(lbState);
+        add(tfState);
+        add(btnState);
+
         add(btnSave);
         add(btnEsc);
 
