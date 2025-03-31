@@ -9,7 +9,8 @@ public class ImportDTO {
     private String date;
 
     public ImportDTO() {}
-    /*public ImportDTO(Object[] obj) {
+
+  /*  public ImportDTO(Object[] obj) {
         this.idImport = (int) obj[0];
         this.idStaff = (int) obj[1];
         this.idSupplier =  (int) obj[2];
