@@ -10,17 +10,7 @@ public class ImportDAO {
     private Connection conn;
 
 
-    private ImportDAO() {
-        try {
-            // Thay đổi thông tin kết nối theo database của bạn
-            String url = "jdbc:mysql://localhost:3306/your_database";
-            String user = "root";
-            String password = "";
-            conn = DriverManager.getConnection(url, user, password);
-        } catch (SQLException e) {
-            throw new RuntimeException("Lỗi kết nối cơ sở dữ liệu!", e);
-        }
-    }
+
 
     public static ImportDAO getInstance() {
         if (instance == null) {

@@ -4,17 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong">
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong Big Update">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_24_2025_6_00_AM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_24_2025_6_00_AM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SQL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/CustomerBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/CustomerBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/CustomerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/CustomerDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DTO/CustomerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/CustomerDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddCustomer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnCustomer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJLabel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPanel$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/DataProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/DataProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnImport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnImport.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +40,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/cuong9565/mini-mart-java.git&quot;,
-    &quot;accountId&quot;: &quot;f4c729e0-ab1e-41b9-93d0-47692b69cd9a&quot;
+    &quot;accountId&quot;: &quot;08037649-7790-4746-a5dc-212837c2106e&quot;
   }
 }</component>
   <component name="ProblemsViewState">
@@ -65,11 +65,12 @@
     &quot;Application.Manage.executor&quot;: &quot;Run&quot;,
     &quot;Application.demo.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;ShowUsagesActions.previewPropertyKey&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/tphu/mini-mart-java/lib/poi-bin-5.2.3&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/mini-mart-java/mysql-connector-j-9.1.0/mysql-connector-j-9.1.0.jar&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -99,14 +100,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -158,11 +151,6 @@
       <workItem from="1743172178240" duration="6126000" />
       <workItem from="1743207858240" duration="9602000" />
       <workItem from="1743218064872" duration="2870000" />
-      <workItem from="1743327057406" duration="1012000" />
-      <workItem from="1743329340060" duration="2949000" />
-      <workItem from="1743336380016" duration="3171000" />
-      <workItem from="1743345885511" duration="573000" />
-      <workItem from="1743401229707" duration="444000" />
     </task>
     <task id="LOCAL-00001" summary="Cuong update Login Form">
       <option name="closed" value="true" />
@@ -524,39 +512,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743217625821</updated>
     </task>
-    <task id="LOCAL-00046" summary="Cuong">
+    <task id="LOCAL-00046" summary="Cuong Big Update">
       <option name="closed" value="true" />
-      <created>1743326150614</created>
+      <created>1743249640722</created>
       <option name="number" value="00046" />
       <option name="presentableId" value="LOCAL-00046" />
       <option name="project" value="LOCAL" />
-      <updated>1743326150614</updated>
+      <updated>1743249640722</updated>
     </task>
-    <task id="LOCAL-00047" summary="Cuong">
-      <option name="closed" value="true" />
-      <created>1743326643323</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1743326643323</updated>
-    </task>
-    <task id="LOCAL-00048" summary="Cuong">
-      <option name="closed" value="true" />
-      <created>1743328071068</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1743328071068</updated>
-    </task>
-    <task id="LOCAL-00049" summary="Cuong">
-      <option name="closed" value="true" />
-      <created>1743339510753</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1743339510753</updated>
-    </task>
-    <option name="localTasksCounter" value="50" />
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -588,17 +552,7 @@
     <MESSAGE value="Cuong update" />
     <MESSAGE value="Cuong insert lib" />
     <MESSAGE value="Cuong" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cuong" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/GUI/JPanel/pnStaff.java</url>
-          <line>165</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Cuong Big Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cuong Big Update" />
   </component>
 </project>
