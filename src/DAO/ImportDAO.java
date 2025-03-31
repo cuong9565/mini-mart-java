@@ -93,7 +93,6 @@ public class ImportDAO {
         return false;
     }
 
-    // Xóa bản ghi Import theo ID
     public boolean delete(int id) {
         String sql = "DELETE FROM Import WHERE id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
