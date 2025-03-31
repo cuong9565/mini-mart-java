@@ -27,12 +27,14 @@ CREATE TABLE Staff (
 );
 
 -- Tạo bảng Offer
-CREATE TABLE Offer (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    
-    startDate DATETIME,
-    endDate DATETIME
-);
+CREATE TABLE `offer` (
+  `id` int NOT NULL,
+  `startDate` datetime DEFAULT NULL,
+  `endDate` datetime DEFAULT NULL,
+  `type` varchar(100) NOT NULL,
+  `quantity` int NOT NULL,
+  `status` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Tạo bảng OfferProduct
 CREATE TABLE OfferProduct (
@@ -220,6 +222,8 @@ INSERT INTO Customer (phone, lastName, firstName, address, gender) VALUES
  ('0911009988', 'staffpass', 'Hoa', 'Ly', 'Biên Hòa', 17000000, 'Nhân viên', 'Active', 'Nữ'),
  ('0900998877', 'newpass', 'Tuan', 'Ho', 'Quảng Ninh', 19500000, 'Quản lý', 'Active', 'Nam');
 
+INSERT INTO `offer` (`id`, `startDate`, `endDate`, `type`, `quantity`, `status`) VALUES
+(1, '2025-03-31 13:55:08', '2039-10-29 13:55:08', 'Giảm giá bill', 536, 'Áp dụng');
  -- ---------------- SELECT -----------
  use mini_mart_java;
  select * from Provider;
