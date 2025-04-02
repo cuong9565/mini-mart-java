@@ -106,24 +106,24 @@ public class pnTypeProduct extends JPanel {
         btnIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                List<Object[]> list = tbTypeProduct.ImportExel(4);
+                List<Object[]> list = tbTypeProduct.ImportExel(1);
                 if(list==null) return;
                 List<TypeProductDTO> products = new ArrayList<>();
-//                for (Object[] ob : list)
-//                    products.add(new TypeProductDTO(-1, ob[0].toString(), ob[1].toString(), ob[2].toString(), ob[3].toString()));
-//                if(TypeProductBUS.getInstance().addTypeProducts(products)){
-//                    JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + TypeProductBUS.getInstance().getNumLine() + " nhà cung cấp");
-//                    loadTypeProduct();
-//                }
-//                else {
-//                    JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + TypeProductBUS.getInstance().getError());
-//                }
+                for (Object[] ob : list)
+                    products.add(new TypeProductDTO(-1, ob[0].toString()));
+                if(TypeProductBUS.getInstance().adds(products)){
+                    JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + TypeProductBUS.getInstance().getNumLine() + " loại sản phẩm");
+                    loadTypeProduct();
+                }
+                else {
+                    JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + TypeProductBUS.getInstance().getError());
+                }
             }
         });
         btnOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                tbTypeProduct.ExportExel("Danh sách nhà cung cấp");
+                tbTypeProduct.ExportExel("Danh sách loại sản phẩm");
             }
         });
         cbSearch.addActionListener(new ActionListener() {
@@ -143,8 +143,8 @@ public class pnTypeProduct extends JPanel {
                 tbTypeProduct.dftbModel.setRowCount(0);
                 int col = cbSearch.getSelectedIndex();
                 String txt = tfSearch.getText();
-//                for(TypeProductDTO product: TypeProductBUS.getInstance().getTypeProductListBy(col, txt))
-//                    tbTypeProduct.dftbModel.addRow(product.getObjects());
+                for(TypeProductDTO product: TypeProductBUS.getInstance().getListBy(col, txt))
+                    tbTypeProduct.dftbModel.addRow(product.getObjects());
             }
         });
         // endregion

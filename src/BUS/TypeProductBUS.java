@@ -3,12 +3,14 @@ package BUS;
 import DAO.TypeProductDAO;
 import DTO.TypeProductDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TypeProductBUS {
     private static TypeProductBUS instance = null;
     private static List<TypeProductDTO>list = null;
     private static String error = null;
+    private static int numLine = 0;
 
     public TypeProductBUS() {}
     public static TypeProductBUS getInstance() {
@@ -21,6 +23,23 @@ public class TypeProductBUS {
         return list;
     }
 
+    public List<TypeProductDTO> getListBy(int col, String txt){
+        List<TypeProductDTO>products = new ArrayList<>();
+        switch (col){
+            case 0:
+                for (TypeProductDTO product: list)
+                    if(product.getName().equals(txt))
+                        products.add(product);
+                break;
+            case 1:
+                for (TypeProductDTO product: list)
+                    if(String.valueOf(product.getId()).equals(txt))
+                        products.add(product);
+                break;
+        }
+        return products;
+    }
+
     public boolean add(TypeProductDTO product){
         if(product.getName().isEmpty()){
             error = "Không được để trống thông tin!!!";
@@ -31,6 +50,17 @@ public class TypeProductBUS {
         }
         catch (Exception e){
             error = "Lỗi: " + e.getMessage();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean adds(List<TypeProductDTO> list){
+        try {
+            numLine = TypeProductDAO.getInstance().adds(list);
+        }
+        catch (Exception e){
+            error = e.getMessage();
             return false;
         }
         return true;
@@ -62,4 +92,5 @@ public class TypeProductBUS {
     }
 
     public String getError(){return error;}
+    public int getNumLine(){return numLine;}
 }
