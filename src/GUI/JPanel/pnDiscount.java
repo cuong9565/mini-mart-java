@@ -49,7 +49,7 @@ public class pnDiscount extends JPanel {
     private JPanel panelDisplay = new JPanel();
 
     public pnDiscount() {
-        discountBus = new Discount_BUS((DefaultTableModel) tbDiscountCodes.getModel());
+//        discountBus = new Discount_BUS((DefaultTableModel) tbDiscountCodes.getModel());
         setLayout(new BorderLayout());
         setBackground(Color.decode("#F5F5F5"));
         Border border = BorderFactory.createLineBorder(Color.GRAY, 1);
@@ -125,7 +125,7 @@ public class pnDiscount extends JPanel {
         sorter = new TableRowSorter<>((DefaultTableModel) tbDiscountCodes.getModel());
         tbDiscountCodes.setRowSorter(sorter);
 
-        discountBus.loadDiscountData();
+//        discountBus.loadDiscountData();
 
         // Thêm sự kiện tìm kiếm
         txtSearch.addMouseListener(new MouseAdapter() {

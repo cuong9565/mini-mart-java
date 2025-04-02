@@ -31,8 +31,8 @@ CREATE TABLE Staff (
 CREATE TABLE Offer (
     id INT AUTO_INCREMENT PRIMARY KEY,
     
-    startDate DATETIME,
-    endDate DATETIME
+    startDate DATE,
+    endDate DATE
 );
 
 -- Tạo bảng OfferProduct
@@ -207,6 +207,26 @@ INSERT INTO Customer (phone, lastName, firstName, address, gender) VALUES
 ('0979012345', 'Phạm', 'Hải', '67 Lê Hồng Phong, Vinh', 'Nam'),
 ('0991234567', 'Hoàng Thị', 'Tâm', '23 Nguyễn Trãi, Thanh Hóa', 'Nữ');
 
+
+INSERT INTO Offer (startDate, endDate) VALUES
+('2025-04-01', '2025-04-15'),
+('2025-04-05', '2025-04-20'),
+('2025-04-10', '2025-04-25'),
+('2025-04-15', '2025-04-30'),
+('2025-04-20', '2025-05-05');
+
+INSERT INTO OfferProduct (idOffer, discount) VALUES
+(1, 20),
+(1, 30),
+(2, 15),
+(2, 25),
+(3, 10),
+(3, 40),
+(4, 50),
+(4, 20),
+(5, 30),
+(5, 15);
+
 INSERT INTO ProductType (name) VALUES
 ('Thực phẩm đóng gói'), ('Đồ uống'), ('Gia vị'), ('Đồ ăn vặt'), ('Sữa và chế phẩm'),
 ('Thịt tươi'), ('Hải sản'), ('Rau củ'), ('Trái cây'), ('Đồ đông lạnh'),
@@ -227,54 +247,54 @@ INSERT INTO ProductDetail (detailInfo) VALUES
 
 INSERT INTO Product (idProductType, idProductDetail, idOfferProduct, name, price, unit, quantity) VALUES
 (1, 1, NULL, 'Mì gói Hảo Hảo', 5000, 'Gói', 100),
-(2, 2, NULL, 'Nước ngọt Pepsi', 12000, 'Chai', 50),
-(3, 3, NULL, 'Nước mắm Nam Ngư', 35000, 'Chai', 30),
+(2, 2, 3, 'Nước ngọt Pepsi', 12000, 'Chai', 50),
+(3, 3, 7, 'Nước mắm Nam Ngư', 35000, 'Chai', 30),
 (4, 4, NULL, 'Snack Oishi', 10000, 'Gói', 80),
-(5, 5, NULL, 'Sữa tươi Vinamilk', 25000, 'Hộp', 40),
-(6, 6, NULL, 'Thịt ba chỉ', 60000, 'Khay', 20),
+(5, 5, 1, 'Sữa tươi Vinamilk', 25000, 'Hộp', 40),
+(6, 6, 9, 'Thịt ba chỉ', 60000, 'Khay', 20),
 (7, 7, NULL, 'Tôm sú đông lạnh', 150000, 'Túi', 15),
-(8, 8, NULL, 'Rau muống', 10000, 'Túi', 60),
-(9, 9, NULL, 'Táo Mỹ', 45000, 'Túi', 25),
+(8, 8, 4, 'Rau muống', 10000, 'Túi', 60),
+(9, 9, 10, 'Táo Mỹ', 45000, 'Túi', 25),
 (10, 10, NULL, 'Gà rán đông lạnh', 80000, 'Hộp', 10),
-(11, 11, NULL, 'Kẹo socola KitKat', 15000, 'Gói', 70),
+(11, 11, 2, 'Kẹo socola KitKat', 15000, 'Gói', 70),
 (12, 12, NULL, 'Bàn chải đánh răng', 20000, 'Cái', 50),
-(13, 13, NULL, 'Bộ dao nhà bếp', 90000, 'Bộ', 15),
-(14, 14, NULL, 'Sữa tắm Lifebuoy', 65000, 'Chai', 30),
+(13, 13, 6, 'Bộ dao nhà bếp', 90000, 'Bộ', 15),
+(14, 14, 8, 'Sữa tắm Lifebuoy', 65000, 'Chai', 30),
 (15, 15, NULL, 'Kem dưỡng Nivea', 55000, 'Tuýp', 25),
-(16, 16, NULL, 'Gạo ST25', 30000, 'Kg', 40),
+(16, 16, 5, 'Gạo ST25', 30000, 'Kg', 40),
 (17, 17, NULL, 'Cá ngừ đóng hộp', 25000, 'Hộp', 60),
-(18, 18, NULL, 'Nước giặt OMO', 120000, 'Can', 20),
+(18, 18, 3, 'Nước giặt OMO', 120000, 'Can', 20),
 (19, 19, NULL, 'Giấy vệ sinh Pulppy', 45000, 'Cuộn', 50),
-(20, 20, NULL, 'Khăn giấy ướt', 30000, 'Hộp', 35),
-(1, 21, NULL, 'Mì Omachi', 8000, 'Gói', 90),
+(20, 20, 7, 'Khăn giấy ướt', 30000, 'Hộp', 35),
+(1, 21, 1, 'Mì Omachi', 8000, 'Gói', 90),
 (2, 22, NULL, 'Coca-Cola', 12000, 'Chai', 45),
-(3, 23, NULL, 'Muối ớt Chinsu', 15000, 'Hũ', 40),
+(3, 23, 9, 'Muối ớt Chinsu', 15000, 'Hũ', 40),
 (4, 24, NULL, 'Bò khô Jack', 35000, 'Gói', 30),
-(5, 25, NULL, 'Sữa chua Vinamilk', 20000, 'Hộp', 50),
+(5, 25, 4, 'Sữa chua Vinamilk', 20000, 'Hộp', 50),
 (6, 26, NULL, 'Thịt heo xay', 55000, 'Khay', 25),
-(7, 27, NULL, 'Mực ống đông lạnh', 120000, 'Túi', 10),
+(7, 27, 2, 'Mực ống đông lạnh', 120000, 'Túi', 10),
 (8, 28, NULL, 'Cải xanh', 12000, 'Túi', 55),
-(9, 29, NULL, 'Cam sành', 30000, 'Túi', 30),
+(9, 29, 6, 'Cam sành', 30000, 'Túi', 30),
 (10, 30, NULL, 'Pizza đông lạnh', 90000, 'Hộp', 15),
-(11, 31, NULL, 'Kẹo dẻo Haribo', 25000, 'Gói', 60),
+(11, 31, 8, 'Kẹo dẻo Haribo', 25000, 'Gói', 60),
 (12, 32, NULL, 'Bàn chải tre', 15000, 'Cái', 40),
-(13, 33, NULL, 'Thớt nhựa', 35000, 'Cái', 20),
+(13, 33, 5, 'Thớt nhựa', 35000, 'Cái', 20),
 (14, 34, NULL, 'Dầu gội Head & Shoulders', 85000, 'Chai', 25),
-(15, 35, NULL, 'Kem đánh răng Colgate', 30000, 'Tuýp', 50),
+(15, 35, 10, 'Kem đánh răng Colgate', 30000, 'Tuýp', 50),
 (16, 36, NULL, 'Gạo tám thơm', 28000, 'Kg', 35),
-(17, 37, NULL, 'Thịt bò hộp', 35000, 'Hộp', 45),
+(17, 37, 3, 'Thịt bò hộp', 35000, 'Hộp', 45),
 (18, 38, NULL, 'Nước xả Downy', 100000, 'Can', 15),
-(19, 39, NULL, 'Giấy vệ sinh Bless You', 40000, 'Cuộn', 60),
+(19, 39, 7, 'Giấy vệ sinh Bless You', 40000, 'Cuộn', 60),
 (20, 40, NULL, 'Khăn giấy lụa', 25000, 'Hộp', 40),
-(1, 41, NULL, 'Mì ống Barilla', 45000, 'Gói', 20),
+(1, 41, 1, 'Mì ống Barilla', 45000, 'Gói', 20),
 (2, 42, NULL, 'Nước ép C2', 10000, 'Chai', 70),
-(3, 43, NULL, 'Tiêu đen Visaco', 20000, 'Hũ', 35),
+(3, 43, 4, 'Tiêu đen Visaco', 20000, 'Hũ', 35),
 (4, 44, NULL, 'Khoai chiên Lay’s', 15000, 'Gói', 80),
-(5, 45, NULL, 'Sữa chua uống Yakult', 30000, 'Hộp', 50),
+(5, 45, 9, 'Sữa chua uống Yakult', 30000, 'Hộp', 50),
 (6, 46, NULL, 'Cá basa tươi', 70000, 'Khay', 15),
-(7, 47, NULL, 'Mực lá đông lạnh', 130000, 'Túi', 10),
+(7, 47, 2, 'Mực lá đông lạnh', 130000, 'Túi', 10),
 (8, 48, NULL, 'Cà rốt', 15000, 'Túi', 40),
-(9, 49, NULL, 'Táo Fuji', 50000, 'Túi', 20),
+(9, 49, 6, 'Táo Fuji', 50000, 'Túi', 20),
 (10, 50, NULL, 'Chả cá đông lạnh', 60000, 'Hộp', 25);
 
  INSERT INTO staff (phone, password, firstName, lastName, address, salary, type, status, gender)
@@ -290,21 +310,22 @@ INSERT INTO Product (idProductType, idProductDetail, idOfferProduct, name, price
  ('0911009988', 'staffpass', 'Hoa', 'Ly', 'Biên Hòa', 17000000, 'Nhân viên', 'Active', 'Nữ'),
  ('0900998877', 'newpass', 'Tuan', 'Ho', 'Quảng Ninh', 19500000, 'Quản lý', 'Active', 'Nam');
 
+
+
  -- ---------------- SELECT -----------
- use mini_mart_java;
  select * from provider;
  select * from customer;
  select * from product;
  select * from productdetail;
  select * from producttype;
  select * from staff;
+ select * from offer;
  -- ------------------------------------
 
-select * 
+select pd.*, pdtype.name as type, pddetail.detailInfo as detail, pdoffer.discount as discount, o.id as idOffer, o.startDate as startDate, o.endDate as endDate
 from product pd
 join producttype pdtype on pd.idProductType = pdtype.id
 join productdetail pddetail on pd.idProductDetail = pddetail.id
-left join offerproduct pdoffer on pd.idOfferProduct = pdoffer.id;
-
-select *
-from offerproduct
+left join offerproduct pdoffer on pd.idOfferProduct = pdoffer.id
+left join offer o on pdoffer.idOffer = o.id
+order by pd.id asc;

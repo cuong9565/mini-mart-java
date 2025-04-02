@@ -171,7 +171,7 @@ public class pnProduct extends JPanel {
 
     public void loadProduct()  {
         tbProduct.dftbModel.setRowCount(0);
-//        for(ProductDTO product: ProductBUS.getInstance().getList())
-//            tbProduct.dftbModel.addRow(product.getObjects());
+        for(ProductDTO product: ProductBUS.getInstance().getList())
+            tbProduct.dftbModel.addRow(product.getRowObjects());
     }
 }

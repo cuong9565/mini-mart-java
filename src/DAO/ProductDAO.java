@@ -18,7 +18,13 @@ public class ProductDAO {
     public List<ProductDTO> getList() {
         List<ProductDTO> list = new ArrayList<>();
         Connection con = DataProvider.getInstance().getConnection();
-        String sql = "select * from product";
+        String sql = "select pd.*, pdtype.name as type, pddetail.detailInfo as detail, pdoffer.discount as discount, o.id as idOffer, o.startDate as startDate, o.endDate as endDate\n" +
+                "from product pd\n" +
+                "join producttype pdtype on pd.idProductType = pdtype.id\n" +
+                "join productdetail pddetail on pd.idProductDetail = pddetail.id\n" +
+                "left join offerproduct pdoffer on pd.idOfferProduct = pdoffer.id\n" +
+                "left join offer o on pdoffer.idOffer = o.id\n" +
+                "order by pd.id asc;";
         try (PreparedStatement stmt = con.prepareStatement(sql)){
             ResultSet rs = stmt.executeQuery();
             while(rs.next()) list.add(new ProductDTO(rs));
