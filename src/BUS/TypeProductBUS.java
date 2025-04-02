@@ -18,6 +18,10 @@ public class TypeProductBUS {
         return instance;
     }
 
+    public TypeProductDTO getItemByRow(int row){
+        return list.get(row);
+    }
+
     public List<TypeProductDTO> getList(){
         list = TypeProductDAO.getInstance().getList();
         return list;

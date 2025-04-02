@@ -82,21 +82,20 @@ public class MyJTable extends JTable {
     }
 
     public void ExportExel(String name){
+        int m = dftbModel.getRowCount();
+        int n = dftbModel.getColumnCount();
         Workbook wb = new XSSFWorkbook();
         Sheet sheet = wb.createSheet("Danh sách");
         Row rowTitle = sheet.createRow(0);
-         rowTitle.createCell(0).setCellValue(name);
+        rowTitle.createCell(0).setCellValue(name);
 
         Row rowHeader = sheet.createRow(1);
-        for(int i = 0; i < dftbModel.getColumnCount(); i++)
-            rowHeader.createCell(i).setCellValue(dftbModel.getColumnName(i));
+        for(int i = 0; i < n; i++) rowHeader.createCell(i).setCellValue(dftbModel.getColumnName(i));
 
-        for(int i = 0; i < dftbModel.getRowCount(); i++){
+        for(int i = 0; i < m; i++){
             Row row = sheet.createRow(i+2);
-
-            Object[] objects = getRowObject(i);
-            for(int j = 0; j < objects.length; j++)
-                row.createCell(j).setCellValue(objects[j].toString());
+            for(int j = 0; j < n; j++)
+                row.createCell(j).setCellValue(dftbModel.getValueAt(i,j).toString());
         }
 
         JFileChooser chooser = new JFileChooser();
@@ -119,20 +118,6 @@ public class MyJTable extends JTable {
             }
         }
     }
-
-    public Object[] getRowObject(int row) {
-        Object[] rowObjects = new Object[dftbModel.getColumnCount()];
-        for(int i = 0; i < dftbModel.getColumnCount(); i++) {
-            rowObjects[i] = dftbModel.getValueAt(row, i);
-        }
-        return rowObjects;
-    }
-
-
-
-
-
-
 
 
 

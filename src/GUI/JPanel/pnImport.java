@@ -153,7 +153,7 @@ public class pnImport extends JPanel {
 
     private void loadProducts() {
         try {
-            List<ProductDTO> products = productDAO.getAll();
+            List<ProductDTO> products = productDAO.getList();
             tbProduct.dftbModel.setRowCount(0);
             for (ProductDTO product : products) {
                 tbProduct.dftbModel.addRow(new Object[]{
@@ -280,7 +280,7 @@ public class pnImport extends JPanel {
             String searchText = txtSearch.getText().trim().toLowerCase();
             tbProduct.dftbModel.setRowCount(0);
             try {
-                List<ProductDTO> products = productDAO.getAll();
+                List<ProductDTO> products = productDAO.getList();
                 for (ProductDTO product : products) {
                     if (product.getName().toLowerCase().contains(searchText) ||
                             String.valueOf(product.getId()).contains(searchText)) {

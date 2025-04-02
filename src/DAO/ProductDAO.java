@@ -6,50 +6,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDAO {
-    private static ProductDAO instance;
-    private Connection conn;
+    private static ProductDAO instance = null;
 
-    private ProductDAO() {
-        try {
-            String url = "jdbc:mysql://localhost:3306/mini_mart_java";
-            String user = "root";
-            String password = ""; // Update with your credentials
-            conn = DriverManager.getConnection(url, user, password);
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed to connect to database!", e);
-        }
-    }
-
-    public static ProductDAO getInstance() {
-        if (instance == null) {
-            synchronized (ProductDAO.class) {
-                if (instance == null) {
-                    instance = new ProductDAO();
-                }
-            }
-        }
+    public ProductDAO() {}
+    public static ProductDAO getInstance(){
+        if(instance == null) instance = new ProductDAO();
         return instance;
     }
 
     // Get all products
-    public List<ProductDTO> getAll() {
+    public List<ProductDTO> getList() {
         List<ProductDTO> list = new ArrayList<>();
-        String sql = "SELECT * FROM Product";
-        try (PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                list.add(new ProductDTO(rs));
-            }
+        Connection con = DataProvider.getInstance().getConnection();
+        String sql = "select * from product";
+        try (PreparedStatement stmt = con.prepareStatement(sql)){
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()) list.add(new ProductDTO(rs));
         } catch (SQLException e) {
-            throw new RuntimeException("Failed to retrieve products!", e);
+            throw new RuntimeException("Lỗi: " + e.getMessage());
         }
+        DataProvider.getInstance().CloseConnection(con);
         return list;
     }
 
     // Get product by ID
     public ProductDTO getById(int id) {
         String sql = "SELECT * FROM Product WHERE id = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        Connection con = DataProvider.getInstance().getConnection();
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -66,7 +50,8 @@ public class ProductDAO {
     public boolean insert(ProductDTO productDTO) {
         String sql = "INSERT INTO Product (idProductType, idProductDetail, idOfferProduct, name, price, unit, quantity) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        Connection con = DataProvider.getInstance().getConnection();
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, productDTO.getIdProductType());
             stmt.setInt(2, productDTO.getIdProductDetail());
             stmt.setInt(3, productDTO.getIdOfferProduct() == -1 ? null : productDTO.getIdOfferProduct());
@@ -94,7 +79,8 @@ public class ProductDAO {
     public boolean update(ProductDTO productDTO) {
         String sql = "UPDATE Product SET idProductType = ?, idProductDetail = ?, idOfferProduct = ?, " +
                 "name = ?, price = ?, unit = ?, quantity = ? WHERE id = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        Connection con = DataProvider.getInstance().getConnection();
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, productDTO.getIdProductType());
             stmt.setInt(2, productDTO.getIdProductDetail());
             stmt.setInt(3, productDTO.getIdOfferProduct() == -1 ? null : productDTO.getIdOfferProduct());
@@ -113,7 +99,8 @@ public class ProductDAO {
     // Delete product
     public boolean delete(int id) {
         String sql = "DELETE FROM Product WHERE id = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        Connection con = DataProvider.getInstance().getConnection();
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, id);
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -121,14 +108,4 @@ public class ProductDAO {
         }
     }
 
-    // Close connection
-    public void closeConnection() {
-        try {
-            if (conn != null && !conn.isClosed()) {
-                conn.close();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed to close connection!", e);
-        }
-    }
 }

@@ -23,6 +23,10 @@ public class SupplierBUS {
         return supplierList;
     }
 
+    public SupplierDTO getSupplierByRow(int row) {
+        return supplierList.get(row);
+    }
+
     public List<SupplierDTO> getListSupplierBy(String whr, String str){
         return SupplierDAO.getInstance().getListSupplierBy(whr, str);
     }

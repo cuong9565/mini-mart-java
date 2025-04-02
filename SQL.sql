@@ -300,5 +300,11 @@ INSERT INTO Product (idProductType, idProductDetail, idOfferProduct, name, price
  select * from staff;
  -- ------------------------------------
 
+select * 
+from product pd
+join producttype pdtype on pd.idProductType = pdtype.id
+join productdetail pddetail on pd.idProductDetail = pddetail.id
+left join offerproduct pdoffer on pd.idOfferProduct = pdoffer.id;
 
-
+select *
+from offerproduct

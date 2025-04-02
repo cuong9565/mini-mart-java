@@ -74,7 +74,7 @@ public class pnTypeProduct extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int i = tbTypeProduct.getSelectedRow();
                 if (i >=0){
-                    TypeProductDTO product = new TypeProductDTO(tbTypeProduct.getRowObject(i));
+                    TypeProductDTO product = TypeProductBUS.getInstance().getItemByRow(i);
                     new dlEditTypeProduct(frame, thisPanel, product);
                 }
                 else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần sửa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
@@ -85,7 +85,7 @@ public class pnTypeProduct extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int i = tbTypeProduct.getSelectedRow();
                 if (i>=0){
-                    TypeProductDTO productNew = new TypeProductDTO(tbTypeProduct.getRowObject(i));
+                    TypeProductDTO productNew = TypeProductBUS.getInstance().getItemByRow(i);
                     if(TypeProductBUS.getInstance().delete(productNew)){
                         JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         loadTypeProduct();

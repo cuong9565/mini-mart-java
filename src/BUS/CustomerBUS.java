@@ -20,6 +20,10 @@ public class CustomerBUS {
         return instance;
     }
 
+    public CustomerDTO getItemByRow(int row){
+        return customerList.get(row);
+    }
+
     public List<CustomerDTO>getAllList(){
         customerList = CustomerDAO.getInstance().getAllList();
         return customerList;
