@@ -31,7 +31,7 @@ public class fManage extends JFrame {
     int currCursor = 0;
     fManage currFrame = this;
 
-    JPanel[] lsPn = new JPanel[]{new pnStatistic(), new pnImport(), new pnSell(), new pnProduct(), new pnTypeProduct(), new pnCustomer(currFrame), new pnBill(), new pnDiscount(), new pnStaff(), new pnSupplier(currFrame)};
+    JPanel[] lsPn = new JPanel[]{new pnStatistic(), new pnImport(), new pnSell(), new pnProduct(), new pnTypeProduct(currFrame), new pnCustomer(currFrame), new pnBill(), new pnDiscount(), new pnStaff(), new pnSupplier(currFrame)};
 
     public fManage(fLogin loginForm) {
         setTitle("Phần mềm quản lý siêu thị mini");

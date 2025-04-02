@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 public class dlEditCustomer extends JDialog {
     JPanel pnMain = new MyJPanel(MyColor.White);
     JLabel lbHeader = new MyJLabel(Font.BOLD, 24, MyColor.White, "Sửa thông tin khách hàng", SwingConstants.CENTER, SwingConstants.CENTER);
+    JLabel lbId = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Mã số", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbLastName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Họ*", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbFirstName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Tên*", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbGender = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Giới tính*", SwingConstants.LEFT, SwingConstants.CENTER);
@@ -24,6 +25,7 @@ public class dlEditCustomer extends JDialog {
     JLabel lbAddress = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Địa chỉ*", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbState = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Trạng thái*", SwingConstants.LEFT, SwingConstants.CENTER);
 
+    JTextField tfId = new MyJTextFieldInput(Font.PLAIN, 14, false);
     JTextField tfLastName = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JTextField tfFirstName = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JTextField tfAddress = new MyJTextFieldInput(Font.PLAIN, 14, true);
@@ -41,11 +43,43 @@ public class dlEditCustomer extends JDialog {
     public dlEditCustomer(fManage parentFrame, pnCustomer parentPanel, CustomerDTO customer) {
         super(parentFrame,true);
         setTitle("Sửa thông tin khách hàng");
-        setSize(540,510);
+        setSize(540,580);
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
+        // region SET BOUNDS
+        pnMain.setBounds(0,0,540,580);
+
+        lbId.setBounds(50,80,420,20);
+        tfId.setBounds(50,100,420,30);
+
+        lbLastName.setBounds(50, 150, 200, 20);
+        tfLastName.setBounds(50, 170, 200, 30);
+        lbFirstName.setBounds(270, 150, 200, 20);
+        tfFirstName.setBounds(270, 170, 200, 30);
+
+        lbPhone.setBounds(50, 220, 200, 20);
+        tfPhone.setBounds(50, 240, 200, 30);
+        lbGender.setBounds(270, 220, 200, 20);
+        bgGender.radioButtons[0].setBounds(270, 240, 100, 30);
+        bgGender.radioButtons[1].setBounds(370, 240, 100, 30);
+
+        lbAddress.setBounds(50, 290, 420, 20);
+        tfAddress.setBounds(50, 310, 420, 30);
+
+        lbState.setBounds(50, 360, 420, 20);
+        tfState.setBounds(50, 380, 250, 30);
+        btnState.setBounds(320, 380, 150, 30);
+
+        btnSave.setBounds(100, 440, 150, 40);
+        btnEsc.setBounds(270, 440, 150, 40);
+        lbHeader.setOpaque(true);
+        lbHeader.setBackground(MyColor.DarkBlue);
+        lbHeader.setBounds(0,0,540,60);
+        // endregion
+        // region SET TEXT
+        tfId.setText(customer.getId() + "");
         tfLastName.setText(customer.getLastName());
         tfFirstName.setText(customer.getFirstName());
         tfPhone.setText(customer.getPhone());
@@ -61,34 +95,8 @@ public class dlEditCustomer extends JDialog {
             btnState.setText("Mở tài khoản");
             btnState.setBackground(MyColor.LightBlue);
         }
-
-        // region setBounds
-        pnMain.setBounds(0,0,540,440);
-        lbLastName.setBounds(50,80,200,20);
-        tfLastName.setBounds(50,100,200,30);
-        lbFirstName.setBounds(270,80,200,20);
-        tfFirstName.setBounds(270,100,200,30);
-
-        lbPhone.setBounds(50,150,200,20);
-        tfPhone.setBounds(50,170,200,30);
-        lbGender.setBounds(270,150,200,20);
-        bgGender.radioButtons[0].setBounds(270, 170, 100, 30);
-        bgGender.radioButtons[1].setBounds(370, 170, 100, 30);
-
-        lbAddress.setBounds(50,220,420,20);
-        tfAddress.setBounds(50,240,420,30);
-
-        lbState.setBounds(50,290,420,20);
-        tfState.setBounds(50,310,250,30);
-        btnState.setBounds(320, 310, 150, 30);
-
-        btnSave.setBounds(100,370,150,40);
-        btnEsc.setBounds(270,370,150,40);
-        lbHeader.setOpaque(true);
-        lbHeader.setBackground(MyColor.DarkBlue);
-        lbHeader.setBounds(0,0,540,60);
         // endregion
-        // region Event
+        // region EVENT
         btnEsc.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dialog.dispose();
@@ -120,7 +128,9 @@ public class dlEditCustomer extends JDialog {
             }
         });
         // endregion11
-
+        // region ADD
+        add(lbId);
+        add(tfId);
         add(lbLastName);
         add(tfLastName);
         add(lbFirstName);
@@ -140,6 +150,7 @@ public class dlEditCustomer extends JDialog {
 
         add(lbHeader);
         add(pnMain);
+        // endregion
 
         setVisible(true);
     }

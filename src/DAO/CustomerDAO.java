@@ -30,25 +30,6 @@ public class CustomerDAO {
         return list;
     }
 
-    public List<CustomerDTO> getSearch(String whr, String str){
-        List<CustomerDTO> list = new ArrayList<>();
-        Connection con = DataProvider.getInstance().getConnection();
-        String sql = String.format("select * from customer where %s like ?", whr);
-
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, "%" + str + "%");
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()) list.add(new CustomerDTO(rs));
-        }
-        catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        DataProvider.getInstance().CloseConnection(con);
-        return list;
-    }
-
     public int adds(List<CustomerDTO>list){
         int res = 0, pos = 1;
         Connection con = DataProvider.getInstance().getConnection();

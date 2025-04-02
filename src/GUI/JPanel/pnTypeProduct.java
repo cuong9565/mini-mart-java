@@ -1,86 +1,174 @@
 package GUI.JPanel;
 
+import BUS.TypeProductBUS;
+import Components.*;
+import DTO.*;
+import GUI.JDialog.dlAddTypeProduct;
+import GUI.JDialog.dlEditTypeProduct;
+import GUI.JFrame.fManage;
+import com.mysql.cj.protocol.Message;
+
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import javax.swing.table.DefaultTableModel;
+import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class pnTypeProduct extends JPanel {
-    private JTable productTable;
-    private DefaultTableModel tableModel;
+    JPanel pnHeader = new MyJPanel(MyColor.White);
+    JPanel pnFooter = new MyJPanel(MyColor.White);
+    JPanel pnFunc = new MyJPanel(MyColor.White, "Chức năng");
+    JPanel pnSearch = new MyJPanel(MyColor.White, "Tìm kiếm");
+    JButton btnAdd = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Thêm", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnEdit = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#FF9800"), Color.decode("#FFD966"), "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnDelete = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#F44336"), Color.decode("#FF7568"), "Xóa", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnIn = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Nhập<br>Exel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnOut = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Xuất<br>Exel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
+    JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
+    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Tên", "Mã số"}, 12);
 
-    public pnTypeProduct() {
-        setLayout(new BorderLayout()); // Sử dụng BorderLayout
+    MyJTable tbTypeProduct = new MyJTable(new String[]{"Mã số", "Tên"});
 
-        // Tạo panel cho các nút loại sản phẩm
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(1, 4, 10, 10)); // 1 hàng, 4 cột
+    pnTypeProduct thisPanel = this;
+    int posSelectedCB = 0;
 
-        // Tạo các nút cho từng loại sản phẩm
-        String[] types = {"Nước", "Mì", "Bánh", "Vệ sinh"};
+    public pnTypeProduct(fManage frame) {
+        setLayout(null);
+        setBackground(MyColor.LightGray);
 
-        for (String type : types) {
-            JButton button = new JButton(type);
-            button.setFont(new Font("Arial", Font.BOLD, 14)); // Kích thước chữ
-            button.setPreferredSize(new Dimension(100, 50)); // Kích thước nút
-            button.addActionListener((ActionEvent e) -> showProducts(type));
-            buttonPanel.add(button);
-        }
+        // region SET BOUNDS
+        pnHeader.setBounds(0,0,970, 90);
+        pnFunc.setBounds(0,0,370,90);
+        btnAdd.setBounds(15,20,60,60);
+        btnEdit.setBounds(85,20,60,60);
+        btnDelete.setBounds(155,20,60,60);
+        btnIn.setBounds(225,20,60,60);
+        btnOut.setBounds(295,20,60,60);
+        pnSearch.setBounds(470,0,500,90);
+        cbSearch.setBounds(485, 30, 150, 30);
+        tfSearch.setBounds(645, 30, 200, 30);
+        btnRefresh.setBounds(855,30,100,30);
+        pnFooter.setBounds(0,100,970, 650);
+        tbTypeProduct.scrPn.setBounds(0,100,970,650);
+        // endregion
+        // region EVENT CHO PANEL NÀY
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                loadTypeProduct();
+            }
+        });
+        // endregion
+        // region EVEN
+        btnAdd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new dlAddTypeProduct(frame, thisPanel);
+            }
+        });
+        btnEdit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int i = tbTypeProduct.getSelectedRow();
+                if (i >=0){
+                    TypeProductDTO product = new TypeProductDTO(tbTypeProduct.getRowObject(i));
+                    new dlEditTypeProduct(frame, thisPanel, product);
+                }
+                else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần sửa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        btnDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int i = tbTypeProduct.getSelectedRow();
+                if (i>=0){
+                    TypeProductDTO productNew = new TypeProductDTO(tbTypeProduct.getRowObject(i));
+                    if(TypeProductBUS.getInstance().delete(productNew)){
+                        JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        loadTypeProduct();
+                    }
+                    else JOptionPane.showMessageDialog(thisPanel, TypeProductBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
+                }
+                else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xóa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        btnRefresh.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tfSearch.setText("");
+                cbSearch.setSelectedIndex(0);
+                loadTypeProduct();
+            }
+        });
+        btnIn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<Object[]> list = tbTypeProduct.ImportExel(4);
+                if(list==null) return;
+                List<TypeProductDTO> products = new ArrayList<>();
+//                for (Object[] ob : list)
+//                    products.add(new TypeProductDTO(-1, ob[0].toString(), ob[1].toString(), ob[2].toString(), ob[3].toString()));
+//                if(TypeProductBUS.getInstance().addTypeProducts(products)){
+//                    JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + TypeProductBUS.getInstance().getNumLine() + " nhà cung cấp");
+//                    loadTypeProduct();
+//                }
+//                else {
+//                    JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + TypeProductBUS.getInstance().getError());
+//                }
+            }
+        });
+        btnOut.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tbTypeProduct.ExportExel("Danh sách nhà cung cấp");
+            }
+        });
+        cbSearch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int i = cbSearch.getSelectedIndex();
+                if(posSelectedCB !=i){
+                    tfSearch.setText("");
+                }
+            }
+        });
+        tfSearch.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) {textChange();}
+            public void removeUpdate(DocumentEvent e) {textChange();}
+            public void changedUpdate(DocumentEvent e) {textChange();}
+            public void textChange(){
+                tbTypeProduct.dftbModel.setRowCount(0);
+                int col = cbSearch.getSelectedIndex();
+                String txt = tfSearch.getText();
+//                for(TypeProductDTO product: TypeProductBUS.getInstance().getTypeProductListBy(col, txt))
+//                    tbTypeProduct.dftbModel.addRow(product.getObjects());
+            }
+        });
+        // endregion
+        // region ADD
+        add(btnAdd);
+        add(btnEdit);
+        add(btnDelete);
+        add(btnIn);
+        add(btnOut);
+        add(pnFunc);
+        add(btnRefresh);
+        add(cbSearch);
+        add(tfSearch);
+        add(pnSearch);
+        add(pnHeader);
+        add(tbTypeProduct.scrPn);
+        add(pnFooter);
+        // endregion
 
-        add(buttonPanel, BorderLayout.NORTH); // Thêm panel chứa nút vào phía Bắc
-
-        // Tạo bảng sản phẩm
-        String[] columnNames = {"Mã sản phẩm", "Tên sản phẩm", "Giá"};
-        tableModel = new DefaultTableModel(columnNames, 0);
-        productTable = new JTable(tableModel);
-        JScrollPane scrollPane = new JScrollPane(productTable);
-        productTable.setFillsViewportHeight(true);
-
-        // Thêm bảng sản phẩm vào giữa
-        add(scrollPane, BorderLayout.CENTER);
     }
 
-    private void showProducts(String type) {
-        // Làm sạch bảng hiện tại
-        tableModel.setRowCount(0); // Xóa tất cả các hàng hiện có
-
-        // Tạo dữ liệu mẫu cho từng loại sản phẩm
-        Object[][] data;
-        switch (type) {
-            case "Nước":
-                data = new Object[][]{
-                        {"SP001", "Nước khoáng", "10.000đ"},
-                        {"SP002", "Nước ngọt", "15.000đ"},
-                        {"SP003", "Nước tinh khiết", "8.000đ"}
-                };
-            case "Mì":
-                data = new Object[][]{
-                        {"SP004", "Mì tôm", "5.000đ"},
-                        {"SP005", "Mì gói", "7.000đ"},
-                        {"SP006", "Mì Hàn Quốc", "12.000đ"}
-                };
-                break;
-            case "Bánh":
-                data = new Object[][]{
-                        {"SP007", "Bánh quy", "20.000đ"},
-                        {"SP008", "Bánh mì", "15.000đ"},
-                        {"SP009", "Bánh ngọt", "25.000đ"}
-                };
-                break;
-            case "Vệ sinh":
-                data = new Object[][]{
-                        {"SP010", "Khăn giấy", "10.000đ"},
-                        {"SP011", "Xà phòng", "15.000đ"},
-                        {"SP012", "Nước rửa tay", "20.000đ"}
-                };
-                break;
-            default:
-                data = new Object[0][0]; // Không có dữ liệu
-                break;
-        }
-
-        // Thêm dữ liệu vào bảng
-        for (Object[] row : data) {
-            tableModel.addRow(row);
-        }
+    public void loadTypeProduct()  {
+        tbTypeProduct.dftbModel.setRowCount(0);
+        for(TypeProductDTO product: TypeProductBUS.getInstance().getList())
+            tbTypeProduct.dftbModel.addRow(product.getObjects());
     }
 }
