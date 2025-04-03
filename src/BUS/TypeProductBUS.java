@@ -18,8 +18,10 @@ public class TypeProductBUS {
         return instance;
     }
 
-    public TypeProductDTO getItemByRow(int row){
-        return list.get(row);
+    public TypeProductDTO getItemById(int id){
+        for(TypeProductDTO item : list)
+            if(item.getId() == id) return item;
+        return null;
     }
 
     public List<TypeProductDTO> getList(){
@@ -32,12 +34,12 @@ public class TypeProductBUS {
         switch (col){
             case 0:
                 for (TypeProductDTO product: list)
-                    if(product.getName().equals(txt))
+                    if(product.getName().contains(txt))
                         products.add(product);
                 break;
             case 1:
                 for (TypeProductDTO product: list)
-                    if(String.valueOf(product.getId()).equals(txt))
+                    if(String.valueOf(product.getId()).contains(txt))
                         products.add(product);
                 break;
         }

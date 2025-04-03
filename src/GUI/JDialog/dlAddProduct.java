@@ -1,7 +1,6 @@
 package GUI.JDialog;
 
-import BUS.ProductBUS;
-import BUS.SupplierBUS;
+import BUS.*;
 import Components.*;
 import DTO.*;
 import GUI.JFrame.fManage;
@@ -35,7 +34,7 @@ public class dlAddProduct extends JDialog {
     JButton btnEsc = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Red, MyColor.LightRed, "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
 
     JDialog dialog = this;
-
+    int posCbDiscount = 0;
     public dlAddProduct(fManage parentFrame, pnProduct parentPanel) {
         super(parentFrame,true);
         setTitle("Thêm sản phẩm");
@@ -45,10 +44,12 @@ public class dlAddProduct extends JDialog {
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         // region SET TEXT
-
+        for(TypeProductDTO type: TypeProductBUS.getInstance().getList()) cbType.addItem(type);
+        for(OfferProductDTO offerProduct: OfferProductBUS.getInstance().getListDiscount()) cbDiscount.addItem(offerProduct);
+        for(OfferDTO offer: OfferBUS.getInstance().getListByOfferProduct((OfferProductDTO) cbDiscount.getSelectedItem()))
+            cbDiscountTime.addItem(offer);
         // endregion
-
-        // region setBounds
+        // region SET BOUNDS
         pnMain.setBounds(0,0,540,440);
         lbName.setBounds(50,80,200,20);
         tfName.setBounds(50,100,200,30);
@@ -73,6 +74,18 @@ public class dlAddProduct extends JDialog {
         // endregion
 
         // region Event
+        cbDiscount.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int i = cbDiscount.getSelectedIndex();
+                if(i!=posCbDiscount) {
+                    posCbDiscount = i;
+                    cbDiscountTime.removeAllItems();
+                    for(OfferDTO offer: OfferBUS.getInstance().getListByOfferProduct((OfferProductDTO) cbDiscount.getSelectedItem()))
+                        cbDiscountTime.addItem(offer);
+                }
+            }
+        });
         btnEsc.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dialog.dispose();
@@ -80,7 +93,12 @@ public class dlAddProduct extends JDialog {
         });
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                
+//                if(ProductBUS.getInstance().add()){
+//                    JOptionPane.showMessageDialog(dialog, "Thêm sản phẩm thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+//                    parentPanel.loadProduct();
+//                    dispose();
+//                }
+//                else JOptionPane.showMessageDialog(dialog, ProductBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
             }
         });
         // endregion11

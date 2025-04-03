@@ -23,8 +23,11 @@ public class SupplierBUS {
         return supplierList;
     }
 
-    public SupplierDTO getSupplierByRow(int row) {
-        return supplierList.get(row);
+    public SupplierDTO getSupplierById(int id) {
+        for (SupplierDTO supplier : supplierList)
+            if (supplier.getId() == id)
+                return supplier;
+        return null;
     }
 
     public List<SupplierDTO> getListSupplierBy(String whr, String str){
@@ -117,27 +120,27 @@ public class SupplierBUS {
         switch (col){
             case 0:
                 for(SupplierDTO supplier : supplierList)
-                    if(supplier.getName().equals(txt))
+                    if(supplier.getName().contains(txt))
                         list.add(supplier);
                 break;
             case 1:
                 for(SupplierDTO supplier : supplierList)
-                    if(String.valueOf(supplier.getId()).equals(txt))
+                    if(String.valueOf(supplier.getId()).contains(txt))
                         list.add(supplier);
                 break;
             case 2:
                 for(SupplierDTO supplier : supplierList)
-                    if(supplier.getPhone().equals(txt))
+                    if(supplier.getPhone().contains(txt))
                         list.add(supplier);
                 break;
             case 3:
                 for(SupplierDTO supplier : supplierList)
-                    if(supplier.getAddress().equals(txt))
+                    if(supplier.getAddress().contains(txt))
                         list.add(supplier);
                 break;
             case 4:
                 for(SupplierDTO supplier : supplierList)
-                    if(supplier.getEmail().equals(txt))
+                    if(supplier.getEmail().contains(txt))
                         list.add(supplier);
                 break;
         }

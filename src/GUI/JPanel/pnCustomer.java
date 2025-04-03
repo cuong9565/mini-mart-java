@@ -82,7 +82,8 @@ public class pnCustomer extends JPanel {
                 int i = tbCustomer.getSelectedRow();
                 if(i==-1) JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn tài khoản để sửa thông tin!!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
                 else {
-                    CustomerDTO customer = CustomerBUS.getInstance().getItemByRow(i);
+                    int id = Integer.parseInt(tbCustomer.getFirstColumn(i));
+                    CustomerDTO customer = CustomerBUS.getInstance().getItemById(id);
                     new dlEditCustomer(fmanage, thisPanel, customer);
                 }
             }
@@ -93,7 +94,8 @@ public class pnCustomer extends JPanel {
                 int i = tbCustomer.getSelectedRow();
                 if(i==-1) JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn khách hàng cần xóa!!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
                 else {
-                    CustomerDTO customer = CustomerBUS.getInstance().getItemByRow(i);
+                    int id = Integer.parseInt(tbCustomer.getFirstColumn(i));
+                    CustomerDTO customer = CustomerBUS.getInstance().getItemById(id);
                     if(CustomerBUS.getInstance().delete(customer)){
                         JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin khách hàng thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         loadCustomer();

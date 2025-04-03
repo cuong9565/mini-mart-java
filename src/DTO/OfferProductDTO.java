@@ -1,21 +1,40 @@
 package DTO;
 
+import java.sql.ResultSet;
+
 public class OfferProductDTO {
-    private int id, idOffer, discount;
+    private int id, discount;
+    private OfferDTO offer;
+
     public OfferProductDTO() {}
-    public OfferProductDTO(int id, int idOffer, int discount) {
+    public OfferProductDTO(int id, OfferDTO offer, int discount) {
         this.id = id;
-        this.idOffer = idOffer;
+        this.offer = offer;
         this.discount = discount;
     }
+    public OfferProductDTO(ResultSet rs) {
+        try{
+            this.id = rs.getInt("id");
+            this.discount = rs.getInt("discount");
+            this.offer = new OfferDTO(
+                    rs.getInt("idOffer"),
+                    rs.getDate("startDate"),
+                    rs.getDate("endDate")
+            );
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
     public int getId() {return id;}
-    public int getIdOffer() {return idOffer;}
+    public OfferDTO getOffer() {return offer;}
     public int getDiscount() {return discount;}
+
     public void setId(int id) {this.id = id;}
-    public void setIdOffer(int idOffer) {this.idOffer = idOffer;}
+    public void setOffer(OfferDTO offer) {this.offer = offer;}
     public void setDiscount(int discount) {this.discount = discount;}
     @Override
     public String toString() {
-        return discount + "%";
+        return (this.id!=0)?discount + "%":"Không áp dụng";
     }
 }

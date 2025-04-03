@@ -20,8 +20,10 @@ public class CustomerBUS {
         return instance;
     }
 
-    public CustomerDTO getItemByRow(int row){
-        return customerList.get(row);
+    public CustomerDTO getItemById(int id){
+        for (CustomerDTO customerDTO : customerList)
+            if (customerDTO.getId() == id) return customerDTO;
+        return null;
     }
 
     public List<CustomerDTO>getAllList(){
@@ -99,37 +101,37 @@ public class CustomerBUS {
         switch (col){
             case 0:
                 for (CustomerDTO customerDTO : customerList)
-                    if (customerDTO.getFirstName().equals(txt))
+                    if (customerDTO.getFirstName().contains(txt))
                         list.add(customerDTO);
                 break;
             case 1:
                 for (CustomerDTO customerDTO : customerList)
-                    if(String.valueOf(customerDTO.getId()).equals(txt))
+                    if(String.valueOf(customerDTO.getId()).contains(txt))
                         list.add(customerDTO);
                 break;
             case 2:
                 for (CustomerDTO customerDTO : customerList)
-                    if (customerDTO.getPhone().equals(txt))
+                    if (customerDTO.getPhone().contains(txt))
                         list.add(customerDTO);
                 break;
             case 3:
                 for (CustomerDTO customerDTO : customerList)
-                    if (customerDTO.getLastName().equals(txt))
+                    if (customerDTO.getLastName().contains(txt))
                         list.add(customerDTO);
                 break;
             case 4:
                 for (CustomerDTO customerDTO : customerList)
-                    if (customerDTO.getAddress().equals(txt))
+                    if (customerDTO.getAddress().contains(txt))
                         list.add(customerDTO);
                 break;
             case 5:
                 for (CustomerDTO customerDTO : customerList)
-                    if (customerDTO.getGender().equals(txt))
+                    if (customerDTO.getGender().contains(txt))
                         list.add(customerDTO);
                 break;
             case 6:
                 for (CustomerDTO customerDTO : customerList)
-                    if (customerDTO.getState().equals(txt))
+                    if (customerDTO.getState().contains(txt))
                         list.add(customerDTO);
                 break;
         }

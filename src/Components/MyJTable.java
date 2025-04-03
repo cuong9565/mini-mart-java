@@ -119,10 +119,9 @@ public class MyJTable extends JTable {
         }
     }
 
-
-
-
-
+    public String getFirstColumn(int row){
+        return dftbModel.getValueAt(row,0).toString();
+    }
 
 
     public MyJTable(String header[], Font style, Color colorFont, Color brheader, Color select) {

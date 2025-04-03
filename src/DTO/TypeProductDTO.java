@@ -29,11 +29,8 @@ public class TypeProductDTO {
     public String getName() {return name;}
     public void setId(int id) {this.id = id;}
     public void setName(String name) {this.name = name;}
-    public Object[] getObjects() {
-        return new Object[] { id, name };
-    }
+    public Object[] getObjects() {return new Object[] { id, name };}
+
     @Override
-    public String toString() {
-        return this.name;
-    }
+    public String toString() {return this.name;}
 }

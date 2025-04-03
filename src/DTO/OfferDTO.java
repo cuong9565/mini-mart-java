@@ -1,11 +1,15 @@
 package DTO;
 
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.SimpleFormatter;
 
 public class OfferDTO {
     private int id;
     private Date dateStart, dateEnd;
+    private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     public OfferDTO() {}
 
@@ -33,4 +37,9 @@ public class OfferDTO {
     public void setId(int id) {this.id = id;}
     public void setDateStart(Date dateStart) {this.dateStart = dateStart;}
     public void setDateEnd(Date dateEnd) {this.dateEnd = dateEnd;}
+
+    @Override
+    public String toString() {
+        return (id==0)?"Không áp dụng":"<html>Từ <b>" + dateFormat.format(dateStart)+ "</b> đến <b>" + dateFormat.format(dateEnd)+ "</b></html>";
+    }
 }

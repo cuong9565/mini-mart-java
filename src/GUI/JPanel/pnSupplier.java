@@ -74,7 +74,8 @@ public class pnSupplier extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int i = tbSupplier.getSelectedRow();
                 if (i >=0){
-                    SupplierDTO supplier = SupplierBUS.getInstance().getSupplierByRow(i);
+                    int id = Integer.parseInt(tbSupplier.getFirstColumn(i));
+                    SupplierDTO supplier = SupplierBUS.getInstance().getSupplierById(id);
                     new dlEditSupplier(frame, thisPanel, supplier);
                 }
                 else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần sửa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
@@ -85,7 +86,8 @@ public class pnSupplier extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int i = tbSupplier.getSelectedRow();
                 if (i >=0){
-                    SupplierDTO supplierNew = SupplierBUS.getInstance().getSupplierByRow(i);
+                    int id = Integer.parseInt(tbSupplier.getFirstColumn(i));
+                    SupplierDTO supplierNew = SupplierBUS.getInstance().getSupplierById(id);
                     if(SupplierBUS.getInstance().deleteSupplier(supplierNew)){
                         JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         loadSupplier();

@@ -6,8 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong Product">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/CustomerBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/CustomerBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/SupplierBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/SupplierBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/TypeProductBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/TypeProductBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/MyJTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/OfferDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/OfferDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/OfferProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/OfferProductDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DTO/TypeProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/TypeProductDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnCustomer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnSupplier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnTypeProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnTypeProduct.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,15 +173,7 @@
       <workItem from="1743594579758" duration="4721000" />
       <workItem from="1743603381667" duration="4639000" />
       <workItem from="1743608915327" duration="29000" />
-      <workItem from="1743639332483" duration="5729000" />
-    </task>
-    <task id="LOCAL-00006" summary="Cuong update Setting Account Panel">
-      <option name="closed" value="true" />
-      <created>1742122337132</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1742122337132</updated>
+      <workItem from="1743639332483" duration="14091000" />
     </task>
     <task id="LOCAL-00007" summary="Cuong update">
       <option name="closed" value="true" />
@@ -558,7 +559,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743608936719</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Cuong Product">
+      <option name="closed" value="true" />
+      <created>1743646060497</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1743646060497</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
