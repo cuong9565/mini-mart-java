@@ -1,10 +1,12 @@
 package GUI.JDialog;
 
 import BUS.ProductBUS;
+import BUS.SupplierBUS;
 import Components.*;
-import DTO.ProductDTO;
+import DTO.*;
 import GUI.JFrame.fManage;
 import GUI.JPanel.pnProduct;
+import GUI.JPanel.pnSupplier;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,9 +15,21 @@ import java.awt.event.ActionListener;
 
 public class dlAddProduct extends JDialog {
     JPanel pnMain = new MyJPanel(MyColor.White);
-    JLabel lbHeader = new MyJLabel(Font.BOLD, 24, MyColor.White, "Thêm loại sản phẩm", SwingConstants.CENTER, SwingConstants.CENTER);
-    JLabel lbName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Tên loại sản phẩm*", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbHeader = new MyJLabel(Font.BOLD, 24, MyColor.White, "Thêm sản phẩm", SwingConstants.CENTER, SwingConstants.CENTER);
+
+    JLabel lbName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Tên*", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbType = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Loại*", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbDiscount = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Phần trăm giảm giá*", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbDiscountTime = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Thời gian giảm giá*", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbPrice = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Giá bán*", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbUnit = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Đơn vị*", SwingConstants.LEFT, SwingConstants.CENTER);
+
     JTextField tfName = new MyJTextFieldInput(Font.PLAIN, 14, true);
+    JComboBox<TypeProductDTO> cbType = new MyJComboBox<>(new TypeProductDTO[]{}, 12);
+    JComboBox<OfferProductDTO> cbDiscount = new MyJComboBox<>(new OfferProductDTO[]{},12);
+    JComboBox<OfferDTO> cbDiscountTime = new MyJComboBox<>(new OfferDTO[]{},12);
+    JSpinner snPrice = new MyJSpinner(100, 100, 1000000000, 100);
+    JTextField tfUnit = new MyJTextFieldInput(Font.PLAIN, 14, true);
 
     JButton btnSave = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Green, MyColor.LightGreen, "Xác nhận", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnEsc = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Red, MyColor.LightRed, "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
@@ -24,18 +38,35 @@ public class dlAddProduct extends JDialog {
 
     public dlAddProduct(fManage parentFrame, pnProduct parentPanel) {
         super(parentFrame,true);
-        setTitle("Thêm loại sản phẩm");
-        setSize(540,300);
+        setTitle("Thêm sản phẩm");
+        setSize(540,440);
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
+        // region SET TEXT
+
+        // endregion
+
         // region setBounds
         pnMain.setBounds(0,0,540,440);
-        lbName.setBounds(50,80,420,20);
-        tfName.setBounds(50,100,420,30);
-        btnSave.setBounds(100,160,150,40);
-        btnEsc.setBounds(270,160,150,40);
+        lbName.setBounds(50,80,200,20);
+        tfName.setBounds(50,100,200,30);
+        lbType.setBounds(270,80,200,20);
+        cbType.setBounds(270,100,200,30);
+
+        lbDiscount.setBounds(50,150,200,20);
+        cbDiscount.setBounds(50,170,200,30);
+        lbDiscountTime.setBounds(270,150,200,20);
+        cbDiscountTime.setBounds(270, 170, 200, 30);
+
+        lbPrice.setBounds(50,220,200,20);
+        lbUnit.setBounds(270,220,200,20);
+        snPrice.setBounds(50,240,200,30);
+        tfUnit.setBounds(270,240,200,30);
+
+        btnSave.setBounds(100,300,150,40);
+        btnEsc.setBounds(270,300,150,40);
         lbHeader.setOpaque(true);
         lbHeader.setBackground(MyColor.DarkBlue);
         lbHeader.setBounds(0,0,540,60);
@@ -49,25 +80,29 @@ public class dlAddProduct extends JDialog {
         });
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-//                ProductDTO product = new ProductDTO(-1, tfName.getText());
-//                boolean check = ProductBUS.getInstance().add(product);
-//
-//                if(check){
-//                    JOptionPane.showMessageDialog(dialog, "Thêm thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-//                    parentPanel.loadProduct();
-//                    dialog.dispose();
-//                }
-//                else JOptionPane.showMessageDialog(dialog, ProductBUS.getInstance().getError(), "Thông báo", JOptionPane.WARNING_MESSAGE);
+                
             }
         });
         // endregion11
 
+        // region ADD
         add(lbName);
         add(tfName);
+        add(lbType);
+        add(cbType);
+        add(lbPrice);
+        add(lbUnit);
+        add(snPrice);
+        add(tfUnit);
+        add(lbDiscount);
+        add(lbDiscountTime);
+        add(cbDiscount);
+        add(cbDiscountTime);
         add(btnSave);
         add(btnEsc);
         add(lbHeader);
         add(pnMain);
+        // endregion
 
         setVisible(true);
     }

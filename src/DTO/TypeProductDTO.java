@@ -32,4 +32,8 @@ public class TypeProductDTO {
     public Object[] getObjects() {
         return new Object[] { id, name };
     }
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }
