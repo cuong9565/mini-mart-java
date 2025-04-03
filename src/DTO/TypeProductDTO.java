@@ -13,6 +13,14 @@ public class TypeProductDTO {
         this.id = id;
         this.name = name;
     }
+    public TypeProductDTO(ResultSet rs, int curr){
+        try {
+            this.id = Integer.parseInt(rs.getString("idProductType"));
+            this.name = rs.getString("type");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public TypeProductDTO(ResultSet rs) {
         try {
             this.id = Integer.parseInt(rs.getString("id"));

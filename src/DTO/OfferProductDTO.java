@@ -12,6 +12,20 @@ public class OfferProductDTO {
         this.offer = offer;
         this.discount = discount;
     }
+    public OfferProductDTO(ResultSet rs, int curr){
+        try{
+            this.id = rs.getInt("idOfferProduct");
+            this.discount = rs.getInt("discount");
+            this.offer = new OfferDTO(
+                    rs.getInt("idOffer"),
+                    rs.getDate("startDate"),
+                    rs.getDate("endDate")
+            );
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
     public OfferProductDTO(ResultSet rs) {
         try{
             this.id = rs.getInt("id");

@@ -78,6 +78,7 @@ public class dlAddCustomer extends JDialog {
                 if(CustomerBUS.getInstance().add(customer)){
                     JOptionPane.showMessageDialog(dialog, "Thêm khách hàng thành công!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
                     parentPanel.loadCustomer();
+                    parentPanel.textChange();
                     dialog.dispose();
                 }
                 else JOptionPane.showMessageDialog(dialog, CustomerBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);

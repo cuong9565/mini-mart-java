@@ -58,7 +58,7 @@ public class pnSupplier extends JPanel {
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentShown(ComponentEvent e) {
-                loadSupplier();
+                btnRefresh.doClick();
             }
         });
         // endregion
@@ -91,6 +91,7 @@ public class pnSupplier extends JPanel {
                     if(SupplierBUS.getInstance().deleteSupplier(supplierNew)){
                         JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         loadSupplier();
+                        textChange();
                     }
                     else JOptionPane.showMessageDialog(thisPanel, SupplierBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
                 }
@@ -141,13 +142,6 @@ public class pnSupplier extends JPanel {
             public void insertUpdate(DocumentEvent e) {textChange();}
             public void removeUpdate(DocumentEvent e) {textChange();}
             public void changedUpdate(DocumentEvent e) {textChange();}
-            public void textChange(){
-                tbSupplier.dftbModel.setRowCount(0);
-                int col = cbSearch.getSelectedIndex();
-                String txt = tfSearch.getText();
-                for(SupplierDTO supplier: SupplierBUS.getInstance().getSupplierListBy(col, txt))
-                    tbSupplier.dftbModel.addRow(supplier.getObjects());
-            }
         });
         // endregion
         // region ADD
@@ -171,6 +165,14 @@ public class pnSupplier extends JPanel {
     public void loadSupplier()  {
         tbSupplier.dftbModel.setRowCount(0);
         for(SupplierDTO supplier: SupplierBUS.getInstance().getListSupplier())
+            tbSupplier.dftbModel.addRow(supplier.getObjects());
+    }
+
+    public void textChange(){
+        tbSupplier.dftbModel.setRowCount(0);
+        int col = cbSearch.getSelectedIndex();
+        String txt = tfSearch.getText();
+        for(SupplierDTO supplier: SupplierBUS.getInstance().getSupplierListBy(col, txt))
             tbSupplier.dftbModel.addRow(supplier.getObjects());
     }
 }

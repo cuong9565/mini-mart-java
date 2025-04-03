@@ -58,7 +58,7 @@ public class pnTypeProduct extends JPanel {
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentShown(ComponentEvent e) {
-                loadTypeProduct();
+                btnRefresh.doClick();
             }
         });
         // endregion
@@ -91,6 +91,7 @@ public class pnTypeProduct extends JPanel {
                     if(TypeProductBUS.getInstance().delete(product)){
                         JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         loadTypeProduct();
+                        textChange();
                     }
                     else JOptionPane.showMessageDialog(thisPanel, TypeProductBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
                 }
@@ -116,6 +117,7 @@ public class pnTypeProduct extends JPanel {
                 if(TypeProductBUS.getInstance().adds(products)){
                     JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + TypeProductBUS.getInstance().getNumLine() + " loại sản phẩm");
                     loadTypeProduct();
+                    textChange();
                 }
                 else {
                     JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + TypeProductBUS.getInstance().getError());
@@ -141,13 +143,6 @@ public class pnTypeProduct extends JPanel {
             public void insertUpdate(DocumentEvent e) {textChange();}
             public void removeUpdate(DocumentEvent e) {textChange();}
             public void changedUpdate(DocumentEvent e) {textChange();}
-            public void textChange(){
-                tbTypeProduct.dftbModel.setRowCount(0);
-                int col = cbSearch.getSelectedIndex();
-                String txt = tfSearch.getText();
-                for(TypeProductDTO product: TypeProductBUS.getInstance().getListBy(col, txt))
-                    tbTypeProduct.dftbModel.addRow(product.getObjects());
-            }
         });
         // endregion
         // region ADD
@@ -171,6 +166,14 @@ public class pnTypeProduct extends JPanel {
     public void loadTypeProduct()  {
         tbTypeProduct.dftbModel.setRowCount(0);
         for(TypeProductDTO product: TypeProductBUS.getInstance().getList())
+            tbTypeProduct.dftbModel.addRow(product.getObjects());
+    }
+
+    public void textChange(){
+        tbTypeProduct.dftbModel.setRowCount(0);
+        int col = cbSearch.getSelectedIndex();
+        String txt = tfSearch.getText();
+        for(TypeProductDTO product: TypeProductBUS.getInstance().getListBy(col, txt))
             tbTypeProduct.dftbModel.addRow(product.getObjects());
     }
 }

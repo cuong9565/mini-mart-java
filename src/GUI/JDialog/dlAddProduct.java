@@ -72,7 +72,6 @@ public class dlAddProduct extends JDialog {
         lbHeader.setBackground(MyColor.DarkBlue);
         lbHeader.setBounds(0,0,540,60);
         // endregion
-
         // region Event
         cbDiscount.addActionListener(new ActionListener() {
             @Override
@@ -93,16 +92,10 @@ public class dlAddProduct extends JDialog {
         });
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-//                if(ProductBUS.getInstance().add()){
-//                    JOptionPane.showMessageDialog(dialog, "Thêm sản phẩm thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-//                    parentPanel.loadProduct();
-//                    dispose();
-//                }
-//                else JOptionPane.showMessageDialog(dialog, ProductBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
+
             }
         });
         // endregion11
-
         // region ADD
         add(lbName);
         add(tfName);

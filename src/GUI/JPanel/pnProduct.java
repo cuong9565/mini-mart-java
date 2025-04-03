@@ -39,7 +39,6 @@ public class pnProduct extends JPanel {
     public pnProduct(fManage frame) {
         setLayout(null);
         setBackground(MyColor.LightGray);
-
         // region SET BOUNDS
         pnHeader.setBounds(0,0,970, 90);
         pnFunc.setBounds(0,0,440,90);
@@ -60,7 +59,7 @@ public class pnProduct extends JPanel {
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentShown(ComponentEvent e) {
-                loadProduct();
+                btnRefresh.doClick();
             }
         });
         // endregion
@@ -141,13 +140,6 @@ public class pnProduct extends JPanel {
             public void insertUpdate(DocumentEvent e) {textChange();}
             public void removeUpdate(DocumentEvent e) {textChange();}
             public void changedUpdate(DocumentEvent e) {textChange();}
-            public void textChange(){
-//                tbProduct.dftbModel.setRowCount(0);
-//                int col = cbSearch.getSelectedIndex();
-//                String txt = tfSearch.getText();
-//                for(ProductDTO product: ProductBUS.getInstance().getListBy(col, txt))
-//                    tbProduct.dftbModel.addRow(product.getObjects());
-            }
         });
         // endregion
         // region ADD
@@ -166,12 +158,19 @@ public class pnProduct extends JPanel {
         add(tbProduct.scrPn);
         add(pnFooter);
         // endregion
-
     }
 
     public void loadProduct()  {
         tbProduct.dftbModel.setRowCount(0);
         for(ProductDTO product: ProductBUS.getInstance().getList())
             tbProduct.dftbModel.addRow(product.getRowObjects());
+    }
+
+    public void textChange(){
+//                tbProduct.dftbModel.setRowCount(0);
+//                int col = cbSearch.getSelectedIndex();
+//                String txt = tfSearch.getText();
+//                for(ProductDTO product: ProductBUS.getInstance().getListBy(col, txt))
+//                    tbProduct.dftbModel.addRow(product.getObjects());
     }
 }

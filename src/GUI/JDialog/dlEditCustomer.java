@@ -108,6 +108,7 @@ public class dlEditCustomer extends JDialog {
                 if(CustomerBUS.getInstance().update(customerNew)){
                     JOptionPane.showMessageDialog(dialog, "Sửa thông tin khách hàng thành công!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
                     parentPanel.loadCustomer();
+                    parentPanel.textChange();
                     dialog.dispose();
                 }
                 else JOptionPane.showMessageDialog(dialog, CustomerBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);

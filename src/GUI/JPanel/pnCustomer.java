@@ -65,7 +65,7 @@ public class pnCustomer extends JPanel {
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentShown(ComponentEvent e) {
-                loadCustomer();
+                btnRefresh.doClick();
             }
         });
         // endregion
@@ -99,6 +99,7 @@ public class pnCustomer extends JPanel {
                     if(CustomerBUS.getInstance().delete(customer)){
                         JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin khách hàng thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         loadCustomer();
+                        textChange();
                     }
                     else JOptionPane.showMessageDialog(thisPanel, CustomerBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
                 }
@@ -149,13 +150,6 @@ public class pnCustomer extends JPanel {
             public void insertUpdate(DocumentEvent e) {textChange();}
             public void removeUpdate(DocumentEvent e) {textChange();}
             public void changedUpdate(DocumentEvent e) {textChange();}
-            public void textChange(){
-                tbCustomer.dftbModel.setRowCount(0);
-                int col = cbSearch.getSelectedIndex();
-                String txt = tfSearch.getText();
-                for(CustomerDTO customer: CustomerBUS.getInstance().getSupplierListBy(col, txt))
-                    tbCustomer.dftbModel.addRow(customer.getObjects());
-            }
         });
         // endregion
         // region ADD
@@ -178,6 +172,14 @@ public class pnCustomer extends JPanel {
     public void loadCustomer(){
         tbCustomer.dftbModel.setRowCount(0);
         for(CustomerDTO customer: CustomerBUS.getInstance().getAllList())
+            tbCustomer.dftbModel.addRow(customer.getObjects());
+    }
+
+    public void textChange(){
+        tbCustomer.dftbModel.setRowCount(0);
+        int col = cbSearch.getSelectedIndex();
+        String txt = tfSearch.getText();
+        for(CustomerDTO customer: CustomerBUS.getInstance().getSupplierListBy(col, txt))
             tbCustomer.dftbModel.addRow(customer.getObjects());
     }
 }
