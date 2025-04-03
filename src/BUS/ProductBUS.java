@@ -20,4 +20,9 @@ public class ProductBUS {
         list = ProductDAO.getInstance().getList();
         return list;
     }
+
+    public boolean add(ProductDTO product) {
+//        if
+        return true;
+    }
 }

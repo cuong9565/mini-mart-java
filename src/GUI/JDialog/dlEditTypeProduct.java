@@ -64,7 +64,6 @@ public class dlEditTypeProduct extends JDialog {
                     JOptionPane.showMessageDialog(dialog, "Sửa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     parentPanel.loadTypeProduct();
                     parentPanel.textChange();
-                    dialog.dispose();
                 }
                 else JOptionPane.showMessageDialog(dialog, TypeProductBUS.getInstance().getError(), "Thông báo", JOptionPane.WARNING_MESSAGE);
             }

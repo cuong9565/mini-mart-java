@@ -81,7 +81,6 @@ public class dlEditSupplier extends JDialog {
                     parentPanel.loadSupplier();
                     parentPanel.loadSupplier();
                     parentPanel.textChange();
-                    dialog.dispose();
                 }
                 else JOptionPane.showMessageDialog(dialog, SupplierBUS.getInstance().getError(), "Thông báo", JOptionPane.WARNING_MESSAGE);
             }
