@@ -49,6 +49,6 @@ public class OfferProductDTO {
     public void setDiscount(int discount) {this.discount = discount;}
     @Override
     public String toString() {
-        return (this.id!=0)?discount + "%":"Không áp dụng";
+        return (this.id!=0)?discount + "%":"Chưa có ưu đãi";
     }
 }

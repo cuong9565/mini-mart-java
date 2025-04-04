@@ -18,6 +18,13 @@ public class ProductBUS {
         return instance;
     }
 
+    public ProductDTO getItemById(int id) {
+        for(ProductDTO p : list)
+            if(p.getId() == id)
+                return p;
+        return null;
+    }
+
     public List<ProductDTO> getList() {
         list = ProductDAO.getInstance().getList();
         return list;

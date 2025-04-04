@@ -73,12 +73,13 @@ public class pnProduct extends JPanel {
         btnEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                int i = tbProduct.getSelectedRow();
-//                if (i >=0){
-//                    ProductDTO product = new ProductDTO(tbProduct.getRowObject(i));
-//                    new dlEditProduct(frame, thisPanel, product);
-//                }
-//                else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần sửa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                int i = tbProduct.getSelectedRow();
+                if (i>=0){
+                    int id = Integer.parseInt(tbProduct.getFirstColumn(i));
+                    ProductDTO product = ProductBUS.getInstance().getItemById(id);
+                    new dlEditProduct(frame, thisPanel, product);
+                }
+                else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần sửa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
             }
         });
         btnDelete.addActionListener(new ActionListener() {

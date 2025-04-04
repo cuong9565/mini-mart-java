@@ -204,7 +204,7 @@ public class pnImport extends JPanel {
                 try {
                     int quantity = Integer.parseInt(txtQuantity.getText());
                     int productId = (int) tbProduct.dftbModel.getValueAt(row, 0);
-                    ProductDTO product = productDAO.getById(productId);
+                    ProductDTO product = productDAO.getItemById(productId);
                     product.setQuantity(quantity);
                     selectedProducts.add(product);
 

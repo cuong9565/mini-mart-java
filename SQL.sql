@@ -213,7 +213,8 @@ INSERT INTO Offer (startDate, endDate) VALUES
 ('2025-04-05', '2025-04-20'),
 ('2025-04-10', '2025-04-25'),
 ('2025-04-15', '2025-04-30'),
-('2025-04-20', '2025-05-05');
+('2025-04-20', '2025-05-05'),
+('2025-02-01', '2025-02-28');
 
 INSERT INTO OfferProduct (idOffer, discount) VALUES
 (1, 20),
@@ -225,7 +226,8 @@ INSERT INTO OfferProduct (idOffer, discount) VALUES
 (4, 50),
 (4, 20),
 (5, 30),
-(5, 15);
+(5, 15),
+(6, 35);
 
 INSERT INTO ProductType (name) VALUES
 ('Thực phẩm đóng gói'), ('Đồ uống'), ('Gia vị'), ('Đồ ăn vặt'), ('Sữa và chế phẩm'),
@@ -286,11 +288,11 @@ INSERT INTO Product (idProductType, idProductDetail, idOfferProduct, name, price
 (18, 38, NULL, 'Nước xả Downy', 100000, 'Can', 15),
 (19, 39, 7, 'Giấy vệ sinh Bless You', 40000, 'Cuộn', 60),
 (20, 40, NULL, 'Khăn giấy lụa', 25000, 'Hộp', 40),
-(1, 41, 1, 'Mì ống Barilla', 45000, 'Gói', 20),
+(1, 41, 11, 'Mì ống Barilla', 45000, 'Gói', 20),
 (2, 42, NULL, 'Nước ép C2', 10000, 'Chai', 70),
 (3, 43, 4, 'Tiêu đen Visaco', 20000, 'Hũ', 35),
 (4, 44, NULL, 'Khoai chiên Lay’s', 15000, 'Gói', 80),
-(5, 45, 9, 'Sữa chua uống Yakult', 30000, 'Hộp', 50),
+(5, 45, 11, 'Sữa chua uống Yakult', 30000, 'Hộp', 50),
 (6, 46, NULL, 'Cá basa tươi', 70000, 'Khay', 15),
 (7, 47, 2, 'Mực lá đông lạnh', 130000, 'Túi', 10),
 (8, 48, NULL, 'Cà rốt', 15000, 'Túi', 40),

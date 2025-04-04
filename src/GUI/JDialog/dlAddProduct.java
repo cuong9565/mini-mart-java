@@ -27,7 +27,7 @@ public class dlAddProduct extends JDialog {
     JTextField tfName = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JComboBox<TypeProductDTO> cbType = new MyJComboBox<>(new TypeProductDTO[]{}, 12);
     JComboBox<OfferProductDTO> cbDiscount = new MyJComboBox<>(new OfferProductDTO[]{},12);
-    JComboBox<OfferDTO> cbDiscountTime = new MyJComboBox<>(new OfferDTO[]{},12);
+    JComboBox<OfferDTO> cbOffer = new MyJComboBox<>(new OfferDTO[]{},12);
     JSpinner snPrice = new MyJSpinner(100, 100, 1000000000, 100);
     JTextField tfUnit = new MyJTextFieldInput(Font.PLAIN, 14, true);
     MyJTextArea taDetail = new MyJTextArea();
@@ -48,8 +48,7 @@ public class dlAddProduct extends JDialog {
         // region SET TEXT
         for(TypeProductDTO type: TypeProductBUS.getInstance().getList()) cbType.addItem(type);
         for(OfferProductDTO offerProduct: OfferProductBUS.getInstance().getListDiscount()) cbDiscount.addItem(offerProduct);
-        for(OfferDTO offer: OfferBUS.getInstance().getListByOfferProduct((OfferProductDTO) cbDiscount.getSelectedItem()))
-            cbDiscountTime.addItem(offer);
+        for(OfferDTO offer: OfferBUS.getInstance().getListByOfferProduct((OfferProductDTO) cbDiscount.getSelectedItem())) cbOffer.addItem(offer);
         // endregion
         // region SET BOUNDS
         pnMain.setBounds(0,0,760,440);
@@ -61,7 +60,7 @@ public class dlAddProduct extends JDialog {
         lbDiscount.setBounds(50,150,200,20);
         cbDiscount.setBounds(50,170,200,30);
         lbDiscountTime.setBounds(270,150,200,20);
-        cbDiscountTime.setBounds(270, 170, 200, 30);
+        cbOffer.setBounds(270, 170, 200, 30);
 
         lbPrice.setBounds(50,220,200,20);
         lbUnit.setBounds(270,220,200,20);
@@ -84,9 +83,9 @@ public class dlAddProduct extends JDialog {
                 int i = cbDiscount.getSelectedIndex();
                 if(i!=posCbDiscount) {
                     posCbDiscount = i;
-                    cbDiscountTime.removeAllItems();
+                    cbOffer.removeAllItems();
                     for(OfferDTO offer: OfferBUS.getInstance().getListByOfferProduct((OfferProductDTO) cbDiscount.getSelectedItem()))
-                        cbDiscountTime.addItem(offer);
+                        cbOffer.addItem(offer);
                 }
             }
         });
@@ -99,9 +98,9 @@ public class dlAddProduct extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 TypeProductDTO typeSelected = (TypeProductDTO) cbType.getSelectedItem();
                 OfferProductDTO offerProductSelected = (OfferProductDTO) cbDiscount.getSelectedItem();
-                OfferDTO offerSelected = (OfferDTO) cbDiscountTime.getSelectedItem();
+                OfferDTO offerSelected = (OfferDTO) cbOffer.getSelectedItem();
 
-                int idProductType = ((TypeProductDTO) cbType.getSelectedItem()).getId();
+                int idProductType = typeSelected.getId();
                 String detail = taDetail.getText();
                 int idOfferProduct = (offerProductSelected.getId()==0?0:OfferProductBUS.getInstance().getIdBy(offerProductSelected.getDiscount(), offerSelected.getId()));
                 String name = tfName.getText();
@@ -130,7 +129,7 @@ public class dlAddProduct extends JDialog {
         add(lbDiscount);
         add(lbDiscountTime);
         add(cbDiscount);
-        add(cbDiscountTime);
+        add(cbOffer);
         add(lbDetail);
         add(taDetail.sp);
         add(btnSave);

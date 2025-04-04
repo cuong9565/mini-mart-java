@@ -1,14 +1,9 @@
 package DTO;
 
-import org.apache.xmlbeans.impl.soap.Detail;
-
-import java.sql.Date;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDate;
 
 public class ProductDTO {
-    private int id, quantity, discount;
+    private int id, quantity;
     private TypeProductDTO type;
     private DetailProductDTO detail;
     private OfferProductDTO offerProduct;
@@ -27,7 +22,6 @@ public class ProductDTO {
             this.price = rs.getDouble("price");
             this.unit = rs.getString("unit");
             this.quantity = rs.getInt("quantity");
-            this.discount = rs.getInt("discount");
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -43,7 +37,6 @@ public class ProductDTO {
         this.price = price;
         this.unit = unit;
         this.quantity = quantity;
-        this.discount = discount;
     }
 
     public int getId() { return id; }
@@ -54,7 +47,6 @@ public class ProductDTO {
     public double getPrice() { return price; }
     public String getUnit() { return unit; }
     public int getQuantity() { return quantity; }
-    public int getDiscount() { return discount; }
 
     public void setId(int id) { this.id = id; }
     public void setType(TypeProductDTO type) { this.type = type; }
@@ -64,10 +56,14 @@ public class ProductDTO {
     public void setPrice(double price) { this.price = price; }
     public void setUnit(String unit) { this.unit = unit; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
-    public void setDiscount(int discount) { this.discount = discount; }
 
     public Object[] getRowObjects() {
         java.util.Date today = new java.util.Date();
-        return new Object[]{id, type.getName(), ((offerProduct.getId()!=0 && today.after(offerProduct.getOffer().getDateStart()) && today.before(offerProduct.getOffer().getDateEnd()))?discount:0) + "%", name, String.format("%,.0fđ", price), unit, quantity};
+        String str = "";
+        if(offerProduct.getId()==0) str = "Chưa có ưu đãi";
+        else if(today.compareTo(offerProduct.getOffer().getDateStart())<0) str = "Chưa đến kì giảm giá";
+        else if(today.compareTo(offerProduct.getOffer().getDateEnd())>0) str = "Đã qua kì giảm giá";
+        else str = offerProduct.getDiscount() + "%";
+        return new Object[]{id, type.getName(), str, name, String.format("%,.0fđ", price), unit, quantity};
     }
 }

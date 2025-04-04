@@ -35,7 +35,7 @@ public class ProductDAO {
         return list;
     }
 
-    public ProductDTO getById(int id) {
+    public ProductDTO getItemById(int id) {
         ProductDTO res = null;
         String sql = "select * from product where id = ?";
         Connection con = DataProvider.getInstance().getConnection();
