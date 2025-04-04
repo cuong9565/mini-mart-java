@@ -5,12 +5,12 @@ import Components.*;
 import DTO.*;
 import GUI.JFrame.fManage;
 import GUI.JPanel.pnProduct;
-import GUI.JPanel.pnSupplier;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 public class dlAddProduct extends JDialog {
     JPanel pnMain = new MyJPanel(MyColor.White);
@@ -22,6 +22,7 @@ public class dlAddProduct extends JDialog {
     JLabel lbDiscountTime = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Thời gian giảm giá*", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbPrice = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Giá bán*", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbUnit = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Đơn vị*", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbDetail = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Thông tin chi tiết", SwingConstants.LEFT, SwingConstants.CENTER);
 
     JTextField tfName = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JComboBox<TypeProductDTO> cbType = new MyJComboBox<>(new TypeProductDTO[]{}, 12);
@@ -29,6 +30,7 @@ public class dlAddProduct extends JDialog {
     JComboBox<OfferDTO> cbDiscountTime = new MyJComboBox<>(new OfferDTO[]{},12);
     JSpinner snPrice = new MyJSpinner(100, 100, 1000000000, 100);
     JTextField tfUnit = new MyJTextFieldInput(Font.PLAIN, 14, true);
+    MyJTextArea taDetail = new MyJTextArea();
 
     JButton btnSave = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Green, MyColor.LightGreen, "Xác nhận", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnEsc = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Red, MyColor.LightRed, "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
@@ -38,7 +40,7 @@ public class dlAddProduct extends JDialog {
     public dlAddProduct(fManage parentFrame, pnProduct parentPanel) {
         super(parentFrame,true);
         setTitle("Thêm sản phẩm");
-        setSize(540,440);
+        setSize(760,440);
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -50,7 +52,7 @@ public class dlAddProduct extends JDialog {
             cbDiscountTime.addItem(offer);
         // endregion
         // region SET BOUNDS
-        pnMain.setBounds(0,0,540,440);
+        pnMain.setBounds(0,0,760,440);
         lbName.setBounds(50,80,200,20);
         tfName.setBounds(50,100,200,30);
         lbType.setBounds(270,80,200,20);
@@ -66,11 +68,14 @@ public class dlAddProduct extends JDialog {
         snPrice.setBounds(50,240,200,30);
         tfUnit.setBounds(270,240,200,30);
 
-        btnSave.setBounds(100,300,150,40);
-        btnEsc.setBounds(270,300,150,40);
+        lbDetail.setBounds(490,80,200,20);
+        taDetail.sp.setBounds(490, 100, 200, 170);
+
+        btnSave.setBounds(220,300,150,40);
+        btnEsc.setBounds(390,300,150,40);
         lbHeader.setOpaque(true);
         lbHeader.setBackground(MyColor.DarkBlue);
-        lbHeader.setBounds(0,0,540,60);
+        lbHeader.setBounds(0,0,760,60);
         // endregion
         // region Event
         cbDiscount.addActionListener(new ActionListener() {
@@ -92,7 +97,24 @@ public class dlAddProduct extends JDialog {
         });
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                TypeProductDTO typeSelected = (TypeProductDTO) cbType.getSelectedItem();
+                OfferProductDTO offerProductSelected = (OfferProductDTO) cbDiscount.getSelectedItem();
+                OfferDTO offerSelected = (OfferDTO) cbDiscountTime.getSelectedItem();
 
+                int idProductType = ((TypeProductDTO) cbType.getSelectedItem()).getId();
+                String detail = taDetail.getText();
+                int idOfferProduct = (offerProductSelected.getId()==0?0:OfferProductBUS.getInstance().getIdBy(offerProductSelected.getDiscount(), offerSelected.getId()));
+                String name = tfName.getText();
+                double price = Double.parseDouble(snPrice.getValue().toString());
+                String unit = tfUnit.getText();
+                int quantity = 0;
+                if(ProductBUS.getInstance().add(idProductType, detail, idOfferProduct, name, price, unit, quantity)){
+                    JOptionPane.showMessageDialog(dialog, "Thêm thông tin sản phẩm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    parentPanel.loadProduct();
+                    parentPanel.textChange();
+                    dispose();
+                }
+                else JOptionPane.showMessageDialog(dialog, "Lỗi: " + ProductBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
             }
         });
         // endregion11
@@ -109,6 +131,8 @@ public class dlAddProduct extends JDialog {
         add(lbDiscountTime);
         add(cbDiscount);
         add(cbDiscountTime);
+        add(lbDetail);
+        add(taDetail.sp);
         add(btnSave);
         add(btnEsc);
         add(lbHeader);

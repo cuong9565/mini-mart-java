@@ -313,14 +313,18 @@ INSERT INTO Product (idProductType, idProductDetail, idOfferProduct, name, price
 
 
  -- ---------------- SELECT -----------
- select * from provider;
- select * from customer;
- select * from product;
- select * from productdetail;
- select * from producttype;
- select * from staff;
- select * from offer;
+select * from provider;
+select * from customer;
+select * from product;
+select * from productdetail;
+select * from producttype;
+select * from staff;
+select * from offer;
+select * from productdetail;
  -- ------------------------------------
+ 
+select * from offer o, offerproduct op
+where o.id = op.idOffer; 
 
 select pd.*, pdtype.name as type, pddetail.detailInfo as detail, pdoffer.discount as discount, o.id as idOffer, o.startDate as startDate, o.endDate as endDate
 from product pd

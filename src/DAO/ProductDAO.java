@@ -3,6 +3,7 @@ package DAO;
 import DTO.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ProductDAO {
@@ -14,7 +15,6 @@ public class ProductDAO {
         return instance;
     }
 
-    // Get all products
     public List<ProductDTO> getList() {
         List<ProductDTO> list = new ArrayList<>();
         Connection con = DataProvider.getInstance().getConnection();
@@ -35,85 +35,99 @@ public class ProductDAO {
         return list;
     }
 
-    // Get product by ID
     public ProductDTO getById(int id) {
-        String sql = "SELECT * FROM Product WHERE id = ?";
+        ProductDTO res = null;
+        String sql = "select * from product where id = ?";
         Connection con = DataProvider.getInstance().getConnection();
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return new ProductDTO(rs);
-                }
-            }
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            res = new ProductDTO(rs);
         } catch (SQLException e) {
-            throw new RuntimeException("Failed to retrieve product by ID!", e);
+            throw new RuntimeException(e.getMessage());
         }
-        return null;
+        return res;
     }
 
-    // Insert a new product
-    public boolean insert(ProductDTO productDTO) {
-//        String sql = "INSERT INTO Product (idProductType, idProductDetail, idOfferProduct, name, price, unit, quantity) " +
-//                "VALUES (?, ?, ?, ?, ?, ?, ?)";
-//        Connection con = DataProvider.getInstance().getConnection();
-//        try (PreparedStatement stmt = con.prepareStatement(sql)) {
-//            stmt.setInt(1, productDTO.getIdProductType());
-//            stmt.setInt(2, productDTO.getIdProductDetail());
-//            stmt.setInt(3, productDTO.getIdOfferProduct() == -1 ? null : productDTO.getIdOfferProduct());
-//            stmt.setString(4, productDTO.getName());
-//            stmt.setDouble(5, productDTO.getPrice());
-//            stmt.setString(6, productDTO.getUnit());
-//            stmt.setInt(7, productDTO.getQuantity());
-//
-//            int affectedRows = stmt.executeUpdate();
-//            if (affectedRows > 0) {
-//                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-//                    if (generatedKeys.next()) {
-//                        productDTO.setId(generatedKeys.getInt(1));
-//                    }
-//                }
-//                return true;
-//            }
-//            return false;
-//        } catch (SQLException e) {
-//            throw new RuntimeException("Insert failed!", e);
-//        }
-        return false;
-    }
-
-    // Update product
-    public boolean update(ProductDTO productDTO) {
-//        String sql = "UPDATE Product SET idProductType = ?, idProductDetail = ?, idOfferProduct = ?, " +
-//                "name = ?, price = ?, unit = ?, quantity = ? WHERE id = ?";
-//        Connection con = DataProvider.getInstance().getConnection();
-//        try (PreparedStatement stmt = con.prepareStatement(sql)) {
-//            stmt.setInt(1, productDTO.getIdProductType());
-//            stmt.setInt(2, productDTO.getIdProductDetail());
-//            stmt.setInt(3, productDTO.getIdOfferProduct() == -1 ? null : productDTO.getIdOfferProduct());
-//            stmt.setString(4, productDTO.getName());
-//            stmt.setDouble(5, productDTO.getPrice());
-//            stmt.setString(6, productDTO.getUnit());
-//            stmt.setInt(7, productDTO.getQuantity());
-//            stmt.setInt(8, productDTO.getId());
-//
-//            return stmt.executeUpdate() > 0;
-//        } catch (SQLException e) {
-//            throw new RuntimeException("Update failed!", e);
-//        }
-        return false;
-    }
-
-    // Delete product
-    public boolean delete(int id) {
-        String sql = "DELETE FROM Product WHERE id = ?";
+    public int add(ProductDTO product) {
+        int res = 0;
+        String sql = "insert into product(idProductType, idProductDetail, idOfferProduct, name, price, unit, quantity) values(?,?,?,?,?,?,?)";
         Connection con = DataProvider.getInstance().getConnection();
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            throw new RuntimeException("Delete failed!", e);
+        try(PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setInt(1, product.getType().getId());
+            ps.setInt(2, product.getDetail().getId());
+            if((product.getOfferProduct().getId()!=0)) ps.setInt(3, product.getOfferProduct().getId());
+            else ps.setNull(3, Types.INTEGER);
+            ps.setString(4, product.getName());
+            ps.setDouble(5, product.getPrice());
+            ps.setString(6, product.getUnit());
+            ps.setInt(7, product.getQuantity());
+            res = ps.executeUpdate();
+        }catch (SQLException e) {
+            throw new RuntimeException();
         }
+        DataProvider.getInstance().CloseConnection(con);
+        return res;
     }
+
+    public int add(int idProductType, int idProductDetail, int idOfferProduct, String name, double price, String unit, int quantity){
+        int res = 0;
+        String sql = "insert into product(idProductType, idProductDetail, idOfferProduct, name, price, unit, quantity) values(?,?,?,?,?,?,?)";
+        Connection con = DataProvider.getInstance().getConnection();
+        try(PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setInt(1, idProductType);
+            ps.setInt(2, idProductDetail);
+            if((idOfferProduct!=0)) ps.setInt(3, idOfferProduct);
+            else ps.setNull(3, Types.INTEGER);
+            ps.setString(4, name);
+            ps.setDouble(5, price);
+            ps.setString(6, unit);
+            ps.setInt(7, quantity);
+            res = ps.executeUpdate();
+        }catch (SQLException e) {
+            throw new RuntimeException();
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return res;
+    }
+
+    public int update(ProductDTO product){
+        int res = 0;
+        Connection con = DataProvider.getInstance().getConnection();
+        String sql = "update product set idProductType = ?, idProductDetail = ?, idOfferProduct = ?, name = ?, price = ?, unit = ?, quantity = ? where id = ?";
+        try (PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setInt(1, product.getType().getId());
+            ps.setInt(2, product.getDetail().getId());
+            ps.setInt(3, product.getOfferProduct().getId());
+            ps.setString(4, product.getName());
+            ps.setDouble(5, product.getPrice());
+            ps.setString(6, product.getUnit());
+            ps.setInt(7, product.getQuantity());
+            ps.setInt(8, product.getId());
+            res = ps.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw new RuntimeException();
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return res;
+    }
+
+    public int delete(ProductDTO product) {
+        int res = 0;
+        Connection con = DataProvider.getInstance().getConnection();
+        String sql = "delete from product where id = ?";
+        try(PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setInt(1, product.getId());
+            res = ps.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw new RuntimeException();
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return res;
+    }
+
+
 
 }

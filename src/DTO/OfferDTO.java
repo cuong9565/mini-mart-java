@@ -3,8 +3,7 @@ package DTO;
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.SimpleFormatter;
+import java.sql.Date;
 
 public class OfferDTO {
     private int id;
@@ -32,7 +31,7 @@ public class OfferDTO {
     public int getId() {
         return id;
     }
-    public Date getDateStart() {return dateStart;}
+    public java.sql.Date getDateStart() {return dateStart;}
     public Date getDateEnd() {return dateEnd;}
     public void setId(int id) {this.id = id;}
     public void setDateStart(Date dateStart) {this.dateStart = dateStart;}

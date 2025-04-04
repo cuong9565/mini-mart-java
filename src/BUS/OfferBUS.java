@@ -25,7 +25,7 @@ public class OfferBUS {
     }
 
     public List<OfferDTO> getListByOfferProduct(OfferProductDTO offerProduct) {
-        List<OfferDTO>ls = new ArrayList<OfferDTO>();
+        List<OfferDTO>ls = new ArrayList<>();
         if(offerProduct.getId()==0)
             ls.add(new OfferDTO(0,null,null));
         else {
@@ -34,6 +34,39 @@ public class OfferBUS {
                     ls.add(op.getOffer());
         }
         return ls;
+    }
+
+    public boolean add(OfferDTO offer) {
+        try {
+            OfferDAO.getInstance().add(offer);
+        }
+        catch(Exception e) {
+            error = e.getMessage();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean update(OfferDTO offer) {
+        try {
+            OfferDAO.getInstance().update(offer);
+        }
+        catch (Exception e) {
+            error = e.getMessage();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean delete(OfferDTO offer) {
+        try {
+            OfferDAO.getInstance().delete(offer);
+        }
+        catch (Exception e) {
+            error = e.getMessage();
+            return false;
+        }
+        return true;
     }
 
     public String getError() {return error;}

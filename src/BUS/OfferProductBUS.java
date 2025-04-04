@@ -31,4 +31,11 @@ public class OfferProductBUS {
                 ls.add(o);
         return ls;
     }
+
+    public int getIdBy(int discount, int idOffer) {
+        for(OfferProductDTO o : getList())
+            if (o.getDiscount() == discount && o.getOffer().getId() == idOffer)
+                return o.getId();
+        return 0;
+    }
 }
