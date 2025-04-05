@@ -57,13 +57,18 @@ public class ProductDTO {
     public void setUnit(String unit) { this.unit = unit; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
 
-    public Object[] getRowObjects() {
+    @Override
+    public String toString() {
         java.util.Date today = new java.util.Date();
         String str = "";
         if(offerProduct.getId()==0) str = "Chưa có ưu đãi";
         else if(today.compareTo(offerProduct.getOffer().getDateStart())<0) str = "Chưa đến kì giảm giá";
         else if(today.compareTo(offerProduct.getOffer().getDateEnd())>0) str = "Đã qua kì giảm giá";
         else str = offerProduct.getDiscount() + "%";
-        return new Object[]{id, type.getName(), str, name, String.format("%,.0fđ", price), unit, quantity};
+        return str;
+    }
+
+    public Object[] getRowObjects() {
+        return new Object[]{id, type.getName(), toString(), name, String.format("%,.0fđ", price), unit, quantity};
     }
 }

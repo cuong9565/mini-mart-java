@@ -24,6 +24,12 @@ public class TypeProductBUS {
         return null;
     }
 
+    public TypeProductDTO getItemByName(String name){
+        for (TypeProductDTO item : getList())
+            if(item.getName().equals(name)) return item;
+        return null;
+    }
+
     public List<TypeProductDTO> getList(){
         list = TypeProductDAO.getInstance().getList();
         return list;

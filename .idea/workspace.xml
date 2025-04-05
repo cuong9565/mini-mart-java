@@ -6,14 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong Product">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SQL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BUS/ProductBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/ProductBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/TypeProductBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/TypeProductBUS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/ProductDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/ProductDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DTO/OfferProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/OfferProductDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DTO/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/ProductDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddProduct.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditProduct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnImport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnImport.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -176,15 +173,10 @@
       <workItem from="1743657662763" duration="4100000" />
       <workItem from="1743683482189" duration="3476000" />
       <workItem from="1743758026223" duration="6943000" />
-      <workItem from="1743772535115" duration="3990000" />
-    </task>
-    <task id="LOCAL-00011" summary="Cuong update">
-      <option name="closed" value="true" />
-      <created>1742194992012</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1742194992012</updated>
+      <workItem from="1743772535115" duration="4199000" />
+      <workItem from="1743811970049" duration="2678000" />
+      <workItem from="1743835129920" duration="6778000" />
+      <workItem from="1743846680881" duration="2903000" />
     </task>
     <task id="LOCAL-00012" summary="Cuong update Color + SettingAccountFrame">
       <option name="closed" value="true" />
@@ -570,7 +562,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743767749580</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="Cuong Product">
+      <option name="closed" value="true" />
+      <created>1743776760825</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1743776760826</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

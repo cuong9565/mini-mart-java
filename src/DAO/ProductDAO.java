@@ -49,27 +49,6 @@ public class ProductDAO {
         return res;
     }
 
-    public int add(ProductDTO product) {
-        int res = 0;
-        String sql = "insert into product(idProductType, idProductDetail, idOfferProduct, name, price, unit, quantity) values(?,?,?,?,?,?,?)";
-        Connection con = DataProvider.getInstance().getConnection();
-        try(PreparedStatement ps = con.prepareStatement(sql)){
-            ps.setInt(1, product.getType().getId());
-            ps.setInt(2, product.getDetail().getId());
-            if((product.getOfferProduct().getId()!=0)) ps.setInt(3, product.getOfferProduct().getId());
-            else ps.setNull(3, Types.INTEGER);
-            ps.setString(4, product.getName());
-            ps.setDouble(5, product.getPrice());
-            ps.setString(6, product.getUnit());
-            ps.setInt(7, product.getQuantity());
-            res = ps.executeUpdate();
-        }catch (SQLException e) {
-            throw new RuntimeException();
-        }
-        DataProvider.getInstance().CloseConnection(con);
-        return res;
-    }
-
     public int add(int idProductType, int idProductDetail, int idOfferProduct, String name, double price, String unit, int quantity){
         int res = 0;
         String sql = "insert into product(idProductType, idProductDetail, idOfferProduct, name, price, unit, quantity) values(?,?,?,?,?,?,?)";
@@ -91,19 +70,19 @@ public class ProductDAO {
         return res;
     }
 
-    public int update(ProductDTO product){
+    public int update(int id, int idProductType, int idOfferProduct, String name, double price, String unit, int quantity){
         int res = 0;
         Connection con = DataProvider.getInstance().getConnection();
-        String sql = "update product set idProductType = ?, idProductDetail = ?, idOfferProduct = ?, name = ?, price = ?, unit = ?, quantity = ? where id = ?";
+        String sql = "update product set idProductType = ?, idOfferProduct = ?, name = ?, price = ?, unit = ?, quantity = ? where id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)){
-            ps.setInt(1, product.getType().getId());
-            ps.setInt(2, product.getDetail().getId());
-            ps.setInt(3, product.getOfferProduct().getId());
-            ps.setString(4, product.getName());
-            ps.setDouble(5, product.getPrice());
-            ps.setString(6, product.getUnit());
-            ps.setInt(7, product.getQuantity());
-            ps.setInt(8, product.getId());
+            ps.setInt(1, idProductType);
+            if(idOfferProduct!=0) ps.setInt(2, idOfferProduct);
+            else ps.setNull(2, Types.INTEGER);
+            ps.setString(3, name);
+            ps.setDouble(4, price);
+            ps.setString(5, unit);
+            ps.setInt(6, quantity);
+            ps.setInt(7, id);
             res = ps.executeUpdate();
         }
         catch (SQLException e) {

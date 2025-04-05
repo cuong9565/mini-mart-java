@@ -1,9 +1,11 @@
 package GUI.JPanel;
 
 import BUS.ProductBUS;
+import BUS.TypeProductBUS;
 import Components.*;
 import DTO.*;
 import GUI.JDialog.dlAddProduct;
+import GUI.JDialog.dlDetailProduct;
 import GUI.JDialog.dlEditProduct;
 import GUI.JFrame.fManage;
 import com.mysql.cj.protocol.Message;
@@ -85,16 +87,32 @@ public class pnProduct extends JPanel {
         btnDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                int i = tbProduct.getSelectedRow();
-//                if (i>=0){
-//                    ProductDTO productNew = new ProductDTO(tbProduct.getRowObject(i));
-//                    if(ProductBUS.getInstance().delete(productNew)){
-//                        JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-//                        loadProduct();
-//                    }
-//                    else JOptionPane.showMessageDialog(thisPanel, ProductBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
-//                }
-//                else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xóa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                int i = tbProduct.getSelectedRow();
+                if(i>=0){
+                    int id = Integer.parseInt(tbProduct.getFirstColumn(i));
+                    ProductDTO product = ProductBUS.getInstance().getItemById(id);
+                    if(ProductBUS.getInstance().delete(product)){
+                        JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin sản phẩm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        loadProduct();
+                        textChange();
+                    }
+                    else JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + ProductBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
+                }
+                else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xóa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+
+            }
+        });
+        btnDetail.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int i = tbProduct.getSelectedRow();
+                if (i>=0){
+                    int id = Integer.parseInt(tbProduct.getFirstColumn(i));
+                    ProductDTO product = ProductBUS.getInstance().getItemById(id);
+                    new dlDetailProduct(frame, thisPanel, product);
+                }
+                else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xem!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+
             }
         });
         btnRefresh.addActionListener(new ActionListener() {
@@ -108,24 +126,34 @@ public class pnProduct extends JPanel {
         btnIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                List<Object[]> list = tbProduct.ImportExel(1);
-//                if(list==null) return;
-//                List<ProductDTO> products = new ArrayList<>();
-//                for (Object[] ob : list)
-//                    products.add(new ProductDTO(-1, ob[0].toString()));
-//                if(ProductBUS.getInstance().adds(products)){
-//                    JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + ProductBUS.getInstance().getNumLine() + " loại sản phẩm");
-//                    loadProduct();
-//                }
-//                else {
-//                    JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + ProductBUS.getInstance().getError());
-//                }
+                List<Object[]> list = tbProduct.ImportExel(4);
+                if(list==null) return;
+                String error = null;
+                int success = 0;
+                for (Object[] ob : list) {
+                    int idProductType = TypeProductBUS.getInstance().getItemByName(ob[0].toString()).getId();
+                    String detail = "";
+                    int idOfferProduct = 0;
+                    String name = ob[1].toString();
+                    double price = Double.parseDouble(ob[2].toString().replace("đ", "").replace(",", ""));
+                    String unit = ob[3].toString();
+
+                    if(ProductBUS.getInstance().add(idProductType, detail, idOfferProduct, name, price, unit, 0)){
+                        success++;
+                    }
+                    else error += ("\n" + ProductBUS.getInstance().getError());
+                }
+
+                JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + success + " sản phẩm");
+                if(error!=null) JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + error);
+                loadProduct();
+                textChange();
             }
         });
         btnOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                tbProduct.ExportExel("Danh sách loại sản phẩm");
+                tbProduct.ExportExel("Danh sách sản phẩm");
             }
         });
         cbSearch.addActionListener(new ActionListener() {
@@ -168,10 +196,10 @@ public class pnProduct extends JPanel {
     }
 
     public void textChange(){
-//                tbProduct.dftbModel.setRowCount(0);
-//                int col = cbSearch.getSelectedIndex();
-//                String txt = tfSearch.getText();
-//                for(ProductDTO product: ProductBUS.getInstance().getListBy(col, txt))
-//                    tbProduct.dftbModel.addRow(product.getObjects());
+        tbProduct.dftbModel.setRowCount(0);
+        int col = cbSearch.getSelectedIndex();
+        String txt = tfSearch.getText();
+        for(ProductDTO product: ProductBUS.getInstance().getListSearch(col, txt))
+            tbProduct.dftbModel.addRow(product.getRowObjects());
     }
 }
