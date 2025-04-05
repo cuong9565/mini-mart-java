@@ -55,7 +55,7 @@ public class pnImport extends JPanel {
 
     private void initComponents() {
         setLayout(null);
-        setBackground(Color.decode("#FFFFFF"));
+        setBackground(MyColor.White);
         Border border = BorderFactory.createLineBorder(Color.gray, 1);
         panel1.setBorder(BorderFactory.createTitledBorder(border, "Tìm kiếm"));
         panel1.setBackground(Color.decode("#FFFFFF"));

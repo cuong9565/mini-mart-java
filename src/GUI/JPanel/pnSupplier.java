@@ -37,7 +37,7 @@ public class pnSupplier extends JPanel {
 
     public pnSupplier(fManage frame) {
         setLayout(null);
-        setBackground(MyColor.LightGray);
+        setBackground(MyColor.White);
 
         // region SET BOUNDS
         pnHeader.setBounds(0,0,970, 90);
@@ -52,7 +52,7 @@ public class pnSupplier extends JPanel {
         tfSearch.setBounds(645, 30, 200, 30);
         btnRefresh.setBounds(855,30,100,30);
         pnFooter.setBounds(0,100,970, 650);
-        tbSupplier.scrPn.setBounds(0,100,970,650);
+        tbSupplier.scrPn.setBounds(0,100,960,640);
         // endregion
         // region EVENT CHO PANEL NÀY
         addComponentListener(new ComponentAdapter() {

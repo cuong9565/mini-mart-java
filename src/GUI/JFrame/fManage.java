@@ -10,7 +10,7 @@ import java.awt.event.*;
 
 public class fManage extends JFrame {
     JPanel pnLeft = new MyJPanel(MyColor.White);
-    JPanel pnRight = new MyJPanel(MyColor.LightGray);
+    JPanel pnRight = new MyJPanel(MyColor.White);
     JPanel pnNav = new MyJPanel(MyColor.White);
     JPanel pnMenu = new MyJPanel(MyColor.White);
     JLabel lbWelcome = new MyJLabel(Font.PLAIN, 16, MyColor.Black, "<html>Xin chào<br>USER<br>ROLE<br><hr></html>", SwingConstants.CENTER, SwingConstants.CENTER);
@@ -31,7 +31,7 @@ public class fManage extends JFrame {
     int currCursor = 0;
     fManage currFrame = this;
 
-    JPanel[] lsPn = new JPanel[]{new pnStatistic(), new pnImport(), new pnSell(), new pnProduct(currFrame), new pnTypeProduct(currFrame), new pnCustomer(currFrame), new pnBill(), new pnDiscount(), new pnStaff(), new pnSupplier(currFrame)};
+    JPanel[] lsPn = new JPanel[]{new pnStatistic(), new pnImport(), new pnSell(), new pnProduct(currFrame), new pnTypeProduct(currFrame), new pnCustomer(currFrame), new pnBill(), new pnDiscount(currFrame), new pnStaff(), new pnSupplier(currFrame)};
 
     public fManage(fLogin loginForm) {
         setTitle("Phần mềm quản lý siêu thị mini");

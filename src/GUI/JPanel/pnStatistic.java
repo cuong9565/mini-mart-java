@@ -50,7 +50,7 @@ public class pnStatistic extends JPanel {
 
     public pnStatistic() {
         setLayout(null);
-        setBackground(Color.decode("#FFFFFF"));
+        setBackground(MyColor.White);
 
         // --- 3 khung đầu ---
         jPanel1.setBackground(Color.decode("#45e7f3"));

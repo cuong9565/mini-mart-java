@@ -26,6 +26,9 @@ public class MyJTable extends JTable {
             }
         };
         setModel(dftbModel);
+        setBackground(MyColor.White);
+        setBorder(BorderFactory.createLineBorder(MyColor.Black));
+
 
         // Set cho header
         getTableHeader().setFont(new Font("Roboto", Font.BOLD, 16));

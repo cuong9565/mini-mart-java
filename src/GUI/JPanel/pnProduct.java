@@ -40,7 +40,7 @@ public class pnProduct extends JPanel {
 
     public pnProduct(fManage frame) {
         setLayout(null);
-        setBackground(MyColor.LightGray);
+        setBackground(MyColor.White);
         // region SET BOUNDS
         pnHeader.setBounds(0,0,970, 90);
         pnFunc.setBounds(0,0,440,90);
