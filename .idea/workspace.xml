@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/mysql_connector_j_9_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_j_9_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SQL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/Staff_BUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/Staff_BUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/MyJTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DTO/connect_data.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/connect_data.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddSupplier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnDiscount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnDiscount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStaff.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStaff.java" afterDir="false" />
-    </list>
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="p commit" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -68,7 +58,7 @@
     "ShowUsagesActions.previewPropertyKey": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/tphu/mini-mart-java/lib/poi-bin-5.2.3",
+    "last_opened_file_path": "C:/tphu/backup/mini-mart-java",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -550,7 +540,8 @@
     <MESSAGE value="Cuong update" />
     <MESSAGE value="Cuong insert lib" />
     <MESSAGE value="Cuong" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cuong" />
+    <MESSAGE value="p commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="p commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
