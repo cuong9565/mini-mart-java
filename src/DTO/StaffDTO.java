@@ -1,6 +1,6 @@
 package DTO;
 
-public class Staff_DTO {
+public class StaffDTO {
     private String id;
     private String password ;
     private String lastName;
@@ -12,7 +12,7 @@ public class Staff_DTO {
     private String phone;
     private String status;
 
-    public Staff_DTO(String id,String phone ,String password , String firstName,String lastName,String gender, String address,
+    public StaffDTO(String id,String phone ,String password , String firstName,String lastName,String gender, String address,
                      String role, double salary, String status) {
         this.id = id;
         this.password = password;

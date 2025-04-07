@@ -1,37 +1,37 @@
 package DAO;
 
-import DTO.Staff_DTO;
+import DTO.StaffDTO;
 import DTO.connect_data;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Staff_DAO {
+public class StaffDAO {
     private connect_data db;
 
-    public Staff_DAO() {
+    public StaffDAO() {
         db = new connect_data();
     }
 
     // Thêm nhân viên vào database
-    public boolean addStaff(Staff_DTO staff) {
+    public boolean addStaff(StaffDTO staff) {
         String query = "INSERT INTO staff (phone, password, firstName, lastName, address, salary, type, status, gender) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         int rowsAffected = db.executeUpdate(query, staff.getPhone(),staff.getPassword() ,staff.getFirstName(),staff.getLastName(), staff.getAddress(),
                 staff.getSalary(),  staff.getRole(),
-            staff.getStatus(),staff.getGender());
+                staff.getStatus(),staff.getGender());
         return rowsAffected > 0;
     }
 
     // Lấy tất cả nhân viên từ database
-    public List<Staff_DTO> getAllStaff() {
-        List<Staff_DTO> staffList = new ArrayList<>();
+    public List<StaffDTO> getAllStaff() {
+        List<StaffDTO> staffList = new ArrayList<>();
         String query = "SELECT * FROM staff";
         ResultSet rs = db.executeQuery(query);
         try {
             while (rs.next()) {
-                Staff_DTO staff = new Staff_DTO(
+                StaffDTO staff = new StaffDTO(
                         rs.getString("id"),
                         rs.getString ("phone"),
                         rs.getString("password"),
@@ -53,7 +53,7 @@ public class Staff_DAO {
     }
 
     // Cập nhật thông tin nhân viên
-    public boolean updateStaff(Staff_DTO staff) {
+    public boolean updateStaff(StaffDTO staff) {
         String query = "UPDATE staff SET phone = ?, password = ?, firstName = ?, lastName = ?, gender = ?, " +
                 "address = ?, salary = ?, type = ?, status = ? WHERE id = ?";
         int rowsAffected = db.executeUpdate(query,

@@ -51,6 +51,40 @@ public class MyJTable extends JTable {
         scrPn = new JScrollPane(this);
     }
 
+
+    public MyJTable(String header[], int fontSize) {
+        dftbModel = new DefaultTableModel(header, 0){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        setModel(dftbModel);
+        setBackground(MyColor.White);
+        setBorder(BorderFactory.createLineBorder(MyColor.Black));
+
+
+        // Set cho header
+        getTableHeader().setFont(new Font("Roboto", Font.PLAIN, fontSize));
+        getTableHeader().setBackground(MyColor.White);
+        getTableHeader().setForeground(MyColor.Black);
+        getTableHeader().setReorderingAllowed(false);
+        getTableHeader().setBorder(null);
+        getTableHeader().setPreferredSize(new Dimension(this.getTableHeader().getWidth(), 33));
+
+        // Set cho content
+        setFont(new Font("Roboto", Font.PLAIN, 14));
+        setBackground(MyColor.White);
+        setForeground(MyColor.Black);
+        setRowHeight(23);
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        setAutoCreateRowSorter(false);
+
+
+        scrPn = new JScrollPane(this);
+    }
+
     public List<Object[]> ImportExel(int col){
         List<Object[]> list = new ArrayList<Object[]>();
         JFileChooser chooser = new JFileChooser();

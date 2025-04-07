@@ -47,10 +47,10 @@ public class pnSupplier extends JPanel {
         btnDelete.setBounds(155,20,60,60);
         btnIn.setBounds(225,20,60,60);
         btnOut.setBounds(295,20,60,60);
-        pnSearch.setBounds(470,0,500,90);
-        cbSearch.setBounds(485, 30, 150, 30);
-        tfSearch.setBounds(645, 30, 200, 30);
-        btnRefresh.setBounds(855,30,100,30);
+        pnSearch.setBounds(460,0,500,90);
+        cbSearch.setBounds(475, 30, 150, 30);
+        tfSearch.setBounds(635, 30, 200, 30);
+        btnRefresh.setBounds(845,30,100,30);
         pnFooter.setBounds(0,100,970, 650);
         tbSupplier.scrPn.setBounds(0,100,960,640);
         // endregion

@@ -1,7 +1,7 @@
 package BUS;
 import javax.swing.table.TableRowSorter;
-import DAO.Staff_DAO;
-import DTO.Staff_DTO;
+import DAO.StaffDAO;
+import DTO.StaffDTO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -11,19 +11,19 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 
-public class Staff_BUS {
-    private Staff_DAO staffDAO;
+public class StaffBUS {
+    private StaffDAO staffDAO;
     private DefaultTableModel model;
-    public static List<Staff_DTO> staffList;
+    public static List<StaffDTO> staffList;
 
-    public Staff_BUS(DefaultTableModel model) {
-        this.staffDAO = new Staff_DAO();
+    public StaffBUS(DefaultTableModel model) {
+        this.staffDAO = new StaffDAO();
         this.model = model;
         staffList = staffDAO.getAllStaff();
     }
 
     // Thêm nhân viên
-    public boolean addStaff(Staff_DTO staff) {
+    public boolean addStaff(StaffDTO staff) {
 
         if (staff.getLastName().isEmpty() || staff.getFirstName().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Họ và tên không được để trống!");
@@ -41,7 +41,7 @@ public class Staff_BUS {
     }
 
     // Cập nhật nhân viên
-    public boolean updateStaff(Staff_DTO staff) {
+    public boolean updateStaff(StaffDTO staff) {
         if (staff.getLastName().isEmpty() || staff.getFirstName().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Họ và tên không được để trống!");
             return false;
@@ -65,17 +65,17 @@ public class Staff_BUS {
         }
         if(status.equals("Inactive")){
             return  staffDAO.lockStaff(id, "Active");
-             }
-       else {
-           return staffDAO.lockStaff(id,"Inactive");
+        }
+        else {
+            return staffDAO.lockStaff(id,"Inactive");
         }
     }
 
     // Load dữ liệu từ database vào bảng
     public void loadStaffData() {
         model.setRowCount(0); // Xóa dữ liệu cũ
-      List<Staff_DTO> staffList = staffDAO.getAllStaff();
-        for (Staff_DTO staff : staffList) {
+        List<StaffDTO> staffList = staffDAO.getAllStaff();
+        for (StaffDTO staff : staffList) {
             model.addRow(new Object[]{
                     staff.getId(),staff.getPhone(),staff.getPassword() ,staff.getFirstName(),staff.getLastName(), staff.getAddress(),
                     staff.getSalary(),  staff.getRole(),
@@ -131,7 +131,7 @@ public class Staff_BUS {
 
         btnSave.addActionListener(e -> {
             try {
-                Staff_DTO staff = new Staff_DTO(
+                StaffDTO staff = new StaffDTO(
                         "",
                         txtPhone.getText(),
                         new String(txtPass.getPassword()),
@@ -211,7 +211,7 @@ public class Staff_BUS {
 
         btnSave.addActionListener(e -> {
             try {
-                Staff_DTO staff = new Staff_DTO(
+                StaffDTO staff = new StaffDTO(
                         txtId.getText(),
                         txtPhone.getText(),
                         (String) model.getValueAt(selectedRow,2),

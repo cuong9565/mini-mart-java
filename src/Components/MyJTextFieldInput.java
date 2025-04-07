@@ -12,6 +12,7 @@ public class MyJTextFieldInput extends JTextField {
         setFont(new Font("Roboto", style, size));
         setForeground(Color.decode("#000000"));
         setEditable(editable);
+        setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 
         setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.decode("#000000")),

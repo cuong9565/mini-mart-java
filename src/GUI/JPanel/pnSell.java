@@ -1,152 +1,130 @@
 package GUI.JPanel;
 
-import Components.MyColor;
-import Components.MyJButton;
-import Components.MyJLabel;
+import Components.*;
+import GUI.JFrame.fManage;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class pnSell extends JPanel {
-    DefaultTableModel model = new DefaultTableModel();
-    DefaultTableModel model1 = new DefaultTableModel();
-    JButton btnRefresh = new MyJButton(Font.PLAIN, 16, MyColor.Black, MyColor.White, MyColor.White, "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnExportExcel = new MyJButton(Font.PLAIN, 16, MyColor.Black, MyColor.White, MyColor.LightGray, "Nhập Excel", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnDelete = new MyJButton(Font.PLAIN, 16, MyColor.Black, MyColor.White, MyColor.LightGray, "Xóa", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnEdit = new MyJButton(Font.PLAIN, 16, MyColor.Black, MyColor.White, MyColor.LightGray, "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
-    JLabel lbID = new MyJLabel(Font.PLAIN,12,MyColor.Black,"Mã phiếu nhập",SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbCreate = new MyJLabel(Font.PLAIN,12,MyColor.Black,"Người tạo phiếu",SwingConstants.LEFT, SwingConstants.CENTER);
-    JPanel panel1 = new JPanel();
-    JPanel panel2 = new JPanel();
-    JPanel tablePanel = new JPanel();
-    JPanel tablePanel1 = new JPanel();
-    JPanel buttonPanel = new JPanel();
-    JPanel quantityPanel = new JPanel();
-    JTextField txtSearch = new JTextField();
-    JTextField txtID = new JTextField();
-    JTextField txtCreate = new JTextField();
-    JTextField txtQuantity = new JTextField();
+//    JPanel pnHeader = new MyJPanel(MyColor.White);
+//    JPanel pnFooter = new MyJPanel(MyColor.White);
+//    JPanel pnFunc = new MyJPanel(MyColor.White, "Chức năng");
+//    JPanel pnSearch = new MyJPanel(MyColor.White, "Tìm kiếm");
+//    JButton btnAdd = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Thêm", SwingConstants.CENTER, SwingConstants.CENTER);
+//    JButton btnEdit = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#FF9800"), Color.decode("#FFD966"), "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
+//    JButton btnDelete = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#F44336"), Color.decode("#FF7568"), "Xóa", SwingConstants.CENTER, SwingConstants.CENTER);
+//    JButton btnIn = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Nhập<br>Exel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
+//    JButton btnOut = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Xuất<br>Exel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
+//    JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
+//    JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
+//    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Tên", "Mã số", "Số điện thoại", "Địa chỉ", "Email"}, 12);
+//
+//    MyJTable tbSupplier = new MyJTable(new String[]{"Mã số", "Tên", "Số điện thoại", "Địa chỉ", "Email"});
+//
+//    pnSell thisPanel = this;
+//    int posSelectedCB = 0;
 
-    JTable tbProduct;
-    JTable tbImport;
-    JPanel totalPanel = new JPanel();
-    JLabel lbTotal = new MyJLabel(Font.BOLD, 16, Color.decode("#000000"), "Tổng tiền", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbAmount = new MyJLabel(Font.PLAIN, 16, Color.decode("#000000"), "1.000.000đ", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbQuantity = new MyJLabel(Font.PLAIN, 16, Color.decode("#000000"), "Số lượng", SwingConstants.LEFT, SwingConstants.CENTER);
-    JButton btnExport = new MyJButton(Font.PLAIN, 16, Color.decode("#FFFFFF"), Color.decode("#64a15c"), Color.decode("#00CC00"), "Xuất hàng", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnAdd = new MyJButton(Font.PLAIN, 16, Color.decode("#FFFFFF"), Color.decode("#64a15c"), Color.decode("#00CC00"), "Thêm", SwingConstants.CENTER, SwingConstants.CENTER);
+    JPanel pnMain = new MyJPanel(MyColor.White);
+    JPanel pnInfoCustomer = new MyJPanel(MyColor.White, "Thông tin khách hàng");
+    JPanel pnInfoBill = new MyJPanel(MyColor.White, "Thông tin hóa đơn");
+    JLabel lbIdBill = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Mã hóa đơn", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbOfferBill = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Giảm giá hóa đơn", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbNameStaff = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Tên nhân viên", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbPhoneCustomer = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Số điện thoại khách hàng", SwingConstants.LEFT, SwingConstants.CENTER);
+    JTextField tfIdBill = new MyJTextFieldInput(Font.PLAIN, 14, false);
+    JTextField tfOfferBill = new MyJTextFieldInput(Font.PLAIN, 14, true);
+    JTextField tfNameStaff = new MyJTextFieldInput(Font.PLAIN, 14, false);
+    JTextField tfPhoneCustomer = new MyJTextFieldInput(Font.PLAIN, 14, true);
+
+    JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
+    JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
+    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Mã", "Loại", "Giảm giá", "Tên", "Đơn giá", "Đơn vị", "Số lượng"}, 12);
+    JPanel pnSearch = new MyJPanel(MyColor.White, "Tìm kiếm sản phẩm");
+
+    MyJTable tbProduct = new MyJTable(new String[]{"Mã", "Loại", "Giảm giá", "Tên", "Đơn giá", "Đơn vị", "Số lượng"}, 12);
+    MyJTable tbBillInfo = new MyJTable(new String[]{"Mã", "Mã sản phẩm", "Giá bán", "Số lượng", "Đơn vị"}, 12);
+
+    JLabel lbQuantity = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Số lượng: ", SwingConstants.LEFT, SwingConstants.CENTER);
+    JSpinner snPrice = new MyJSpinner(1, 1, 1000000000, 1);
+    JButton btnAddQuantity = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Thêm", SwingConstants.CENTER, SwingConstants.CENTER);
+
+    JButton btnImportExel = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Nhập Exel", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnDelete = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Xóa", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnEdit = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnCancel = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Hủy đơn", SwingConstants.CENTER, SwingConstants.CENTER);
 
 
-    public pnSell() {
+    JLabel lbTotal = new MyJLabel(Font.BOLD, 14, MyColor.Black, "Tổng tiền: ", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbSum = new MyJLabel(Font.BOLD, 14, MyColor.Black, "0đ", SwingConstants.LEFT, SwingConstants.CENTER);
+    JButton btnCal = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Thanh toán", SwingConstants.CENTER, SwingConstants.CENTER);
+
+    public pnSell(fManage frame) {
         setLayout(null);
         setBackground(MyColor.White);
-        Border border = BorderFactory.createLineBorder(Color.gray,1);
-        panel1.setBorder(BorderFactory.createTitledBorder(border,"Tìm kiếm"));
-        panel1.setBackground(Color.decode("#FFFFFF"));
-        panel1.setBounds(10,10,450,80);
 
-        txtSearch.setFont(new Font("Arial",Font.PLAIN,20));
-        txtSearch.setHorizontalAlignment(JTextField.CENTER);
-        txtSearch.setBounds(30,35,302,36);
-        txtSearch.setBorder(border);
+        pnMain.setBounds(0,0,970, 750);
+        pnInfoCustomer.setBounds(0,0,960, 70);
+        pnInfoBill.setBounds(480,70,480, 135);
 
-        btnRefresh.setBorder(border);
-        btnRefresh.setBounds(342,35,100,36);
+        lbIdBill.setBounds(490,85,200,20);
+        tfIdBill.setBounds(490,105,200,30);
+        lbNameStaff.setBounds(730,85,200,20);
+        tfNameStaff.setBounds(730,105,200,30);
 
-        panel2.setBackground(Color.decode("#FFFFFF"));
-        panel2.setLayout(new GridLayout(3,2,10,10));
-        panel2.add(lbID); panel2.add(txtID);
-        panel2.add(lbCreate); panel2.add(txtCreate);
-        panel2.setBounds(490,10,430,100);
+        lbOfferBill.setBounds(490, 145, 200,20);
+        tfOfferBill.setBounds(490, 165, 200,30);
+        lbPhoneCustomer.setBounds(730,145,200,20);
+        tfPhoneCustomer.setBounds(730,165,200,30);
 
-        String[] columns = {"Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn giá"};
-        model.setColumnIdentifiers(columns);
-        tbProduct = new JTable(model);
-        JScrollPane scrollPane = new JScrollPane(tbProduct);
-        //tbProduct.setBackground(Color.decode("#FFFFFF"));
-        scrollPane.getViewport().setBackground(Color.decode("#FFFFFF"));
-        tbProduct.setRowHeight(30);
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER); // Căn giữa
-        tbProduct.setDefaultRenderer(Object.class, centerRenderer);
-        tablePanel.setLayout(new GridLayout(1,1));
-        tablePanel.add(scrollPane);
-        tablePanel.setBounds(10,110,450,550);
+        pnSearch.setBounds(0,70,460,60);
+        cbSearch.setBounds(10, 90, 140, 30);
+        tfSearch.setBounds(160, 90, 190, 30);
+        btnRefresh.setBounds(360,90,90,30);
 
-        String[] columns1 = {"STT", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn giá"};
-        model1.setColumnIdentifiers(columns1);
-        tbImport = new JTable(model1);
-        JScrollPane scrollPane1 = new JScrollPane(tbImport);
-        //tbProduct.setBackground(Color.decode("#FFFFFF"));
-        scrollPane1.getViewport().setBackground(Color.decode("#FFFFFF"));
-        tbImport.setRowHeight(30);
-        DefaultTableCellRenderer centerRenderer1 = new DefaultTableCellRenderer();
-        centerRenderer1.setHorizontalAlignment(SwingConstants.CENTER); // Căn giữa
-        tbImport.setDefaultRenderer(Object.class, centerRenderer);
-        tablePanel1.setLayout(new GridLayout(1,1));
-        tablePanel1.add(scrollPane1);
-        tablePanel1.setBounds(480,110,480,470);
-        //-----------Button chức năng-----------------
-        buttonPanel.setBackground(Color.decode("#FFFFFF"));
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        buttonPanel.setBounds(480, 590, 480, 50);
+        tbProduct.scrPn.setBounds(0,140,460,550);
+        tbBillInfo.scrPn.setBounds(480, 215, 480, 420);
 
-        btnExportExcel.setBorder(border);
-        btnExportExcel.setPreferredSize(new Dimension(120, 36));
-        btnDelete.setBorder(border);
-        btnDelete.setPreferredSize(new Dimension(120, 36));
-        btnEdit.setBorder(border);
-        btnEdit.setPreferredSize(new Dimension(120, 36));
+        lbQuantity.setBounds(0, 700, 70, 30);
+        snPrice.setBounds(70, 700, 100, 30);
+        btnAddQuantity.setBounds(180, 700, 100, 30);
 
-        buttonPanel.add(btnExportExcel);
-        buttonPanel.add(btnDelete);
-        buttonPanel.add(btnEdit);
+        btnImportExel.setBounds(480, 650, 100, 30);
+        btnDelete.setBounds(590, 650, 100, 30);
+        btnEdit.setBounds(700, 650, 100, 30);
 
-        //----Xuất hàng---------
-        totalPanel.setLayout(null);
-        totalPanel.setBackground(Color.decode("#FFFFFF"));
-        totalPanel.setBounds(480, 660, 480, 60);
+        lbTotal.setBounds(480, 700, 80, 30);
+        lbSum.setBounds(560, 700, 190, 30);
+        btnCal.setBounds(750, 700, 100, 30);
+        btnCancel.setBounds(860, 700, 100, 30);
 
-        lbTotal.setBounds(60, 15, 100, 30);
-        totalPanel.add(lbTotal);
-
-        lbAmount.setBounds(180, 15, 100, 30);
-        totalPanel.add(lbAmount);
-
-        // btnExport.setBorder(BorderFactory.createLineBorder(Color.decode("#00CC00"), 1));
-        btnExport.setBounds(310, 15, 120, 30);
-        totalPanel.add(btnExport);
-
-        //----Số lượng---------
-        quantityPanel.setLayout(null);
-        quantityPanel.setBackground(Color.decode("#FFFFFF"));
-        quantityPanel.setBounds(50, 660, 450, 60);
-
-        lbQuantity.setBounds(10, 15, 80, 30);
-        quantityPanel.add(lbQuantity);
-
-        txtQuantity.setFont(new Font("Arial", Font.PLAIN, 16));
-        txtQuantity.setHorizontalAlignment(JTextField.CENTER);
-        txtQuantity.setBounds(100, 15, 100, 30);
-        txtQuantity.setBorder(border);
-        quantityPanel.add(txtQuantity);
-
-        btnAdd.setBorder(border);
-        btnAdd.setBounds(250, 15, 120, 30);
-        btnAdd.setPreferredSize(new Dimension(120, 36));
-        quantityPanel.add(btnAdd);
-
-        add(quantityPanel);
-        add(totalPanel);
-        add(buttonPanel);
-        add(tablePanel1);
-        add(tablePanel);
+        add(lbIdBill);
+        add(tfIdBill);
+        add(lbNameStaff);
+        add(tfNameStaff);
+        add(lbOfferBill);
+        add(tfOfferBill);
+        add(lbPhoneCustomer);
+        add(tfPhoneCustomer);
         add(btnRefresh);
-        add(txtSearch);
-        add(panel1);
-        add(panel2);
+        add(cbSearch);
+        add(tfSearch);
+        add(tbProduct.scrPn);
+        add(tbBillInfo.scrPn);
+        add(lbQuantity);
+        add(snPrice);
+        add(btnAddQuantity);
+        add(btnImportExel);
+        add(btnDelete);
+        add(btnEdit);
+        add(btnCancel);
+        add(lbTotal);
+        add(lbSum);
+        add(btnCal);
+        add(pnSearch);
+        add(pnInfoBill);
+        add(pnInfoCustomer);
+        add(pnMain);
     }
+
 }

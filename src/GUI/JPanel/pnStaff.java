@@ -1,6 +1,6 @@
 package GUI.JPanel;
 
-import BUS.Staff_BUS;
+import BUS.StaffBUS;
 import Components.MyJTable;
 
 import javax.swing.*;
@@ -25,7 +25,7 @@ public class pnStaff extends JPanel {
             new Color(255, 0, 239)
     );
     private  TableRowSorter<DefaultTableModel> sorter;
-    private  Staff_BUS staffBUS;
+    private  StaffBUS staffBUS;
     // Các thành phần giao diện
     private final JButton btnAdd = new JButton("Thêm");
     private final JButton btnEdit = new JButton("Sửa");
@@ -42,7 +42,7 @@ public class pnStaff extends JPanel {
     private final JPanel panelDisplay = new JPanel();
 
     public pnStaff() {
-        staffBUS = new Staff_BUS((DefaultTableModel) tbStaff.getModel()); // Truyền model vào BUs
+        staffBUS = new StaffBUS((DefaultTableModel) tbStaff.getModel()); // Truyền model vào BUs
         setLayout(new BorderLayout());
         setBackground(Color.decode("#F5F5F5"));
         Border border = BorderFactory.createLineBorder(Color.GRAY, 1);

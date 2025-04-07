@@ -114,8 +114,10 @@ CREATE TABLE Bill (
     idStaff INT,
     idOfferBill INT,
     idCustomer INT,
-    dateCreate DATETIME,
+    dateCreate DATE,
     price DOUBLE,
+    state NVARCHAR(100), 
+    
     FOREIGN KEY (idStaff) REFERENCES Staff(id),
     FOREIGN KEY (idCustomer) REFERENCES Customer(id),
     FOREIGN KEY (idOfferBill) REFERENCES OfferBill(id)
@@ -317,10 +319,10 @@ INSERT INTO Product (idProductType, idProductDetail, idOfferProduct, name, price
  -- ---------------- SELECT -----------
 select * from provider;
 select * from customer;
+select * from staff;
 select * from product;
 select * from productdetail;
 select * from producttype;
-select * from staff;
 select * from offer;
 select * from productdetail;
  -- ------------------------------------

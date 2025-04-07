@@ -1,133 +1,178 @@
 package GUI.JPanel;
 
-import Components.MyColor;
-import Components.MyJButton;
-import Components.MyJTable;
+//import BUS.BillBUS;
+import Components.*;
+import DTO.*;
+//import GUI.JDialog.dlAddBill;
+//import GUI.JDialog.dlEditBill;
+import GUI.JFrame.fManage;
+import com.mysql.cj.protocol.Message;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.table.TableCellRenderer;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.Component;
+import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class pnBill extends JPanel {
-    private JTable tbInvoice = new  MyJTable(new String[]{"STT", "Mã HĐ", "ID Khách", "Khách hàng", "Ngày lập", "Tổng tiền", "Trạng thái", "Chi tiết"},
-            new Font("Roboto", Font.BOLD, 14),
-            new Color(159, 32, 243), // Màu chữ
-            new Color(159, 242, 115), // Màu nền header
-            new Color(255, 0, 239));
-    private JButton btnCancel = new MyJButton(Font.BOLD, 16, MyColor.White, new Color(220, 53, 69), new Color(255, 99, 132), "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
-    private JButton btnFind = new MyJButton(Font.BOLD, 16, MyColor.White, new Color(0, 123, 255), new Color(51, 153, 255), "Tìm", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnAdd = new MyJButton(Font.BOLD, 16, MyColor.White, new Color(40, 167, 69), new Color(72, 201, 95), "Thêm", SwingConstants.CENTER, SwingConstants.CENTER);
-    private JButton btnEdit = new MyJButton(Font.BOLD, 14, MyColor.White, new Color(108, 117, 125), new Color(150, 150, 150), "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
-    private JButton btnReload = new MyJButton(Font.BOLD, 14, MyColor.White, new Color(23, 162, 184), new Color(60, 179, 211), "Tải lại", SwingConstants.CENTER, SwingConstants.CENTER);
-    private JButton btnLoad = new MyJButton(Font.BOLD, 14, MyColor.White, new Color(23, 162, 184), new Color(60, 179, 211), "Load", SwingConstants.CENTER, SwingConstants.CENTER);
+    JPanel pnHeader = new MyJPanel(MyColor.White);
+    JPanel pnFooter = new MyJPanel(MyColor.White);
+    JPanel pnFunc = new MyJPanel(MyColor.White, "Chức năng");
+    JPanel pnSearch = new MyJPanel(MyColor.White, "Tìm kiếm");
+    JButton btnAdd = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Thêm", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnEdit = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#FF9800"), Color.decode("#FFD966"), "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnDelete = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#F44336"), Color.decode("#FF7568"), "Xóa", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnIn = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Nhập<br>Exel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnOut = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Xuất<br>Exel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
+    JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
+    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Tên", "Mã số", "Số điện thoại", "Địa chỉ", "Email"}, 12);
 
-    JTextField txtFilter = new JTextField("Nhập nội dung");
-    // panel
-    JPanel panelFunction = new JPanel();
-    JPanel panelFind = new JPanel();
-    JPanel panelHeader = new JPanel();
-    JPanel panelDisplay = new JPanel();  // hien danh sach hoa don
+    MyJTable tbBill = new MyJTable(new String[]{"Mã số", "Tên", "Số điện thoại", "Địa chỉ", "Email"});
 
-    public pnBill() {
+    pnBill thisPanel = this;
+    int posSelectedCB = 0;
+
+    public pnBill(fManage frame) {
         setLayout(null);
-        setBackground(Color.decode("#FFFFFF"));
+        setBackground(MyColor.White);
 
-        // panel function
-        panelFunction.add(btnAdd);
-        panelFunction.add(btnEdit);
-        panelFunction.add(btnCancel);
-        panelFunction.setLayout(new GridLayout(1, 3, 10, 20));
-        panelFunction.setBorder(BorderFactory.createTitledBorder("Chức năng"));
-        btnAdd.setPreferredSize(new Dimension(100, 35));
-        btnEdit.setPreferredSize(new Dimension(100, 35));
-        btnCancel.setPreferredSize(new Dimension(100, 35));
-
-        // panel find
-        panelFind.add(txtFilter);
-        panelFind.add(btnFind);
-        panelFind.add(btnLoad);
-        Border border = BorderFactory.createLineBorder(Color.gray, 1);
-        panelFind.setBorder(BorderFactory.createTitledBorder("Tìm kiếm"));
-        txtFilter.setPreferredSize(new Dimension(200, 30));
-        btnFind.setPreferredSize(new Dimension(80, 30));
-        btnLoad.setPreferredSize(new Dimension(80, 30));
-
-        // panel header
-        panelHeader.add(panelFunction);
-        panelHeader.add(panelFind);
-        panelHeader.setLayout(new GridLayout(1, 2, 15, 25));
-        panelHeader.setBounds(10, 54, 950, 80);
-
-        tbInvoice.getTableHeader().setReorderingAllowed(false);
-        tbInvoice.setRowHeight(30);
-        tbInvoice.getTableHeader().setBackground(Color.cyan);
-        tbInvoice.getTableHeader().setFont(new Font("Arial",1,16));
-        tbInvoice.getColumnModel().getColumn(7).setCellRenderer(new ButtonRenderer());
-        tbInvoice.getColumnModel().getColumn(7).setCellEditor(new ButtonEditor(new JCheckBox()));
-        JScrollPane scrollPane = new JScrollPane(tbInvoice);
-        panelDisplay.setBackground(Color.decode("#FFFFFF"));
-        panelDisplay.setLayout(new GridLayout(1, 1));
-        panelDisplay.add(scrollPane);
-        panelDisplay.setBounds(10, 170, 950, 550);
-
-        add(panelHeader);
-       add(panelDisplay);
-
-        // Sự kiện nhấp chuột cho txtFilter
-        txtFilter.addMouseListener(new MouseAdapter() {
+        // region SET BOUNDS
+        pnHeader.setBounds(0,0,970, 90);
+        pnFunc.setBounds(0,0,370,90);
+        btnAdd.setBounds(15,20,60,60);
+        btnEdit.setBounds(85,20,60,60);
+        btnDelete.setBounds(155,20,60,60);
+        btnIn.setBounds(225,20,60,60);
+        btnOut.setBounds(295,20,60,60);
+        pnSearch.setBounds(460,0,500,90);
+        cbSearch.setBounds(475, 30, 150, 30);
+        tfSearch.setBounds(635, 30, 200, 30);
+        btnRefresh.setBounds(845,30,100,30);
+        pnFooter.setBounds(0,100,970, 650);
+        tbBill.scrPn.setBounds(0,100,960,640);
+        // endregion
+        // region EVENT CHO PANEL NÀY
+        addComponentListener(new ComponentAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1) { // chuột trái
-                    txtFilter.setText("");
+            public void componentShown(ComponentEvent e) {
+                btnRefresh.doClick();
+            }
+        });
+        // endregion
+        // region EVEN
+        btnAdd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+//                new dlAddBill(frame, thisPanel);
+            }
+        });
+        btnEdit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int i = tbBill.getSelectedRow();
+                if (i >=0){
+                    int id = Integer.parseInt(tbBill.getFirstColumn(i));
+//                    BillDTO supplier = BillBUS.getInstance().getBillById(id);
+//                    new dlEditBill(frame, thisPanel, supplier);
+                }
+                else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần sửa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        btnDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int i = tbBill.getSelectedRow();
+                if (i >=0){
+                    int id = Integer.parseInt(tbBill.getFirstColumn(i));
+//                    BillDTO supplierNew = BillBUS.getInstance().getBillById(id);
+//                    if(BillBUS.getInstance().deleteBill(supplierNew)){
+//                        JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+//                        loadBill();
+//                        textChange();
+//                    }
+//                    else JOptionPane.showMessageDialog(thisPanel, BillBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
+                }
+                else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xóa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        btnRefresh.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tfSearch.setText("");
+                cbSearch.setSelectedIndex(0);
+                loadBill();
+            }
+        });
+        btnIn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<Object[]> list = tbBill.ImportExel(4);
+                if(list==null) return;
+//                List<BillDTO> suppliers = new ArrayList<>();
+//                for (Object[] ob : list)
+//                    suppliers.add(new BillDTO(-1, ob[0].toString(), ob[1].toString(), ob[2].toString(), ob[3].toString()));
+//                if(BillBUS.getInstance().addBills(suppliers)){
+//                    JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + BillBUS.getInstance().getNumLine() + " nhà cung cấp");
+//                    loadBill();
+//                }
+//                else {
+//                    JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + BillBUS.getInstance().getError());
+//                }
+            }
+        });
+        btnOut.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tbBill.ExportExel("Danh sách nhà cung cấp");
+            }
+        });
+        cbSearch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int i = cbSearch.getSelectedIndex();
+                if(posSelectedCB !=i){
+                    tfSearch.setText("");
                 }
             }
         });
+        tfSearch.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) {textChange();}
+            public void removeUpdate(DocumentEvent e) {textChange();}
+            public void changedUpdate(DocumentEvent e) {textChange();}
+        });
+        // endregion
+        // region ADD
+        add(btnAdd);
+        add(btnEdit);
+        add(btnDelete);
+        add(btnIn);
+        add(btnOut);
+        add(pnFunc);
+        add(btnRefresh);
+        add(cbSearch);
+        add(tfSearch);
+        add(pnSearch);
+        add(pnHeader);
+        add(tbBill.scrPn);
+        add(pnFooter);
+        // endregion
 
     }
 
-    // Renderer cho nút "Xem chi tiết"
-    class ButtonRenderer extends JButton implements TableCellRenderer {
-        public ButtonRenderer() {
-            setOpaque(true);
-        }
-
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                                                       boolean hasFocus, int row, int column) {
-            setText((value == null) ? "Xem" : value.toString());
-            return this;
-        }
+    public void loadBill()  {
+        tbBill.dftbModel.setRowCount(0);
+//        for(BillDTO supplier: BillBUS.getInstance().getListBill())
+//            tbBill.dftbModel.addRow(supplier.getObjects());
     }
 
-    // Editor cho nút "Xem chi tiết"
-    class ButtonEditor extends DefaultCellEditor {
-        private JButton button;
-        private String label;
-
-        public ButtonEditor(JCheckBox checkBox) {
-            super(checkBox);
-            button = new JButton();
-            button.setOpaque(true);
-            button.addActionListener(e -> {
-                JOptionPane.showMessageDialog(null, "Chức năng xem chi tiết chưa được triển khai!");
-            });
-        }
-
-        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row) {
-            label = (value == null) ? "Xem chi tiết" : value.toString();
-            button.setText(label);
-            return button;
-        }
-
-        @Override
-        public Object getCellEditorValue() {
-            return label;
-        }
+    public void textChange(){
+        tbBill.dftbModel.setRowCount(0);
+        int col = cbSearch.getSelectedIndex();
+        String txt = tfSearch.getText();
+//        for(BillDTO supplier: BillBUS.getInstance().getBillListBy(col, txt))
+//            tbBill.dftbModel.addRow(supplier.getObjects());
     }
-
-
 }
