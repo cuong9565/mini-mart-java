@@ -6,13 +6,13 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyJTable extends JTable {
     public DefaultTableModel dftbModel;
@@ -26,6 +26,9 @@ public class MyJTable extends JTable {
             }
         };
         setModel(dftbModel);
+        setBackground(MyColor.White);
+        setBorder(BorderFactory.createLineBorder(MyColor.Black));
+
 
         // Set cho header
         getTableHeader().setFont(new Font("Roboto", Font.BOLD, 16));
@@ -42,25 +45,60 @@ public class MyJTable extends JTable {
         setRowHeight(23);
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
+        setAutoCreateRowSorter(false);
+
+
         scrPn = new JScrollPane(this);
     }
 
+    public List<Object[]> ImportExel(int col){
+        List<Object[]> list = new ArrayList<Object[]>();
+        JFileChooser chooser = new JFileChooser();
+        chooser.setDialogTitle("Chọn tệp để mở");
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        chooser.setFileFilter(new FileNameExtensionFilter("Excel Files (*.xlsx, *.xls)", "xlsx", "xls"));
+
+        int result = chooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();
+            try(
+                FileInputStream fileInput = new FileInputStream(file.getAbsoluteFile());
+                Workbook wb = new XSSFWorkbook(fileInput);
+            ){
+                Sheet sheet = wb.getSheetAt(0);
+                int n = sheet.getLastRowNum();
+
+                for(int i=2; i<=n; i++){
+                    Row row = sheet.getRow(i);
+                    Object[] data = new Object[row.getLastCellNum()];
+                    for(int j=0; j<col; j++)
+                        data[j] = row.getCell(j).getStringCellValue();
+                    list.add(data);
+                }
+            }catch (Exception e){
+                JOptionPane.showMessageDialog(null, "Lỗi: " + e.getMessage());
+            }
+        }
+        else list = null;
+
+        return list;
+    }
+
     public void ExportExel(String name){
+        int m = dftbModel.getRowCount();
+        int n = dftbModel.getColumnCount();
         Workbook wb = new XSSFWorkbook();
         Sheet sheet = wb.createSheet("Danh sách");
         Row rowTitle = sheet.createRow(0);
-         rowTitle.createCell(0).setCellValue(name);
+        rowTitle.createCell(0).setCellValue(name);
 
         Row rowHeader = sheet.createRow(1);
-        for(int i = 0; i < dftbModel.getColumnCount(); i++)
-            rowHeader.createCell(i).setCellValue(dftbModel.getColumnName(i));
+        for(int i = 0; i < n; i++) rowHeader.createCell(i).setCellValue(dftbModel.getColumnName(i));
 
-        for(int i = 0; i < dftbModel.getRowCount(); i++){
+        for(int i = 0; i < m; i++){
             Row row = sheet.createRow(i+2);
-
-            Object[] objects = getRowObject(i);
-            for(int j = 0; j < objects.length; j++)
-                row.createCell(j).setCellValue(objects[j].toString());
+            for(int j = 0; j < n; j++)
+                row.createCell(j).setCellValue(dftbModel.getValueAt(i,j).toString());
         }
 
         JFileChooser chooser = new JFileChooser();
@@ -84,24 +122,9 @@ public class MyJTable extends JTable {
         }
     }
 
-    public Object[] getRowObject(int row) {
-        Object[] rowObjects = new Object[dftbModel.getColumnCount()];
-        for(int i = 0; i < dftbModel.getColumnCount(); i++) {
-            rowObjects[i] = dftbModel.getValueAt(row, i);
-        }
-        return rowObjects;
+    public String getFirstColumn(int row){
+        return dftbModel.getValueAt(row,0).toString();
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
     public MyJTable(String header[], Font style, Color colorFont, Color brheader, Color select) {

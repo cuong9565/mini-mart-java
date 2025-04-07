@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SupplierDAO {
-    private static SupplierDAO instance;
+    private static SupplierDAO instance = null;
 
     public SupplierDAO() {}
     public static SupplierDAO getInstance() {
@@ -47,6 +47,27 @@ public class SupplierDAO {
         }
         DataProvider.getInstance().CloseConnection(con);
         return list;
+    }
+
+    public int addSuppliers(List<SupplierDTO> listSuppliers) {
+        int res = 0, pos = 1;
+        String sql = "insert into provider(name, phone, address, email) values(?,?,?,?)";
+        for(int i=1; i<listSuppliers.size(); i++) sql += ",(?,?,?,?)";
+        Connection con = DataProvider.getInstance().getConnection();
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            for(SupplierDTO supplier: listSuppliers) {
+                ps.setString(pos++, supplier.getName());
+                ps.setString(pos++, supplier.getPhone());
+                ps.setString(pos++, supplier.getAddress());
+                ps.setString(pos++, supplier.getEmail());
+            }
+            res = ps.executeUpdate();
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return res;
     }
 
     public boolean addSupplier(SupplierDTO supplier) throws Exception {

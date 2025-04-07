@@ -6,12 +6,15 @@ import DTO.*;
 import GUI.JDialog.dlAddSupplier;
 import GUI.JDialog.dlEditSupplier;
 import GUI.JFrame.fManage;
+import com.mysql.cj.protocol.Message;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class pnSupplier extends JPanel {
     JPanel pnHeader = new MyJPanel(MyColor.White);
@@ -32,11 +35,9 @@ public class pnSupplier extends JPanel {
     pnSupplier thisPanel = this;
     int posSelectedCB = 0;
 
-    String[] lsCombobox = {"name", "id", "phone", "address", "email"};
-
     public pnSupplier(fManage frame) {
         setLayout(null);
-        setBackground(MyColor.LightGray);
+        setBackground(MyColor.White);
 
         // region SET BOUNDS
         pnHeader.setBounds(0,0,970, 90);
@@ -51,13 +52,13 @@ public class pnSupplier extends JPanel {
         tfSearch.setBounds(645, 30, 200, 30);
         btnRefresh.setBounds(855,30,100,30);
         pnFooter.setBounds(0,100,970, 650);
-        tbSupplier.scrPn.setBounds(0,100,970,650);
+        tbSupplier.scrPn.setBounds(0,100,960,640);
         // endregion
         // region EVENT CHO PANEL NÀY
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentShown(ComponentEvent e) {
-                loadSupplier();
+                btnRefresh.doClick();
             }
         });
         // endregion
@@ -73,7 +74,8 @@ public class pnSupplier extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int i = tbSupplier.getSelectedRow();
                 if (i >=0){
-                    SupplierDTO supplier = new SupplierDTO(tbSupplier.getRowObject(i));
+                    int id = Integer.parseInt(tbSupplier.getFirstColumn(i));
+                    SupplierDTO supplier = SupplierBUS.getInstance().getSupplierById(id);
                     new dlEditSupplier(frame, thisPanel, supplier);
                 }
                 else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần sửa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
@@ -84,10 +86,12 @@ public class pnSupplier extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int i = tbSupplier.getSelectedRow();
                 if (i >=0){
-                    SupplierDTO supplierNew = new SupplierDTO(tbSupplier.getRowObject(i));
+                    int id = Integer.parseInt(tbSupplier.getFirstColumn(i));
+                    SupplierDTO supplierNew = SupplierBUS.getInstance().getSupplierById(id);
                     if(SupplierBUS.getInstance().deleteSupplier(supplierNew)){
                         JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         loadSupplier();
+                        textChange();
                     }
                     else JOptionPane.showMessageDialog(thisPanel, SupplierBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
                 }
@@ -102,6 +106,23 @@ public class pnSupplier extends JPanel {
                 loadSupplier();
             }
         });
+        btnIn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<Object[]> list = tbSupplier.ImportExel(4);
+                if(list==null) return;
+                List<SupplierDTO> suppliers = new ArrayList<>();
+                for (Object[] ob : list)
+                    suppliers.add(new SupplierDTO(-1, ob[0].toString(), ob[1].toString(), ob[2].toString(), ob[3].toString()));
+                if(SupplierBUS.getInstance().addSuppliers(suppliers)){
+                    JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + SupplierBUS.getInstance().getNumLine() + " nhà cung cấp");
+                    loadSupplier();
+                }
+                else {
+                    JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + SupplierBUS.getInstance().getError());
+                }
+            }
+        });
         btnOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -113,15 +134,14 @@ public class pnSupplier extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int i = cbSearch.getSelectedIndex();
                 if(posSelectedCB !=i){
-                    posSelectedCB = i;
                     tfSearch.setText("");
                 }
             }
         });
         tfSearch.getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e) {loadSupplier();}
-            public void removeUpdate(DocumentEvent e) {loadSupplier();}
-            public void changedUpdate(DocumentEvent e) {loadSupplier();}
+            public void insertUpdate(DocumentEvent e) {textChange();}
+            public void removeUpdate(DocumentEvent e) {textChange();}
+            public void changedUpdate(DocumentEvent e) {textChange();}
         });
         // endregion
         // region ADD
@@ -143,10 +163,16 @@ public class pnSupplier extends JPanel {
     }
 
     public void loadSupplier()  {
-        int i = posSelectedCB;
-        String whr = lsCombobox[i];
         tbSupplier.dftbModel.setRowCount(0);
-        for(SupplierDTO supplier: SupplierBUS.getInstance().getListSupplierBy(whr, tfSearch.getText()))
+        for(SupplierDTO supplier: SupplierBUS.getInstance().getListSupplier())
+            tbSupplier.dftbModel.addRow(supplier.getObjects());
+    }
+
+    public void textChange(){
+        tbSupplier.dftbModel.setRowCount(0);
+        int col = cbSearch.getSelectedIndex();
+        String txt = tfSearch.getText();
+        for(SupplierDTO supplier: SupplierBUS.getInstance().getSupplierListBy(col, txt))
             tbSupplier.dftbModel.addRow(supplier.getObjects());
     }
 }

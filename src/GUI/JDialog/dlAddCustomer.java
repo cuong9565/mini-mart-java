@@ -1,7 +1,9 @@
 package GUI.JDialog;
 
+import BUS.CustomerBUS;
 import BUS.SupplierBUS;
 import Components.*;
+import DTO.CustomerDTO;
 import DTO.SupplierDTO;
 import GUI.JFrame.fManage;
 import GUI.JPanel.pnCustomer;
@@ -15,15 +17,18 @@ import java.awt.event.ActionListener;
 public class dlAddCustomer extends JDialog {
     JPanel pnMain = new MyJPanel(MyColor.White);
     JLabel lbHeader = new MyJLabel(Font.BOLD, 24, MyColor.White, "Thêm khách hàng", SwingConstants.CENTER, SwingConstants.CENTER);
-    JLabel lbName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Tên khách hàng*", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbLastName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Họ*", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbFirstName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Tên*", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbGender = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Giới tính*", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbPhone = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Số điện thoại*", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbAddress = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Địa chỉ*", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbEmail = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Email*", SwingConstants.LEFT, SwingConstants.CENTER);
 
-    JTextField tfName = new MyJTextFieldInput(Font.PLAIN, 14, true);
-    JTextField tfPhone = new MyJTextFieldInput(Font.PLAIN, 14, true);
+    JTextField tfLastName = new MyJTextFieldInput(Font.PLAIN, 14, true);
+    JTextField tfFirstName = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JTextField tfAddress = new MyJTextFieldInput(Font.PLAIN, 14, true);
-    JTextField tfEmail = new MyJTextFieldInput(Font.PLAIN, 14, true);
+    JTextField tfPhone = new MyJTextFieldInput(Font.PLAIN, 14, true);
+
+    MyButtonGroup bgGender = new MyButtonGroup(new String[]{"Nam", "Nữ"});
 
     JButton btnSave = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Green, MyColor.LightGreen, "Xác nhận", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnEsc = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Red, MyColor.LightRed, "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
@@ -40,14 +45,20 @@ public class dlAddCustomer extends JDialog {
 
         // region setBounds
         pnMain.setBounds(0,0,540,440);
-        lbName.setBounds(50,80,200,20);
-        tfName.setBounds(50,100,200,30);
-        lbPhone.setBounds(270,80,200,20);
-        tfPhone.setBounds(270,100,200,30);
-        lbAddress.setBounds(50,150,420,20);
-        tfAddress.setBounds(50,170,420,30);
-        lbEmail.setBounds(50,220,420,20);
-        tfEmail.setBounds(50,240,420,30);
+        lbLastName.setBounds(50,80,200,20);
+        tfLastName.setBounds(50,100,200,30);
+        lbFirstName.setBounds(270,80,200,20);
+        tfFirstName.setBounds(270,100,200,30);
+
+        lbPhone.setBounds(50,150,200,20);
+        tfPhone.setBounds(50,170,200,30);
+        lbGender.setBounds(270,150,200,20);
+        bgGender.radioButtons[0].setBounds(270, 170, 100, 30);
+        bgGender.radioButtons[1].setBounds(370, 170, 100, 30);
+
+        lbAddress.setBounds(50,220,420,20);
+        tfAddress.setBounds(50,240,420,30);
+
         btnSave.setBounds(100,300,150,40);
         btnEsc.setBounds(270,300,150,40);
         lbHeader.setOpaque(true);
@@ -63,27 +74,28 @@ public class dlAddCustomer extends JDialog {
         });
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                SupplierDTO supplier = new SupplierDTO(-1, tfName.getText(), tfPhone.getText(), tfAddress.getText(), tfEmail.getText());
-                boolean check = SupplierBUS.getInstance().addProvider(supplier);
-
-                if(check){
-                    JOptionPane.showMessageDialog(dialog, "Thêm thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                CustomerDTO customer = new CustomerDTO(-1, tfPhone.getText(), tfLastName.getText(), tfFirstName.getText(), tfAddress.getText(), ((bgGender.radioButtons[0].isSelected())?"Nam":"Nữ"), "Mở");
+                if(CustomerBUS.getInstance().add(customer)){
+                    JOptionPane.showMessageDialog(dialog, "Thêm khách hàng thành công!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
                     parentPanel.loadCustomer();
+                    parentPanel.textChange();
                     dialog.dispose();
                 }
-                else JOptionPane.showMessageDialog(dialog, SupplierBUS.getInstance().getError(), "Thông báo", JOptionPane.WARNING_MESSAGE);
+                else JOptionPane.showMessageDialog(dialog, CustomerBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
             }
         });
         // endregion11
 
-        add(lbName);
-        add(tfName);
-        add(lbPhone);
-        add(tfPhone);
+        add(lbLastName);
+        add(tfLastName);
+        add(lbFirstName);
+        add(tfFirstName);
         add(lbAddress);
         add(tfAddress);
-        add(lbEmail);
-        add(tfEmail);
+        add(lbPhone);
+        add(lbGender);
+        add(tfPhone);
+        for(JRadioButton rb: bgGender.radioButtons) add(rb);
         add(btnSave);
         add(btnEsc);
 

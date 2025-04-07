@@ -8,11 +8,11 @@ public class SupplierDTO {
     private String name, phone, address, email;
     public SupplierDTO() {}
     public SupplierDTO(Object[] obj) {
-        this.id = (int) obj[0];
-        this.name = (String) obj[1];
-        this.phone =  (String) obj[2];
-        this.address = (String) obj[3];
-        this.email = (String) obj[4];
+        this.id = Integer.parseInt(obj[0].toString());
+        this.name = obj[1].toString();
+        this.phone =  obj[2].toString();
+        this.address = obj[3].toString();
+        this.email = obj[4].toString();
     }
     public SupplierDTO(int id, String name, String phone, String address, String email) {
         this.id = id;

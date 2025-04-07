@@ -67,6 +67,7 @@ public class dlAddSupplier extends JDialog {
                 if(check){
                     JOptionPane.showMessageDialog(dialog, "Thêm thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     parentPanel.loadSupplier();
+                    parentPanel.textChange();
                     dialog.dispose();
                 }
                 else JOptionPane.showMessageDialog(dialog, SupplierBUS.getInstance().getError(), "Thông báo", JOptionPane.WARNING_MESSAGE);
