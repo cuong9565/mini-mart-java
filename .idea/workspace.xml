@@ -4,32 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong Product">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_29_2025_6_38_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_29_2025_6_38_PM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_30_2025_4_09_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_30_2025_4_09_PM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_30_2025_4_14_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_30_2025_4_14_PM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_31_2025_1_20_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_31_2025_1_20_PM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_31_2025_6_22_AM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_31_2025_6_22_AM__Changes_.xml" beforeDir="false" />
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong BillInfo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SQL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/Discount_BUS.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/Staff_BUS.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/MyJTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/MyJTextFieldInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJTextFieldInput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/Discount_DAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/Staff_DAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DTO/Discount_DTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DTO/Staff_DTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JFrame/fManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JFrame/fManage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnBill.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnSell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnSell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStaff.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStaff.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnSupplier.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -195,14 +172,6 @@
       <workItem from="1743811970049" duration="2678000" />
       <workItem from="1743835129920" duration="6778000" />
       <workItem from="1743846680881" duration="8721000" />
-    </task>
-    <task id="LOCAL-00013" summary="Cuong update SettingAccountFrame">
-      <option name="closed" value="true" />
-      <created>1742307896067</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1742307896067</updated>
     </task>
     <task id="LOCAL-00014" summary="Cuong update SettingAccountFrame">
       <option name="closed" value="true" />
@@ -588,7 +557,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743849870522</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="Cuong BillInfo">
+      <option name="closed" value="true" />
+      <created>1744038925352</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1744038925352</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -623,6 +600,7 @@
     <MESSAGE value="Cuong" />
     <MESSAGE value="Cuong TypeProduct" />
     <MESSAGE value="Cuong Product" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cuong Product" />
+    <MESSAGE value="Cuong BillInfo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cuong BillInfo" />
   </component>
 </project>

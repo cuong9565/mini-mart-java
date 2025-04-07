@@ -43,7 +43,7 @@ public class pnSell extends JPanel {
     JPanel pnSearch = new MyJPanel(MyColor.White, "Tìm kiếm sản phẩm");
 
     MyJTable tbProduct = new MyJTable(new String[]{"Mã", "Loại", "Giảm giá", "Tên", "Đơn giá", "Đơn vị", "Số lượng"}, 12);
-    MyJTable tbBillInfo = new MyJTable(new String[]{"Mã", "Mã sản phẩm", "Giá bán", "Số lượng", "Đơn vị"}, 12);
+    MyJTable tbBillInfo = new MyJTable(new String[]{"Mã", "Mã sản phẩm",  "Số lượng", "Đơn vị", "Thành tiền"}, 12);
 
     JLabel lbQuantity = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Số lượng: ", SwingConstants.LEFT, SwingConstants.CENTER);
     JSpinner snPrice = new MyJSpinner(1, 1, 1000000000, 1);
