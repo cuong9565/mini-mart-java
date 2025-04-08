@@ -31,11 +31,11 @@ public class fManage extends JFrame {
     int currCursor = 0;
     fManage currFrame = this;
 
-    JPanel[] lsPn = new JPanel[]{new pnStatistic(), new pnImport(), new pnSell(currFrame), new pnProduct(currFrame), new pnTypeProduct(currFrame), new pnCustomer(currFrame), new pnBill(currFrame), new pnDiscount(currFrame), new pnStaff(), new pnSupplier(currFrame)};
+    JPanel[] lsPn = new JPanel[]{new pnStatistic(), new pnImport(), new pnSell(currFrame), new pnProduct(currFrame), new pnTypeProduct(currFrame), new pnCustomer(currFrame), new pnBill(currFrame), new pnDiscount(currFrame), new pnStaff(currFrame), new pnSupplier(currFrame)};
 
     public fManage(fLogin loginForm) {
         setTitle("Phần mềm quản lý siêu thị mini");
-        setSize(1200, 800);
+        setSize(1400, 800);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -57,9 +57,9 @@ public class fManage extends JFrame {
         btnSettingAccount.setBounds(10, 650, 180, 30);
         btnLogout.setBounds(10, 680, 180, 30);
         pnNav.setBounds(10,150,180, 500);
-        pnMenu.setBounds(210,10,970, 750);
+        pnMenu.setBounds(210,10,1170, 750);
         pnLeft.setBounds(0,0,200,800);
-        pnRight.setBounds(200,0,1000, 800);
+        pnRight.setBounds(200,0,1200, 800);
         // endregion
 
         pnNav.setLayout(new BoxLayout(pnNav, BoxLayout.Y_AXIS));

@@ -30,7 +30,7 @@ public class pnTypeProduct extends JPanel {
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Tên", "Mã số"}, 12);
 
-    MyJTable tbTypeProduct = new MyJTable(new String[]{"Mã số", "Tên"});
+    MyJTable tbTypeProduct = new MyJTable(new String[]{"Mã số", "Tên"}, new int[]{}, new int[]{}, new int[]{});
 
     pnTypeProduct thisPanel = this;
     int posSelectedCB = 0;

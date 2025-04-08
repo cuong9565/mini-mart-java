@@ -1,252 +1,176 @@
 package GUI.JPanel;
 
 import BUS.StaffBUS;
-import Components.MyJTable;
+import Components.*;
+import DTO.*;
+import GUI.JDialog.dlAddStaff;
+import GUI.JDialog.dlEditStaff;
+import GUI.JFrame.fManage;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.plaf.basic.BasicComboBoxUI;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableRowSorter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.regex.Pattern;
+import java.awt.event.*;
 
 public class pnStaff extends JPanel {
-    private MyJTable tbStaff= new MyJTable(new String[]{"Mã NV", "SDT", "Mật Khẩu", "Họ", "Tên", "Địa chỉ", "Lương", "Role", "Trạng thái", "Giới tính"},
-            new Font("Roboto", Font.BOLD, 16),
-            new Color(159, 32, 243),
-            new Color(159, 242, 115),
-            new Color(255, 0, 239)
-    );
-    private  TableRowSorter<DefaultTableModel> sorter;
-    private  StaffBUS staffBUS;
-    // Các thành phần giao diện
-    private final JButton btnAdd = new JButton("Thêm");
-    private final JButton btnEdit = new JButton("Sửa");
-    private final JButton btnBlock = new JButton("Khóa");
-    private final JButton btnExportExcel = new JButton("Xuất Excel");
-    private final JButton btnRefresh = new JButton("Tải lại");
-    private final JTextField txtSearch = new JTextField("Nhập mã NV hoặc tên...");
-    private final JComboBox<String> sortComboBox;
+    JPanel pnHeader = new MyJPanel(MyColor.White);
+    JPanel pnFooter = new MyJPanel(MyColor.White);
+    JPanel pnFunc = new MyJPanel(MyColor.White, "Chức năng");
+    JPanel pnSearch = new MyJPanel(MyColor.White, "Tìm kiếm");
+    JButton btnAdd = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Thêm", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnEdit = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#FF9800"), Color.decode("#FFD966"), "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnDelete = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#F44336"), Color.decode("#FF7568"), "Xóa", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnIn = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Nhập<br>Exel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnOut = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Xuất<br>Exel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
+    JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
+    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Mã số", "Họ", "Tên", "Giới tính", "Số điện thoại", "Địa chỉ", "Vai trò", "Lương", "Trạng thái", "Mật khẩu"}, 12);
 
-    // Panels
-    private final JPanel panelFunction = new JPanel();
-    private final JPanel panelSearch = new JPanel();
-    private final JPanel panelHeader = new JPanel();
-    private final JPanel panelDisplay = new JPanel();
+    MyJTable tbStaff = new MyJTable(new String[]{"Mã số", "Họ", "Tên", "Giới tính", "Số điện thoại", "Địa chỉ", "Vai trò", "Lương", "Trạng thái", "Mật khẩu"}, new int[]{20, 75, 50, 35, 75, 200, 100}, new int[]{1, 2, 5, 6}, new int[]{});
 
-    public pnStaff() {
-        staffBUS = new StaffBUS((DefaultTableModel) tbStaff.getModel()); // Truyền model vào BUs
-        setLayout(new BorderLayout());
-        setBackground(Color.decode("#F5F5F5"));
-        Border border = BorderFactory.createLineBorder(Color.GRAY, 1);
-        customizeButton(btnAdd, new Color(50, 168, 82));
-        customizeButton(btnEdit, new Color(255, 165, 0));
-        customizeButton(btnBlock, new Color(255, 69, 58));
-        JButton btnImportExcel = new JButton("Nhập Excel");
-        customizeButton(btnImportExcel, new Color(66, 133, 244));
-        customizeButton(btnExportExcel, new Color(66, 133, 244));
-        customizeButton(btnRefresh, new Color(66, 133, 244));
+    pnStaff thisPanel = this;
+    int posSelectedCB = 0;
 
-        // Thiết lập panelFunction
-        panelFunction.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        panelFunction.setBorder(BorderFactory.createTitledBorder(border, "Chức năng", 0, 0, new Font("Arial", Font.BOLD, 14)));
-        panelFunction.setBackground(Color.WHITE);
-        panelFunction.add(btnAdd);
-        panelFunction.add(btnEdit);
-        panelFunction.add(btnBlock);
-        panelFunction.add(btnImportExcel);
-        panelFunction.add(btnExportExcel);
+    public pnStaff(fManage frame) {
+        setLayout(null);
+        setBackground(MyColor.White);
 
-        // Thiết lập panelSearch
-        panelSearch.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 5));
-        panelSearch.setBorder(BorderFactory.createTitledBorder(border, "Tìm kiếm & Sắp xếp", 0, 0, new Font("Arial", Font.BOLD, 14)));
-        panelHeader.setBackground(new Color(230, 240, 255));
-        txtSearch.setPreferredSize(new Dimension(200, 30));
-        txtSearch.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.GRAY, 1),
-                BorderFactory.createEmptyBorder(5, 5, 5, 5)
-        ));
-        txtSearch.setForeground(Color.GRAY);
-        txtSearch.setFont(new Font("Arial", Font.PLAIN, 14));
-
-        // Cập nhật sortComboBox với các tùy chọn sắp xếp nâng cao
-        String[] sortOptions = {
-                "Lương (tăng dần)",
-                "Lương (giảm dần)",
-                "NAM",
-                "NỮ",
-                "Quản lý",
-                "Nhân Viên"
-        };
-        sortComboBox = new JComboBox<>(sortOptions);
-        sortComboBox.setPreferredSize(new Dimension(150, 30));
-        sortComboBox.setBackground(Color.WHITE);
-        sortComboBox.setForeground(Color.GRAY);
-        sortComboBox.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-        sortComboBox.setUI(new BasicComboBoxUI() {
+        // region SET BOUNDS
+        pnHeader.setBounds(0,0,970, 90);
+        pnFunc.setBounds(0,0,370,90);
+        btnAdd.setBounds(15,20,60,60);
+        btnEdit.setBounds(85,20,60,60);
+        btnDelete.setBounds(155,20,60,60);
+        btnIn.setBounds(225,20,60,60);
+        btnOut.setBounds(295,20,60,60);
+        pnSearch.setBounds(660,0,500,90);
+        cbSearch.setBounds(675, 30, 150, 30);
+        tfSearch.setBounds(835, 30, 200, 30);
+        btnRefresh.setBounds(1045,30,100,30);
+        pnFooter.setBounds(0,100,970, 650);
+        tbStaff.scrPn.setBounds(0,100,1160,640);
+        // endregion
+        // region EVENT CHO PANEL NÀY
+        addComponentListener(new ComponentAdapter() {
             @Override
-            protected JButton createArrowButton() {
-                JButton arrowButton = new JButton("V");
-                arrowButton.setBackground(Color.WHITE);
-                arrowButton.setForeground(Color.GRAY);
-                arrowButton.setBorder(BorderFactory.createEmptyBorder());
-                arrowButton.setFocusPainted(false);
-                return arrowButton;
+            public void componentShown(ComponentEvent e) {
+                loadStaff();
             }
         });
-
-        panelSearch.add(txtSearch);
-        panelSearch.add(sortComboBox);
-        panelSearch.add(btnRefresh);
-
-        // panelHeader
-        panelHeader.setLayout(new BorderLayout());
-        panelHeader.add(panelFunction, BorderLayout.WEST);
-        panelHeader.add(panelSearch, BorderLayout.EAST);
-        panelHeader.setBackground(Color.decode("#09D1C7"));
-        panelHeader.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
-
-        // Thiết lập bảng
-        JScrollPane scrollPane = new JScrollPane(tbStaff);
-        scrollPane.setBorder(null);
-        scrollPane.setBackground(Color.WHITE);
-        TableColumnModel columnModel = tbStaff.getColumnModel();
-        columnModel.getColumn(0).setPreferredWidth(30);
-        columnModel.getColumn(1).setPreferredWidth(90);
-        columnModel.getColumn(2).setPreferredWidth(120);
-        columnModel.getColumn(3).setPreferredWidth(60);
-        columnModel.getColumn( 4).setPreferredWidth(60);
-        columnModel.getColumn(5).setPreferredWidth(170);
-        columnModel.getColumn(6).setPreferredWidth(80);
-        columnModel.getColumn(7).setPreferredWidth(95);
-        columnModel.getColumn(8).setPreferredWidth(100);
-        columnModel.getColumn(9).setPreferredWidth(70);
-
-        sorter = new TableRowSorter<>((DefaultTableModel) tbStaff.getModel());//
-        tbStaff.setRowSorter(sorter);
-        sorter.setComparator(6, (o1, o2) -> {
-            try {
-                Double d1 = Double.parseDouble(o1.toString());
-                Double d2 = Double.parseDouble(o2.toString());
-                return d1.compareTo(d2);
-            } catch (NumberFormatException e) {
-                return o1.toString().compareTo(o2.toString());
+        // endregion
+        // region EVEN
+        btnAdd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new dlAddStaff(frame, thisPanel);
             }
         });
-        // Load dữ liệu ban đầu
-        staffBUS.loadStaffData();
-
-        // Sự kiện tìm kiếm
-        txtSearch.addMouseListener(new MouseAdapter() {
+        btnEdit.addActionListener(new ActionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1) {
-                    txtSearch.setText("");
+            public void actionPerformed(ActionEvent e) {
+                int i = tbStaff.getSelectedRow();
+                if (i >=0){
+                    int id = Integer.parseInt(tbStaff.getFirstColumn(i));
+                    StaffDTO staff = StaffBUS.getInstance().getStaffById(id);
+                    new dlEditStaff(frame, thisPanel, staff);
+                }
+                else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần sửa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        btnDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int i = tbStaff.getSelectedRow();
+                if (i >=0){
+                    int id = Integer.parseInt(tbStaff.getFirstColumn(i));
+                    if(StaffBUS.getInstance().delete(id)){
+                        JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        loadStaff();
+                    }
+                    else JOptionPane.showMessageDialog(thisPanel, StaffBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
+                }
+                else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xóa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        btnRefresh.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tfSearch.setText("");
+                cbSearch.setSelectedIndex(0);
+                loadStaff();
+            }
+        });
+        btnIn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+//                List<Object[]> list = tbStaff.ImportExel(4);
+//                if(list==null) return;
+//                List<StaffDTO> suppliers = new ArrayList<>();
+//                for (Object[] ob : list)
+//                    suppliers.add(new StaffDTO(-1, ob[0].toString(), ob[1].toString(), ob[2].toString(), ob[3].toString()));
+//                if(StaffBUS.getInstance().addStaffs(suppliers)){
+//                    JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + StaffBUS.getInstance().getNumLine() + " nhà cung cấp");
+//                    loadStaff();
+//                }
+//                else {
+//                    JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + StaffBUS.getInstance().getError());
+//                }
+            }
+        });
+        btnOut.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tbStaff.ExportExel("Danh sách nhân viên");
+            }
+        });
+        cbSearch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int i = cbSearch.getSelectedIndex();
+                if(posSelectedCB !=i){
+                    tfSearch.setText("");
                 }
             }
         });
-
-        txtSearch.addActionListener(e -> {
-            String searchText = txtSearch.getText().trim().toLowerCase();
-            if (searchText.isEmpty() || searchText.equals("nhập nội dung tìm kiếm ...")) {
-                sorter.setRowFilter(null);
-            } else {
-                sorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(searchText)));
-            }
+        tfSearch.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {textChange();}
         });
-
-        // Sự kiện sắp xếp cho sortComboBox
-        sortComboBox.addActionListener(e -> {
-            int selectedIndex = sortComboBox.getSelectedIndex();
-            switch (selectedIndex) {
-                case 0: // Lương (tăng dần)
-                    sorter.setSortKeys(java.util.Collections.singletonList(
-                            new RowSorter.SortKey(6, SortOrder.ASCENDING)
-                    ));
-                    break;
-
-                case 1: // Lương (giảm dần)
-                    sorter.setSortKeys(java.util.Collections.singletonList(
-                            new RowSorter.SortKey(6, SortOrder.DESCENDING)
-                    ));
-                    break;
-                case 2: // Nam
-                    sorter.setRowFilter(RowFilter.regexFilter("(?i)^Nam$", 9));
-                    break;
-                case 3: // Nữ
-                    sorter.setRowFilter(RowFilter.regexFilter("(?i)^Nữ$", 9));
-                    sorter.setSortKeys(null); // Xóa sắp xếp
-                    break;
-                case 4: // Quản lý
-                    sorter.setRowFilter(RowFilter.regexFilter("(?i)^Quản lý$", 7));
-                    sorter.setSortKeys(null);
-                    break;
-                case 5: // Nhân viên
-                    sorter.setRowFilter(RowFilter.regexFilter("(?i)^Nhân viên$", 7));
-                    sorter.setSortKeys(null);
-                    break;
-                default:
-                    sorter.setSortKeys(null);
-                    break;
-            }
-            tbStaff.repaint();
+        tfSearch.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) {textChange();}
+            public void removeUpdate(DocumentEvent e) {textChange();}
+            public void changedUpdate(DocumentEvent e) {textChange();}
         });
+        // endregion
+        // region ADD
+        add(btnAdd);
+        add(btnEdit);
+        add(btnDelete);
+        add(btnIn);
+        add(btnOut);
+        add(pnFunc);
+        add(btnRefresh);
+        add(cbSearch);
+        add(tfSearch);
+        add(pnSearch);
+        add(pnHeader);
+        add(tbStaff.scrPn);
+        add(pnFooter);
+        // endregion
 
-        // Sự kiện cho các nút
-        btnAdd.addActionListener(e -> staffBUS.showAddDialog(this));
-        btnEdit.addActionListener(e -> staffBUS.showEditDialog(this, tbStaff.getSelectedRow()));
-       btnExportExcel.addActionListener(e-> tbStaff.ExportExel("Danh sách nhân sự"));
-        btnBlock.addActionListener(e -> {
-            int selectedRow = tbStaff.getSelectedRow();
-            String status = (String) tbStaff.getValueAt(selectedRow,8);
-            if (selectedRow >= 0) {
-                String id = (String) tbStaff.getValueAt(selectedRow, 0);
-                if (staffBUS.lockStaff(id,status)) {
-                    if (status.equals("Active")) {
-                        JOptionPane.showMessageDialog(this, "Đã khóa tài khoản!");
-                    }
-                    else {
-                        JOptionPane.showMessageDialog(this,"Đã mở khóa tài khoản!");
-                    }
-                    staffBUS.loadStaffData();
-                }
-            }
-        });
-        btnRefresh.addActionListener(e -> staffBUS.refreshTable(txtSearch, sorter, sortComboBox));
-        panelDisplay.setLayout(new BorderLayout());
-        panelDisplay.add(scrollPane, BorderLayout.CENTER);
-        panelDisplay.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
-        panelDisplay.setBackground(Color.WHITE);
-        add(panelHeader, BorderLayout.NORTH);
-        add(panelDisplay, BorderLayout.CENTER);
     }
 
-    // Tùy chỉnh giao diện nút
-    private void customizeButton(JButton button, Color backgroundColor) {
-        button.setBackground(backgroundColor);
-        button.setForeground(Color.WHITE);
-        button.setFont(new Font("Arial", Font.BOLD, 14));
-        button.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
-        button.setFocusPainted(false);
-        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        Color hoverColor = backgroundColor.brighter(); // Sáng hơn 20%
-        button.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                button.setBackground(hoverColor);
-            }
+    public void loadStaff()  {
+        tbStaff.dftbModel.setRowCount(0);
+        for (StaffDTO staff: StaffBUS.getInstance().getList())
+            tbStaff.dftbModel.addRow(staff.getObjects());
+    }
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-                button.setBackground(backgroundColor);
-            }
-        });
+    public void textChange(){
+        tbStaff.dftbModel.setRowCount(0);
+        int col = cbSearch.getSelectedIndex();
+        String txt = tfSearch.getText();
+        for(StaffDTO supplier: StaffBUS.getInstance().getStaffListBy(col, txt))
+            tbStaff.dftbModel.addRow(supplier.getObjects());
     }
 }

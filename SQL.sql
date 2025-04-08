@@ -22,8 +22,8 @@ CREATE TABLE Staff (
     lastName VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,
     address VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,
     salary DOUBLE NOT NULL,
-    type VARCHAR(100) CHARACTER SET UTF8MB4,
-    status VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL default 'Mở', -- Khóa || Mở
+    role VARCHAR(100) CHARACTER SET UTF8MB4,
+    state VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL default 'Đang hoạt động', -- Đã bị khóa || Đang hoạt động
     gender VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL -- Nam || Nữ
 );
 
@@ -301,19 +301,57 @@ INSERT INTO Product (idProductType, idProductDetail, idOfferProduct, name, price
 (9, 49, 6, 'Táo Fuji', 50000, 'Túi', 20),
 (10, 50, NULL, 'Chả cá đông lạnh', 60000, 'Hộp', 25);
 
- INSERT INTO staff (phone, password, firstName, lastName, address, salary, type, status, gender)
- VALUES
- ('0955112233', 'securepass', 'Phu', 'Ng', 'Nha Trang', 19000000, 'Quản lý', 'Active', 'Nam'),
- ('0988776655', 'pass1234', 'An', 'Tran', 'Hà Nội', 15000000, 'Nhân viên', 'Active', 'Nữ'),
- ('0977665544', 'adminpass', 'Linh', 'Nguyen', 'Đà Nẵng', 21000000, 'Quản lý', 'Active', 'Nam'),
- ('0966554433', 'password1', 'Huy', 'Le', 'Hải Phòng', 18000000, 'Nhân viên', 'Inactive', 'Nam'),
- ('0955443322', 'mypassword', 'Trang', 'Pham', 'Cần Thơ', 16000000, 'Nhân viên', 'Active', 'Nữ'),
- ('0944332211', '123456', 'Binh', 'Do', 'Huế', 22000000, 'Quản lý', 'Active', 'Nam'),
- ('0933221100', 'nvpassword', 'Nga', 'Vo', 'Bình Dương', 14000000, 'Nhân viên', 'Active', 'Nữ'),
- ('0922110099', 'abcd1234', 'Duc', 'Dang', 'Vũng Tàu', 20000000, 'Quản lý', 'Inactive', 'Nam'),
- ('0911009988', 'staffpass', 'Hoa', 'Ly', 'Biên Hòa', 17000000, 'Nhân viên', 'Active', 'Nữ'),
- ('0900998877', 'newpass', 'Tuan', 'Ho', 'Quảng Ninh', 19500000, 'Quản lý', 'Active', 'Nam');
-
+INSERT INTO Staff (phone, password, firstName, lastName, address, salary, role, gender) VALUES
+('0905123456', 'matkhau123', 'Hùng', 'Nguyễn', '123 Lê Lợi, TP. Huế', 7000000, 'Nhân viên bán hàng', 'Nam'),
+('0912345678', 'abc123', 'Lan', 'Trần Thị', '45 Nguyễn Huệ, Hà Nội', 8000000, 'Thu ngân', 'Nữ'),
+('0935678901', 'pass456', 'Minh', 'Phạm Văn', '78 Trần Phú, TP. HCM', 6500000, 'Nhân viên kho', 'Nam'),
+('0987654321', 'xyz789', 'Hương', 'Lê Thị', '12 Hùng Vương, Đà Nẵng', 7500000, 'Thu ngân', 'Nữ'),
+('0941234567', '123456', 'Tuấn', 'Đỗ Anh', '56 Phạm Ngũ Lão, Nha Trang', 9000000, 'Quản lý', 'Nam'),
+('0978765432', 'password1', 'Mai', 'Ngô Thị', '89 Nguyễn Trãi, Cần Thơ', 7200000, 'Nhân viên bán hàng', 'Nữ'),
+('0923456789', 'abcxyz', 'Dũng', 'Hoàng', '34 Lê Đại Hành, Vinh', 6800000, 'Nhân viên kho', 'Nam'),
+('0967890123', 'mk12345', 'Thảo', 'Vũ Thị', '67 Trần Hưng Đạo, Hải Phòng', 7800000, 'Thu ngân', 'Nữ'),
+('0918765432', 'pass789', 'Kiên', 'Trương', '23 Nguyễn Văn Cừ, Quy Nhơn', 8500000, 'Quản lý', 'Nam'),
+('0932145678', '123abc', 'Linh', 'Bùi Thị', '90 Phạm Văn Đồng, Đà Lạt', 7000000, 'Nhân viên bán hàng', 'Nữ'),
+('0909876543', 'xyz123', 'Nam', 'Đặng Văn', '15 Lê Thánh Tôn, Vũng Tàu', 6700000, 'Nhân viên kho', 'Nam'),
+('0945678901', 'pass321', 'Ngọc', 'Phan Thị', '48 Hùng Vương, Buôn Ma Thuột', 7600000, 'Thu ngân', 'Nữ'),
+('0971234567', 'abc456', 'Phong', 'Lương', '72 Trần Phú, Pleiku', 8200000, 'Quản lý', 'Nam'),
+('0926789012', 'mk45678', 'Yến', 'Hà Thị', '19 Nguyễn Đình Chiểu, Hà Tĩnh', 6900000, 'Nhân viên bán hàng', 'Nữ'),
+('0965432109', '123xyz', 'Trung', 'Nguyễn Văn', '33 Lê Lai, Thanh Hóa', 6600000, 'Nhân viên kho', 'Nam'),
+('0913456789', 'pass654', 'Hạnh', 'Trần Thị', '57 Nguyễn Thị Minh Khai, TP. HCM', 7700000, 'Thu ngân', 'Nữ'),
+('0989012345', 'abc789', 'Bình', 'Phạm', '81 Lê Duẩn, Hà Nội', 8800000, 'Quản lý', 'Nam'),
+('0934567890', 'xyz456', 'Thủy', 'Lê Thị', '24 Trần Quốc Toản, Đà Nẵng', 7100000, 'Nhân viên bán hàng', 'Nữ'),
+('0906789012', 'pass987', 'Hải', 'Hoàng Văn', '68 Nguyễn Huệ, Nha Trang', 6400000, 'Nhân viên kho', 'Nam'),
+('0943210987', '123def', 'Trang', 'Ngô Thị', '11 Phạm Hồng Thái, Cần Thơ', 7900000, 'Thu ngân', 'Nữ'),
+('0978901234', 'abc321', 'Việt', 'Đỗ', '35 Lê Văn Sỹ, TP. HCM', 8300000, 'Quản lý', 'Nam'),
+('0921098765', 'xyz654', 'Hoa', 'Vũ Thị', '59 Trần Đại Nghĩa, Hà Nội', 7300000, 'Nhân viên bán hàng', 'Nữ'),
+('0964321098', 'pass123', 'Long', 'Trương Văn', '83 Hùng Vương, Hải Phòng', 6700000, 'Nhân viên kho', 'Nam'),
+('0917890123', 'abc654', 'Thu', 'Bùi Thị', '27 Nguyễn Văn Linh, Đà Nẵng', 7800000, 'Thu ngân', 'Nữ'),
+('0980123456', 'xyz987', 'Quang', 'Phan', '51 Lê Lợi, Vinh', 8600000, 'Quản lý', 'Nam'),
+('0938901234', '123ghi', 'Tâm', 'Hà Thị', '75 Trần Phú, Quy Nhơn', 7000000, 'Nhân viên bán hàng', 'Nữ'),
+('0902345678', 'pass456', 'Khang', 'Nguyễn', '99 Nguyễn Trãi, TP. HCM', 6800000, 'Nhân viên kho', 'Nam'),
+('0946789012', 'abc987', 'Oanh', 'Trần Thị', '14 Lê Đại Hành, Hà Nội', 7600000, 'Thu ngân', 'Nữ'),
+('0973456789', 'xyz321', 'Đạt', 'Phạm Văn', '38 Hùng Vương, Đà Lạt', 8400000, 'Quản lý', 'Nam'),
+('0929012345', 'pass789', 'Hiền', 'Lê Thị', '62 Nguyễn Huệ, Nha Trang', 7200000, 'Nhân viên bán hàng', 'Nữ'),
+('0961234567', '123jkl', 'Sơn', 'Hoàng', '86 Trần Hưng Đạo, Cần Thơ', 6500000, 'Nhân viên kho', 'Nam'),
+('0915678901', 'abc123', 'Phương', 'Ngô Thị', '20 Phạm Ngũ Lão, Hải Phòng', 7700000, 'Thu ngân', 'Nữ'),
+('0984321098', 'xyz456', 'Thắng', 'Đỗ Văn', '44 Lê Lai, TP. HCM', 8700000, 'Quản lý', 'Nam'),
+('0931234567', 'pass321', 'Nhi', 'Vũ Thị', '68 Nguyễn Đình Chiểu, Hà Nội', 7100000, 'Nhân viên bán hàng', 'Nữ'),
+('0908901234', 'abc789', 'Hòa', 'Trương', '92 Trần Quốc Toản, Đà Nẵng', 6900000, 'Nhân viên kho', 'Nam'),
+('0944567890', 'xyz987', 'Vy', 'Bùi Thị', '16 Lê Thánh Tôn, Vũng Tàu', 7800000, 'Thu ngân', 'Nữ'),
+('0970123456', '123mno', 'Khoa', 'Phan Văn', '40 Nguyễn Văn Cừ, Quy Nhơn', 8500000, 'Quản lý', 'Nam'),
+('0926789012', 'pass654', 'Tuyết', 'Hà Thị', '64 Phạm Văn Đồng, Đà Lạt', 7300000, 'Nhân viên bán hàng', 'Nữ'),
+('0963456789', 'abc321', 'Cường', 'Nguyễn', '88 Lê Duẩn, TP. HCM', 6700000, 'Nhân viên kho', 'Nam'),
+('0919012345', 'xyz654', 'Đào', 'Trần Thị', '22 Nguyễn Thị Minh Khai, Hà Nội', 7600000, 'Thu ngân', 'Nữ'),
+('0985678901', 'pass987', 'Tín', 'Phạm', '46 Hùng Vương, Nha Trang', 8800000, 'Quản lý', 'Nam'),
+('0932345678', '123pqr', 'Nhung', 'Lê Thị', '70 Trần Phú, Cần Thơ', 7000000, 'Nhân viên bán hàng', 'Nữ'),
+('0901234567', 'abc456', 'Hiếu', 'Hoàng Văn', '94 Nguyễn Huệ, Hải Phòng', 6800000, 'Nhân viên kho', 'Nam'),
+('0947890123', 'xyz789', 'Bích', 'Ngô Thị', '18 Lê Lợi, Vinh', 7700000, 'Thu ngân', 'Nữ'),
+('0974567890', 'pass123', 'Duy', 'Đỗ', '42 Trần Hưng Đạo, TP. HCM', 8600000, 'Quản lý', 'Nam'),
+('0920123456', 'abc987', 'Thúy', 'Vũ Thị', '66 Nguyễn Trãi, Hà Nội', 7200000, 'Nhân viên bán hàng', 'Nữ'),
+('0968901234', 'xyz321', 'Lộc', 'Trương Văn', '90 Phạm Ngũ Lão, Đà Nẵng', 6500000, 'Nhân viên kho', 'Nam'),
+('0916789012', 'pass456', 'Hồng', 'Bùi Thị', '14 Nguyễn Văn Linh, Nha Trang', 7800000, 'Thu ngân', 'Nữ'),
+('0983456789', '123stu', 'Vũ', 'Phan', '38 Lê Đại Hành, Cần Thơ', 8700000, 'Quản lý', 'Nam'),
+('0939012345', 'abc654', 'Ánh', 'Hà Thị', '62 Trần Quốc Toản, Hải Phòng', 7100000, 'Nhân viên bán hàng', 'Nữ');
 
 
  -- ---------------- SELECT -----------

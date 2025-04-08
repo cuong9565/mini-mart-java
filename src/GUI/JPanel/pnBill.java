@@ -30,7 +30,7 @@ public class pnBill extends JPanel {
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Tên", "Mã số", "Số điện thoại", "Địa chỉ", "Email"}, 12);
 
-    MyJTable tbBill = new MyJTable(new String[]{"Mã số", "Tên", "Số điện thoại", "Địa chỉ", "Email"});
+    MyJTable tbBill = new MyJTable(new String[]{"Mã số", "Tên", "Số điện thoại", "Địa chỉ", "Email"}, new int[]{}, new int[]{}, new int[]{});
 
     pnBill thisPanel = this;
     int posSelectedCB = 0;

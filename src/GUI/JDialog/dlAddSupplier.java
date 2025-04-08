@@ -52,7 +52,6 @@ public class dlAddSupplier extends JDialog {
         lbHeader.setBackground(MyColor.DarkBlue);
         lbHeader.setBounds(0,0,540,60);
         // endregion
-
         // region Event
         btnEsc.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -74,7 +73,7 @@ public class dlAddSupplier extends JDialog {
             }
         });
         // endregion11
-
+        // region ADD
         add(lbName);
         add(tfName);
         add(lbPhone);
@@ -87,6 +86,7 @@ public class dlAddSupplier extends JDialog {
         add(btnEsc);
         add(lbHeader);
         add(pnMain);
+        // endregion
 
         setVisible(true);
     }

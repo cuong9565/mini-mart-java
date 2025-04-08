@@ -30,7 +30,7 @@ public class pnSupplier extends JPanel {
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Tên", "Mã số", "Số điện thoại", "Địa chỉ", "Email"}, 12);
 
-    MyJTable tbSupplier = new MyJTable(new String[]{"Mã số", "Tên", "Số điện thoại", "Địa chỉ", "Email"});
+    MyJTable tbSupplier = new MyJTable(new String[]{"Mã số", "Tên", "Số điện thoại", "Địa chỉ", "Email"}, new int[]{}, new int[]{}, new int[]{});
 
     pnSupplier thisPanel = this;
     int posSelectedCB = 0;
@@ -47,12 +47,12 @@ public class pnSupplier extends JPanel {
         btnDelete.setBounds(155,20,60,60);
         btnIn.setBounds(225,20,60,60);
         btnOut.setBounds(295,20,60,60);
-        pnSearch.setBounds(460,0,500,90);
-        cbSearch.setBounds(475, 30, 150, 30);
-        tfSearch.setBounds(635, 30, 200, 30);
-        btnRefresh.setBounds(845,30,100,30);
+        pnSearch.setBounds(660,0,500,90);
+        cbSearch.setBounds(675, 30, 150, 30);
+        tfSearch.setBounds(835, 30, 200, 30);
+        btnRefresh.setBounds(1045,30,100,30);
         pnFooter.setBounds(0,100,970, 650);
-        tbSupplier.scrPn.setBounds(0,100,960,640);
+        tbSupplier.scrPn.setBounds(0,100,1160,640);
         // endregion
         // region EVENT CHO PANEL NÀY
         addComponentListener(new ComponentAdapter() {

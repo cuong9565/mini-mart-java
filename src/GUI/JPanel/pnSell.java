@@ -1,30 +1,16 @@
 package GUI.JPanel;
 
+import BUS.ProductBUS;
 import Components.*;
+import DTO.ProductDTO;
 import GUI.JFrame.fManage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class pnSell extends JPanel {
-//    JPanel pnHeader = new MyJPanel(MyColor.White);
-//    JPanel pnFooter = new MyJPanel(MyColor.White);
-//    JPanel pnFunc = new MyJPanel(MyColor.White, "Chức năng");
-//    JPanel pnSearch = new MyJPanel(MyColor.White, "Tìm kiếm");
-//    JButton btnAdd = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Thêm", SwingConstants.CENTER, SwingConstants.CENTER);
-//    JButton btnEdit = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#FF9800"), Color.decode("#FFD966"), "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
-//    JButton btnDelete = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#F44336"), Color.decode("#FF7568"), "Xóa", SwingConstants.CENTER, SwingConstants.CENTER);
-//    JButton btnIn = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Nhập<br>Exel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
-//    JButton btnOut = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Xuất<br>Exel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
-//    JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
-//    JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
-//    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Tên", "Mã số", "Số điện thoại", "Địa chỉ", "Email"}, 12);
-//
-//    MyJTable tbSupplier = new MyJTable(new String[]{"Mã số", "Tên", "Số điện thoại", "Địa chỉ", "Email"});
-//
-//    pnSell thisPanel = this;
-//    int posSelectedCB = 0;
-
     JPanel pnMain = new MyJPanel(MyColor.White);
     JPanel pnInfoCustomer = new MyJPanel(MyColor.White, "Thông tin khách hàng");
     JPanel pnInfoBill = new MyJPanel(MyColor.White, "Thông tin hóa đơn");
@@ -39,11 +25,11 @@ public class pnSell extends JPanel {
 
     JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
-    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Mã", "Loại", "Giảm giá", "Tên", "Đơn giá", "Đơn vị", "Số lượng"}, 12);
+    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Mã", "Tên", "Đơn giá", "Đơn vị", "Số lượng"}, 12);
     JPanel pnSearch = new MyJPanel(MyColor.White, "Tìm kiếm sản phẩm");
 
-    MyJTable tbProduct = new MyJTable(new String[]{"Mã", "Loại", "Giảm giá", "Tên", "Đơn giá", "Đơn vị", "Số lượng"}, 12);
-    MyJTable tbBillInfo = new MyJTable(new String[]{"Mã", "Mã sản phẩm", "Đơn giá", "Số lượng", "Giảm giá", "Đơn vị", "Thành tiền"}, 12);
+    MyJTable tbProduct = new MyJTable(new String[]{"Mã", "Tên", "Đơn giá", "Đơn vị", "Số lượng"}, 12, new int[]{50, 150, 100, 50}, new int[]{1}, new int[]{});
+    MyJTable tbBillInfo = new MyJTable(new String[]{"Mã", "Mã sản phẩm", "Đơn giá", "Số lượng", "Giảm giá", "Đơn vị", "Thành tiền"}, 12, new int[]{15, 15, 50, 15, 15, 15}, new int[]{}, new int[]{});
 
     JLabel lbQuantity = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Số lượng: ", SwingConstants.LEFT, SwingConstants.CENTER);
     JSpinner snPrice = new MyJSpinner(1, 1, 1000000000, 1);
@@ -63,19 +49,20 @@ public class pnSell extends JPanel {
         setLayout(null);
         setBackground(MyColor.White);
 
-        pnMain.setBounds(0,0,970, 750);
-        pnInfoCustomer.setBounds(0,0,960, 70);
-        pnInfoBill.setBounds(480,70,480, 135);
+        // region SET BOUNDS
+        pnMain.setBounds(0,0,1170, 750);
+        pnInfoCustomer.setBounds(0,0,1160, 70);
+        pnInfoBill.setBounds(480,70,680, 135);
 
-        lbIdBill.setBounds(490,85,200,20);
-        tfIdBill.setBounds(490,105,200,30);
-        lbNameStaff.setBounds(730,85,200,20);
-        tfNameStaff.setBounds(730,105,200,30);
+        lbIdBill.setBounds(500,85,200,20);
+        tfIdBill.setBounds(500,105,200,30);
+        lbNameStaff.setBounds(920,85,200,20);
+        tfNameStaff.setBounds(920,105,200,30);
 
-        lbOfferBill.setBounds(490, 145, 200,20);
-        tfOfferBill.setBounds(490, 165, 200,30);
-        lbPhoneCustomer.setBounds(730,145,200,20);
-        tfPhoneCustomer.setBounds(730,165,200,30);
+        lbOfferBill.setBounds(500, 145, 200,20);
+        tfOfferBill.setBounds(500, 165, 200,30);
+        lbPhoneCustomer.setBounds(920,145,200,20);
+        tfPhoneCustomer.setBounds(920,165,200,30);
 
         pnSearch.setBounds(0,70,460,60);
         cbSearch.setBounds(10, 90, 140, 30);
@@ -83,7 +70,7 @@ public class pnSell extends JPanel {
         btnRefresh.setBounds(360,90,90,30);
 
         tbProduct.scrPn.setBounds(0,140,460,550);
-        tbBillInfo.scrPn.setBounds(480, 215, 480, 420);
+        tbBillInfo.scrPn.setBounds(480, 215, 680, 420);
 
         lbQuantity.setBounds(0, 700, 70, 30);
         snPrice.setBounds(70, 700, 100, 30);
@@ -95,9 +82,20 @@ public class pnSell extends JPanel {
 
         lbTotal.setBounds(480, 700, 80, 30);
         lbSum.setBounds(560, 700, 190, 30);
-        btnCal.setBounds(750, 700, 100, 30);
-        btnCancel.setBounds(860, 700, 100, 30);
+        btnCal.setBounds(950, 700, 100, 30);
+        btnCancel.setBounds(1060, 700, 100, 30);
+        // endregion
 
+        // region SET EVENT
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                loadProduct();
+            }
+        });
+        // endregion
+
+        // region ADD
         add(lbIdBill);
         add(tfIdBill);
         add(lbNameStaff);
@@ -125,6 +123,13 @@ public class pnSell extends JPanel {
         add(pnInfoBill);
         add(pnInfoCustomer);
         add(pnMain);
+        // endregion
+    }
+
+    public void loadProduct(){
+        tbProduct.dftbModel.setRowCount(0);
+        for(ProductDTO product: ProductBUS.getInstance().getList())
+            tbProduct.dftbModel.addRow(product.getRowObjectsSell());
     }
 
 }

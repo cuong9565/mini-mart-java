@@ -1,79 +1,94 @@
 package DAO;
 
 import DTO.StaffDTO;
-import DTO.connect_data;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StaffDAO {
-    private connect_data db;
-
-    public StaffDAO() {
-        db = new connect_data();
+    private static StaffDAO instance = null;
+    private StaffDAO() {}
+    public static StaffDAO getInstance() {
+        if (instance == null) instance = new StaffDAO();
+        return instance;
     }
 
-    // Thêm nhân viên vào database
-    public boolean addStaff(StaffDTO staff) {
-        String query = "INSERT INTO staff (phone, password, firstName, lastName, address, salary, type, status, gender) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        int rowsAffected = db.executeUpdate(query, staff.getPhone(),staff.getPassword() ,staff.getFirstName(),staff.getLastName(), staff.getAddress(),
-                staff.getSalary(),  staff.getRole(),
-                staff.getStatus(),staff.getGender());
-        return rowsAffected > 0;
-    }
-
-    // Lấy tất cả nhân viên từ database
-    public List<StaffDTO> getAllStaff() {
-        List<StaffDTO> staffList = new ArrayList<>();
-        String query = "SELECT * FROM staff";
-        ResultSet rs = db.executeQuery(query);
-        try {
-            while (rs.next()) {
-                StaffDTO staff = new StaffDTO(
-                        rs.getString("id"),
-                        rs.getString ("phone"),
-                        rs.getString("password"),
-                        rs.getString("firstName"),
-                        rs.getString("lastName"),
-                        rs.getString("gender"),
-                        rs.getString("address"),
-                        rs.getString("type"),
-                        rs.getDouble("salary"),
-                        rs.getString("status")
-
-                );
-                staffList.add(staff);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public List<StaffDTO> getList(){
+        List<StaffDTO> list = new ArrayList<>();
+        String sql = "select * from staff";
+        Connection con = DataProvider.getInstance().getConnection();
+        try(
+                PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery();
+        ){
+            while(rs.next()) list.add(new StaffDTO(rs));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        return staffList;
+        DataProvider.getInstance().CloseConnection(con);
+        return list;
     }
 
-    // Cập nhật thông tin nhân viên
-    public boolean updateStaff(StaffDTO staff) {
-        String query = "UPDATE staff SET phone = ?, password = ?, firstName = ?, lastName = ?, gender = ?, " +
-                "address = ?, salary = ?, type = ?, status = ? WHERE id = ?";
-        int rowsAffected = db.executeUpdate(query,
-                staff.getPhone(),
-                staff.getPassword(),
-                staff.getFirstName(),
-                staff.getLastName(),
-                staff.getGender(),
-                staff.getAddress(),
-                staff.getSalary(),
-                staff.getRole(),
-                staff.getStatus(),
-                staff.getId());
-        return rowsAffected > 0;
+    public boolean add(StaffDTO staff) {
+        int res = 0;
+        String sql = "insert into staff(phone, password, firstName, lastName, address, salary, role, gender) values(?,?,?,?,?,?,?,?)";
+        Connection con = DataProvider.getInstance().getConnection();
+        try(PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setString(1, staff.getPhone());
+            ps.setString(2, staff.getPassword());
+            ps.setString(3, staff.getFirstName());
+            ps.setString(4, staff.getLastName());
+            ps.setString(5, staff.getAddress());
+            ps.setDouble(6, staff.getSalary());
+            ps.setString(7, staff.getRole());
+            ps.setString(8, staff.getGender());
+            res = ps.executeUpdate();
+        }
+        catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return res>0;
     }
 
-    // Khóa
-    public boolean lockStaff(String id, String status) {
-        String query = "UPDATE staff SET status = ? WHERE id = ?";
-        int rowsAffected = db.executeUpdate(query, status, id); // thứ tự gán
-        return rowsAffected > 0;
+    public boolean update(StaffDTO staff) {
+        int res = 0;
+        String sql = "update staff set phone = ?, password = ?, firstName = ?, lastName = ?, address = ?, salary = ?, state = ?, role = ?, gender = ? where id = ?";
+        Connection con = DataProvider.getInstance().getConnection();
+        try (PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setString(1, staff.getPhone());
+            ps.setString(2, staff.getPassword());
+            ps.setString(3, staff.getFirstName());
+            ps.setString(4, staff.getLastName());
+            ps.setString(5, staff.getAddress());
+            ps.setDouble(6, staff.getSalary());
+            ps.setString(7, staff.getState());
+            ps.setString(8, staff.getRole());
+            ps.setString(9, staff.getGender());
+            ps.setInt(10, staff.getId());
+            res = ps.executeUpdate();
+        }
+        catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        return res>0;
+    }
+
+    public boolean delete(int id) {
+        int res = 0;
+        String sql = "delete from staff where id = ?";
+        Connection con = DataProvider.getInstance().getConnection();
+        try (PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setInt(1, id);
+            res = ps.executeUpdate();
+        }
+        catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return res>0;
     }
 }

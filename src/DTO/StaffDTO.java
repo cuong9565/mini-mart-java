@@ -1,7 +1,9 @@
 package DTO;
 
+import java.sql.ResultSet;
+
 public class StaffDTO {
-    private String id;
+    private int id;
     private String password ;
     private String lastName;
     private String firstName;
@@ -10,10 +12,10 @@ public class StaffDTO {
     private String role;
     private double salary;
     private String phone;
-    private String status;
+    private String state;
 
-    public StaffDTO(String id,String phone ,String password , String firstName,String lastName,String gender, String address,
-                     String role, double salary, String status) {
+    public StaffDTO() {}
+    public StaffDTO(int id, String phone ,String password , String firstName,String lastName,String gender, String address, String role, double salary, String state) {
         this.id = id;
         this.password = password;
         this.lastName = lastName;
@@ -23,33 +25,49 @@ public class StaffDTO {
         this.role = role;
         this.salary = salary;
         this.phone = phone;
-        this.status = status;
+        this.state = state;
+    }
+    public StaffDTO(ResultSet rs){
+        try{
+            id = Integer.parseInt(rs.getString("id"));
+            password = rs.getString("password");
+            lastName = rs.getString("lastName");
+            firstName = rs.getString("firstName");
+            gender = rs.getString("gender");
+            address = rs.getString("address");
+            role = rs.getString("role");
+            salary = Double.parseDouble(rs.getString("salary"));
+            phone = rs.getString("phone");
+            state = rs.getString("state");
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
+    public int getId() {return id;}
+    public String getPassword() {return password;}
+    public String getLastName() {return lastName;}
+    public String getFirstName() {return firstName;}
+    public String getGender() {return gender;}
+    public String getAddress() {return address;}
+    public String getRole() {return role;}
+    public double getSalary() {return salary;}
+    public String getPhone() {return phone;}
+    public String getState() {return state;}
 
-    public  String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public void setId(int id) {this.id = id;}
+    public void setPassword(String password) {this.password = password;}
+    public void setLastName(String lastName) {this.lastName = lastName;}
+    public void setFirstName(String firstName) {this.firstName = firstName;}
+    public void setGender(String gender) {this.gender = gender;}
+    public void setAddress(String address) {this.address = address;}
+    public void setRole(String role) {this.role = role;}
+    public void setSalary(double salary) {this.salary = salary;}
+    public void setPhone(String phone) {this.phone = phone;}
+    public void setState(String state) {this.state = state;}
 
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
-    public String getLastName() { return lastName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
-    public String getFirstName() { return firstName; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
-    public String getGender() { return gender; }
-    public void setGender(String gender) { this.gender = gender; }
-    public String getAddress() { return address; }
-    public void setAddress(String address) { this.address = address; }
-    public String getRole() { return role; }
-    public void setRole(String role) { this.role = role; }
-    public double getSalary() { return salary; }
-    public void setSalary(double salary) { this.salary = salary; }
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public Object[] getObjects() {
+        return new Object[]{id, lastName, firstName, gender, phone, address, role, String.format("%,.0fđ", salary), state, password};
+    }
 }

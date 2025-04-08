@@ -71,4 +71,8 @@ public class ProductDTO {
     public Object[] getRowObjects() {
         return new Object[]{id, type.getName(), toString(), name, String.format("%,.0fđ", price), unit, quantity};
     }
+    public Object[] getRowObjectsSell() {
+        return new Object[]{id, name, String.format("%,.0fđ", price), unit, quantity};
+    }
+
 }

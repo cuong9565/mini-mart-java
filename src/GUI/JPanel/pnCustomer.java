@@ -36,7 +36,7 @@ public class pnCustomer extends JPanel {
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Tên", "Mã số", "Số điện thoại", "Họ", "Địa chỉ", "Giới tính", "Trạng thái"}, 12);
 
-    MyJTable tbCustomer = new MyJTable(new String[]{"Mã số", "Số điện thoại" , "Họ", "Tên", "Địa chỉ", "Giới tính", "Trạng thái"});
+    MyJTable tbCustomer = new MyJTable(new String[]{"Mã số", "Số điện thoại" , "Họ", "Tên", "Địa chỉ", "Giới tính", "Trạng thái"}, new int[]{}, new int[]{}, new int[]{});
     int currPosCB = 0;
     pnCustomer thisPanel = this;
 

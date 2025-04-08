@@ -31,8 +31,8 @@ public class pnImport extends JPanel {
     JTextField txtCreate = new JTextField();
     JTextField txtQuantity = new JTextField();
     JComboBox<Object> cboSupplier = new JComboBox<>();
-    MyJTable tbProduct = new MyJTable(new String[]{"Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn vị", "Đơn giá"});
-    MyJTable tbImport = new MyJTable(new String[]{"STT", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn vị", "Đơn giá"});
+    MyJTable tbProduct = new MyJTable(new String[]{"Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn vị", "Đơn giá"}, new int[]{}, new int[]{}, new int[]{});
+    MyJTable tbImport = new MyJTable(new String[]{"STT", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn vị", "Đơn giá"}, new int[]{}, new int[]{}, new int[]{});
     JPanel totalPanel = new JPanel();
     JLabel lbTotal = new MyJLabel(Font.BOLD, 16, Color.decode("#000000"), "Tổng tiền", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbAmount = new MyJLabel(Font.PLAIN, 16, Color.decode("#000000"), "0đ", SwingConstants.LEFT, SwingConstants.CENTER);

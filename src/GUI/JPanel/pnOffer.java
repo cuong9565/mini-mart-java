@@ -33,7 +33,7 @@ public class pnOffer extends JPanel {
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Mã số", "Ngày bắt đầu", "Ngày kết thúc"}, 12);
 
-    MyJTable tbOffer = new MyJTable(new String[]{"Mã số", "Ngày bắt đầu", "Ngày kết thúc"});
+    MyJTable tbOffer = new MyJTable(new String[]{"Mã số", "Ngày bắt đầu", "Ngày kết thúc"}, new int[]{}, new int[]{}, new int[]{});
     pnOffer thisPanel = this;
     int posSelectedCB = 0;
 
