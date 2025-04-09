@@ -139,7 +139,6 @@ public class pnOffer extends JPanel {
             tbOffer.dftbModel.addRow(offer.getObjects());
         textChange();
     }
-
     public void textChange() {
         tbOffer.dftbModel.setRowCount(0);
         int col = cbSearch.getSelectedIndex();
