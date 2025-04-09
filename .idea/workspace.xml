@@ -4,7 +4,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong Staff" />
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong Staff">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/CustomerBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/CustomerBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/OfferBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/OfferBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/ProductBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/ProductBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/SupplierBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/SupplierBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/TypeProductBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/TypeProductBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/MyJSpinner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJSpinner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/OfferDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/OfferDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddCustomer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddSupplier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddTypeProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddTypeProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddoffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddoffer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditCustomer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditSupplier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditTypeProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditTypeProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditoffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditoffer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnCustomer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnDiscount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnDiscount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnOffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnOffer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStaff.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStaff.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnSupplier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnTypeProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnTypeProduct.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -175,14 +202,8 @@
       <workItem from="1744114376575" duration="5912000" />
       <workItem from="1744122167658" duration="2877000" />
       <workItem from="1744157212775" duration="3111000" />
-    </task>
-    <task id="LOCAL-00019" summary="Cuong add JLableError">
-      <option name="closed" value="true" />
-      <created>1742367134203</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1742367134203</updated>
+      <workItem from="1744184046170" duration="5455000" />
+      <workItem from="1744202593970" duration="6514000" />
     </task>
     <task id="LOCAL-00020" summary="Cuong add JLableError">
       <option name="closed" value="true" />
@@ -568,7 +589,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744164355938</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="Cuong Staff">
+      <option name="closed" value="true" />
+      <created>1744184059775</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1744184059775</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

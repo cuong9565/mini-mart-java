@@ -7,10 +7,7 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,41 +31,34 @@ public class pnCustomer extends JPanel {
     JButton btnOut = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Xuất<br>Exel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
-    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Tên", "Mã số", "Số điện thoại", "Họ", "Địa chỉ", "Giới tính", "Trạng thái"}, 12);
+    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Mã số", "Số điện thoại" , "Họ", "Tên", "Địa chỉ", "Giới tính", "Trạng thái"}, 12);
 
-    MyJTable tbCustomer = new MyJTable(new String[]{"Mã số", "Số điện thoại" , "Họ", "Tên", "Địa chỉ", "Giới tính", "Trạng thái"}, new int[]{}, new int[]{}, new int[]{});
-    int currPosCB = 0;
+    MyJTable tbCustomer = new MyJTable(new String[]{"Mã số", "Số điện thoại" , "Họ", "Tên", "Địa chỉ", "Giới tính", "Trạng thái"}, new int[]{50, 100, 100, 100, 300, 35}, new int[]{2, 3, 4}, new int[]{});
     pnCustomer thisPanel = this;
-
-    int posSelectedCB = 0;
 
     public pnCustomer(fManage fmanage) {
         setLayout(null);
         setBackground(MyColor.White);
 
         // region SET BOUNDS
-        pnHeader.setBounds(0,0,970, 90);
+        pnHeader.setBounds(0,0,1170, 90);
         pnFunc.setBounds(0,0,370,90);
         btnAdd.setBounds(15,20,60,60);
         btnEdit.setBounds(85,20,60,60);
         btnDelete.setBounds(155,20,60,60);
         btnIn.setBounds(225,20,60,60);
         btnOut.setBounds(295,20,60,60);
-        pnSearch.setBounds(470,0,500,90);
-        cbSearch.setBounds(485, 30, 150, 30);
-        tfSearch.setBounds(645, 30, 200, 30);
-        btnRefresh.setBounds(855,30,100,30);
-        pnFooter.setBounds(0,100,970, 650);
-        tbCustomer.scrPn.setBounds(0,100,970,650);
+
+        pnSearch.setBounds(670,0,500,90);
+        cbSearch.setBounds(685, 30, 150, 30);
+        tfSearch.setBounds(845, 30, 200, 30);
+        btnRefresh.setBounds(1055,30,100,30);
+        pnFooter.setBounds(0,100,1170, 650);
+        tbCustomer.scrPn.setBounds(0,100,1170,650);
         // endregion
-        // region ADD EVENT CHO FORM NÀY
         addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentShown(ComponentEvent e) {
-                btnRefresh.doClick();
-            }
+            public void componentShown(ComponentEvent e) {loadCustomer();}
         });
-        // endregion
         // region EVENT
         btnAdd.addActionListener(new ActionListener() {
             @Override
@@ -99,7 +89,6 @@ public class pnCustomer extends JPanel {
                     if(CustomerBUS.getInstance().delete(customer)){
                         JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin khách hàng thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         loadCustomer();
-                        textChange();
                     }
                     else JOptionPane.showMessageDialog(thisPanel, CustomerBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
                 }
@@ -137,14 +126,10 @@ public class pnCustomer extends JPanel {
             }
         });
         cbSearch.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int i = cbSearch.getSelectedIndex();
-                if(posSelectedCB !=i){
-                    posSelectedCB = i;
-                    tfSearch.setText("");
-                }
-            }
+            public void actionPerformed(ActionEvent e) {textChange();}
+        });
+        tfSearch.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {textChange();}
         });
         tfSearch.getDocument().addDocumentListener(new DocumentListener() {
             public void insertUpdate(DocumentEvent e) {textChange();}
@@ -173,6 +158,7 @@ public class pnCustomer extends JPanel {
         tbCustomer.dftbModel.setRowCount(0);
         for(CustomerDTO customer: CustomerBUS.getInstance().getAllList())
             tbCustomer.dftbModel.addRow(customer.getObjects());
+        textChange();
     }
 
     public void textChange(){

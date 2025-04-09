@@ -1,22 +1,16 @@
 package GUI.JPanel;
 
 import BUS.OfferBUS;
-import BUS.SupplierBUS;
 import Components.*;
 import DTO.*;
-import GUI.JDialog.dlAddSupplier;
 import GUI.JDialog.dlAddoffer;
-import GUI.JDialog.dlEditSupplier;
 import GUI.JDialog.dlEditoffer;
-import GUI.JFrame.fManage;
-import com.mysql.cj.protocol.Message;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class pnOffer extends JPanel {
@@ -35,42 +29,36 @@ public class pnOffer extends JPanel {
 
     MyJTable tbOffer = new MyJTable(new String[]{"Mã số", "Ngày bắt đầu", "Ngày kết thúc"}, new int[]{}, new int[]{}, new int[]{});
     pnOffer thisPanel = this;
-    int posSelectedCB = 0;
 
     public pnOffer(pnDiscount parent) {
         setLayout(null);
         setBackground(MyColor.White);
+
         // region SET BOUNDS
-        pnHeader.setBounds(0,0,970, 90);
+        pnHeader.setBounds(0,0,1170, 90);
         pnFunc.setBounds(0,0,370,90);
         btnAdd.setBounds(15,20,60,60);
         btnEdit.setBounds(85,20,60,60);
         btnDelete.setBounds(155,20,60,60);
         btnIn.setBounds(225,20,60,60);
         btnOut.setBounds(295,20,60,60);
-        pnSearch.setBounds(460,0,500,90);
-        cbSearch.setBounds(475, 30, 150, 30);
-        tfSearch.setBounds(640, 30, 200, 30);
-        btnRefresh.setBounds(845,30,100,30);
-        pnFooter.setBounds(0,100,970, 650);
-        tbOffer.scrPn.setBounds(0,100,960,610);
+        pnSearch.setBounds(660,0,500,90);
+        cbSearch.setBounds(675, 30, 150, 30);
+        tfSearch.setBounds(840, 30, 200, 30);
+        btnRefresh.setBounds(1045,30,100,30);
+        pnFooter.setBounds(0,100,1170, 650);
+        tbOffer.scrPn.setBounds(0,100,1160,610);
         // endregion
-
         addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentShown(ComponentEvent e) {
-                btnRefresh.doClick();
-            }
+            public void componentShown(ComponentEvent e) {loadOffer();}
         });
-
+        // region SET EVENT
         btnAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new dlAddoffer(pnOffer.this);
             }
         });
-
-
         btnEdit.addActionListener(e -> {
             int i = tbOffer.getSelectedRow();
             if (i >= 0) {
@@ -101,37 +89,34 @@ public class pnOffer extends JPanel {
         });
 
         btnIn.addActionListener(e -> {
-            List<Object[]> list = tbOffer.ImportExel(4);
-            if (list == null) return;
-            List<SupplierDTO> suppliers = new ArrayList<>();
-            for (Object[] ob : list)
-                suppliers.add(new SupplierDTO(-1, ob[0].toString(), ob[1].toString(), ob[2].toString(), ob[3].toString()));
-            if (SupplierBUS.getInstance().addSuppliers(suppliers)) {
-                JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + SupplierBUS.getInstance().getNumLine() + " nhà cung cấp");
-                loadOffer();
-            } else {
-                JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + SupplierBUS.getInstance().getError());
+            List<Object[]> list = tbOffer.ImportExel(2);
+            if(list==null) return;
+            String error = null;
+            int success = 0;
+            for (Object[] ob : list) {
+                OfferDTO offer = new OfferDTO(-1, ob[0].toString(), ob[1].toString());
+                if(OfferBUS.getInstance().add(offer)) success++;
+                else error += ("\n" + OfferBUS.getInstance().getError());
             }
+            JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + success + " thời gian giảm giá");
+            if(error!=null) JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + error);
+            loadOffer();
         });
 
-        btnOut.addActionListener(e -> {
-            tbOffer.ExportExel("Danh sách khuyến mãi");
+        btnOut.addActionListener(_ -> tbOffer.ExportExel("Danh sách khuyến mãi"));
+        cbSearch.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {textChange();}
         });
-
-        cbSearch.addActionListener(e -> {
-            int i = cbSearch.getSelectedIndex();
-            if (posSelectedCB != i) {
-                tfSearch.setText("");
-                posSelectedCB = i;
-            }
+        tfSearch.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {textChange();}
         });
-
         tfSearch.getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e) { textChange(); }
-            public void removeUpdate(DocumentEvent e) { textChange(); }
-            public void changedUpdate(DocumentEvent e) { textChange(); }
+            public void insertUpdate(DocumentEvent e) {textChange();}
+            public void removeUpdate(DocumentEvent e) {textChange();}
+            public void changedUpdate(DocumentEvent e) {textChange();}
         });
-
+        // endregion
+        // region ADD
         add(btnAdd);
         add(btnEdit);
         add(btnDelete);
@@ -145,21 +130,21 @@ public class pnOffer extends JPanel {
         add(pnHeader);
         add(tbOffer.scrPn);
         add(pnFooter);
+        // endregion
     }
 
     public void loadOffer() {
         tbOffer.dftbModel.setRowCount(0);
-        for (OfferDTO offer : OfferBUS.getInstance().getList()) {
+        for (OfferDTO offer : OfferBUS.getInstance().getList())
             tbOffer.dftbModel.addRow(offer.getObjects());
-        }
+        textChange();
     }
 
     public void textChange() {
         tbOffer.dftbModel.setRowCount(0);
         int col = cbSearch.getSelectedIndex();
         String txt = tfSearch.getText();
-        for (SupplierDTO supplier : SupplierBUS.getInstance().getSupplierListBy(col, txt)) {
-            tbOffer.dftbModel.addRow(supplier.getObjects());
-        }
+        for (OfferDTO offer : OfferBUS.getInstance().getListBy(col, txt))
+            tbOffer.dftbModel.addRow(offer.getObjects());
     }
 }

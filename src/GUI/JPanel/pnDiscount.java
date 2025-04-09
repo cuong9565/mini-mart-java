@@ -39,9 +39,9 @@ public class pnDiscount extends JPanel {
         setLayout(null);
         setBackground(MyColor.White);
 
-        pnMain.setBounds(0,0,970,800);
-        pnNav.setBounds(0,0,970, 30);
-        pnContent.setBounds(0,30,970,800);
+        pnMain.setBounds(0,0,1170,800);
+        pnNav.setBounds(0,0,1170, 30);
+        pnContent.setBounds(0,30,1170,800);
 
         btnOffer.setMaximumSize(new Dimension(150, 30));
         btnOffer.setMinimumSize(new Dimension(150, 30));

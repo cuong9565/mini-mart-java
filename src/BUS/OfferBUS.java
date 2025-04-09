@@ -1,11 +1,9 @@
 package BUS;
 import DAO.OfferDAO;
-import DTO.OfferBillDTO;
 import DTO.OfferDTO;
 import DTO.OfferProductDTO;
-import DTO.SupplierDTO;
-
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class OfferBUS {
@@ -14,8 +12,7 @@ public class OfferBUS {
     private static String error = null;
     private static int numLine = 0;
 
-    public OfferBUS() {
-    }
+    public OfferBUS() {}
 
     public static OfferBUS getInstance() {
         if (instance == null) instance = new OfferBUS();
@@ -27,10 +24,22 @@ public class OfferBUS {
         return list;
     }
 
+    public List<OfferDTO> getListBy(int col, String txt) {
+        List<OfferDTO> ls = new ArrayList<>();
+        for (OfferDTO o : list) {
+            switch (col) {
+                case 0: if(String.valueOf(o.getId()).contains(txt)) ls.add(o); break;
+                case 1: if(o.getFormattedDateStart().contains(txt)) ls.add(o); break;
+                case 2: if(o.getFormattedDateEnd().contains(txt)) ls.add(o); break;
+            }
+        }
+        return ls;
+    }
+
     public List<OfferDTO> getListByOfferProduct(OfferProductDTO offerProduct) {
         List<OfferDTO> ls = new ArrayList<>();
         if (offerProduct.getId() == 0)
-            ls.add(new OfferDTO(0, null, null));
+            ls.add(new OfferDTO(0, (java.sql.Date) null, (java.sql.Date) null));
         else {
             for (OfferProductDTO op : OfferProductBUS.getInstance().getList())
                 if (op.getDiscount() == offerProduct.getDiscount())
@@ -40,6 +49,10 @@ public class OfferBUS {
     }
 
     public boolean add(OfferDTO offer) {
+        if(offer.getDateStart().compareTo(offer.getDateEnd())>0){
+            error = "Ngày bắt đầu phải trước ngày kết thúc!!!";
+            return false;
+        }
         try {
             OfferDAO.getInstance().add(offer);
         } catch (Exception e) {
@@ -50,6 +63,10 @@ public class OfferBUS {
     }
 
     public boolean update(OfferDTO offer) {
+        if(offer.getDateStart().compareTo(offer.getDateEnd())>0){
+            error = "Ngày bắt đầu phải trước ngày kết thúc!!!";
+            return false;
+        }
         try {
             OfferDAO.getInstance().update(offer);
         } catch (Exception e) {

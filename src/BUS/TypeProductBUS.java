@@ -37,17 +37,9 @@ public class TypeProductBUS {
 
     public List<TypeProductDTO> getListBy(int col, String txt){
         List<TypeProductDTO>products = new ArrayList<>();
-        switch (col){
-            case 0:
-                for (TypeProductDTO product: list)
-                    if(product.getName().contains(txt))
-                        products.add(product);
-                break;
-            case 1:
-                for (TypeProductDTO product: list)
-                    if(String.valueOf(product.getId()).contains(txt))
-                        products.add(product);
-                break;
+        for (TypeProductDTO product: list) switch (col){
+            case 0: if(String.valueOf(product.getId()).contains(txt)) products.add(product); break;
+            case 1: if(product.getName().contains(txt)) products.add(product); break;
         }
         return products;
     }

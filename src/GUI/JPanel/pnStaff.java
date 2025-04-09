@@ -2,7 +2,6 @@ package GUI.JPanel;
 
 import BUS.ProductBUS;
 import BUS.StaffBUS;
-import BUS.TypeProductBUS;
 import Components.*;
 import DTO.*;
 import GUI.JDialog.dlAddStaff;
@@ -33,7 +32,6 @@ public class pnStaff extends JPanel {
     MyJTable tbStaff = new MyJTable(new String[]{"Mã số", "Họ", "Tên", "Giới tính", "Số điện thoại", "Địa chỉ", "Vai trò", "Lương", "Trạng thái", "Mật khẩu"}, new int[]{20, 75, 50, 35, 75, 200, 100}, new int[]{1, 2, 5, 6}, new int[]{});
 
     pnStaff thisPanel = this;
-    int posSelectedCB = 0;
 
     public pnStaff(fManage frame) {
         setLayout(null);
@@ -64,13 +62,11 @@ public class pnStaff extends JPanel {
         // endregion
         // region EVEN
         btnAdd.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 new dlAddStaff(frame, thisPanel);
             }
         });
         btnEdit.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 int i = tbStaff.getSelectedRow();
                 if (i >=0){
@@ -82,7 +78,6 @@ public class pnStaff extends JPanel {
             }
         });
         btnDelete.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 int i = tbStaff.getSelectedRow();
                 if (i >=0){
@@ -97,7 +92,6 @@ public class pnStaff extends JPanel {
             }
         });
         btnRefresh.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 tfSearch.setText("");
                 cbSearch.setSelectedIndex(0);
@@ -105,7 +99,6 @@ public class pnStaff extends JPanel {
             }
         });
         btnIn.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
 
                 List<Object[]> list = tbStaff.ImportExel(8);
@@ -138,13 +131,7 @@ public class pnStaff extends JPanel {
             }
         });
         cbSearch.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int i = cbSearch.getSelectedIndex();
-                if(posSelectedCB !=i){
-                    tfSearch.setText("");
-                }
-            }
+            public void actionPerformed(ActionEvent e) {textChange();}
         });
         tfSearch.addFocusListener(new FocusAdapter() {
             public void focusGained(FocusEvent e) {textChange();}
@@ -177,6 +164,7 @@ public class pnStaff extends JPanel {
         tbStaff.dftbModel.setRowCount(0);
         for (StaffDTO staff: StaffBUS.getInstance().getList())
             tbStaff.dftbModel.addRow(staff.getObjects());
+        textChange();
     }
 
     public void textChange(){

@@ -11,7 +11,11 @@ public class OfferDTO {
     private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     public OfferDTO() {}
-
+    public OfferDTO(int id, String dateStart, String dateEnd) {
+        this.id = id;
+        this.dateStart = convert(dateStart);
+        this.dateEnd = convert(dateEnd);
+    }
     public OfferDTO(int id, Date dateStart, Date dateEnd) {
         this.id = id;
         this.dateStart = dateStart;
@@ -31,8 +35,10 @@ public class OfferDTO {
     public int getId() {
         return id;
     }
-    public java.sql.Date getDateStart() {return dateStart;}
+    public Date getDateStart() {return dateStart;}
     public Date getDateEnd() {return dateEnd;}
+    public String getFormattedDateStart() {return dateFormat.format(dateStart);}
+    public String getFormattedDateEnd() {return dateFormat.format(dateEnd);}
     public void setId(int id) {this.id = id;}
     public void setDateStart(Date dateStart) {this.dateStart = dateStart;}
     public void setDateEnd(Date dateEnd) {this.dateEnd = dateEnd;}
@@ -42,10 +48,17 @@ public class OfferDTO {
         return (id==0)?"Không áp dụng":"<html>Từ <b>" + dateFormat.format(dateStart)+ "</b> đến <b>" + dateFormat.format(dateEnd)+ "</b></html>";
     }
 
-
     public Object[] getObjects() {
-        return new Object[]{id,dateStart,dateEnd};
+        return new Object[]{id, dateFormat.format(dateStart), dateFormat.format(dateEnd)};
     }
 
-
+    public Date convert(String date){
+        try{
+            java.util.Date utilDate = dateFormat.parse(date);
+            return new Date(utilDate.getTime());
+        }catch (Exception e) {
+            System.out.println("Lỗi định dạng ngày: " + e.getMessage());
+            return null;
+        }
+    }
 }

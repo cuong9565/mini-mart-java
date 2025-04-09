@@ -28,38 +28,34 @@ public class pnTypeProduct extends JPanel {
     JButton btnOut = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Xuất<br>Exel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
-    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Tên", "Mã số"}, 12);
+    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Mã số", "Tên"}, 12);
 
-    MyJTable tbTypeProduct = new MyJTable(new String[]{"Mã số", "Tên"}, new int[]{}, new int[]{}, new int[]{});
+    MyJTable tbTypeProduct = new MyJTable(new String[]{"Mã số", "Tên"}, new int[]{50}, new int[]{1}, new int[]{});
 
     pnTypeProduct thisPanel = this;
-    int posSelectedCB = 0;
 
     public pnTypeProduct(fManage frame) {
         setLayout(null);
         setBackground(MyColor.White);
 
         // region SET BOUNDS
-        pnHeader.setBounds(0,0,970, 90);
+        pnHeader.setBounds(0,0,1170, 90);
         pnFunc.setBounds(0,0,370,90);
         btnAdd.setBounds(15,20,60,60);
         btnEdit.setBounds(85,20,60,60);
         btnDelete.setBounds(155,20,60,60);
         btnIn.setBounds(225,20,60,60);
         btnOut.setBounds(295,20,60,60);
-        pnSearch.setBounds(470,0,500,90);
-        cbSearch.setBounds(485, 30, 150, 30);
-        tfSearch.setBounds(645, 30, 200, 30);
-        btnRefresh.setBounds(855,30,100,30);
-        pnFooter.setBounds(0,100,970, 650);
-        tbTypeProduct.scrPn.setBounds(0,100,970,650);
+        pnSearch.setBounds(670,0,500,90);
+        cbSearch.setBounds(685, 30, 150, 30);
+        tfSearch.setBounds(845, 30, 200, 30);
+        btnRefresh.setBounds(1055,30,100,30);
+        pnFooter.setBounds(0,100,1170, 650);
+        tbTypeProduct.scrPn.setBounds(0,100,1170,650);
         // endregion
         // region EVENT CHO PANEL NÀY
         addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentShown(ComponentEvent e) {
-                btnRefresh.doClick();
-            }
+            public void componentShown(ComponentEvent e) {loadTypeProduct();}
         });
         // endregion
         // region EVEN
@@ -91,7 +87,6 @@ public class pnTypeProduct extends JPanel {
                     if(TypeProductBUS.getInstance().delete(product)){
                         JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         loadTypeProduct();
-                        textChange();
                     }
                     else JOptionPane.showMessageDialog(thisPanel, TypeProductBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
                 }
@@ -131,13 +126,10 @@ public class pnTypeProduct extends JPanel {
             }
         });
         cbSearch.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int i = cbSearch.getSelectedIndex();
-                if(posSelectedCB !=i){
-                    tfSearch.setText("");
-                }
-            }
+            public void actionPerformed(ActionEvent e) {textChange();}
+        });
+        tfSearch.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {textChange();}
         });
         tfSearch.getDocument().addDocumentListener(new DocumentListener() {
             public void insertUpdate(DocumentEvent e) {textChange();}
@@ -167,6 +159,7 @@ public class pnTypeProduct extends JPanel {
         tbTypeProduct.dftbModel.setRowCount(0);
         for(TypeProductDTO product: TypeProductBUS.getInstance().getList())
             tbTypeProduct.dftbModel.addRow(product.getObjects());
+        textChange();
     }
 
     public void textChange(){

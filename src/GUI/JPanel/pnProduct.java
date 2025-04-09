@@ -31,9 +31,9 @@ public class pnProduct extends JPanel {
     JButton btnDetail = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Chi tiết</html>", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
-    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Tên", "Mã", "Loại", "Giảm giá", "Giá bán", "Đơn vị", "Số lượng"}, 12);
+    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Mã", "Loại", "Giảm giá", "Tên sản phẩm", "Giá bán", "Đơn vị", "Số lượng"}, 12);
 
-    MyJTable tbProduct = new MyJTable(new String[]{"Mã", "Loại", "Giảm giá", "Tên sản phẩm", "Giá bán", "Đơn vị", "Số lượng"}, new int[]{}, new int[]{}, new int[]{});
+    MyJTable tbProduct = new MyJTable(new String[]{"Mã", "Loại", "Giảm giá", "Tên sản phẩm", "Giá bán", "Đơn vị", "Số lượng"}, new int[]{30, 100, 100, 100, 100, 30}, new int[]{1, 2, 3}, new int[]{});
 
     pnProduct thisPanel = this;
     int posSelectedCB = 0;
@@ -42,7 +42,7 @@ public class pnProduct extends JPanel {
         setLayout(null);
         setBackground(MyColor.White);
         // region SET BOUNDS
-        pnHeader.setBounds(0,0,970, 90);
+        pnHeader.setBounds(0,0,1170, 90);
         pnFunc.setBounds(0,0,440,90);
         btnAdd.setBounds(15,20,60,60);
         btnEdit.setBounds(85,20,60,60);
@@ -50,19 +50,16 @@ public class pnProduct extends JPanel {
         btnIn.setBounds(225,20,60,60);
         btnOut.setBounds(295,20,60,60);
         btnDetail.setBounds(365, 20, 60,60);
-        pnSearch.setBounds(470,0,500,90);
-        cbSearch.setBounds(485, 30, 150, 30);
-        tfSearch.setBounds(645, 30, 200, 30);
-        btnRefresh.setBounds(855,30,100,30);
-        pnFooter.setBounds(0,100,970, 650);
-        tbProduct.scrPn.setBounds(0,100,970,650);
+        pnSearch.setBounds(670,0,500,90);
+        cbSearch.setBounds(685, 30, 150, 30);
+        tfSearch.setBounds(845, 30, 200, 30);
+        btnRefresh.setBounds(1055,30,100,30);
+        pnFooter.setBounds(0,100,1170, 650);
+        tbProduct.scrPn.setBounds(0,100,1170,650);
         // endregion
         // region EVENT CHO PANEL NÀY
         addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentShown(ComponentEvent e) {
-                btnRefresh.doClick();
-            }
+            public void componentShown(ComponentEvent e) {loadProduct();}
         });
         // endregion
         // region EVEN
@@ -94,7 +91,6 @@ public class pnProduct extends JPanel {
                     if(ProductBUS.getInstance().delete(product)){
                         JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin sản phẩm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         loadProduct();
-                        textChange();
                     }
                     else JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + ProductBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
                 }
@@ -147,7 +143,6 @@ public class pnProduct extends JPanel {
                 JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + success + " sản phẩm");
                 if(error!=null) JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + error);
                 loadProduct();
-                textChange();
             }
         });
         btnOut.addActionListener(new ActionListener() {
@@ -157,13 +152,10 @@ public class pnProduct extends JPanel {
             }
         });
         cbSearch.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int i = cbSearch.getSelectedIndex();
-                if(posSelectedCB !=i){
-                    tfSearch.setText("");
-                }
-            }
+            public void actionPerformed(ActionEvent e) {textChange();}
+        });
+        tfSearch.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {textChange();}
         });
         tfSearch.getDocument().addDocumentListener(new DocumentListener() {
             public void insertUpdate(DocumentEvent e) {textChange();}
@@ -193,6 +185,7 @@ public class pnProduct extends JPanel {
         tbProduct.dftbModel.setRowCount(0);
         for(ProductDTO product: ProductBUS.getInstance().getList())
             tbProduct.dftbModel.addRow(product.getRowObjects());
+        textChange();
     }
 
     public void textChange(){

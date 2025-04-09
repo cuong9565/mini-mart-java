@@ -28,12 +28,11 @@ public class pnSupplier extends JPanel {
     JButton btnOut = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Xuất<br>Exel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
-    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Tên", "Mã số", "Số điện thoại", "Địa chỉ", "Email"}, 12);
+    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Mã số", "Tên", "Số điện thoại", "Địa chỉ", "Email"}, 12);
 
-    MyJTable tbSupplier = new MyJTable(new String[]{"Mã số", "Tên", "Số điện thoại", "Địa chỉ", "Email"}, new int[]{}, new int[]{}, new int[]{});
+    MyJTable tbSupplier = new MyJTable(new String[]{"Mã số", "Tên", "Số điện thoại", "Địa chỉ", "Email"}, new int[]{20, 100, 60, 300}, new int[]{1, 3, 4}, new int[]{});
 
     pnSupplier thisPanel = this;
-    int posSelectedCB = 0;
 
     public pnSupplier(fManage frame) {
         setLayout(null);
@@ -56,13 +55,10 @@ public class pnSupplier extends JPanel {
         // endregion
         // region EVENT CHO PANEL NÀY
         addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentShown(ComponentEvent e) {
-                btnRefresh.doClick();
-            }
+            public void componentShown(ComponentEvent e) {loadSupplier();}
         });
         // endregion
-        // region EVEN
+        // region EVENT
         btnAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -91,7 +87,6 @@ public class pnSupplier extends JPanel {
                     if(SupplierBUS.getInstance().deleteSupplier(supplierNew)){
                         JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         loadSupplier();
-                        textChange();
                     }
                     else JOptionPane.showMessageDialog(thisPanel, SupplierBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
                 }
@@ -130,13 +125,10 @@ public class pnSupplier extends JPanel {
             }
         });
         cbSearch.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int i = cbSearch.getSelectedIndex();
-                if(posSelectedCB !=i){
-                    tfSearch.setText("");
-                }
-            }
+            public void actionPerformed(ActionEvent e) {textChange();}
+        });
+        tfSearch.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {textChange();}
         });
         tfSearch.getDocument().addDocumentListener(new DocumentListener() {
             public void insertUpdate(DocumentEvent e) {textChange();}
@@ -166,6 +158,7 @@ public class pnSupplier extends JPanel {
         tbSupplier.dftbModel.setRowCount(0);
         for(SupplierDTO supplier: SupplierBUS.getInstance().getListSupplier())
             tbSupplier.dftbModel.addRow(supplier.getObjects());
+        textChange();
     }
 
     public void textChange(){

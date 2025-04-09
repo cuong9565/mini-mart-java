@@ -142,7 +142,6 @@ public class dlEditProduct extends JDialog {
                 if(ProductBUS.getInstance().update(id, idProductType, detail, idOfferProduct, name, price, unit, quantity)){
                     JOptionPane.showMessageDialog(dialog, "Thay đổi thông tin sản phẩm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     parentPanel.loadProduct();
-                    parentPanel.textChange();
                 }
                 else JOptionPane.showMessageDialog(dialog, "Lỗi: " + ProductBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
             }

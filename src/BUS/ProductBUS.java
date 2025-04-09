@@ -33,28 +33,14 @@ public class ProductBUS {
 
     public List<ProductDTO> getListSearch(int col, String txt) {
         List<ProductDTO> ls = new ArrayList<>();
-        switch (col){
-            case 0:
-                for (ProductDTO p : list) if (p.getName().contains(txt)) ls.add(p);
-                break;
-            case 1:
-                for (ProductDTO p : list) if (String.valueOf(p.getId()).contains(txt)) ls.add(p);
-                break;
-            case 2:
-                for (ProductDTO p : list) if (p.getType().getName().contains(txt)) ls.add(p);
-                break;
-            case 3:
-                for (ProductDTO p : list) if (p.toString().contains(txt)) ls.add(p);
-                break;
-            case 4:
-                for (ProductDTO p : list) if (String.format("%,.0fđ", p.getPrice()).contains(txt)) ls.add(p);
-                break;
-            case 5:
-                for (ProductDTO p : list) if (p.getUnit().contains(txt)) ls.add(p);
-                break;
-            case 6:
-                for (ProductDTO p : list) if (String.valueOf(p.getQuantity()).contains(txt)) ls.add(p);
-                break;
+        for (ProductDTO p : list) switch (col) {
+            case 0: if (String.valueOf(p.getId()).contains(txt)) ls.add(p); break;
+            case 1: if (p.getType().getName().contains(txt)) ls.add(p); break;
+            case 2: if (p.toString().contains(txt)) ls.add(p); break;
+            case 3: if (p.getName().contains(txt)) ls.add(p); break;
+            case 4: if (String.format("%,.0fđ", p.getPrice()).contains(txt)) ls.add(p); break;
+            case 5: if (p.getUnit().contains(txt)) ls.add(p); break;
+            case 6: if (String.valueOf(p.getQuantity()).contains(txt)) ls.add(p); break;
         }
         return ls;
     }

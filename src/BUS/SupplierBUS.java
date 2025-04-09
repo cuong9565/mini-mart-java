@@ -116,35 +116,15 @@ public class SupplierBUS {
     public List<SupplierDTO>getSupplierList(){return supplierList;}
     public List<SupplierDTO>getSupplierListBy(int col, String txt){
         List<SupplierDTO>list = new ArrayList<>();
-
-        switch (col){
-            case 0:
-                for(SupplierDTO supplier : supplierList)
-                    if(supplier.getName().contains(txt))
-                        list.add(supplier);
-                break;
-            case 1:
-                for(SupplierDTO supplier : supplierList)
-                    if(String.valueOf(supplier.getId()).contains(txt))
-                        list.add(supplier);
-                break;
-            case 2:
-                for(SupplierDTO supplier : supplierList)
-                    if(supplier.getPhone().contains(txt))
-                        list.add(supplier);
-                break;
-            case 3:
-                for(SupplierDTO supplier : supplierList)
-                    if(supplier.getAddress().contains(txt))
-                        list.add(supplier);
-                break;
-            case 4:
-                for(SupplierDTO supplier : supplierList)
-                    if(supplier.getEmail().contains(txt))
-                        list.add(supplier);
-                break;
+        for (SupplierDTO supplier : supplierList) {
+            switch (col){
+                case 0: if(String.valueOf(supplier.getId()).contains(txt)) list.add(supplier); break;
+                case 1: if(supplier.getName().contains(txt)) list.add(supplier); break;
+                case 2: if(supplier.getPhone().contains(txt)) list.add(supplier); break;
+                case 3: if(supplier.getAddress().contains(txt)) list.add(supplier); break;
+                case 4: if(supplier.getEmail().contains(txt)) list.add(supplier); break;
+            }
         }
-
         return list;
     }
 }

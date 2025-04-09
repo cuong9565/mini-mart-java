@@ -97,43 +97,16 @@ public class CustomerBUS {
     public int getNumLine(){return numLine;}
     public List<CustomerDTO>getSupplierListBy(int col, String txt){
         List<CustomerDTO>list = new ArrayList<>();
-
-        switch (col){
-            case 0:
-                for (CustomerDTO customerDTO : customerList)
-                    if (customerDTO.getFirstName().contains(txt))
-                        list.add(customerDTO);
-                break;
-            case 1:
-                for (CustomerDTO customerDTO : customerList)
-                    if(String.valueOf(customerDTO.getId()).contains(txt))
-                        list.add(customerDTO);
-                break;
-            case 2:
-                for (CustomerDTO customerDTO : customerList)
-                    if (customerDTO.getPhone().contains(txt))
-                        list.add(customerDTO);
-                break;
-            case 3:
-                for (CustomerDTO customerDTO : customerList)
-                    if (customerDTO.getLastName().contains(txt))
-                        list.add(customerDTO);
-                break;
-            case 4:
-                for (CustomerDTO customerDTO : customerList)
-                    if (customerDTO.getAddress().contains(txt))
-                        list.add(customerDTO);
-                break;
-            case 5:
-                for (CustomerDTO customerDTO : customerList)
-                    if (customerDTO.getGender().contains(txt))
-                        list.add(customerDTO);
-                break;
-            case 6:
-                for (CustomerDTO customerDTO : customerList)
-                    if (customerDTO.getState().contains(txt))
-                        list.add(customerDTO);
-                break;
+        for (CustomerDTO customer: customerList) {
+            switch (col) {
+                case 0: if(String.valueOf(customer.getId()).contains(txt)) list.add(customer); break;
+                case 1: if(customer.getPhone().contains(txt)) list.add(customer); break;
+                case 2: if(customer.getLastName().contains(txt)) list.add(customer); break;
+                case 3: if(customer.getFirstName().contains(txt)) list.add(customer); break;
+                case 4: if(customer.getAddress().contains(txt)) list.add(customer); break;
+                case 5: if(customer.getGender().contains(txt)) list.add(customer); break;
+                case 6: if(customer.getState().contains(txt)) list.add(customer); break;
+            }
         }
         return list;
     }

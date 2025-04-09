@@ -110,7 +110,6 @@ public class dlAddProduct extends JDialog {
                 if(ProductBUS.getInstance().add(idProductType, detail, idOfferProduct, name, price, unit, quantity)){
                     JOptionPane.showMessageDialog(dialog, "Thêm thông tin sản phẩm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     parentPanel.loadProduct();
-                    parentPanel.textChange();
                     dispose();
                 }
                 else JOptionPane.showMessageDialog(dialog, "Lỗi: " + ProductBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);

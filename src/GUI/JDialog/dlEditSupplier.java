@@ -79,8 +79,6 @@ public class dlEditSupplier extends JDialog {
                 if(check){
                     JOptionPane.showMessageDialog(dialog, "Thay đổi thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     parentPanel.loadSupplier();
-                    parentPanel.loadSupplier();
-                    parentPanel.textChange();
                 }
                 else JOptionPane.showMessageDialog(dialog, SupplierBUS.getInstance().getError(), "Thông báo", JOptionPane.WARNING_MESSAGE);
             }
