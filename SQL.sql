@@ -1,4 +1,4 @@
-DROP DATABASE mini_mart_java;
+DROP DATABASE if EXISTS mini_mart_java;
 CREATE DATABASE mini_mart_java;
 USE mini_mart_java;
 
