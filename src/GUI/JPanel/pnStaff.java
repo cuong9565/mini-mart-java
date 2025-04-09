@@ -1,6 +1,8 @@
 package GUI.JPanel;
 
+import BUS.ProductBUS;
 import BUS.StaffBUS;
+import BUS.TypeProductBUS;
 import Components.*;
 import DTO.*;
 import GUI.JDialog.dlAddStaff;
@@ -12,6 +14,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 
 public class pnStaff extends JPanel {
     JPanel pnHeader = new MyJPanel(MyColor.White);
@@ -104,18 +107,28 @@ public class pnStaff extends JPanel {
         btnIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                List<Object[]> list = tbStaff.ImportExel(4);
-//                if(list==null) return;
-//                List<StaffDTO> suppliers = new ArrayList<>();
-//                for (Object[] ob : list)
-//                    suppliers.add(new StaffDTO(-1, ob[0].toString(), ob[1].toString(), ob[2].toString(), ob[3].toString()));
-//                if(StaffBUS.getInstance().addStaffs(suppliers)){
-//                    JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + StaffBUS.getInstance().getNumLine() + " nhà cung cấp");
-//                    loadStaff();
-//                }
-//                else {
-//                    JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + StaffBUS.getInstance().getError());
-//                }
+
+                List<Object[]> list = tbStaff.ImportExel(8);
+                if(list==null) return;
+                String error = null;
+                int success = 0;
+                for (Object[] ob : list) {
+                    String lastName = (String) ob[0];
+                    String firstName = (String) ob[1];
+                    String gender = (String) ob[2];
+                    String phone = (String) ob[3];
+                    String address = (String) ob[4];
+                    String role = (String) ob[5];
+                    Double salary = Double.parseDouble(String.valueOf(ob[6]).replace(",", "").replace("đ", ""));
+                    String password = (String) ob[7];
+                    StaffDTO staff = new StaffDTO(-1, phone, password, firstName, lastName, gender, address, role, salary, "");
+                    if(StaffBUS.getInstance().add(staff)) success++;
+                    else error += ("\n" + ProductBUS.getInstance().getError());
+                }
+
+                JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + success + " nhân viên");
+                if(error!=null) JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + error);
+                loadStaff();
             }
         });
         btnOut.addActionListener(new ActionListener() {
