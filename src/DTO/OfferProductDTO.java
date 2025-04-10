@@ -1,10 +1,13 @@
 package DTO;
 
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class OfferProductDTO {
     private int id, discount;
     private OfferDTO offer;
+    private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     public OfferProductDTO() {}
     public OfferProductDTO(int id, OfferDTO offer, int discount) {
@@ -52,11 +55,10 @@ public class OfferProductDTO {
         return (this.id!=0)?discount + "%":"Chưa có ưu đãi";
     }
     public Object[] getObjects() {
-        return new Object[]{
-                id,
-                offer.getDateStart(),
-                offer.getDateEnd(),
-                discount
+        return new Object[]{id,
+                dateFormat.format(offer.getDateStart()),
+                dateFormat.format(offer.getDateEnd()),
+                discount + "%"
         };
     }
 

@@ -23,7 +23,7 @@ public class OfferProductDAO {
                 "select op.*, o.startDate, o.endDate\n" +
                 "from offerproduct op, offer o\n" +
                 "where op.idOffer = o.id\n" +
-                "order by op.discount";
+                "order by op.id";
         try(PreparedStatement ps = con.prepareStatement(sql)){
             ResultSet rs = ps.executeQuery();
             while(rs.next()) list.add(new OfferProductDTO(rs));
@@ -33,21 +33,69 @@ public class OfferProductDAO {
         }
         return list;
     }
+    public List<OfferProductDTO> getListDistinctDiscount(){
+        List<OfferProductDTO> list = new ArrayList<>();
+        Connection con = DataProvider.getInstance().getConnection();
+        String sql = "select distinct discount " +
+                    "from offerproduct " +
+                    "order by discount;";
+        try(PreparedStatement ps = con.prepareStatement(sql)){
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) list.add(new OfferProductDTO(-1, null, Integer.parseInt(rs.getString("discount"))));
+        }
+        catch(Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return list;
+    }
 
-    public boolean delete(OfferProductDTO o) throws Exception {
+    public boolean add(OfferProductDTO offerProductDTO){
         int res = 0;
-        String sql = "delete from provider where id = ?";
-        try {
-            Connection con = DataProvider.getInstance().getConnection();
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, o.getId());
+        String sql = "insert into offerproduct(idOffer, discount) values(?,?)";
+        Connection con = DataProvider.getInstance().getConnection();
+        try(PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setInt(1, offerProductDTO.getOffer().getId());
+            ps.setInt(2, offerProductDTO.getDiscount());
             res = ps.executeUpdate();
-            DataProvider.getInstance().CloseConnection(con);
+        }
+        catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return res > 0;
+    }
+
+    public boolean update(OfferProductDTO offerProductDTO){
+        int res = 0;
+        String sql = "update offerproduct set discount = ?, idOffer = ? where id = ?";
+        Connection con = DataProvider.getInstance().getConnection();
+        try (PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setInt(1, offerProductDTO.getDiscount());
+            ps.setInt(2, offerProductDTO.getOffer().getId());
+            ps.setInt(3, offerProductDTO.getId());
+            res = ps.executeUpdate();
+        }
+        catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return res > 0;
+    }
+
+    public boolean delete(int id){
+        int res = 0;
+        String sql = "delete from offerproduct where id = ?";
+        Connection con = DataProvider.getInstance().getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            res = ps.executeUpdate();
         }
         catch (Exception e) {
-            throw new Exception("Lỗi SQL: " + e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
-        if(res>0) return true;
-        else throw new Exception("Không thể xóa !");
+        DataProvider.getInstance().CloseConnection(con);
+        return res > 0;
     }
 }

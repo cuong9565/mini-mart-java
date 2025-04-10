@@ -36,6 +36,12 @@ public class OfferBUS {
         return ls;
     }
 
+    public OfferDTO getItemByDate(String dateStart, String dateEnd) {
+        for (OfferDTO o : getList())
+            if(o.getFormattedDateStart().contains(dateStart) && o.getFormattedDateEnd().contains(dateEnd)) return o;
+        return null;
+    }
+
     public List<OfferDTO> getListByOfferProduct(OfferProductDTO offerProduct) {
         List<OfferDTO> ls = new ArrayList<>();
         if (offerProduct.getId() == 0)

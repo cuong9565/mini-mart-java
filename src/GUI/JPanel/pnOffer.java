@@ -33,7 +33,6 @@ public class pnOffer extends JPanel {
     public pnOffer(pnDiscount parent) {
         setLayout(null);
         setBackground(MyColor.White);
-
         // region SET BOUNDS
         pnHeader.setBounds(0,0,1170, 90);
         pnFunc.setBounds(0,0,370,90);
@@ -49,10 +48,10 @@ public class pnOffer extends JPanel {
         pnFooter.setBounds(0,100,1170, 650);
         tbOffer.scrPn.setBounds(0,100,1160,610);
         // endregion
+        // region SET EVENT
         addComponentListener(new ComponentAdapter() {
             public void componentShown(ComponentEvent e) {loadOffer();}
         });
-        // region SET EVENT
         btnAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -77,7 +76,7 @@ public class pnOffer extends JPanel {
                      JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!");
                      loadOffer();
                  } else {
-                     JOptionPane.showMessageDialog(thisPanel, OfferBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
+                     JOptionPane.showMessageDialog(thisPanel, OfferBUS.getInstance().getError(), "Lỗi", JOptionPane.ERROR_MESSAGE);
                  }
             } else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xóa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
         });

@@ -10,7 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Objects;
 
 public class dlEditProduct extends JDialog {
     JPanel pnMain = new MyJPanel(MyColor.White);
@@ -56,8 +55,10 @@ public class dlEditProduct extends JDialog {
         }
         for(OfferProductDTO offerProduct: OfferProductBUS.getInstance().getListDiscount()) {
             cbDiscount.addItem(offerProduct);
-            if(offerProduct.getDiscount() == productDTO.getOfferProduct().getDiscount())
+            if(offerProduct.getDiscount() == productDTO.getOfferProduct().getDiscount()){
                 cbDiscount.setSelectedItem(offerProduct);
+                posCbDiscount = cbDiscount.getSelectedIndex();
+            }
         }
         for(OfferDTO offer: OfferBUS.getInstance().getListByOfferProduct((OfferProductDTO) cbDiscount.getSelectedItem())) {
             cbOffer.addItem(offer);

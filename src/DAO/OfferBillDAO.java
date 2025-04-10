@@ -1,12 +1,10 @@
 package DAO;
 
 import DTO.OfferBillDTO;
-import DTO.OfferDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,74 +16,70 @@ public class OfferBillDAO {
         if (instance == null) instance = new OfferBillDAO();
         return instance;
     }
-
-    public boolean addBill(OfferBillDTO of) {
-        int res = 0;
-        String sql = "INSERT INTO offerbill (idOffer, discount) VALUES (?, ?)";
-        Connection con = DataProvider.getInstance().getConnection();
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, of.getOffer().getId());
-            ps.setInt(2, of.getDiscount());
-            res = ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        DataProvider.getInstance().CloseConnection(con);
-        return res > 0;
-
-    }
-
-    public List<OfferBillDTO> getList() {
+    public List<OfferBillDTO> getList(){
         List<OfferBillDTO> list = new ArrayList<>();
         Connection con = DataProvider.getInstance().getConnection();
         String sql =
-                "SELECT ob.*, o.startDate, o.endDate " +
-                        "FROM offerbill ob, offer o " +
-                        "WHERE ob.idOffer = o.id " +
-                        "ORDER BY ob.discount";
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
+                "select ob.*, o.startDate, o.endDate\n" +
+                        "from offerbill ob, offer o\n" +
+                        "where ob.idOffer = o.id\n" +
+                        "order by ob.id";
+        try(PreparedStatement ps = con.prepareStatement(sql)){
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(new OfferBillDTO(rs));
-            }
-        } catch (Exception e) {
-            throw new RuntimeException("Lỗi SQL: " + e.getMessage());
+            while(rs.next()) list.add(new OfferBillDTO(rs));
+        }
+        catch(Exception e){
+            throw new RuntimeException(e.getMessage());
         }
         return list;
     }
 
-    public boolean delete(OfferBillDTO o) throws Exception {
+    public boolean add(OfferBillDTO offerProductDTO){
         int res = 0;
-        String sql = "DELETE FROM offerbill WHERE id = ?";
-        try {
-            Connection con = DataProvider.getInstance().getConnection();
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, o.getId());
-            res = ps.executeUpdate();
-            DataProvider.getInstance().CloseConnection(con);
-        } catch (Exception e) {
-            throw new Exception("Lỗi SQL: " + e.getMessage());
-        }
-        if (res > 0) return true;
-        else throw new Exception("Không thể xóa OfferBill!");
-    }
-
-    public boolean update(OfferBillDTO data) {
-        int res = 0;
-        String sql = "UPDATE offerbill SET idOffer = ?, discount = ? WHERE id = ?";
+        String sql = "insert into offerbill(idOffer, discount) values(?,?)";
         Connection con = DataProvider.getInstance().getConnection();
-
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, data.getOffer().getId());
-            ps.setInt(2, data.getDiscount());
-            ps.setInt(3, data.getId());
+        try(PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setInt(1, offerProductDTO.getOffer().getId());
+            ps.setInt(2, offerProductDTO.getDiscount());
             res = ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Lỗi cập nhật offerbill: " + e.getMessage());
         }
-
+        catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
         DataProvider.getInstance().CloseConnection(con);
         return res > 0;
     }
 
+    public boolean update(OfferBillDTO offerProductDTO){
+        int res = 0;
+        String sql = "update offerbill set discount = ?, idOffer = ? where id = ?";
+        Connection con = DataProvider.getInstance().getConnection();
+        try (PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setInt(1, offerProductDTO.getDiscount());
+            ps.setInt(2, offerProductDTO.getOffer().getId());
+            ps.setInt(3, offerProductDTO.getId());
+            res = ps.executeUpdate();
+        }
+        catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return res > 0;
+    }
+
+    public boolean delete(int id){
+        int res = 0;
+        String sql = "delete from offerbill where id = ?";
+        Connection con = DataProvider.getInstance().getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            res = ps.executeUpdate();
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return res > 0;
+    }
 }

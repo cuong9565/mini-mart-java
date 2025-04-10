@@ -231,6 +231,16 @@ INSERT INTO OfferProduct (idOffer, discount) VALUES
 (5, 15),
 (6, 35);
 
+INSERT INTO OfferBill (discount, idOffer) VALUES
+(10, 1),
+(15, 2),
+(20, 3),
+(25, 4),
+(30, 5),
+(50, 6),
+(5, 1),
+(35, 3);
+
 INSERT INTO ProductType (name) VALUES
 ('Thực phẩm đóng gói'), ('Đồ uống'), ('Gia vị'), ('Đồ ăn vặt'), ('Sữa và chế phẩm'),
 ('Thịt tươi'), ('Hải sản'), ('Rau củ'), ('Trái cây'), ('Đồ đông lạnh'),
@@ -367,6 +377,10 @@ select * from productdetail;
  
 select * from offer o, offerproduct op
 where o.id = op.idOffer; 
+
+select distinct discount
+from offerproduct
+order by discount;
 
 select pd.*, pdtype.name as type, pddetail.detailInfo as detail, pdoffer.discount as discount, o.id as idOffer, o.startDate as startDate, o.endDate as endDate
 from product pd

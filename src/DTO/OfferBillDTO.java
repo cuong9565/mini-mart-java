@@ -1,22 +1,36 @@
 package DTO;
 
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class OfferBillDTO {
-    private int id;
-    private int discount;
+    private int id, discount;
     private OfferDTO offer;
+    private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-    public OfferBillDTO() {
-    }
-
-    public OfferBillDTO(int id, int discount, OfferDTO offer) {
+    public OfferBillDTO() {}
+    public OfferBillDTO(int id, OfferDTO offer, int discount) {
         this.id = id;
-        this.discount = discount;
         this.offer = offer;
+        this.discount = discount;
+    }
+    public OfferBillDTO(ResultSet rs, int curr){
+        try{
+            this.id = rs.getInt("idOfferBill");
+            this.discount = rs.getInt("discount");
+            this.offer = new OfferDTO(
+                    rs.getInt("idOffer"),
+                    rs.getDate("startDate"),
+                    rs.getDate("endDate")
+            );
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public OfferBillDTO(ResultSet rs) {
-        try {
+        try{
             this.id = rs.getInt("id");
             this.discount = rs.getInt("discount");
             this.offer = new OfferDTO(
@@ -24,41 +38,28 @@ public class OfferBillDTO {
                     rs.getDate("startDate"),
                     rs.getDate("endDate")
             );
-        } catch (Exception e) {
-            System.out.println("OfferBillDTO: " + e.getMessage());
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
+    public int getId() {return id;}
+    public OfferDTO getOffer() {return offer;}
+    public int getDiscount() {return discount;}
 
-    public int getId() {
-        return id;
+    public void setId(int id) {this.id = id;}
+    public void setOffer(OfferDTO offer) {this.offer = offer;}
+    public void setDiscount(int discount) {this.discount = discount;}
+    @Override
+    public String toString() {
+        return (this.id!=0)?discount + "%":"Chưa có ưu đãi";
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(int discount) {
-        this.discount = discount;
-    }
-
-    public OfferDTO getOffer() {
-        return offer;
-    }
-
-    public void setOffer(OfferDTO offer) {
-        this.offer = offer;
-    }
-
     public Object[] getObjects() {
-        return new Object[] {
-                id,
-                offer.getDateStart(),
-                offer.getDateEnd(),
-                discount
+        return new Object[]{id,
+                dateFormat.format(offer.getDateStart()),
+                dateFormat.format(offer.getDateEnd()),
+                discount + "%"
         };
     }
+
 }

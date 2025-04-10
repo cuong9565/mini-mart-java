@@ -1,18 +1,18 @@
 package GUI.JDialog;
 
 import BUS.OfferBUS;
-import BUS.OfferBillBUS;
+import BUS.OfferProductBUS;
 import Components.*;
 import DTO.OfferDTO;
-import DTO.OfferBillDTO;
-import GUI.JPanel.pnOfferBill;
+import DTO.OfferProductDTO;
+import GUI.JPanel.pnOfferProduct;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class dlEditOfferBill extends JDialog {
+public class dlEditOfferProduct extends JDialog {
     JPanel pnMain = new MyJPanel(MyColor.White);
-    JLabel lbHeader = new MyJLabel(Font.BOLD, 24, MyColor.White, "Sửa thông tin giảm giá hóa đơn", SwingConstants.CENTER, SwingConstants.CENTER);
+    JLabel lbHeader = new MyJLabel(Font.BOLD, 24, MyColor.White, "Sửa thông tin giảm giá sản phẩm", SwingConstants.CENTER, SwingConstants.CENTER);
     JLabel lbId = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Mã số*", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbStartDate = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Phần trăm giảm giá*", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbEndDate = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Thời gian giảm giá*", SwingConstants.LEFT, SwingConstants.CENTER);
@@ -23,9 +23,9 @@ public class dlEditOfferBill extends JDialog {
     JButton btnSave = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Green, MyColor.LightGreen, "Xác nhận", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnEsc = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Red, MyColor.LightRed, "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
 
-    public dlEditOfferBill(pnOfferBill parentPanel, OfferBillDTO parentOfferBill) {
+    public dlEditOfferProduct(pnOfferProduct parentPanel, OfferProductDTO parentOfferProduct) {
         super((JFrame) SwingUtilities.getWindowAncestor(parentPanel), true);
-        setTitle("Sửa thông tin giảm giá hóa đơn");
+        setTitle("Sửa thông tin giảm giá sản phẩm");
         setSize(540, 370);
         setLayout(null);
         setLocationRelativeTo(null);
@@ -46,23 +46,23 @@ public class dlEditOfferBill extends JDialog {
         btnEsc.setBounds(270, 230, 150, 40);
         // endregion
         // region setText
-        tfId.setText(String.valueOf(parentOfferBill.getId()));
-        spDiscount.setValue(parentOfferBill.getDiscount());
+        tfId.setText(String.valueOf(parentOfferProduct.getId()));
+        spDiscount.setValue(parentOfferProduct.getDiscount());
         for(OfferDTO o: OfferBUS.getInstance().getList()){
             cbTime.addItem(o);
-            if(o.getId()==parentOfferBill.getOffer().getId())
+            if(o.getId()==parentOfferProduct.getOffer().getId())
                 cbTime.setSelectedItem(o);
         }
         // endregion
         btnEsc.addActionListener(_ -> dispose());
         btnSave.addActionListener(_ -> {
             OfferDTO offer = (OfferDTO) cbTime.getSelectedItem();
-            OfferBillDTO offerProduct = new OfferBillDTO(parentOfferBill.getId(), offer, Integer.parseInt(spDiscount.getValue().toString()));
-            if (OfferBillBUS.getInstance().update(offerProduct)) {
+            OfferProductDTO offerProduct = new OfferProductDTO(parentOfferProduct.getId(), offer, Integer.parseInt(spDiscount.getValue().toString()));
+            if (OfferProductBUS.getInstance().update(offerProduct)) {
                 JOptionPane.showMessageDialog(this, "Sửa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                parentPanel.loadOfferBill();
+                parentPanel.loadOfferProduct();
             } else {
-                JOptionPane.showMessageDialog(this, OfferBillBUS.getInstance().getError(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, OfferProductBUS.getInstance().getError(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         });
         // region ADD
