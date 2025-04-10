@@ -1,6 +1,8 @@
 package GUI.JDialog;
 
 import Components.*;
+import DAO.StaffDAO;
+import DTO.StaffDTO;
 import GUI.JPanel.pnChangeInfo;
 import GUI.JPanel.pnChangePassword;
 import GUI.JFrame.fManage;
@@ -16,19 +18,20 @@ public class dlSettingAccount extends JDialog {
     JPanel pnContent = new MyJPanel(MyColor.White);
     JButton btnChangeInfo = new MyJButton(Font.PLAIN, 12, MyColor.Black, MyColor.LightGray, "Thay đổi thông tin", SwingConstants.CENTER,SwingConstants.CENTER);
     JButton btnChangePassword = new MyJButton(Font.PLAIN, 12, MyColor.Black, MyColor.LightGray, "Thay đổi mật khẩu", SwingConstants.CENTER,SwingConstants.CENTER);
-    JButton lsBtn[] = new JButton[]{btnChangeInfo, btnChangePassword};
-    JPanel lsPn[] = new JPanel[]{new pnChangeInfo(this), new pnChangePassword(this)};
     JLabel lbHeader = new MyJLabel(Font.BOLD, 24, MyColor.White, "", SwingConstants.CENTER, SwingConstants.CENTER);
 
     int currCursor = 0;
 
-    public dlSettingAccount(fManage parentFrame) {
+    public dlSettingAccount(fManage parentFrame, StaffDTO accountLogin) {
         super(parentFrame,true);
         setTitle("Thông tin tài khoản");
         setSize(540,550);
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+        JButton lsBtn[] = new JButton[]{btnChangeInfo, btnChangePassword};
+        JPanel lsPn[] = new JPanel[]{new pnChangeInfo(this, accountLogin), new pnChangePassword(this, accountLogin)};
 
         pnMain.setBounds(0,0,540,550);
         pnNav.setBounds(0,0,540, 30);

@@ -1,5 +1,7 @@
 package GUI.JFrame;
 import Components.*;
+import DAO.StaffDAO;
+import DTO.StaffDTO;
 import GUI.JDialog.dlSettingAccount;
 import GUI.JPanel.*;
 
@@ -13,7 +15,7 @@ public class fManage extends JFrame {
     JPanel pnRight = new MyJPanel(MyColor.White);
     JPanel pnNav = new MyJPanel(MyColor.White);
     JPanel pnMenu = new MyJPanel(MyColor.White);
-    JLabel lbWelcome = new MyJLabel(Font.PLAIN, 16, MyColor.Black, "<html>Xin chào<br>USER<br>ROLE<br><hr></html>", SwingConstants.CENTER, SwingConstants.CENTER);
+    JLabel lbWelcome = new MyJLabel(Font.PLAIN, 16, MyColor.Black, "", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnStatistic = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, "Thống kê", SwingConstants.LEFT, SwingConstants.CENTER);
     JButton btnImport = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, "Nhập hàng", SwingConstants.LEFT, SwingConstants.CENTER);
     JButton btnProduct = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, "Sản phẩm", SwingConstants.LEFT, SwingConstants.CENTER);
@@ -33,7 +35,7 @@ public class fManage extends JFrame {
 
     JPanel[] lsPn = new JPanel[]{new pnStatistic(), new pnImport(), new pnSell(currFrame), new pnProduct(currFrame), new pnTypeProduct(currFrame), new pnCustomer(currFrame), new pnBill(currFrame), new pnDiscount(currFrame), new pnStaff(currFrame), new pnSupplier(currFrame)};
 
-    public fManage(fLogin loginForm) {
+    public fManage(fLogin loginForm, StaffDTO accountLogin) {
         setTitle("Phần mềm quản lý siêu thị mini");
         setSize(1400, 800);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -41,6 +43,7 @@ public class fManage extends JFrame {
         setResizable(false);
         setLayout(null);
         setBackground(Color.decode("#FFFFFF"));
+        lbWelcome.setText(String.format("<html>Xin chào <b>%s</b><br><i>Vai trò: %s</i><br><hr></html>", accountLogin.getFirstName(), accountLogin.getRole()));
 
         // region setBounds + MaximumSize Button
         lbWelcome.setBounds(10, 0, 180, 150);
@@ -77,7 +80,7 @@ public class fManage extends JFrame {
 
         btnSettingAccount.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new dlSettingAccount(currFrame);
+                new dlSettingAccount(currFrame, accountLogin);
             }
         });
 

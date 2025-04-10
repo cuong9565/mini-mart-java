@@ -361,7 +361,8 @@ INSERT INTO Staff (phone, password, firstName, lastName, address, salary, role, 
 ('0968901234', 'xyz321', 'Lộc', 'Trương Văn', '90 Phạm Ngũ Lão, Đà Nẵng', 6500000, 'Nhân viên kho', 'Nam'),
 ('0916789012', 'pass456', 'Hồng', 'Bùi Thị', '14 Nguyễn Văn Linh, Nha Trang', 7800000, 'Thu ngân', 'Nữ'),
 ('0983456789', '123stu', 'Vũ', 'Phan', '38 Lê Đại Hành, Cần Thơ', 8700000, 'Quản lý', 'Nam'),
-('0939012345', 'abc654', 'Ánh', 'Hà Thị', '62 Trần Quốc Toản, Hải Phòng', 7100000, 'Nhân viên bán hàng', 'Nữ');
+('0939012345', 'abc654', 'Ánh', 'Hà Thị', '62 Trần Quốc Toản, Hải Phòng', 7100000, 'Nhân viên bán hàng', 'Nữ'),
+('0397969307', 'admin', 'Cường', 'Lê Mạnh', 'Huỳnh Thị Na, Hóc Môn, TP. HCM', 20000000, 'Quản trị viên', 'Nam');
 
 
  -- ---------------- SELECT -----------

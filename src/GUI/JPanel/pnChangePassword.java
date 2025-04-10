@@ -1,6 +1,7 @@
 package GUI.JPanel;
 
 import Components.*;
+import DTO.StaffDTO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +17,7 @@ public class pnChangePassword extends JPanel {
     JPasswordField pfConfirmPassword = new MyJPasswordFieldInput(Font.PLAIN, 14);
     JButton btnSave = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Green, MyColor.LightGreen, "Đổi mật khẩu", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnEsc = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Red, MyColor.LightRed, "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
-    public pnChangePassword(JDialog dialog) {
+    public pnChangePassword(JDialog dialog, StaffDTO accountLogin) {
         setBackground(MyColor.White);
         setLayout(null);
 

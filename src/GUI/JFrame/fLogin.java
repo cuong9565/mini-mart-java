@@ -1,6 +1,8 @@
 package GUI.JFrame;
 
+import BUS.StaffBUS;
 import Components.*;
+import DTO.StaffDTO;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -16,13 +18,11 @@ public class fLogin extends JFrame {
     JPanel pnRight = new MyJPanel(MyColor.White);
     JLabel lbWelcome = new MyJLabel(Font.BOLD, 32, MyColor.White, "<html>Chào mừng bạn đến với<br>Hệ thống quản lý siêu thị mini</html>", SwingConstants.LEFT, SwingConstants.TOP);
     JLabel lbLogin = new MyJLabel(Font.PLAIN, 25, MyColor.Black, "<html>Đăng nhập tài khoản</html>", SwingConstants.CENTER, SwingConstants.TOP);
-    JLabel lbUserName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "<html>Tên đăng nhập hoặc Email</html>", SwingConstants.LEFT, SwingConstants.TOP);
+    JLabel lbPhone = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "<html>Số điện thoại</html>", SwingConstants.LEFT, SwingConstants.TOP);
     JLabel lbPassword = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "<html>Mật khẩu</html>", SwingConstants.LEFT, SwingConstants.TOP);
-    JTextField tfUserName = new MyJTextFieldLine(Font.PLAIN, 12);
+    JTextField tfPhone = new MyJTextFieldLine(Font.PLAIN, 12);
     JPasswordField pfPassword = new MyJPasswordFieldLine(Font.PLAIN, 12);
     JButton btnLogin = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.DarkBlue,MyColor.LightBlue,  "Đăng nhập", SwingConstants.CENTER, SwingConstants.CENTER);
-    JLabel lbEmptyUserName = new MyJLabelError(10, "Vui lòng không để trống trường này!");
-    JLabel lbEmptyPassword = new MyJLabelError(10, "Vui lòng không để trống trường này!");
 
     public fLogin() {
         super("Phần mềm quản lý siêu thị mini");
@@ -35,22 +35,25 @@ public class fLogin extends JFrame {
         // region setBounds
         lbWelcome.setBounds(50, 100, 450, 100);
         lbLogin.setBounds(580, 50, 280, 30);
-        lbUserName.setBounds(580, 120, 280, 20);
+        lbPhone.setBounds(580, 120, 280, 20);
         lbPassword.setBounds(580, 201, 280, 20);
-        tfUserName.setBounds(580, 140, 280, 20);
-        lbEmptyUserName.setBounds(580, 160, 280, 20);
+        tfPhone.setBounds(580, 140, 280, 20);
         pfPassword.setBounds(580, 220, 280, 20);
-        lbEmptyPassword.setBounds(580, 240, 280, 20);
         btnLogin.setBounds(580, 300, 280, 30);
         pnLeft.setBounds(0,0,550, 500);
         pnRight.setBounds(550,0,350,500);
         // endregion
 
+        // region code xong nhớ xóa
+        tfPhone.setText("0397969307");
+        pfPassword.setText("admin");
+        // endregion
+
         // region Shortcut Key
-        tfUserName.addKeyListener(new KeyAdapter() {
+        tfPhone.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
-                    case KeyEvent.VK_ENTER, KeyEvent.VK_DOWN: pfPassword.requestFocus(); break;
+                    case KeyEvent.VK_DOWN: pfPassword.requestFocus(); break;
                 }
             }
         });
@@ -59,8 +62,7 @@ public class fLogin extends JFrame {
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_DOWN: btnLogin.requestFocus(); break;
-                    case KeyEvent.VK_UP: tfUserName.requestFocus(); break;
-                    case KeyEvent.VK_ENTER: Login(); break;
+                    case KeyEvent.VK_UP: tfPhone.requestFocus(); break;
                 }
             }
         });
@@ -68,7 +70,6 @@ public class fLogin extends JFrame {
         btnLogin.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
-                    case KeyEvent.VK_ENTER: Login(); break;
                     case KeyEvent.VK_UP: pfPassword.requestFocus(); break;
                 }
             }
@@ -77,44 +78,14 @@ public class fLogin extends JFrame {
 
         // endregion
 
-        // region Listener
-        btnLogin.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Login();
-            }
-        });
-        tfUserName.getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e) {
-                lbEmptyUserName.setVisible(false);
-            }
-            public void removeUpdate(DocumentEvent e) {
-
-            }
-            public void changedUpdate(DocumentEvent e) {
-
-            }
-        });
-        pfPassword.getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e) {
-                lbEmptyPassword.setVisible(false);
-            }
-            public void removeUpdate(DocumentEvent e) {
-
-            }
-            public void changedUpdate(DocumentEvent e) {
-
-            }
-        });
-        // endregion
+        btnLogin.addActionListener(_-> Login());
 
         // region Add
-        add(lbEmptyUserName);
-        add(lbEmptyPassword);
         add(lbWelcome);
         add(lbLogin);
-        add(lbUserName);
+        add(lbPhone);
         add(lbPassword);
-        add(tfUserName);
+        add(tfPhone);
         add(btnLogin);
         add(pfPassword);
         add(pnLeft);
@@ -122,27 +93,27 @@ public class fLogin extends JFrame {
         // endregion
 
         setVisible(true);
-        tfUserName.requestFocusInWindow();
+        tfPhone.requestFocusInWindow();
+
+        this.getRootPane().setDefaultButton(btnLogin);
+
+        this.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESC");
+
+        this.getRootPane().getActionMap().put("ESC", new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
     }
 
     public void Login() {
-        boolean check = true;
-        String userName = tfUserName.getText();
+        String phone = tfPhone.getText();
         String password = String.valueOf(pfPassword.getPassword());
-        if(userName.isEmpty()) {
-            lbEmptyUserName.setVisible(true);
-            check = false;
-        } else lbEmptyUserName.setVisible(false);
-
-        if(password.isEmpty()){
-            lbEmptyPassword.setVisible(true);
-            check = false;
-        } else lbEmptyPassword.setVisible(false);
-
-
-        if(check){
-            new fManage(this);
+        StaffDTO accountLogin =  StaffBUS.getInstance().Login(phone, password);
+        if(accountLogin.getId()!=0){
+            new fManage(this, accountLogin);
             setVisible(false);
         }
+        else JOptionPane.showMessageDialog(this, StaffBUS.getInstance().getError(), "Lỗi", JOptionPane.ERROR_MESSAGE);
     }
 }

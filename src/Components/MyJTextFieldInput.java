@@ -7,6 +7,11 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
 public class MyJTextFieldInput extends JTextField {
+    @Override
+    public void setText(String str){
+        super.setText(str);
+        setCaretPosition(0);
+    }
     public MyJTextFieldInput(int style, int size, boolean editable) {
         super();
         setFont(new Font("Roboto", style, size));

@@ -18,6 +18,30 @@ public class StaffBUS {
         return instance;
     }
 
+    public StaffDTO Login(String phone, String password){
+        StaffDTO staff = new StaffDTO(0);
+        if(phone.isEmpty()){
+            error = "Số điện thoại không được để trống!!!";
+            return new StaffDTO(0);
+        }
+        if(password.isEmpty()){
+            error = "Mật khẩu không được để trống!!!";
+            return new StaffDTO(0);
+        }
+        if(!phone.matches("^0[0-9]{8,10}$")){
+            error = "Số điện thoại định dạng không hợp lệ!!!";
+            return new StaffDTO(0);
+        }
+        try {
+            staff = StaffDAO.getInstance().Login(phone, password);
+        }
+        catch(Exception e){
+            error = e.getMessage();
+            return new StaffDTO(0);
+        }
+        return staff;
+    }
+
     public List<StaffDTO> getList() {
         list = StaffDAO.getInstance().getList();
         return list;

@@ -16,6 +16,24 @@ public class StaffDAO {
         return instance;
     }
 
+    public StaffDTO Login(String phone, String password) {
+        StaffDTO staff = new StaffDTO(0);
+        Connection con = DataProvider.getInstance().getConnection();
+        String sql = "select * from staff where phone = ? and password = ?";
+        try(PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setString(1, phone);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) staff = new StaffDTO(rs);
+            else throw  new RuntimeException("Số điện thoại hoặc mật khẩu không hợp lệ!!!\nVui lòng nhập lại!!!");
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return staff;
+    }
+
     public List<StaffDTO> getList(){
         List<StaffDTO> list = new ArrayList<>();
         String sql = "select * from staff";

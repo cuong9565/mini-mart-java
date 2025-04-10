@@ -15,6 +15,9 @@ public class StaffDTO {
     private String state;
 
     public StaffDTO() {}
+    public StaffDTO(int id){
+        this.id = id;
+    }
     public StaffDTO(int id, String phone ,String password , String firstName,String lastName,String gender, String address, String role, double salary, String state) {
         this.id = id;
         this.password = password;
@@ -53,6 +56,7 @@ public class StaffDTO {
     public String getAddress() {return address;}
     public String getRole() {return role;}
     public double getSalary() {return salary;}
+    public String  getFormatSalary() {return  String.format("%,.0fđ", salary);}
     public String getPhone() {return phone;}
     public String getState() {return state;}
 
