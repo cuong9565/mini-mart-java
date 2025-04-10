@@ -10,7 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Objects;
 
 public class dlAddProduct extends JDialog {
     JPanel pnMain = new MyJPanel(MyColor.White);
@@ -47,8 +46,8 @@ public class dlAddProduct extends JDialog {
 
         // region SET TEXT
         for(TypeProductDTO type: TypeProductBUS.getInstance().getList()) cbType.addItem(type);
-      /*  for(OfferProductDTO offerProduct: OfferProductBUS.getInstance().getListDiscount()) cbDiscount.addItem(offerProduct);
-        for(OfferDTO offer: OfferBUS.getInstance().getListByOfferProduct((OfferProductDTO) cbDiscount.getSelectedItem())) cbOffer.addItem(offer); */
+        for(OfferProductDTO offerProduct: OfferProductBUS.getInstance().getListDiscount()) cbDiscount.addItem(offerProduct);
+        for(OfferDTO offer: OfferBUS.getInstance().getListByOfferProduct((OfferProductDTO) cbDiscount.getSelectedItem())) cbOffer.addItem(offer);
         // endregion
         // region SET BOUNDS
         pnMain.setBounds(0,0,760,440);
@@ -77,7 +76,7 @@ public class dlAddProduct extends JDialog {
         lbHeader.setBounds(0,0,760,60);
         // endregion
         // region Event
-       /* cbDiscount.addActionListener(new ActionListener() {
+       cbDiscount.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int i = cbDiscount.getSelectedIndex();
@@ -114,8 +113,8 @@ public class dlAddProduct extends JDialog {
                 }
                 else JOptionPane.showMessageDialog(dialog, "Lỗi: " + ProductBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
             }
-        }); */
-        // endregion11
+        });
+        // endregion
         // region ADD
         add(lbName);
         add(tfName);

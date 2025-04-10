@@ -53,7 +53,6 @@ public class dlEditProduct extends JDialog {
             cbType.addItem(type);
             if(type.getId() == productDTO.getType().getId()) cbType.setSelectedItem(type);
         }
-        /*
         for(OfferProductDTO offerProduct: OfferProductBUS.getInstance().getListDiscount()) {
             cbDiscount.addItem(offerProduct);
             if(offerProduct.getDiscount() == productDTO.getOfferProduct().getDiscount()){
@@ -65,7 +64,7 @@ public class dlEditProduct extends JDialog {
             cbOffer.addItem(offer);
             if(offer.getId() == productDTO.getOfferProduct().getOffer().getId())
                 cbOffer.setSelectedItem(offer);
-        } */
+        }
         tfId.setText(String.valueOf(productDTO.getId()));
         snQuantity.setValue(productDTO.getQuantity());
         tfName.setText(productDTO.getName());
@@ -108,7 +107,7 @@ public class dlEditProduct extends JDialog {
 
         // endregion
         // region Event
-      /*  cbDiscount.addActionListener(new ActionListener() {
+        cbDiscount.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int i = cbDiscount.getSelectedIndex();
@@ -119,13 +118,13 @@ public class dlEditProduct extends JDialog {
                         cbOffer.addItem(offer);
                 }
             }
-        }); */
+        });
         btnEsc.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dialog.dispose();
             }
         });
-      /*  btnSave.addActionListener(new ActionListener() {
+        btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 TypeProductDTO typeSelected = (TypeProductDTO) cbType.getSelectedItem();
                 OfferProductDTO offerProductSelected = (OfferProductDTO) cbDiscount.getSelectedItem();
@@ -147,8 +146,8 @@ public class dlEditProduct extends JDialog {
                 }
                 else JOptionPane.showMessageDialog(dialog, "Lỗi: " + ProductBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
             }
-        }); */
-        // endregion11
+        });
+        // endregion
         // region ADD
         add(lbId); add(tfId);
         add(lbQuantity); add(snQuantity);

@@ -119,7 +119,7 @@ public class pnProduct extends JPanel {
                 loadProduct();
             }
         });
-        /* btnIn.addActionListener(new ActionListener() {
+        btnIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 List<Object[]> list = tbProduct.ImportExel(4);
@@ -144,7 +144,7 @@ public class pnProduct extends JPanel {
                 if(error!=null) JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + error);
                 loadProduct();
             }
-        }); */
+        });
         btnOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

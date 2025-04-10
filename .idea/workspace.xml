@@ -13,21 +13,11 @@
       <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJLabel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPanel$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/DetailProductBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/DetailProductBUS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BUS/OfferBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/OfferBUS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BUS/OfferProductBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/OfferProductBUS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BUS/ProductBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/ProductBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/ImportDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/ImportDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/ImportDtlDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/ImportDtlDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/StaffDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/StaffDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DTO/ImportDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/ImportDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DTO/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/ProductDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddProduct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddoffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddoffer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditProduct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditoffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditoffer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnImport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnImport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnOffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnOffer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnOfferProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnOfferProduct.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" afterDir="false" />
     </list>
@@ -44,6 +34,7 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -52,12 +43,12 @@
     &quot;assignee&quot;: &quot;cuong9565&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/cuong9565/mini-mart-java.git",
-    "accountId": "08037649-7790-4746-a5dc-212837c2106e"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/cuong9565/mini-mart-java.git&quot;,
+    &quot;accountId&quot;: &quot;08037649-7790-4746-a5dc-212837c2106e&quot;
   }
-}]]></component>
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
