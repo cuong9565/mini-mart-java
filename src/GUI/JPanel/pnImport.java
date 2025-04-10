@@ -1,298 +1,389 @@
 package GUI.JPanel;
 
-import DAO.*;
+import BUS.ImportBUS;
 import Components.*;
+import DAO.*;
+import DAO.SupplierDAO;
 import DTO.*;
+import DTO.SupplierDTO;
+import GUI.JDialog.dlImportDetail;
+import GUI.JFrame.fManage;
+
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class pnImport extends JPanel {
-    JButton btnRefresh = new MyJButton(Font.PLAIN, 16, MyColor.Black, MyColor.White, MyColor.White, "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnExportExcel = new MyJButton(Font.PLAIN, 16, MyColor.Black, MyColor.White, MyColor.LightGray, "Nhập Excel", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnDelete = new MyJButton(Font.PLAIN, 16, MyColor.Black, MyColor.White, MyColor.LightGray, "Xóa", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnEdit = new MyJButton(Font.PLAIN, 16, MyColor.Black, MyColor.White, MyColor.LightGray, "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnList = new MyJButton(Font.PLAIN, 16, MyColor.Black, MyColor.White, MyColor.LightGray, "Xem chi tiết", SwingConstants.CENTER, SwingConstants.CENTER);
-    JLabel lbID = new MyJLabel(Font.PLAIN, 12, MyColor.Black, "Mã phiếu nhập", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbCreate = new MyJLabel(Font.PLAIN, 12, MyColor.Black, "Người tạo phiếu", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbSupply = new MyJLabel(Font.PLAIN, 12, MyColor.Black, "Nhà cung cấp", SwingConstants.LEFT, SwingConstants.CENTER);
-    JPanel panel1 = new JPanel();
-    JPanel panel2 = new JPanel();
-    JPanel buttonPanel = new JPanel();
-    JPanel quantityPanel = new JPanel();
-    JTextField txtSearch = new JTextField();
-    JTextField txtID = new JTextField();
-    JTextField txtCreate = new JTextField();
-    JTextField txtQuantity = new JTextField();
-    JComboBox<Object> cboSupplier = new JComboBox<>();
-    MyJTable tbProduct = new MyJTable(new String[]{"Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn vị", "Đơn giá"}, new int[]{}, new int[]{}, new int[]{});
-    MyJTable tbImport = new MyJTable(new String[]{"STT", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn vị", "Đơn giá"}, new int[]{}, new int[]{}, new int[]{});
-    JPanel totalPanel = new JPanel();
-    JLabel lbTotal = new MyJLabel(Font.BOLD, 16, Color.decode("#000000"), "Tổng tiền", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbAmount = new MyJLabel(Font.PLAIN, 16, Color.decode("#000000"), "0đ", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbQuantity = new MyJLabel(Font.PLAIN, 16, Color.decode("#000000"), "Số lượng", SwingConstants.LEFT, SwingConstants.CENTER);
-    JButton btnImport = new MyJButton(Font.PLAIN, 16, Color.decode("#FFFFFF"), Color.decode("#64a15c"), Color.decode("#00CC00"), "Nhập hàng", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnAdd = new MyJButton(Font.PLAIN, 16, Color.decode("#FFFFFF"), Color.decode("#64a15c"), Color.decode("#00CC00"), "Thêm", SwingConstants.CENTER, SwingConstants.CENTER);
+    // UI Components
+    JPanel pnMain = new MyJPanel(MyColor.White);
+    JPanel pnInfoImport = new MyJPanel(MyColor.White, "Thông tin phiếu nhập");
+    JPanel pnSearch = new MyJPanel(MyColor.White, "Tìm kiếm sản phẩm");
 
-    private ProductDAO productDAO = ProductDAO.getInstance();
-    private ImportDAO importDAO = ImportDAO.getInstance();
-    private SupplierDAO supplierDAO = SupplierDAO.getInstance();
-    private ImportDtlDAO detailDAO = ImportDtlDAO.getInstance();
+    JLabel lbID = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Mã phiếu nhập", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbCreate = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Người tạo phiếu", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbSupply = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Nhà cung cấp", SwingConstants.LEFT, SwingConstants.CENTER);
+
+    JTextField tfID = new MyJTextFieldInput(Font.PLAIN, 14, false);
+    JTextField tfCreate = new MyJTextFieldInput(Font.PLAIN, 14, false);
+    JComboBox<String> cboSupplier = new MyJComboBox<>(new String[]{}, 12);
+
+    JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
+    JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
+
+    MyJTable tbProduct = new MyJTable(new String[]{"Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn vị", "Đơn giá"}, 12, new int[]{50, 150, 100, 50}, new int[]{1}, new int[]{});
+    MyJTable tbImport = new MyJTable(new String[]{"STT", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn vị", "Đơn giá"}, 12, new int[]{15, 15, 50, 15, 15}, new int[]{}, new int[]{});
+
+    JLabel lbQuantity = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Số lượng: ", SwingConstants.LEFT, SwingConstants.CENTER);
+    JSpinner snQuantity = new MyJSpinner(1, 1, 1000000000, 1);
+    JButton btnAdd = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Thêm", SwingConstants.CENTER, SwingConstants.CENTER);
+
+    JButton btnExportExcel = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Nhập Excel", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnDelete = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Xóa", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnEdit = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnImport = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Nhập hàng", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnList = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Xem chi tiết", SwingConstants.CENTER, SwingConstants.CENTER);
+
+    JLabel lbTotal = new MyJLabel(Font.BOLD, 14, MyColor.Black, "Tổng tiền: ", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbAmount = new MyJLabel(Font.BOLD, 14, MyColor.Black, "0đ", SwingConstants.LEFT, SwingConstants.CENTER);
+
+    private final ImportBUS importBUS = ImportBUS.getInstance();
+    private final ProductDAO productDAO = ProductDAO.getInstance();
+    private final SupplierDAO supplierDAO = SupplierDAO.getInstance();
     private List<ProductDTO> selectedProducts = new ArrayList<>();
+    fManage frame;
+    pnImport thisPanel = this;
 
     public pnImport() {
         initComponents();
         loadSuppliers();
         loadProducts();
-        addListeners();
+        updateTotal();
+        addListeners(frame, thisPanel);
     }
 
     private void initComponents() {
         setLayout(null);
         setBackground(MyColor.White);
-        Border border = BorderFactory.createLineBorder(Color.gray, 1);
-        panel1.setBorder(BorderFactory.createTitledBorder(border, "Tìm kiếm"));
-        panel1.setBackground(Color.decode("#FFFFFF"));
-        panel1.setBounds(10, 10, 450, 80);
 
-        txtSearch.setFont(new Font("Arial", Font.PLAIN, 20));
-        txtSearch.setHorizontalAlignment(JTextField.CENTER);
-        txtSearch.setBounds(30, 35, 302, 36);
-        txtSearch.setBorder(border);
+        // Set bounds
+        pnMain.setBounds(0, 0, 1170, 750);
+        pnInfoImport.setBounds(0, 0, 1160, 70);
+        pnSearch.setBounds(0, 70, 460, 60);
 
-        btnRefresh.setBorder(border);
-        btnRefresh.setBounds(342, 35, 100, 36);
+        lbID.setBounds(240, 10, 200, 20);
+        tfID.setBounds(240, 30, 200, 30);
+        lbCreate.setBounds(460, 10, 200, 20);
+        tfCreate.setBounds(460, 30, 200, 30);
+        lbSupply.setBounds(680, 10, 200, 20);
+        cboSupplier.setBounds(680, 30, 200, 30);
 
-        panel2.setBackground(Color.decode("#FFFFFF"));
-        panel2.setLayout(new GridLayout(3, 2, 10, 10));
-        panel2.add(lbID); panel2.add(txtID);
-        panel2.add(lbCreate); panel2.add(txtCreate);
-        panel2.add(lbSupply); panel2.add(cboSupplier);
-        panel2.setBounds(490, 10, 430, 100);
+        tfSearch.setBounds(10, 90, 340, 30);
+        btnRefresh.setBounds(360, 90, 90, 30);
 
-        tbProduct.scrPn.setBounds(10, 110, 450, 550);
-        tbImport.scrPn.setBounds(490, 120, 450, 450);
+        tbProduct.scrPn.setBounds(0, 140, 460, 550);
+        tbImport.scrPn.setBounds(480, 140, 680, 500);
 
-        buttonPanel.setBackground(Color.decode("#FFFFFF"));
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        buttonPanel.setBounds(480, 590, 480, 50);
+        lbQuantity.setBounds(0, 700, 70, 30);
+        snQuantity.setBounds(70, 700, 100, 30);
+        btnAdd.setBounds(180, 700, 100, 30);
 
-        btnExportExcel.setBorder(border);
-        btnExportExcel.setPreferredSize(new Dimension(100, 36));
-        btnDelete.setBorder(border);
-        btnDelete.setPreferredSize(new Dimension(100, 36));
-        btnEdit.setBorder(border);
-        btnEdit.setPreferredSize(new Dimension(100, 36));
-        btnList.setBorder(border);
-        btnList.setPreferredSize(new Dimension(100, 36));
+        btnExportExcel.setBounds(480, 650, 100, 30);
+        btnDelete.setBounds(590, 650, 100, 30);
+        btnEdit.setBounds(700, 650, 100, 30);
+        btnList.setBounds(810, 650, 120, 30);
+        btnImport.setBounds(950, 700, 100, 30);
 
-        buttonPanel.add(btnExportExcel);
-        buttonPanel.add(btnDelete);
-        buttonPanel.add(btnEdit);
-        buttonPanel.add(btnList);
+        lbTotal.setBounds(480, 700, 80, 30);
+        lbAmount.setBounds(560, 700, 190, 30);
 
-        totalPanel.setLayout(null);
-        totalPanel.setBackground(Color.decode("#FFFFFF"));
-        totalPanel.setBounds(480, 660, 480, 60);
-
-        lbTotal.setBounds(60, 15, 100, 30);
-        totalPanel.add(lbTotal);
-
-        lbAmount.setBounds(180, 15, 100, 30);
-        totalPanel.add(lbAmount);
-
-        btnImport.setBounds(310, 15, 120, 30);
-        totalPanel.add(btnImport);
-
-        quantityPanel.setLayout(null);
-        quantityPanel.setBackground(Color.decode("#FFFFFF"));
-        quantityPanel.setBounds(50, 660, 450, 60);
-
-        lbQuantity.setBounds(10, 15, 80, 30);
-        quantityPanel.add(lbQuantity);
-
-        txtQuantity.setFont(new Font("Arial", Font.PLAIN, 16));
-        txtQuantity.setHorizontalAlignment(JTextField.CENTER);
-        txtQuantity.setBounds(100, 15, 100, 30);
-        txtQuantity.setBorder(border);
-        quantityPanel.add(txtQuantity);
-
-        btnAdd.setBorder(border);
-        btnAdd.setBounds(250, 15, 120, 30);
-        btnAdd.setPreferredSize(new Dimension(120, 36));
-        quantityPanel.add(btnAdd);
-
-        add(quantityPanel);
-        add(totalPanel);
-        add(buttonPanel);
-        add(tbImport.scrPn);
-        add(tbProduct.scrPn);
+        // Add components
+        add(lbID);
+        add(tfID);
+        add(lbCreate);
+        add(tfCreate);
+        add(lbSupply);
+        add(cboSupplier);
         add(btnRefresh);
-        add(txtSearch);
-        add(panel1);
-        add(panel2);
+        add(tfSearch);
+        add(tbProduct.scrPn);
+        add(tbImport.scrPn);
+        add(lbQuantity);
+        add(snQuantity);
+        add(btnAdd);
+        add(btnExportExcel);
+        add(btnDelete);
+        add(btnEdit);
+        add(btnImport);
+        add(btnList);
+        add(lbTotal);
+        add(lbAmount);
+        add(pnSearch);
+        add(pnInfoImport);
+        add(pnMain);
     }
 
     private void loadSuppliers() {
         try {
             List<SupplierDTO> suppliers = supplierDAO.getListSupplier();
             cboSupplier.removeAllItems();
+            cboSupplier.addItem("Select a supplier");
             for (SupplierDTO supplier : suppliers) {
                 cboSupplier.addItem(supplier.getId() + " - " + supplier.getName());
             }
+            cboSupplier.setSelectedIndex(0);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error loading suppliers: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error loading suppliers: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            cboSupplier.removeAllItems();
+            cboSupplier.addItem("Error loading suppliers");
         }
     }
 
     private void loadProducts() {
-        try {
-            List<ProductDTO> products = productDAO.getList();
-            tbProduct.dftbModel.setRowCount(0);
-            for (ProductDTO product : products) {
-                tbProduct.dftbModel.addRow(new Object[]{
-                        product.getId(), product.getName(), product.getQuantity(),
-                        product.getUnit(), product.getPrice()
-                });
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error loading products: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        List<ProductDTO> products = productDAO.getList();
+        tbProduct.dftbModel.setRowCount(0);
+        for (ProductDTO product : products) {
+            tbProduct.dftbModel.addRow(new Object[]{
+                    product.getId(),
+                    product.getName(),
+                    product.getQuantity(),
+                    product.getUnit(),
+                    String.format("%,.0fđ", product.getPrice())
+            });
         }
     }
 
     private void loadImports() {
-        try {
-            List<ImportDTO> imports = importDAO.getAll();
-            tbImport.dftbModel.setRowCount(0);
-            int stt = 1;
-            for (ImportDTO imp : imports) {
-                tbImport.dftbModel.addRow(new Object[]{stt++, "N/A", "N/A", "N/A", "N/A", imp.getTotal()});
-            }
-            updateTotal();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error loading imports: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        tbImport.dftbModel.setRowCount(0);
+        int stt = 1;
+        for (ProductDTO product : selectedProducts) {
+            tbImport.dftbModel.addRow(new Object[]{
+                    stt++,
+                    product.getId(),
+                    product.getName(),
+                    product.getQuantity(),
+                    product.getUnit(),
+                    String.format("%,.0fđ", product.getPrice())
+            });
         }
     }
 
+
     private void updateTotal() {
+        double price = 0;
         double total = 0;
         for (int i = 0; i < tbImport.dftbModel.getRowCount(); i++) {
-            total += Double.parseDouble(tbImport.dftbModel.getValueAt(i, 5).toString());
+            String qty = tbImport.dftbModel.getValueAt(i, 3).toString();
+            String amountStr = tbImport.dftbModel.getValueAt(i, 5).toString().replace("đ", "").replace(",", "");
+            price = Integer.parseInt(qty) * Double.parseDouble(amountStr);
+            total += price;
         }
         lbAmount.setText(String.format("%,.0fđ", total));
     }
 
-    private void addListeners() {
-        btnRefresh.addActionListener(e -> {
-            loadProducts();
-            loadImports();
-            txtSearch.setText("");
-            selectedProducts.clear();
-            tbImport.dftbModel.setRowCount(0);
-            updateTotal();
+    private void clearForm() {
+        tfID.setText("");
+        tfCreate.setText("");
+        snQuantity.setValue(0);
+        cboSupplier.setSelectedIndex(0);
+        selectedProducts.clear();
+        updateTotal();
+    }
+
+    private void searchProducts(String searchText) {
+        try {
+            List<ProductDTO> products = productDAO.getList();
+            tbProduct.dftbModel.setRowCount(0);
+            for (ProductDTO product : products) {
+                if (product.getName().toLowerCase().contains(searchText.toLowerCase()) ||
+                        String.valueOf(product.getId()).contains(searchText)) {
+                    tbProduct.dftbModel.addRow(new Object[]{
+                            product.getId(), product.getName(), product.getQuantity(),
+                            product.getUnit(), String.format("%,.0fđ", product.getPrice())
+                    });
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error searching products: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
+
+    private void addListeners(fManage frame, pnImport thisPanel) {
+
+        btnList.addActionListener( e->{
+            new dlImportDetail(frame, thisPanel);
         });
 
-        btnAdd.addActionListener(e -> {
-            int row = tbProduct.getSelectedRow();
-            if (row >= 0) {
-                try {
-                    int quantity = Integer.parseInt(txtQuantity.getText());
-                    int productId = (int) tbProduct.dftbModel.getValueAt(row, 0);
-                    ProductDTO product = productDAO.getItemById(productId);
-                    product.setQuantity(quantity);
-                    selectedProducts.add(product);
+        btnRefresh.addActionListener(e -> {
+            loadProducts();
+            //loadImports();
+            tfSearch.setText("");
+            clearForm();
+        });
 
-                    tbImport.dftbModel.addRow(new Object[]{
-                            tbImport.dftbModel.getRowCount() + 1, product.getId(), product.getName(),
-                            quantity, product.getUnit(), product.getPrice()
-                    });
-                    updateTotal();
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(this, "Invalid quantity!", "Error", JOptionPane.ERROR_MESSAGE);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Error adding product: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Please select a product to add!");
+        tfSearch.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                searchProducts(tfSearch.getText().trim());
             }
         });
 
-        btnImport.addActionListener(e -> {
-            try {
-                int idStaff = Integer.parseInt(txtCreate.getText());
-                int idProvider = Integer.parseInt(cboSupplier.getSelectedItem().toString().split(" - ")[0]);
-                double total = Double.parseDouble(lbAmount.getText().replace("đ", "").replace(",", ""));
-                String dateStr = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-                ImportDTO importDTO = new ImportDTO(0, idStaff, idProvider, total, dateStr);
-                importDAO.insert(importDTO);
 
-                for (ProductDTO product : selectedProducts) {
-                    ImportDtlDTO detail = new ImportDtlDTO(0, product.getId(),
-                            product.getQuantity(), product.getPrice(), product.getUnit());
-                    detailDAO.insert(detail);
+        btnAdd.addActionListener(e -> {
+            int selectedRow = tbProduct.getSelectedRow();
+            if (selectedRow != -1) {
+                try {
+                    int qty = (Integer) snQuantity.getValue();
+                    if (qty <= 0) {
+                        JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn 0");
+                        return;
+                    }
+                    if (tbProduct.dftbModel.getColumnCount() < 5) {
+                        JOptionPane.showMessageDialog(this, "Dữ liệu sản phẩm không đầy đủ!");
+                        return;
+                    }
+
+                    int productID = (int) tbProduct.dftbModel.getValueAt(selectedRow, 0);
+                    String productName = (String) tbProduct.dftbModel.getValueAt(selectedRow, 1);
+                    int productQuantity = (int) tbProduct.dftbModel.getValueAt(selectedRow, 2);
+                    String productUnit = (String) tbProduct.dftbModel.getValueAt(selectedRow, 3);
+                    String priceStr = tbProduct.dftbModel.getValueAt(selectedRow, 4).toString().replace("đ", "").replace(",", "");
+                    double price = Double.parseDouble(priceStr);
+
+                    if (qty > productQuantity) {
+                        JOptionPane.showMessageDialog(this, "Số lượng phải bé hơn số lượng sản phẩm hiện có");
+                        return;
+                    }
+                    ProductDTO product = new ProductDTO(productID, productName, qty, productUnit, price);
+                    selectedProducts.add(product);
+
+                    loadImports();
+                    updateTotal();
+                    snQuantity.setValue(1);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "Số lượng không hợp lệ");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Lỗi khi thêm sản phẩm: " + ex.getMessage());
                 }
-
-                selectedProducts.clear();
-                tbImport.dftbModel.setRowCount(0);
-                loadImports();
-                updateTotal();
-                JOptionPane.showMessageDialog(this, "Import added successfully!");
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Error adding import: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm");
             }
         });
 
         btnDelete.addActionListener(e -> {
-            int row = tbImport.getSelectedRow();
-            if (row >= 0) {
-                try {
-                    int id = Integer.parseInt(txtID.getText());
-                    importDAO.delete(id);
+            int selectedRow = tbImport.getSelectedRow();
+            if (selectedRow != -1) {
+                int productId = (int) tbImport.dftbModel.getValueAt(selectedRow, 1);
+                int quantityTable = (int) tbImport.dftbModel.getValueAt(selectedRow, 3);
+
+
+                ProductDTO productRemove = null;
+                for (ProductDTO product : selectedProducts) {
+                    if (product.getId() == productId && product.getQuantity() == quantityTable) {
+                        productRemove = product;
+                        break;
+                    }
+                }
+
+                if (productRemove != null) {
+                    selectedProducts.remove(productRemove);
                     loadImports();
-                    JOptionPane.showMessageDialog(this, "Import deleted!");
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Error deleting import: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    updateTotal();
+                    snQuantity.setValue(0);
+                    JOptionPane.showMessageDialog(this, "Đã xóa sản phẩm khỏi danh sách nhập hàng!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Không tìm thấy sản phẩm để xóa!");
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Please select an import to delete!");
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm trong bảng nhập hàng để xóa!");
             }
         });
+    /*
+        btnImport.addActionListener(e -> {
+            try {
+                // Kiểm tra điều kiện đầu vào
+                if (cboSupplier.getSelectedIndex() == 0) {
+                    JOptionPane.showMessageDialog(this, "Vui lòng chọn nhà cung cấp!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                if (selectedProducts.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Danh sách sản phẩm nhập hàng trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                if (txtCreate.getText().trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin người tạo phiếu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Lấy thông tin từ giao diện
+                String supplierStr = cboSupplier.getSelectedItem().toString();
+                int idSupplier = Integer.parseInt(supplierStr.split(" - ")[0]); // Lấy ID nhà cung cấp từ JComboBox
+                int idStaff = Integer.parseInt(txtCreate.getText().trim()); // Giả sử txtCreate chứa ID nhân viên
+                double total = Double.parseDouble(lbAmount.getText().replace("đ", "").replace(",", "")); // Tổng tiền
+                Timestamp dateCreate = new Timestamp(System.currentTimeMillis()); // Thời gian hiện tại
+
+                // Tạo đối tượng ImportDTO
+                ImportDTO importDTO = new ImportDTO(0, idStaff, idSupplier, total, dateCreate); // ID sẽ được tự động sinh
+
+                // Thêm phiếu nhập vào cơ sở dữ liệu
+                boolean importSuccess = importBUS.getInstance().getListImport().add(importDTO);
+                if (!importSuccess) {
+                    JOptionPane.showMessageDialog(this, "Thêm phiếu nhập thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Lấy ID phiếu nhập vừa tạo (giả sử ImportDAO đã cập nhật ID sau khi thêm)
+                int importId = importDTO.getIdImport();
+
+                // Thêm chi tiết phiếu nhập
+                ImportDtlDAO importDtlDAO = ImportDtlDAO.getInstance();
+                for (ProductDTO product : selectedProducts) {
+                    ImportDtlDTO detailDTO = new ImportDtlDTO(
+                            importId,           // ID phiếu nhập
+                            product.getId(),    // ID sản phẩm
+                            product.getQuantity(), // Số lượng
+                            product.getPrice(), // Đơn giá
+                            product.getUnit()   // Đơn vị
+                    );
+                    boolean detailSuccess = importDtlDAO.insert(detailDTO);
+                    if (!detailSuccess) {
+                        JOptionPane.showMessageDialog(this, "Thêm chi tiết phiếu nhập thất bại cho sản phẩm: " + product.getName(),
+                                "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                    // Cập nhật số lượng sản phẩm trong kho (nếu cần)
+                    ProductDAO productDAO = ProductDAO.getInstance();
+                    ProductDTO updatedProduct = productDAO.getItemById(product.getId());
+                    if (updatedProduct != null) {
+                        int newQuantity = updatedProduct.getQuantity() + product.getQuantity();
+                        updatedProduct.setQuantity(newQuantity);
+                        productDAO.update(updatedProduct); // Giả sử ProductDAO có phương thức update
+                    }
+                }
+
+                // Thông báo thành công và làm mới giao diện
+                JOptionPane.showMessageDialog(this, "Nhập hàng thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                clearForm(); // Xóa form
+                loadProducts(); // Tải lại danh sách sản phẩm
+                loadImports(); // Tải lại danh sách nhập hàng (nếu cần)
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Dữ liệu không hợp lệ: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Lỗi khi nhập hàng: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }); */
 
         btnExportExcel.addActionListener(e -> {
             tbImport.ExportExel("Import_List");
-        });
-
-        btnEdit.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Edit functionality not implemented yet.");
-        });
-
-        btnList.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "View details functionality not implemented yet.");
-        });
-
-        txtSearch.addActionListener(e -> {
-            String searchText = txtSearch.getText().trim().toLowerCase();
-            tbProduct.dftbModel.setRowCount(0);
-            try {
-                List<ProductDTO> products = productDAO.getList();
-                for (ProductDTO product : products) {
-                    if (product.getName().toLowerCase().contains(searchText) ||
-                            String.valueOf(product.getId()).contains(searchText)) {
-                        tbProduct.dftbModel.addRow(new Object[]{
-                                product.getId(), product.getName(), product.getQuantity(),
-                                product.getUnit(), product.getPrice()
-                        });
-                    }
-                }
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Error searching products: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
         });
     }
 }

@@ -21,6 +21,7 @@ public class DetailProductBUS {
         list = DetailProductDAO.getInstance().getList();
         return list;
     }
+    /*
     public int add(DetailProductDTO dp) {
         try {DetailProductDAO.getInstance().add(dp);}
         catch (Exception e) {
@@ -28,8 +29,8 @@ public class DetailProductBUS {
             return 0;
         }
         getList();
-        return list.getLast().getId();
-    }
+        return list.getList().getId();
+    }  */
     public boolean update(DetailProductDTO dp) {
         try {DetailProductDAO.getInstance().update(dp);}
         catch (Exception e) {

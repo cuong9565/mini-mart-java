@@ -45,9 +45,10 @@ public class ProductBUS {
         return ls;
     }
 
+    /*
     public boolean add(int idProductType, String detail, int idOfferProduct, String name, double price, String unit, int quantity){
         if(name.isEmpty() || unit.isEmpty()) {
-            error = "Không được để trống thôn tin!!!";
+            error = "Không được để trống thông tin!!!";
             return false;
         }
         try {
@@ -60,7 +61,7 @@ public class ProductBUS {
             return false;
         }
         return true;
-    }
+    } */
 
     public boolean update(int id, int idProductType, DetailProductDTO detail, int idOfferProduct, String name, double price, String unit, int quantity){
         if(name.isEmpty() || unit.isEmpty()) {

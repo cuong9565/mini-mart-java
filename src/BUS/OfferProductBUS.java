@@ -20,6 +20,7 @@ public class OfferProductBUS {
         return instance;
     }
 
+    /*
     public List<OfferProductDTO> getList() {
         list = OfferProductDAO.getInstance().getList();
         return list;
@@ -31,14 +32,14 @@ public class OfferProductBUS {
             if(o.getDiscount() != ls.getLast().getDiscount())
                 ls.add(o);
         return ls;
-    }
+    } */
 
-    public int getIdBy(int discount, int idOffer) {
+    /*public int getIdBy(int discount, int idOffer) {
         for(OfferProductDTO o : getList())
             if (o.getDiscount() == discount && o.getOffer().getId() == idOffer)
                 return o.getId();
         return 0;
-    }
+    } */
 
     public boolean delete(OfferProductDTO offer) {
         try{

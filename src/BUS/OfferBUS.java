@@ -35,7 +35,7 @@ public class OfferBUS {
         }
         return ls;
     }
-
+/*
     public List<OfferDTO> getListByOfferProduct(OfferProductDTO offerProduct) {
         List<OfferDTO> ls = new ArrayList<>();
         if (offerProduct.getId() == 0)
@@ -46,7 +46,7 @@ public class OfferBUS {
                     ls.add(op.getOffer());
         }
         return ls;
-    }
+    } */
 
     public boolean add(OfferDTO offer) {
         if(offer.getDateStart().compareTo(offer.getDateEnd())>0){

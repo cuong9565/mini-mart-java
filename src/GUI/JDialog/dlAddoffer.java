@@ -42,8 +42,8 @@ public class dlAddoffer extends JDialog {
         btnSave.setBounds(100, 160, 150, 40);
         btnEsc.setBounds(270, 160, 150, 40);
         // endregion
-        btnEsc.addActionListener(_ -> dispose());
-        btnSave.addActionListener(_ -> {
+        btnEsc.addActionListener(e -> dispose());
+        btnSave.addActionListener(e -> {
             OfferDTO offer = new OfferDTO(-1, spStartDate.getSqlDate(), spEndDate.getSqlDate());
             if (OfferBUS.getInstance().add(offer)) {
                 JOptionPane.showMessageDialog(this, "Thêm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);

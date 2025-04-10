@@ -93,7 +93,7 @@ public class pnOfferProduct extends JPanel {
         btnRefresh.addActionListener(e -> {
             tfSearch.setText("");
             cbSearch.setSelectedIndex(0);
-            loadOfferProduct();
+           // loadOfferProduct();
         });
 
         btnIn.addActionListener(e -> {
@@ -151,12 +151,13 @@ public class pnOfferProduct extends JPanel {
         // endregion
     }
 
+    /*
     public void loadOfferProduct() {
         tbOfferProduct.dftbModel.setRowCount(0);
         for (OfferProductDTO offer : OfferProductBUS.getInstance().getList()) {
             tbOfferProduct.dftbModel.addRow(offer.getObjects());
         }
-    }
+    } */
 
     public void textChange() {
 //        tbOfferProduct.dftbModel.setRowCount(0);
