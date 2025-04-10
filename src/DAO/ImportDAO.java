@@ -6,101 +6,138 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ImportDAO {
-    private static ImportDAO instance;
-    private Connection conn;
+    private static ImportDAO instance = null;
 
-
-
-
+    public ImportDAO() {}
     public static ImportDAO getInstance() {
-        if (instance == null) {
-            instance = new ImportDAO();
-        }
+        if (instance == null) instance = new ImportDAO();
         return instance;
     }
 
-    // Thêm mới một bản ghi vào bảng Import
-    public boolean insert(ImportDTO importDTO) {
-        String sql = "INSERT INTO Import (idStaff, idSupplier, total, date) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setInt(1, importDTO.getIdStaff());
-            stmt.setInt(2, importDTO.getIdSupplier());
-            stmt.setDouble(3, importDTO.getTotal());
-            stmt.setString(4, importDTO.getDate());
 
-            int affectedRows = stmt.executeUpdate();
-            if (affectedRows > 0) {
-                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        importDTO.setIdImport(generatedKeys.getInt(1));
-                    }
-                }
-                return true;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return false;
-    }
-
-    // Lấy danh sách tất cả các bản ghi Import
-    public List<ImportDTO> getAll() {
+    public List<ImportDTO> getListImport() {
         List<ImportDTO> list = new ArrayList<ImportDTO>();
-        String sql = "SELECT * FROM Import";
-        conn = DataProvider.getInstance().getConnection();
-        try (PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) list.add(new ImportDTO(rs));
+        String sql = "select * from ImportOrder";
+        Connection con = DataProvider.getInstance().getConnection();
 
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) list.add(new ImportDTO(rs));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        DataProvider.getInstance().CloseConnection(conn);
+        DataProvider.getInstance().CloseConnection(con);
         return list;
     }
 
-    // Tìm kiếm Import theo ID
-    public ImportDTO getById(int id) {
-        String sql = "SELECT * FROM Import WHERE id = ?";
-         conn = DataProvider.getInstance().getConnection();
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            try (ResultSet rs = stmt.executeQuery()) {
+    public List<ImportDTO> getListImportBy(String whr, String str) {
+        List<ImportDTO> list = new ArrayList<>();
+        String sql = String.format("select * form importorder where %s like ?", whr);
+        Connection con = DataProvider.getInstance().getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + str + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) list.add(new ImportDTO(rs));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return list;
+    }
+
+    public boolean addImport(ImportDTO imp) throws Exception {
+        String sql = "INSERT INTO ImportOrder(idStaff, idProvider, dateCreate, total) VALUES(?, ?, ?, ?)";
+        Connection con = DataProvider.getInstance().getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, imp.getIdStaff());
+            ps.setInt(2, imp.getIdSupplier());
+            ps.setTimestamp(3, imp.getDate());
+            ps.setDouble(4, imp.getTotal());
+            int res = ps.executeUpdate();
+            if (res > 0) {
+                ResultSet rs = ps.getGeneratedKeys();
                 if (rs.next()) {
-                    return new ImportDTO(rs);
+                    imp.setIdImport(rs.getInt(1)); // Lấy ID tự động sinh
                 }
+                return true;
             }
+            return false;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            DataProvider.getInstance().CloseConnection(con);
+        }
+    }
+
+    public int addImports(List<ImportDTO> listImport) {
+        int res = 0, pos = 1;
+        String sql = "insert into ImportOrder(id, idStaff, idProvider, dateCreate, total) values(?, ?, ?, ?, ?)";
+        for(int i=1; i<listImport.size(); i++) sql += ",(?,?,?,?,?)";
+        Connection con = DataProvider.getInstance().getConnection();
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            for(ImportDTO imp: listImport) {
+                ps.setInt(pos, imp.getIdImport());
+                ps.setInt(pos, imp.getIdStaff());
+                ps.setInt(pos, imp.getIdSupplier());
+                ps.setTimestamp(pos, imp.getDate());
+                ps.setDouble(pos, imp.getTotal());
+            }
+            res = ps.executeUpdate();
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return res;
+    }
+
+    public boolean editImport(ImportDTO imp) throws Exception {
+        int res = 0;
+        String sql = "update ImportOrder set idStaff = ?, idProvider = ?, dateCreate = ?, total = ? where id = ?";
+        try {
+            Connection con = DataProvider.getInstance().getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, imp.getIdImport());
+            ps.setInt(2, imp.getIdStaff());
+            ps.setInt(3, imp.getIdSupplier());
+            ps.setTimestamp(4, imp.getDate());
+            ps.setDouble(5, imp.getTotal());
+            res = ps.executeUpdate();
+            DataProvider.getInstance().CloseConnection(con);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
-    }
-
-    // Cập nhật dữ liệu nhập hàng
-    public boolean update(ImportDTO importDTO) {
-        String sql = "UPDATE Import SET idStaff = ?, idSupplier = ?, total = ?, date = ? WHERE id = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, importDTO.getIdStaff());
-            stmt.setInt(2, importDTO.getIdSupplier());
-            stmt.setDouble(3, importDTO.getTotal());
-            stmt.setString(4, importDTO.getDate());
-            stmt.setInt(5, importDTO.getIdImport());
-
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (res > 0)
+            return true;
+        else {
+            throw new Exception("Không thể thay đổi thông tin!");
         }
-        return false;
     }
 
-    public boolean delete(int id) {
-        String sql = "DELETE FROM Import WHERE id = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+
+    public boolean deleteImport(ImportDTO imp) throws Exception {
+        int res = 0;
+        String sql = "delete from ImportOrder where id = ?";
+        try {
+            Connection con = DataProvider.getInstance().getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1,imp.getIdImport());
+            res = ps.executeUpdate();
+            DataProvider.getInstance().CloseConnection(con);
+        } catch (Exception e) {
+            throw new Exception("Loi SQl: " + e.getMessage());
         }
-        return false;
+        if(res>0) return true;
+        else throw new Exception("Không thể xóa");
     }
+
+
 }
+
+
+
+

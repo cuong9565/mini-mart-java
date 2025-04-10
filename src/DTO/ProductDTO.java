@@ -10,7 +10,7 @@ public class ProductDTO {
     private String name, unit;
     private double price;
 
-    public ProductDTO() {}
+    public ProductDTO(int productID, String productName, int qty, String productUnit, double price) {}
 
     public ProductDTO(ResultSet rs) {
         try {

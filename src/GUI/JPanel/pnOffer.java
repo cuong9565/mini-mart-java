@@ -102,7 +102,7 @@ public class pnOffer extends JPanel {
             loadOffer();
         });
 
-        btnOut.addActionListener(_ -> tbOffer.ExportExel("Danh sách khuyến mãi"));
+        btnOut.addActionListener(e -> tbOffer.ExportExel("Danh sách khuyến mãi"));
         cbSearch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {textChange();}
         });

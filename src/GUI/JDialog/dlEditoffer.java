@@ -49,8 +49,8 @@ public class dlEditoffer extends JDialog {
         spStartDate.setValue(offer.getDateStart());
         spEndDate.setValue(offer.getDateEnd());
 
-        btnEsc.addActionListener(_ -> dispose());
-        btnSave.addActionListener(_ -> {
+        btnEsc.addActionListener(e -> dispose());
+        btnSave.addActionListener(e -> {
             OfferDTO offerNew = new OfferDTO(offer.getId(), spStartDate.getSqlDate(), spEndDate.getSqlDate());
             if (OfferBUS.getInstance().update(offerNew)) {
                 JOptionPane.showMessageDialog(this, "Cập nhật thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
