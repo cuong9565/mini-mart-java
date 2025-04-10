@@ -21,16 +21,14 @@ public class DetailProductBUS {
         list = DetailProductDAO.getInstance().getList();
         return list;
     }
-    /*
-    public int add(DetailProductDTO dp) {
+    public boolean add(DetailProductDTO dp) {
         try {DetailProductDAO.getInstance().add(dp);}
         catch (Exception e) {
             error = e.getMessage();
-            return 0;
+            return false;
         }
-        getList();
-        return list.getList().getId();
-    }  */
+        return true;
+    }
     public boolean update(DetailProductDTO dp) {
         try {DetailProductDAO.getInstance().update(dp);}
         catch (Exception e) {

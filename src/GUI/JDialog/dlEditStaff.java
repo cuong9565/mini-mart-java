@@ -3,14 +3,11 @@ package GUI.JDialog;
 import BUS.StaffBUS;
 import Components.*;
 import DTO.StaffDTO;
-import DTO.TypeProductDTO;
 import GUI.JFrame.fManage;
 import GUI.JPanel.pnStaff;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class dlEditStaff extends JDialog {
     JPanel pnMain = new MyJPanel(MyColor.White);
@@ -40,8 +37,6 @@ public class dlEditStaff extends JDialog {
 
     JComboBox<String> cbRole = new MyJComboBox<>(new String[]{"Quản lý", "Thu ngân", "Nhân viên bán hàng", "Nhân viên kho"}, 12);
     JSpinner snSalary = new MyJSpinner(100, 100, 1000000000, 100);
-
-
 
     JButton btnSave = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Green, MyColor.LightGreen, "Xác nhận", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnEsc = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Red, MyColor.LightRed, "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
@@ -116,34 +111,26 @@ public class dlEditStaff extends JDialog {
         }
         // endregion
         // region Event
-        btnState.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if(tfState.getText().compareTo("Đang hoạt động")==0){
-                    btnState.setText("Mở tài khoản");
-                    btnState.setBackground(MyColor.LightBlue);
-                    tfState.setText("Đã bị khóa");
-                }
-                else {
-                    btnState.setText("Khóa tài khoản");
-                    btnState.setBackground(MyColor.LightRed);
-                    tfState.setText("Đang hoạt động");
-                }
+        btnState.addActionListener(_ -> {
+            if(tfState.getText().compareTo("Đang hoạt động")==0){
+                btnState.setText("Mở tài khoản");
+                btnState.setBackground(MyColor.LightBlue);
+                tfState.setText("Đã bị khóa");
+            }
+            else {
+                btnState.setText("Khóa tài khoản");
+                btnState.setBackground(MyColor.LightRed);
+                tfState.setText("Đang hoạt động");
             }
         });
-        btnEsc.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dialog.dispose();
+        btnEsc.addActionListener(_ -> dialog.dispose());
+        btnSave.addActionListener(_ -> {
+            StaffDTO staffNew = new StaffDTO(staff.getId(), tfPhone.getText(), tfPassword.getText(), tfFirstName.getText(), tfLastName.getText(), (bgGender.radioButtons[0].isSelected()?"Nam":"Nữ"), tfAddress.getText(), (String) cbRole.getSelectedItem(), Double.parseDouble(snSalary.getValue().toString()), tfState.getText());
+            if(StaffBUS.getInstance().update(staffNew)){
+                JOptionPane.showMessageDialog(dialog, "Sửa thông tin nhân viên thành công!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+                parentPanel.loadStaff();
             }
-        });
-        btnSave.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                StaffDTO staffNew = new StaffDTO(staff.getId(), tfPhone.getText(), tfPassword.getText(), tfFirstName.getText(), tfLastName.getText(), (bgGender.radioButtons[0].isSelected()?"Nam":"Nữ"), tfAddress.getText(), (String) cbRole.getSelectedItem(), Double.parseDouble(snSalary.getValue().toString()), tfState.getText());
-                if(StaffBUS.getInstance().update(staffNew)){
-                    JOptionPane.showMessageDialog(dialog, "Sửa thông tin nhân viên thành công!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
-                    parentPanel.loadStaff();
-                }
-                else JOptionPane.showMessageDialog(dialog, StaffBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
-            }
+            else JOptionPane.showMessageDialog(dialog, StaffBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
         });
         // endregion11
         // region ADD

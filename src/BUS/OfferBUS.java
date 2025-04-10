@@ -10,7 +10,6 @@ public class OfferBUS {
     private static OfferBUS instance = null;
     public static List<OfferDTO> list = null;
     private static String error = null;
-    private static int numLine = 0;
 
     public OfferBUS() {}
 
@@ -94,10 +93,6 @@ public class OfferBUS {
 
     public String getError() {
         return error;
-    }
-
-    public int getNumLine() {
-        return numLine;
     }
 
     public OfferDTO getOfferById(int id) {

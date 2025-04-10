@@ -4,20 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong BillInfo">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong End Product">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJLabel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPanel$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/DetailProductBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/DetailProductBUS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BUS/OfferBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/OfferBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/OfferProductBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/OfferProductBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/ProductBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/ProductBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddProduct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/StaffDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/StaffDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/OfferDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/OfferDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/ProductDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddoffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddoffer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditStaff.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditStaff.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnDiscount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnDiscount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnOffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnOffer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnOfferProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnOfferProduct.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" afterDir="false" />
     </list>
@@ -43,12 +40,12 @@
     &quot;assignee&quot;: &quot;cuong9565&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/cuong9565/mini-mart-java.git&quot;,
-    &quot;accountId&quot;: &quot;08037649-7790-4746-a5dc-212837c2106e&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/cuong9565/mini-mart-java.git",
+    "accountId": "f4c729e0-ab1e-41b9-93d0-47692b69cd9a"
   }
-}</component>
+}]]></component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -111,6 +108,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -179,14 +184,7 @@
       <workItem from="1743835129920" duration="6778000" />
       <workItem from="1743846680881" duration="8721000" />
       <workItem from="1744039170855" duration="24000" />
-    </task>
-    <task id="LOCAL-00016" summary="Cuong update">
-      <option name="closed" value="true" />
-      <created>1742364887806</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1742364887806</updated>
+      <workItem from="1744264044767" duration="3134000" />
     </task>
     <task id="LOCAL-00017" summary="Cuong fix GetJPanel">
       <option name="closed" value="true" />
@@ -572,7 +570,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744039182557</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="Cuong End Product">
+      <option name="closed" value="true" />
+      <created>1744260172667</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1744260172667</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -608,6 +614,7 @@
     <MESSAGE value="Cuong TypeProduct" />
     <MESSAGE value="Cuong Product" />
     <MESSAGE value="Cuong BillInfo" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cuong BillInfo" />
+    <MESSAGE value="Cuong End Product" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cuong End Product" />
   </component>
 </project>

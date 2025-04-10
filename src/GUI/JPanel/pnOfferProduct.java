@@ -2,19 +2,15 @@ package GUI.JPanel;
 
 import BUS.OfferBUS;
 import BUS.OfferProductBUS;
-import BUS.SupplierBUS;
 import Components.*;
 import DTO.*;
 import GUI.JDialog.*;
-import GUI.JFrame.fManage;
-import com.mysql.cj.protocol.Message;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class pnOfferProduct extends JPanel {
@@ -35,7 +31,7 @@ public class pnOfferProduct extends JPanel {
 
     pnOfferProduct thisPanel = this;
 
-    public pnOfferProduct(pnDiscount parent) {
+    public pnOfferProduct() {
         setLayout(null);
         setBackground(MyColor.White);
         // region SET BOUNDS
@@ -57,13 +53,8 @@ public class pnOfferProduct extends JPanel {
         addComponentListener(new ComponentAdapter() {
             public void componentShown(ComponentEvent e) {loadOfferProduct();}
         });
-        btnAdd.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new dlAddOfferProduct(thisPanel);
-            }
-        });
-        btnEdit.addActionListener(e -> {
+        btnAdd.addActionListener(_ ->new dlAddOfferProduct(thisPanel));
+        btnEdit.addActionListener(_ -> {
             int i = tbOfferProduct.getSelectedRow();
             if (i >= 0) {
                 int id = Integer.parseInt(tbOfferProduct.getFirstColumn(i));
@@ -72,7 +63,7 @@ public class pnOfferProduct extends JPanel {
             } else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần sửa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
         });
 
-        btnDelete.addActionListener(e -> {
+        btnDelete.addActionListener(_ -> {
             int i = tbOfferProduct.getSelectedRow();
             if (i >= 0) {
                 int id = Integer.parseInt(tbOfferProduct.getFirstColumn(i));
@@ -84,13 +75,13 @@ public class pnOfferProduct extends JPanel {
             } else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xóa!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         });
 
-        btnRefresh.addActionListener(e -> {
+        btnRefresh.addActionListener(_ -> {
             tfSearch.setText("");
             cbSearch.setSelectedIndex(0);
             loadOfferProduct();
         });
 
-        btnIn.addActionListener(e -> {
+        btnIn.addActionListener(_ -> {
             List<Object[]> list = tbOfferProduct.ImportExel(3);
             if(list==null) return;
             String error = "";
@@ -108,9 +99,7 @@ public class pnOfferProduct extends JPanel {
             loadOfferProduct();
         });
         btnOut.addActionListener(_ -> tbOfferProduct.ExportExel("Danh sách giảm giá sản phẩm"));
-        cbSearch.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {textChange();}
-        });
+        cbSearch.addActionListener(_-> textChange());
         tfSearch.addFocusListener(new FocusAdapter() {
             public void focusGained(FocusEvent e) {textChange();}
         });

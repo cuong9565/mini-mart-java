@@ -32,11 +32,11 @@ public class OfferDTO {
         }
     }
 
-    public int getId() {
-        return id;
-    }
+    public int getId() {return id;}
     public Date getDateStart() {return dateStart;}
     public Date getDateEnd() {return dateEnd;}
+    public java.util.Date getDateStartUtil() {return new java.util.Date(dateStart.getTime());}
+    public java.util.Date getDateEndUtil() {return new java.util.Date(dateEnd.getTime());}
     public String getFormattedDateStart() {return dateFormat.format(dateStart);}
     public String getFormattedDateEnd() {return dateFormat.format(dateEnd);}
     public void setId(int id) {this.id = id;}

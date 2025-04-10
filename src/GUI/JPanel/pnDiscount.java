@@ -31,7 +31,7 @@ public class pnDiscount extends JPanel {
     JButton btnOfferProduct = new MyJButton(Font.PLAIN, 12, MyColor.Black, MyColor.LightGray, "Giảm giá sản phẩm", SwingConstants.CENTER,SwingConstants.CENTER);
     JButton btnOfferBill = new MyJButton(Font.PLAIN, 12, MyColor.Black, MyColor.LightGray, "Giảm giá hóa đơn", SwingConstants.CENTER,SwingConstants.CENTER);
     JButton lsBtn[] = new JButton[]{btnOffer, btnOfferProduct, btnOfferBill};
-    JPanel lsPn[] = new JPanel[]{new pnOffer(this), new pnOfferProduct(this), new pnOfferBill(this)};
+    JPanel lsPn[] = new JPanel[]{new pnOffer(this), new pnOfferProduct(), new pnOfferBill(this)};
 
     int currCursor = 0;
 

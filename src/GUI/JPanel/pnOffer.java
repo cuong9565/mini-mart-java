@@ -52,13 +52,8 @@ public class pnOffer extends JPanel {
         addComponentListener(new ComponentAdapter() {
             public void componentShown(ComponentEvent e) {loadOffer();}
         });
-        btnAdd.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new dlAddoffer(pnOffer.this);
-            }
-        });
-        btnEdit.addActionListener(e -> {
+        btnAdd.addActionListener(_ -> new dlAddoffer(pnOffer.this));
+        btnEdit.addActionListener(_ -> {
             int i = tbOffer.getSelectedRow();
             if (i >= 0) {
                 int id = Integer.parseInt(tbOffer.getFirstColumn(i));

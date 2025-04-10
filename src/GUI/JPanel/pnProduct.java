@@ -8,14 +8,12 @@ import GUI.JDialog.dlAddProduct;
 import GUI.JDialog.dlDetailProduct;
 import GUI.JDialog.dlEditProduct;
 import GUI.JFrame.fManage;
-import com.mysql.cj.protocol.Message;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class pnProduct extends JPanel {
@@ -36,7 +34,6 @@ public class pnProduct extends JPanel {
     MyJTable tbProduct = new MyJTable(new String[]{"Mã", "Loại", "Giảm giá", "Tên sản phẩm", "Giá bán", "Đơn vị", "Số lượng"}, new int[]{30, 100, 100, 100, 100, 30}, new int[]{1, 2, 3}, new int[]{});
 
     pnProduct thisPanel = this;
-    int posSelectedCB = 0;
 
     public pnProduct(fManage frame) {
         setLayout(null);
@@ -63,97 +60,72 @@ public class pnProduct extends JPanel {
         });
         // endregion
         // region EVEN
-        btnAdd.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new dlAddProduct(frame, thisPanel);
+        btnAdd.addActionListener(_->new dlAddProduct(frame, thisPanel));
+        btnEdit.addActionListener(_->{
+            int i = tbProduct.getSelectedRow();
+            if (i>=0){
+                int id = Integer.parseInt(tbProduct.getFirstColumn(i));
+                ProductDTO product = ProductBUS.getInstance().getItemById(id);
+                new dlEditProduct(frame, thisPanel, product);
             }
+            else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần sửa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
         });
-        btnEdit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int i = tbProduct.getSelectedRow();
-                if (i>=0){
-                    int id = Integer.parseInt(tbProduct.getFirstColumn(i));
-                    ProductDTO product = ProductBUS.getInstance().getItemById(id);
-                    new dlEditProduct(frame, thisPanel, product);
+        btnDelete.addActionListener(_ -> {
+            int i = tbProduct.getSelectedRow();
+            if(i>=0){
+                int id = Integer.parseInt(tbProduct.getFirstColumn(i));
+                ProductDTO product = ProductBUS.getInstance().getItemById(id);
+                if(ProductBUS.getInstance().delete(product)){
+                    JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin sản phẩm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    loadProduct();
                 }
-                else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần sửa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                else JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + ProductBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
             }
+            else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xóa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+
         });
-        btnDelete.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int i = tbProduct.getSelectedRow();
-                if(i>=0){
-                    int id = Integer.parseInt(tbProduct.getFirstColumn(i));
-                    ProductDTO product = ProductBUS.getInstance().getItemById(id);
-                    if(ProductBUS.getInstance().delete(product)){
-                        JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin sản phẩm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                        loadProduct();
-                    }
-                    else JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + ProductBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
+        btnDetail.addActionListener(_ -> {
+            int i = tbProduct.getSelectedRow();
+            if (i>=0){
+                int id = Integer.parseInt(tbProduct.getFirstColumn(i));
+                ProductDTO product = ProductBUS.getInstance().getItemById(id);
+                new dlDetailProduct(frame, thisPanel, product);
+            }
+            else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xem!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+
+        });
+        btnRefresh.addActionListener(_ -> {
+            tfSearch.setText("");
+            cbSearch.setSelectedIndex(0);
+            loadProduct();
+        });
+        btnIn.addActionListener(_ -> {
+            List<Object[]> list = tbProduct.ImportExel(4);
+            if(list==null) return;
+            String error = null;
+            int success = 0;
+            for (Object[] ob : list) {
+                int idProductType = TypeProductBUS.getInstance().getItemByName(ob[0].toString()).getId();
+                String detail = "";
+                int idOfferProduct = 0;
+                String name = ob[1].toString();
+                double price = Double.parseDouble(ob[2].toString().replace("đ", "").replace(",", ""));
+                String unit = ob[3].toString();
+
+                if(ProductBUS.getInstance().add(idProductType, detail, idOfferProduct, name, price, unit, 0)){
+                    success++;
                 }
-                else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xóa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-
-            }
-        });
-        btnDetail.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int i = tbProduct.getSelectedRow();
-                if (i>=0){
-                    int id = Integer.parseInt(tbProduct.getFirstColumn(i));
-                    ProductDTO product = ProductBUS.getInstance().getItemById(id);
-                    new dlDetailProduct(frame, thisPanel, product);
+                else{
+                    error = ProductBUS.getInstance().getError();
                 }
-                else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xem!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            }
 
-            }
+            JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + success + " sản phẩm");
+            if(error!=null) JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + error);
+            loadProduct();
         });
-        btnRefresh.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tfSearch.setText("");
-                cbSearch.setSelectedIndex(0);
-                loadProduct();
-            }
-        });
-        btnIn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                List<Object[]> list = tbProduct.ImportExel(4);
-                if(list==null) return;
-                String error = null;
-                int success = 0;
-                for (Object[] ob : list) {
-                    int idProductType = TypeProductBUS.getInstance().getItemByName(ob[0].toString()).getId();
-                    String detail = "";
-                    int idOfferProduct = 0;
-                    String name = ob[1].toString();
-                    double price = Double.parseDouble(ob[2].toString().replace("đ", "").replace(",", ""));
-                    String unit = ob[3].toString();
-
-                    if(ProductBUS.getInstance().add(idProductType, detail, idOfferProduct, name, price, unit, 0)){
-                        success++;
-                    }
-                    else error += ("\n" + ProductBUS.getInstance().getError());
-                }
-
-                JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + success + " sản phẩm");
-                if(error!=null) JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + error);
-                loadProduct();
-            }
-        });
-        btnOut.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tbProduct.ExportExel("Danh sách sản phẩm");
-            }
-        });
-        cbSearch.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {textChange();}
-        });
+        btnOut.addActionListener(_ -> tbProduct.ExportExel("Danh sách sản phẩm"));
+        cbSearch.addActionListener(_ -> textChange());
         tfSearch.addFocusListener(new FocusAdapter() {
             public void focusGained(FocusEvent e) {textChange();}
         });
