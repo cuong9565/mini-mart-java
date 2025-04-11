@@ -1,4 +1,5 @@
 package GUI.JFrame;
+import BUS.StaffBUS;
 import Components.*;
 import DAO.StaffDAO;
 import DTO.StaffDTO;
@@ -32,6 +33,7 @@ public class fManage extends JFrame {
 
     int currCursor = 0;
     fManage currFrame = this;
+    StaffDTO thisAccount;
 
     JPanel[] lsPn = new JPanel[]{new pnStatistic(), new pnImport(), new pnSell(currFrame), new pnProduct(currFrame), new pnTypeProduct(currFrame), new pnCustomer(currFrame), new pnBill(currFrame), new pnDiscount(currFrame), new pnStaff(currFrame), new pnSupplier(currFrame)};
 
@@ -43,7 +45,8 @@ public class fManage extends JFrame {
         setResizable(false);
         setLayout(null);
         setBackground(Color.decode("#FFFFFF"));
-        lbWelcome.setText(String.format("<html>Xin chào <b>%s</b><br><i>Vai trò: %s</i><br><hr></html>", accountLogin.getFirstName(), accountLogin.getRole()));
+        thisAccount = accountLogin;
+        LoadThisAccount();
 
         // region setBounds + MaximumSize Button
         lbWelcome.setBounds(10, 0, 180, 150);
@@ -78,17 +81,11 @@ public class fManage extends JFrame {
             }
         });
 
-        btnSettingAccount.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new dlSettingAccount(currFrame, accountLogin);
-            }
-        });
+        btnSettingAccount.addActionListener(_ -> new dlSettingAccount(currFrame, thisAccount));
 
-        btnLogout.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                loginForm.setVisible(true);
-            }
+        btnLogout.addActionListener(_ -> {
+            dispose();
+            loginForm.setVisible(true);
         });
         // endregion
 
@@ -134,6 +131,12 @@ public class fManage extends JFrame {
         // endregion
 
         setVisible(true);
+    }
+
+    public void LoadThisAccount(){
+        int id = thisAccount.getId();
+        thisAccount = StaffBUS.getInstance().getStaffById(id);
+        lbWelcome.setText(String.format("<html>Xin chào <b>%s</b><br><i>Vai trò: %s</i><br><hr></html>", thisAccount.getFirstName(), thisAccount.getRole()));
     }
 }
 

@@ -4,13 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong End Product">
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong Login">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/CustomerBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/CustomerBUS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BUS/StaffBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/StaffBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/MyJTextFieldInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJTextFieldInput.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/StaffDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/StaffDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DTO/StaffDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/StaffDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlSettingAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlSettingAccount.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/JFrame/fLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JFrame/fLogin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/JFrame/fManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JFrame/fManage.java" afterDir="false" />
@@ -184,15 +184,9 @@
       <workItem from="1743846680881" duration="8721000" />
       <workItem from="1744039170855" duration="24000" />
       <workItem from="1744264044767" duration="3336000" />
-      <workItem from="1744291307721" duration="4520000" />
-    </task>
-    <task id="LOCAL-00018" summary="Cuong fix MyJTextField">
-      <option name="closed" value="true" />
-      <created>1742366880101</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1742366880101</updated>
+      <workItem from="1744291307721" duration="5161000" />
+      <workItem from="1744340690599" duration="4584000" />
+      <workItem from="1744364353414" duration="5038000" />
     </task>
     <task id="LOCAL-00019" summary="Cuong add JLableError">
       <option name="closed" value="true" />
@@ -578,7 +572,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744267400410</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="Cuong Login">
+      <option name="closed" value="true" />
+      <created>1744296506802</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1744296506803</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -615,6 +617,7 @@
     <MESSAGE value="Cuong Product" />
     <MESSAGE value="Cuong BillInfo" />
     <MESSAGE value="Cuong End Product" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cuong End Product" />
+    <MESSAGE value="Cuong Login" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cuong Login" />
   </component>
 </project>

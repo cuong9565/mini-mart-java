@@ -1,7 +1,10 @@
 package GUI.JPanel;
 
+import BUS.StaffBUS;
 import Components.*;
 import DTO.StaffDTO;
+import GUI.JDialog.dlSettingAccount;
+import GUI.JFrame.fManage;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -13,8 +16,8 @@ import java.awt.event.ActionListener;
 public class pnChangeInfo extends JPanel {
     JLabel lbId = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Mã nhân viên", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbGender = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Giới tính", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbFirstName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Họ", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbLastName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Tên", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbFirstName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Tên *", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbLastName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Họ *", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbPhone = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Số điện thoại *", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbType = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Vai trò", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbAddress = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Địa chỉ", SwingConstants.LEFT, SwingConstants.CENTER);
@@ -30,13 +33,14 @@ public class pnChangeInfo extends JPanel {
     JTextField tfSalary = new MyJTextFieldInput(Font.PLAIN, 14 , false);
     JButton btnSave = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Green, MyColor.LightGreen, "Lưu thông tin", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnEsc = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Red, MyColor.LightRed, "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
-    JLabel lbEmptyPhone = new MyJLabelError(12, "Vui lòng không để trống trường này!");
 
     JPanel thisPanel = this;
-    public pnChangeInfo(JDialog dialog, StaffDTO accountLogin) {
+
+    public pnChangeInfo(dlSettingAccount dialog, fManage parentFrame, StaffDTO accountLogin) {
         setBackground(MyColor.White);
         setLayout(null);
 
+        // region setBounds
         lbId.setBounds(0,0,200,20);
         tfId.setBounds(0,20,200,30);
         lbType.setBounds(220,0,200,20);
@@ -53,8 +57,6 @@ public class pnChangeInfo extends JPanel {
         bgGender.radioButtons[0].setBounds(220, 160, 100, 30);
         bgGender.radioButtons[1].setBounds(320, 160, 100, 30);
 
-        lbEmptyPhone.setBounds(220,190,200,20);
-
         lbAddress.setBounds(0,210,200,20);
         tfAddress.setBounds(0,230,200,30);
         lbSalary.setBounds(220,210,200,20);
@@ -62,6 +64,7 @@ public class pnChangeInfo extends JPanel {
 
         btnSave.setBounds(50,290, 150, 40);
         btnEsc.setBounds(220,290, 150, 40);
+        // endregion
 
         // region setText
         tfId.setText(String.valueOf(accountLogin.getId()));
@@ -76,42 +79,18 @@ public class pnChangeInfo extends JPanel {
         // endregion
 
         // region Event
-        btnEsc.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dialog.dispose();
+        btnEsc.addActionListener(_ -> dialog.dispose());
+        btnSave.addActionListener(_ -> {
+            StaffDTO staff = new StaffDTO(accountLogin.getId(), tfPhone.getText(), accountLogin.getPassword(), tfFirstName.getText(), tfLastName.getText(),(bgGender.radioButtons[0].isSelected()?"Nam":"Nữ"), tfAddress.getText(), tfType.getText(), accountLogin.getSalary(), accountLogin.getState());
+            if(StaffBUS.getInstance().UpdateAccount(staff)){
+                JOptionPane.showMessageDialog(thisPanel, "Lưu thông tin thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                parentFrame.LoadThisAccount();
             }
-        });
-        btnSave.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                boolean check = true;
-                if(tfPhone.getText().isEmpty()){
-                    lbEmptyPhone.setVisible(true);
-                    check = false;
-                } else lbEmptyPhone.setVisible(false);
-
-                if(check){
-                    JOptionPane.showMessageDialog(dialog, "Lưu thông tin thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                }
-            }
-        });
-        tfPhone.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                lbEmptyPhone.setVisible(false);
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-
-            }
+            else JOptionPane.showMessageDialog(thisPanel, StaffBUS.getInstance().getError(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         });
         // endregion
-        add(lbEmptyPhone);
+
+        // region Add
         add(lbId);
         add(lbGender);
         add(lbFirstName);
@@ -130,5 +109,6 @@ public class pnChangeInfo extends JPanel {
         add(tfSalary);
         add(btnSave);
         add(btnEsc);
+        // endregion
     }
 }

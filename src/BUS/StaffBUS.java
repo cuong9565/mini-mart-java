@@ -19,7 +19,7 @@ public class StaffBUS {
     }
 
     public StaffDTO Login(String phone, String password){
-        StaffDTO staff = new StaffDTO(0);
+        StaffDTO staff;
         if(phone.isEmpty()){
             error = "Số điện thoại không được để trống!!!";
             return new StaffDTO(0);
@@ -42,16 +42,78 @@ public class StaffBUS {
         return staff;
     }
 
+    public boolean UpdateStaffPassword(int id, String currPassword, String newPassword, String confirmPassword){
+        if(currPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()){
+            error = "Không được để trống thông tin!!!\nVui lòng nhập lại";
+            return false;
+        }
+        if(!newPassword.equals(confirmPassword)){
+            error = "Mật khẩu mới và mật khẩu xác nhận không khớp nhau!!!\nVui lòng nhập lại";
+            return false;
+        }
+        try {
+            StaffDAO.getInstance().CheckPassword(id, currPassword);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+            return false;
+        }
+        try {
+            StaffDAO.getInstance().UpdateStaffPassword(id, newPassword);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean UpdateAccount(StaffDTO staff){
+        if(staff.getLastName().isEmpty()){
+            error = "Họ khách hàng không được để trống!!!";
+            return false;
+        }
+        if(staff.getFirstName().isEmpty()){
+            error = "Tên khách hàng không được để trống!!!";
+            return false;
+        }
+        if(staff.getPhone().isEmpty()){
+            error = "Số điện thoại không được để trống!!!";
+            return false;
+        }
+        if(staff.getPassword().isEmpty()){
+            error = "Mật khẩu không được để trống!!!";
+            return false;
+        }
+        if(!staff.getPhone().matches("^0[0-9]{8,10}$")){
+            error = "Số điện thoại định dạng không hợp lệ!!!";
+            return false;
+        }
+        try {
+            StaffDAO.getInstance().UpdateAccount(staff);
+        }
+        catch(Exception e){
+            error = e.getMessage();
+            return false;
+        }
+        return true;
+    }
+
     public List<StaffDTO> getList() {
         list = StaffDAO.getInstance().getList();
         return list;
     }
 
     public StaffDTO getStaffById(int id) {
-        for (StaffDTO staffDTO : list)
-            if (staffDTO.getId() == id)
-                return staffDTO;
-        return null;
+        StaffDTO staff;
+        try {
+            staff = StaffDAO.getInstance().GetStaffById(id);
+        }
+        catch(Exception e){
+            error = e.getMessage();
+            staff = new StaffDTO(0);
+        }
+        return staff;
     }
 
     public List<StaffDTO> getStaffListBy(int col, String txt) {

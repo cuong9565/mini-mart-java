@@ -5,11 +5,8 @@ import Components.*;
 import DTO.StaffDTO;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -52,9 +49,8 @@ public class fLogin extends JFrame {
         // region Shortcut Key
         tfPhone.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_DOWN: pfPassword.requestFocus(); break;
-                }
+                if(e.getKeyCode() == KeyEvent.VK_DOWN)
+                    pfPassword.requestFocus();
             }
         });
 
@@ -69,13 +65,17 @@ public class fLogin extends JFrame {
 
         btnLogin.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_UP: pfPassword.requestFocus(); break;
-                }
+                if(e.getKeyCode() == KeyEvent.VK_UP) pfPassword.requestFocus();
             }
         });
 
-
+        getRootPane().setDefaultButton(btnLogin);
+        getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESC");
+        getRootPane().getActionMap().put("ESC", new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
         // endregion
 
         btnLogin.addActionListener(_-> Login());
@@ -95,15 +95,6 @@ public class fLogin extends JFrame {
         setVisible(true);
         tfPhone.requestFocusInWindow();
 
-        this.getRootPane().setDefaultButton(btnLogin);
-
-        this.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESC");
-
-        this.getRootPane().getActionMap().put("ESC", new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
     }
 
     public void Login() {

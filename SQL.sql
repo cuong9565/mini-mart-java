@@ -116,7 +116,7 @@ CREATE TABLE Bill (
     idCustomer INT,
     dateCreate DATE,
     price DOUBLE,
-    state NVARCHAR(100), 
+    state VARCHAR(100) CHARACTER SET UTF8MB4,
     
     FOREIGN KEY (idStaff) REFERENCES Staff(id),
     FOREIGN KEY (idCustomer) REFERENCES Customer(id),

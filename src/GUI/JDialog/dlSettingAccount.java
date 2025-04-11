@@ -31,7 +31,7 @@ public class dlSettingAccount extends JDialog {
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         JButton lsBtn[] = new JButton[]{btnChangeInfo, btnChangePassword};
-        JPanel lsPn[] = new JPanel[]{new pnChangeInfo(this, accountLogin), new pnChangePassword(this, accountLogin)};
+        JPanel lsPn[] = new JPanel[]{new pnChangeInfo(this, parentFrame, accountLogin), new pnChangePassword(this, parentFrame, accountLogin)};
 
         pnMain.setBounds(0,0,540,550);
         pnNav.setBounds(0,0,540, 30);
