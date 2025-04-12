@@ -5,15 +5,11 @@ import Components.MyJLabel;
 import Components.MyJPanel;
 import Components.MyJTable;
 import DAO.*;
-import DTO.*;
 import GUI.JFrame.fManage;
 import GUI.JPanel.pnImport;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.List;
 
 public class dlImportDetail extends JDialog {
     JPanel pnMain = new MyJPanel(MyColor.White);

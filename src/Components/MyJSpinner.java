@@ -5,8 +5,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Calendar;
 
 public class MyJSpinner extends JSpinner {
@@ -42,31 +40,13 @@ public class MyJSpinner extends JSpinner {
         });
     }
 
-    public MyJSpinner(Date currDate){
-        super(new SpinnerDateModel(currDate, getMinDate(), getMaxDate(), Calendar.DAY_OF_MONTH));
+    public MyJSpinner(MyDate currDate){
+        super(new SpinnerDateModel(currDate.getUtilDate(), MyDate.getMinDate(), MyDate.getMaxDate(), Calendar.DAY_OF_MONTH));
         setEditor(new JSpinner.DateEditor(this, "dd/MM/yyyy"));
     }
 
-    private static Date getMinDate(){
-        try {
-            return new SimpleDateFormat("dd/MM/yyyy").parse("01/01/1000");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
-
-    private static Date getMaxDate(){
-        try {
-            return new SimpleDateFormat("dd/MM/yyyy").parse("31/12/9999");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
-
-    public java.sql.Date getSqlDate(){
-        Date utilDate = (Date) getValue();
-        return new java.sql.Date(utilDate.getTime());
+    public MyDate getMyDate(){
+        java.util.Date utilDate = (java.util.Date) getValue();
+        return new MyDate(utilDate);
     }
 }

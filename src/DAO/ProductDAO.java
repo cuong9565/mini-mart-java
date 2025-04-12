@@ -36,17 +36,11 @@ public class ProductDAO {
     }
 
     public ProductDTO getItemById(int id) {
-        ProductDTO res = null;
-        String sql = "select * from product where id = ?";
-        Connection con = DataProvider.getInstance().getConnection();
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            res = new ProductDTO(rs);
-        } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+        for(ProductDTO product : getList()) {
+            if(product.getId() == id)
+                return product;
         }
-        return res;
+        return null;
     }
 
     public int add(int idProductType, int idProductDetail, int idOfferProduct, String name, double price, String unit, int quantity){
@@ -86,6 +80,22 @@ public class ProductDAO {
             res = ps.executeUpdate();
         }
         catch (SQLException e) {
+            throw new RuntimeException();
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return res;
+    }
+
+    public int updateQuantity(int id, int quantity){
+        int res = 0;
+        Connection con = DataProvider.getInstance().getConnection();
+        String sql = "update product set quantity = ? where id = ?";
+        try (PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setInt(1, quantity);
+            ps.setInt(2, id);
+            res = ps.executeUpdate();
+        }
+        catch (Exception e) {
             throw new RuntimeException();
         }
         DataProvider.getInstance().CloseConnection(con);

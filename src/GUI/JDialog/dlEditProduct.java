@@ -119,33 +119,27 @@ public class dlEditProduct extends JDialog {
                 }
             }
         });
-        btnEsc.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dialog.dispose();
-            }
-        });
-        btnSave.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                TypeProductDTO typeSelected = (TypeProductDTO) cbType.getSelectedItem();
-                OfferProductDTO offerProductSelected = (OfferProductDTO) cbDiscount.getSelectedItem();
-                OfferDTO offerSelected = (OfferDTO) cbOffer.getSelectedItem();
+        btnEsc.addActionListener(_ -> dialog.dispose());
+        btnSave.addActionListener(_ -> {
+            TypeProductDTO typeSelected = (TypeProductDTO) cbType.getSelectedItem();
+            OfferProductDTO offerProductSelected = (OfferProductDTO) cbDiscount.getSelectedItem();
+            OfferDTO offerSelected = (OfferDTO) cbOffer.getSelectedItem();
 
-                int id = productDTO.getId();
-                int idProductType = typeSelected.getId();
-                DetailProductDTO detail = productDTO.getDetail();
-                detail.setText(taDetail.getText());
-                int idOfferProduct = (offerProductSelected.getId()==0?0:OfferProductBUS.getInstance().getIdBy(offerProductSelected.getDiscount(), offerSelected.getId()));
-                String name = tfName.getText();
-                double price = Double.parseDouble(snPrice.getValue().toString());
-                String unit = tfUnit.getText();
-                int quantity = Integer.parseInt(snQuantity.getValue().toString());
+            int id = productDTO.getId();
+            int idProductType = typeSelected.getId();
+            DetailProductDTO detail = productDTO.getDetail();
+            detail.setText(taDetail.getText());
+            int idOfferProduct = (offerProductSelected.getId()==0?0:OfferProductBUS.getInstance().getIdBy(offerProductSelected.getDiscount(), offerSelected.getId()));
+            String name = tfName.getText();
+            double price = Double.parseDouble(snPrice.getValue().toString());
+            String unit = tfUnit.getText();
+            int quantity = Integer.parseInt(snQuantity.getValue().toString());
 
-                if(ProductBUS.getInstance().update(id, idProductType, detail, idOfferProduct, name, price, unit, quantity)){
-                    JOptionPane.showMessageDialog(dialog, "Thay đổi thông tin sản phẩm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    parentPanel.loadProduct();
-                }
-                else JOptionPane.showMessageDialog(dialog, "Lỗi: " + ProductBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
+            if(ProductBUS.getInstance().update(id, idProductType, detail, idOfferProduct, name, price, unit, quantity)){
+                JOptionPane.showMessageDialog(dialog, "Thay đổi thông tin sản phẩm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                parentPanel.loadProduct();
             }
+            else JOptionPane.showMessageDialog(dialog, "Lỗi: " + ProductBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
         });
         // endregion
         // region ADD

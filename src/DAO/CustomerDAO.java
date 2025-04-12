@@ -30,6 +30,22 @@ public class CustomerDAO {
         return list;
     }
 
+    public CustomerDTO getItemById(int id) {
+        Connection con = DataProvider.getInstance().getConnection();
+        String sql = "select * from customer where id = ?";
+        CustomerDTO customer;
+        try(PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) customer = new CustomerDTO(rs);
+            else customer = new CustomerDTO(0);
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return customer;
+    }
+
     public int adds(List<CustomerDTO>list){
         int res = 0, pos = 1;
         Connection con = DataProvider.getInstance().getConnection();

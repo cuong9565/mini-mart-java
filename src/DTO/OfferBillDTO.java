@@ -1,5 +1,7 @@
 package DTO;
 
+import Components.MyDate;
+
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -7,7 +9,6 @@ import java.text.SimpleDateFormat;
 public class OfferBillDTO {
     private int id, discount;
     private OfferDTO offer;
-    private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     public OfferBillDTO() {}
     public OfferBillDTO(int id, OfferDTO offer, int discount) {
@@ -21,8 +22,8 @@ public class OfferBillDTO {
             this.discount = rs.getInt("discount");
             this.offer = new OfferDTO(
                     rs.getInt("idOffer"),
-                    rs.getDate("startDate"),
-                    rs.getDate("endDate")
+                    new MyDate(rs.getDate("startDate")),
+                    new MyDate(rs.getDate("endDate"))
             );
         }
         catch (Exception e) {
@@ -35,8 +36,8 @@ public class OfferBillDTO {
             this.discount = rs.getInt("discount");
             this.offer = new OfferDTO(
                     rs.getInt("idOffer"),
-                    rs.getDate("startDate"),
-                    rs.getDate("endDate")
+                    new MyDate(rs.getDate("startDate")),
+                    new MyDate(rs.getDate("endDate"))
             );
         }
         catch (Exception e) {
@@ -50,16 +51,11 @@ public class OfferBillDTO {
     public void setId(int id) {this.id = id;}
     public void setOffer(OfferDTO offer) {this.offer = offer;}
     public void setDiscount(int discount) {this.discount = discount;}
+
     @Override
     public String toString() {
         return (this.id!=0)?discount + "%":"Chưa có ưu đãi";
     }
-    public Object[] getObjects() {
-        return new Object[]{id,
-                dateFormat.format(offer.getDateStart()),
-                dateFormat.format(offer.getDateEnd()),
-                discount + "%"
-        };
-    }
+    public Object[] getObjects() {return new Object[]{id, offer.getDateStart(), offer.getDateEnd(), discount + "%"};}
 
 }

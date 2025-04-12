@@ -20,7 +20,7 @@ public class ProductBUS {
     }
 
     public ProductDTO getItemById(int id) {
-        for(ProductDTO p : list)
+        for(ProductDTO p : getList())
             if(p.getId() == id)
                 return p;
         return null;
@@ -41,6 +41,18 @@ public class ProductBUS {
             case 4: if (String.format("%,.0fđ", p.getPrice()).contains(txt)) ls.add(p); break;
             case 5: if (p.getUnit().contains(txt)) ls.add(p); break;
             case 6: if (String.valueOf(p.getQuantity()).contains(txt)) ls.add(p); break;
+        }
+        return ls;
+    }
+
+    public List<ProductDTO> getListSearchSell(int col, String txt) {
+        List<ProductDTO> ls = new ArrayList<>();
+        for(ProductDTO p : list) switch (col) {
+            case 0: if (String.valueOf(p.getId()).contains(txt)) ls.add(p); break;
+            case 1: if (p.getName().contains(txt)) ls.add(p); break;
+            case 2: if (p.getFormatPrice().contains(txt)) ls.add(p); break;
+            case 3: if (p.getUnit().contains(txt)) ls.add(p); break;
+            case 4: if (String.valueOf(p.getQuantity()).contains(txt)) ls.add(p); break;
         }
         return ls;
     }
@@ -71,6 +83,17 @@ public class ProductBUS {
             DetailProductDAO.getInstance().update(detail);
             ProductDAO.getInstance().update(id, idProductType, idOfferProduct, name, price, unit, quantity);
         }catch (Exception e) {
+            error = e.getMessage();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean updateQuantity(int idProduct, int quantity){
+        try {
+            ProductDAO.getInstance().updateQuantity(idProduct, quantity);
+        }
+        catch (Exception e) {
             error = e.getMessage();
             return false;
         }

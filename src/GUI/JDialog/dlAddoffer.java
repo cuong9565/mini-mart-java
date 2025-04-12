@@ -14,8 +14,8 @@ public class dlAddoffer extends JDialog {
     JLabel lbHeader = new MyJLabel(Font.BOLD, 24, MyColor.White, "Thêm chương trình giảm giá", SwingConstants.CENTER, SwingConstants.CENTER);
     JLabel lbStartDate = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Ngày áp dụng*", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbEndDate = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Ngày kết thúc*", SwingConstants.LEFT, SwingConstants.CENTER);
-    MyJSpinner spStartDate = new MyJSpinner(new Date());
-    MyJSpinner spEndDate = new MyJSpinner(new Date());
+    MyJSpinner spStartDate = new MyJSpinner(MyDate.getCurrentDate());
+    MyJSpinner spEndDate = new MyJSpinner(MyDate.getCurrentDate());
 
     JButton btnSave = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Green, MyColor.LightGreen, "Xác nhận", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnEsc = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Red, MyColor.LightRed, "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
@@ -42,7 +42,7 @@ public class dlAddoffer extends JDialog {
         // endregion
         btnEsc.addActionListener(_ -> dispose());
         btnSave.addActionListener(_ -> {
-            OfferDTO offer = new OfferDTO(-1, spStartDate.getSqlDate(), spEndDate.getSqlDate());
+            OfferDTO offer = new OfferDTO(-1, spStartDate.getMyDate(), spEndDate.getMyDate());
             if (OfferBUS.getInstance().add(offer)) {
                 JOptionPane.showMessageDialog(this, "Thêm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 parentPanel.loadOffer();

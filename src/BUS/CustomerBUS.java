@@ -18,9 +18,7 @@ public class CustomerBUS {
     }
 
     public CustomerDTO getItemById(int id){
-        for (CustomerDTO customerDTO : customerList)
-            if (customerDTO.getId() == id) return customerDTO;
-        return null;
+        return CustomerDAO.getInstance().getItemById(id);
     }
 
     public List<CustomerDTO>getAllList(){

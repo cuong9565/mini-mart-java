@@ -17,8 +17,8 @@ public class dlEditoffer extends JDialog {
     JLabel lbEndDate = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Ngày kết thúc*", SwingConstants.LEFT, SwingConstants.CENTER);
 
     JTextField tfId = new MyJTextFieldInput(Font.PLAIN, 14, false);
-    MyJSpinner spStartDate = new MyJSpinner(new Date());
-    MyJSpinner spEndDate = new MyJSpinner(new Date());
+    MyJSpinner spStartDate = new MyJSpinner(MyDate.getCurrentDate());
+    MyJSpinner spEndDate = new MyJSpinner(MyDate.getCurrentDate());
 
     JButton btnSave = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Green, MyColor.LightGreen, "Cập nhật", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnEsc = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Red, MyColor.LightRed, "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
@@ -51,7 +51,7 @@ public class dlEditoffer extends JDialog {
 
         btnEsc.addActionListener(e -> dispose());
         btnSave.addActionListener(e -> {
-            OfferDTO offerNew = new OfferDTO(offer.getId(), spStartDate.getSqlDate(), spEndDate.getSqlDate());
+            OfferDTO offerNew = new OfferDTO(offer.getId(), spStartDate.getMyDate(), spEndDate.getMyDate());
             if (OfferBUS.getInstance().update(offerNew)) {
                 JOptionPane.showMessageDialog(this, "Cập nhật thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 parentPanel.loadOffer();

@@ -1,0 +1,99 @@
+package BUS;
+
+import DAO.BillInfoDAO;
+import DTO.BillInfoDTO;
+import DTO.ProductDTO;
+
+import java.util.List;
+
+public class BillInfoBUS {
+    private static BillInfoBUS instance = null;
+    private List<BillInfoDTO> list;
+    private String error = null;
+
+    private BillInfoBUS() {}
+    public static BillInfoBUS getInstance() {
+        if (instance == null) instance = new BillInfoBUS();
+        return instance;
+    }
+
+    public List<BillInfoDTO>loadByIdBill(int idBill){
+        list = BillInfoDAO.getInstance().getList(idBill);
+        return list;
+    }
+
+    public boolean addProduct(int idBill, int idProduct, int quantity){
+        ProductDTO product = ProductBUS.getInstance().getItemById(idProduct);
+
+        BillInfoDTO billInfoDTO = new BillInfoDTO(0);
+        List<BillInfoDTO> lsBillInfo = BillInfoDAO.getInstance().getList(idBill);
+        for(BillInfoDTO billInfo : lsBillInfo)
+            if(billInfo.getIdProduct()==idProduct){
+                billInfoDTO = billInfo;
+                quantity += billInfo.getQuantity();
+                break;
+            }
+
+        if(quantity > product.getQuantity()){
+            error = "Số lượng nhập vượt quá số lượng sản phẩm trong kho";
+            return false;
+        }
+
+        int discount = 0;
+        if(product.toString().contains("%")) discount = product.getOfferProduct().getDiscount();
+        double total = product.getPrice() * (100 - discount) / 100 * quantity;
+        if(billInfoDTO.getId() != 0){ // Nếu có thì cập nhật lại số lượng
+            billInfoDTO.setQuantity(quantity);
+            billInfoDTO.setTotal(total);
+            billInfoDTO.setDiscount(discount);
+            BillInfoDAO.getInstance().update(billInfoDTO);
+        }
+        else { // Nếu không có thì thêm mới 1 billInfo
+            billInfoDTO = new BillInfoDTO(-1, idBill, idProduct, quantity, discount, product.getPrice(), total, product.getName(), product.getUnit());
+            BillInfoDAO.getInstance().insert(billInfoDTO);
+        }
+
+        return true;
+    }
+
+    public boolean fixQuantityProduct(int idBill, int idProduct, int quantity){
+        ProductDTO product = ProductBUS.getInstance().getItemById(idProduct);
+
+        BillInfoDTO billInfoDTO = new BillInfoDTO(0);
+        List<BillInfoDTO> lsBillInfo = BillInfoDAO.getInstance().getList(idBill);
+        for(BillInfoDTO billInfo : lsBillInfo)
+            if(billInfo.getIdProduct()==idProduct){
+                billInfoDTO = billInfo;
+                break;
+            }
+
+        if(quantity > product.getQuantity()){
+            error = "Số lượng nhập vượt quá số lượng sản phẩm trong kho";
+            return false;
+        }
+
+        int discount = 0;
+        if(product.toString().contains("%")) discount = product.getOfferProduct().getDiscount();
+        double total = product.getPrice() * (100 - discount) / 100 * quantity;
+
+        billInfoDTO.setQuantity(quantity);
+        billInfoDTO.setDiscount(discount);
+        billInfoDTO.setTotal(total);
+        BillInfoDAO.getInstance().update(billInfoDTO);
+
+        return true;
+    }
+
+    public boolean deleteProduct(int idBill, int idProduct){
+        try {
+            BillInfoDAO.getInstance().delete(idBill, idProduct);
+        }
+        catch(Exception e){
+            error = e.getMessage();
+            return false;
+        }
+        return true;
+    }
+
+    public String getError(){return error;}
+}

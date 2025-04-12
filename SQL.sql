@@ -116,7 +116,7 @@ CREATE TABLE Bill (
     idCustomer INT,
     dateCreate DATE,
     price DOUBLE,
-    state VARCHAR(100) CHARACTER SET UTF8MB4,
+    state VARCHAR(100) CHARACTER SET UTF8MB4 default 'Chưa thanh toán', -- "Chưa thanh toán" or "Đã thanh toán"
     
     FOREIGN KEY (idStaff) REFERENCES Staff(id),
     FOREIGN KEY (idCustomer) REFERENCES Customer(id),
@@ -130,7 +130,11 @@ CREATE TABLE BillInfo (
     idProduct INT,
     price DOUBLE,
     quantity INT,
-    unit VARCHAR(100) CHARACTER SET UTF8MB4 NOT NULL,
+    discount INT,
+    total DOUBLE,
+    unit VARCHAR(100) CHARACTER SET UTF8MB4,
+	nameProduct VARCHAR(100) CHARACTER SET UTF8MB4,
+
     FOREIGN KEY (idBill) REFERENCES Bill(id),
     FOREIGN KEY (idProduct) REFERENCES Product(id)
 ); 
@@ -365,28 +369,32 @@ INSERT INTO Staff (phone, password, firstName, lastName, address, salary, role, 
 ('0397969307', 'admin', 'Cường', 'Lê Mạnh', 'Huỳnh Thị Na, Hóc Môn, TP. HCM', 20000000, 'Quản trị viên', 'Nam');
 
 
- -- ---------------- SELECT -----------
-select * from provider;
-select * from customer;
-select * from staff;
-select * from product;
-select * from productdetail;
-select * from producttype;
-select * from offer;
-select * from productdetail;
- -- ------------------------------------
- 
-select * from offer o, offerproduct op
-where o.id = op.idOffer; 
+--  -- ---------------- SELECT -----------
+-- select * from provider;
+-- select * from customer;
+-- select * from staff;
+select * from bill;
+select * from billinfo;
+-- select * from product;
+-- select * from productdetail;
+-- select * from producttype;
+-- select * from offer;
+-- select * from productdetail;
+--  -- ------------------------------------
+--  
+-- select * from offer o, offerproduct op
+-- where o.id = op.idOffer; 
 
-select distinct discount
-from offerproduct
-order by discount;
+-- select distinct discount
+-- from offerproduct
+-- order by discount;
 
-select pd.*, pdtype.name as type, pddetail.detailInfo as detail, pdoffer.discount as discount, o.id as idOffer, o.startDate as startDate, o.endDate as endDate
-from product pd
-join producttype pdtype on pd.idProductType = pdtype.id
-join productdetail pddetail on pd.idProductDetail = pddetail.id
-left join offerproduct pdoffer on pd.idOfferProduct = pdoffer.id
-left join offer o on pdoffer.idOffer = o.id
-order by pd.id asc;
+-- select pd.*, pdtype.name as type, pddetail.detailInfo as detail, pdoffer.discount as discount, o.id as idOffer, o.startDate as startDate, o.endDate as endDate
+-- from product pd
+-- join producttype pdtype on pd.idProductType = pdtype.id
+-- join productdetail pddetail on pd.idProductDetail = pddetail.id
+-- left join offerproduct pdoffer on pd.idOfferProduct = pdoffer.id
+-- left join offer o on pdoffer.idOffer = o.id
+-- order by pd.id asc;
+
+-- delete from bill where id = 2;

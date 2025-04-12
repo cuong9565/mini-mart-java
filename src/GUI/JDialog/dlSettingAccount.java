@@ -1,7 +1,6 @@
 package GUI.JDialog;
 
 import Components.*;
-import DAO.StaffDAO;
 import DTO.StaffDTO;
 import GUI.JPanel.pnChangeInfo;
 import GUI.JPanel.pnChangePassword;
@@ -30,8 +29,8 @@ public class dlSettingAccount extends JDialog {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
-        JButton lsBtn[] = new JButton[]{btnChangeInfo, btnChangePassword};
-        JPanel lsPn[] = new JPanel[]{new pnChangeInfo(this, parentFrame, accountLogin), new pnChangePassword(this, parentFrame, accountLogin)};
+        JButton[] lsBtn = new JButton[]{btnChangeInfo, btnChangePassword};
+        JPanel[] lsPn = new JPanel[]{new pnChangeInfo(this, parentFrame, accountLogin), new pnChangePassword(this, parentFrame, accountLogin)};
 
         pnMain.setBounds(0,0,540,550);
         pnNav.setBounds(0,0,540, 30);
@@ -59,19 +58,17 @@ public class dlSettingAccount extends JDialog {
 
         for(int i=0; i<lsBtn.length; i++) {
             final int I = i;
-            lsBtn[i].addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    lsBtn[currCursor].setBackground(MyColor.LightGray);
-                    lsBtn[currCursor].setBorder(BorderFactory.createEmptyBorder());
-                    lsPn[currCursor].setVisible(false);
-                    currCursor = I;
-                    lsBtn[I].setBackground(MyColor.White);
-                    lsBtn[I].setBorder(new MatteBorder(0,0,2,0,MyColor.UnderLineBlue));
-                    lsPn[I].setVisible(true);
-                    switch (I){
-                        case 0: lbHeader.setText("Thông tin tài khoản"); break;
-                        case 1: lbHeader.setText("Đổi mật khẩu"); break;
-                    }
+            lsBtn[i].addActionListener(_ -> {
+                lsBtn[currCursor].setBackground(MyColor.LightGray);
+                lsBtn[currCursor].setBorder(BorderFactory.createEmptyBorder());
+                lsPn[currCursor].setVisible(false);
+                currCursor = I;
+                lsBtn[I].setBackground(MyColor.White);
+                lsBtn[I].setBorder(new MatteBorder(0,0,2,0,MyColor.UnderLineBlue));
+                lsPn[I].setVisible(true);
+                switch (I){
+                    case 0: lbHeader.setText("Thông tin tài khoản"); break;
+                    case 1: lbHeader.setText("Đổi mật khẩu"); break;
                 }
             });
             pnNav.add(lsBtn[i]);

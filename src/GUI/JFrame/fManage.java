@@ -1,7 +1,6 @@
 package GUI.JFrame;
 import BUS.StaffBUS;
 import Components.*;
-import DAO.StaffDAO;
 import DTO.StaffDTO;
 import GUI.JDialog.dlSettingAccount;
 import GUI.JPanel.*;
@@ -29,13 +28,11 @@ public class fManage extends JFrame {
     JButton btnSupplier = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, "Nhà cung cấp", SwingConstants.LEFT, SwingConstants.CENTER);
     JButton btnSettingAccount = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.LightGreen, "Tài khoản", SwingConstants.LEFT, SwingConstants.CENTER);
     JButton btnLogout = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, MyColor.LightRed, "Đăng xuất", SwingConstants.LEFT, SwingConstants.CENTER);
-    JButton[] lsBtn = new JButton[]{btnStatistic, btnImport, btnSell, btnProduct, btnTypeProduct, btnCustomer, btnBill, btnDiscount, btnStaff, btnSupplier};
 
     int currCursor = 0;
     fManage currFrame = this;
     StaffDTO thisAccount;
 
-    JPanel[] lsPn = new JPanel[]{new pnStatistic(), new pnImport(), new pnSell(currFrame), new pnProduct(currFrame), new pnTypeProduct(currFrame), new pnCustomer(currFrame), new pnBill(currFrame), new pnDiscount(currFrame), new pnStaff(currFrame), new pnSupplier(currFrame)};
 
     public fManage(fLogin loginForm, StaffDTO accountLogin) {
         setTitle("Phần mềm quản lý siêu thị mini");
@@ -45,8 +42,21 @@ public class fManage extends JFrame {
         setResizable(false);
         setLayout(null);
         setBackground(Color.decode("#FFFFFF"));
+
         thisAccount = accountLogin;
         LoadThisAccount();
+        JButton[] lsBtn = new JButton[]{btnStatistic, btnImport, btnSell, btnProduct, btnTypeProduct, btnCustomer, btnBill, btnDiscount, btnStaff, btnSupplier};
+        JPanel[] lsPn = new JPanel[]{
+                new pnStatistic(),
+                new pnImport(),
+                new pnSell(currFrame, thisAccount),
+                new pnProduct(currFrame),
+                new pnTypeProduct(currFrame),
+                new pnCustomer(currFrame),
+                new pnBill(currFrame),
+                new pnDiscount(currFrame),
+                new pnStaff(currFrame),
+                new pnSupplier(currFrame)};
 
         // region setBounds + MaximumSize Button
         lbWelcome.setBounds(10, 0, 180, 150);
@@ -107,14 +117,12 @@ public class fManage extends JFrame {
                     else lsBtn[I].setBackground(MyColor.White);
                 }
             });
-            lsBtn[i].addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    lsBtn[currCursor].setBackground(MyColor.White);
-                    lsPn[currCursor].setVisible(false);
-                    currCursor = I;
-                    lsBtn[currCursor].setBackground(MyColor.HoverBlue);
-                    lsPn[currCursor].setVisible(true);
-                }
+            lsBtn[i].addActionListener(_ -> {
+                lsBtn[currCursor].setBackground(MyColor.White);
+                lsPn[currCursor].setVisible(false);
+                currCursor = I;
+                lsBtn[currCursor].setBackground(MyColor.HoverBlue);
+                lsPn[currCursor].setVisible(true);
             });
             pnNav.add(lsBtn[i]);
         }

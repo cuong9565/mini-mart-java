@@ -1,8 +1,8 @@
 package DTO;
 
+import Components.MyDate;
+
 import java.sql.ResultSet;
-import java.util.Calendar;
-import java.util.Date;
 
 public class ProductDTO {
     private int id, quantity;
@@ -54,6 +54,7 @@ public class ProductDTO {
     public OfferProductDTO getOfferProduct(){return offerProduct;}
     public String getName() { return name; }
     public double getPrice() { return price; }
+    public String getFormatPrice(){return String.format("%,.0fđ", price);}
     public String getUnit() { return unit; }
     public int getQuantity() { return quantity; }
 
@@ -68,14 +69,7 @@ public class ProductDTO {
 
     @Override
     public String toString() {
-        Date today = new Date();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(today);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        today = cal.getTime();
+        MyDate today = MyDate.getCurrentDate();
 
         String str;
         if(offerProduct.getId()==0) str = "Chưa có ưu đãi";
@@ -90,6 +84,6 @@ public class ProductDTO {
         return new Object[]{id, type.getName(), toString(), name, String.format("%,.0fđ", price), unit, quantity};
     }
     public Object[] getRowObjectsSell() {
-        return new Object[]{id, name, String.format("%,.0fđ", price), unit, quantity};
+        return new Object[]{id, name, getFormatPrice(), unit, quantity};
     }
 }

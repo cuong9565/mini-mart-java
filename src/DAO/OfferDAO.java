@@ -36,8 +36,8 @@ public class OfferDAO {
         String sql = "INSERT INTO offer(startDate, endDate) VALUES (?, ?)";
         Connection con = DataProvider.getInstance().getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setDate(1, offer.getDateStart());
-            ps.setDate(2, offer.getDateEnd());
+            ps.setDate(1, offer.getDateStart().getSqlDate());
+            ps.setDate(2, offer.getDateEnd().getSqlDate());
             res = ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -52,8 +52,8 @@ public class OfferDAO {
         String sql = "update offer set startDate = ?, endDate = ? where id = ?";
         Connection con = DataProvider.getInstance().getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)){
-            ps.setDate(1, offer.getDateStart());
-            ps.setDate(2, offer.getDateEnd());
+            ps.setDate(1, offer.getDateStart().getSqlDate());
+            ps.setDate(2, offer.getDateEnd().getSqlDate());
             ps.setInt(3, offer.getId());
             res = ps.executeUpdate();
         }

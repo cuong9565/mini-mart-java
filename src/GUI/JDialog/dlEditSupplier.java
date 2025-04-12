@@ -8,8 +8,6 @@ import GUI.JPanel.pnSupplier;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class dlEditSupplier extends JDialog {
     JPanel pnMain = new MyJPanel(MyColor.White);
@@ -66,22 +64,16 @@ public class dlEditSupplier extends JDialog {
         tfEmail.setText(supplier.getEmail());
         // endregion
         // region Event
-        btnEsc.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dialog.dispose();
-            }
-        });
-        btnSave.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                SupplierDTO supplierNew = new SupplierDTO(supplier.getId(), tfName.getText(), tfPhone.getText(), tfAddress.getText(), tfEmail.getText());
-                boolean check = SupplierBUS.getInstance().editSupplier(supplierNew);
+        btnEsc.addActionListener(_ -> dialog.dispose());
+        btnSave.addActionListener(_ -> {
+            SupplierDTO supplierNew = new SupplierDTO(supplier.getId(), tfName.getText(), tfPhone.getText(), tfAddress.getText(), tfEmail.getText());
+            boolean check = SupplierBUS.getInstance().editSupplier(supplierNew);
 
-                if(check){
-                    JOptionPane.showMessageDialog(dialog, "Thay đổi thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    parentPanel.loadSupplier();
-                }
-                else JOptionPane.showMessageDialog(dialog, SupplierBUS.getInstance().getError(), "Thông báo", JOptionPane.WARNING_MESSAGE);
+            if(check){
+                JOptionPane.showMessageDialog(dialog, "Thay đổi thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                parentPanel.loadSupplier();
             }
+            else JOptionPane.showMessageDialog(dialog, SupplierBUS.getInstance().getError(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         });
         // endregion
 

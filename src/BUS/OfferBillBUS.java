@@ -28,15 +28,15 @@ public class OfferBillBUS {
         List<OfferBillDTO> ls = new ArrayList<>();
         for(OfferBillDTO o : list) switch (col){
             case 0: if(String.valueOf(o.getId()).contains(txt)) ls.add(o); break;
-            case 1: if(o.getOffer().getFormattedDateStart().contains(txt)) ls.add(o); break;
-            case 2: if(o.getOffer().getFormattedDateEnd().contains(txt)) ls.add(o); break;
+            case 1: if(o.getOffer().getDateStart().toString().contains(txt)) ls.add(o); break;
+            case 2: if(o.getOffer().getDateEnd().toString().contains(txt)) ls.add(o); break;
             case 3: if((o.getDiscount() + "%").contains(txt)) ls.add(o); break;
         }
         return ls;
     }
 
     public OfferBillDTO getItemById(int id) {
-        for(OfferBillDTO o : list)
+        for(OfferBillDTO o : getList())
             if (o.getId()==id)
                 return o;
         return null;

@@ -2,15 +2,12 @@ package GUI.JDialog;
 
 import BUS.TypeProductBUS;
 import Components.*;
-import DTO.ProductDTO;
 import DTO.TypeProductDTO;
 import GUI.JFrame.fManage;
 import GUI.JPanel.pnTypeProduct;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class dlEditTypeProduct extends JDialog {
     JPanel pnMain = new MyJPanel(MyColor.White);
@@ -50,22 +47,16 @@ public class dlEditTypeProduct extends JDialog {
         tfName.setText(product.getName());
         // endregion
         // region EVENT
-        btnEsc.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dialog.dispose();
-            }
-        });
-        btnSave.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                TypeProductDTO productNew = new TypeProductDTO(product.getId(), tfName.getText());
-                boolean check = TypeProductBUS.getInstance().edit(productNew);
+        btnEsc.addActionListener(_ -> dialog.dispose());
+        btnSave.addActionListener(_ -> {
+            TypeProductDTO productNew = new TypeProductDTO(product.getId(), tfName.getText());
+            boolean check = TypeProductBUS.getInstance().edit(productNew);
 
-                if(check){
-                    JOptionPane.showMessageDialog(dialog, "Sửa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    parentPanel.loadTypeProduct();
-                }
-                else JOptionPane.showMessageDialog(dialog, TypeProductBUS.getInstance().getError(), "Thông báo", JOptionPane.WARNING_MESSAGE);
+            if(check){
+                JOptionPane.showMessageDialog(dialog, "Sửa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                parentPanel.loadTypeProduct();
             }
+            else JOptionPane.showMessageDialog(dialog, TypeProductBUS.getInstance().getError(), "Thông báo", JOptionPane.WARNING_MESSAGE);
         });
         // endregion11
         // region ADD

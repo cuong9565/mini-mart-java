@@ -28,8 +28,8 @@ public class OfferBUS {
         for (OfferDTO o : list) {
             switch (col) {
                 case 0: if(String.valueOf(o.getId()).contains(txt)) ls.add(o); break;
-                case 1: if(o.getFormattedDateStart().contains(txt)) ls.add(o); break;
-                case 2: if(o.getFormattedDateEnd().contains(txt)) ls.add(o); break;
+                case 1: if(o.getDateStart().toString().contains(txt)) ls.add(o); break;
+                case 2: if(o.getDateStart().toString().contains(txt)) ls.add(o); break;
             }
         }
         return ls;
@@ -37,14 +37,13 @@ public class OfferBUS {
 
     public OfferDTO getItemByDate(String dateStart, String dateEnd) {
         for (OfferDTO o : getList())
-            if(o.getFormattedDateStart().contains(dateStart) && o.getFormattedDateEnd().contains(dateEnd)) return o;
+            if(o.getDateStart().toString().contains(dateStart) && o.getDateEnd().toString().contains(dateEnd)) return o;
         return null;
     }
 
     public List<OfferDTO> getListByOfferProduct(OfferProductDTO offerProduct) {
         List<OfferDTO> ls = new ArrayList<>();
-        if (offerProduct.getId() == 0)
-            ls.add(new OfferDTO(0, (java.sql.Date) null, (java.sql.Date) null));
+        if (offerProduct.getId() == 0) ls.add(new OfferDTO(0));
         else {
             for (OfferProductDTO op : OfferProductBUS.getInstance().getList())
                 if (op.getDiscount() == offerProduct.getDiscount())
