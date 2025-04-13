@@ -22,22 +22,22 @@ public class StaffBUS {
         StaffDTO staff;
         if(phone.isEmpty()){
             error = "Số điện thoại không được để trống!!!";
-            return new StaffDTO(0);
+            return new StaffDTO();
         }
         if(password.isEmpty()){
             error = "Mật khẩu không được để trống!!!";
-            return new StaffDTO(0);
+            return new StaffDTO();
         }
         if(!phone.matches("^0[0-9]{8,10}$")){
             error = "Số điện thoại định dạng không hợp lệ!!!";
-            return new StaffDTO(0);
+            return new StaffDTO();
         }
         try {
             staff = StaffDAO.getInstance().Login(phone, password);
         }
         catch(Exception e){
             error = e.getMessage();
-            return new StaffDTO(0);
+            return new StaffDTO();
         }
         return staff;
     }
@@ -111,7 +111,7 @@ public class StaffBUS {
         }
         catch(Exception e){
             error = e.getMessage();
-            staff = new StaffDTO(0);
+            staff = new StaffDTO();
         }
         return staff;
     }

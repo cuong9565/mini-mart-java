@@ -18,7 +18,7 @@ public class StaffDAO {
     }
 
     public StaffDTO Login(String phone, String password) {
-        StaffDTO staff = new StaffDTO(0);
+        StaffDTO staff = new StaffDTO();
         Connection con = DataProvider.getInstance().getConnection();
         String sql = "select * from staff where phone = ? and password = ?";
         try(PreparedStatement ps = con.prepareStatement(sql)){
@@ -36,14 +36,13 @@ public class StaffDAO {
     }
 
     public StaffDTO GetStaffById(int id) {
-        StaffDTO staff = new StaffDTO(0);
+        StaffDTO staff = new StaffDTO();
         Connection con = DataProvider.getInstance().getConnection();
         String sql = "select * from staff where id = ?";
         try(PreparedStatement ps = con.prepareStatement(sql)){
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if(rs.next()) staff = new StaffDTO(rs);
-            else throw new RuntimeException("Không tìm thấy nhân viên với id = " + id);
         }
         catch (Exception e) {
             throw new RuntimeException(e.getMessage());

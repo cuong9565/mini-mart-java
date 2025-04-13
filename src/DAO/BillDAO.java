@@ -3,6 +3,8 @@ package DAO;
 import DTO.BillDTO;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BillDAO {
     private static BillDAO instance = null;
@@ -11,6 +13,21 @@ public class BillDAO {
     public static BillDAO getInstance() {
         if (instance == null) instance = new BillDAO();
         return instance;
+    }
+
+    public List<BillDTO> load() {
+        List<BillDTO> list = new ArrayList<>();
+        String sql = "select * from bill";
+        Connection con = DataProvider.getInstance().getConnection();
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) list.add(new BillDTO(rs));
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return list;
     }
 
     public BillDTO getBillNotPaid(int idStaff){

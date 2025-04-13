@@ -43,7 +43,7 @@ public class OfferBUS {
 
     public List<OfferDTO> getListByOfferProduct(OfferProductDTO offerProduct) {
         List<OfferDTO> ls = new ArrayList<>();
-        if (offerProduct.getId() == 0) ls.add(new OfferDTO(0));
+        if (offerProduct.getId() == 0) ls.add(new OfferDTO());
         else {
             for (OfferProductDTO op : OfferProductBUS.getInstance().getList())
                 if (op.getDiscount() == offerProduct.getDiscount())

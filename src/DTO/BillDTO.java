@@ -12,6 +12,7 @@ public class BillDTO {
     private MyDate dateCreate;
     private double price;
     private String state;
+
     public BillDTO() {}
     public BillDTO(int id){
         this.id = id;

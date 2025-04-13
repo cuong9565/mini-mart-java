@@ -7,10 +7,12 @@ import DTO.BillDTO;
 import DTO.BillInfoDTO;
 import DTO.ProductDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BillBUS {
     private static BillBUS instance = null;
+    private List<BillDTO> list;
     private String error = null;
     private BillBUS() {}
 
@@ -26,6 +28,11 @@ public class BillBUS {
         catch (Exception e) {error = e.getMessage();}
 
         return billDTO;
+    }
+
+    public List<BillDTO> load(){
+        list = BillDAO.getInstance().load();
+        return list;
     }
 
     public void addBill(int idStaff){

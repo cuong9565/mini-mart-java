@@ -4,34 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong SettingAccount">
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong End Sell...Insert MyDate">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/CustomerBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/CustomerBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/BillBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/BillBUS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BUS/OfferBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/OfferBUS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BUS/OfferBillBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/OfferBillBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/OfferProductBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/OfferProductBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/ProductBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/ProductBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/MyJSpinner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJSpinner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/StaffBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/StaffBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/SupplierBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/SupplierBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/MyDate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyDate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/BillDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/BillDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/CustomerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/CustomerDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/OfferDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/OfferDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/ProductDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/ProductDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/StaffDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/StaffDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/SupplierDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/SupplierDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DTO/BillDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/BillDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DTO/CustomerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/CustomerDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DTO/OfferBillDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/OfferBillDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DTO/OfferDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/OfferDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DTO/OfferProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/OfferProductDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DTO/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/ProductDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/StaffDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/StaffDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/SupplierDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/SupplierDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DTO/TypeProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/TypeProductDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddoffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddoffer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditProduct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditSupplier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditTypeProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditTypeProduct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditoffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditoffer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlImportDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlImportDetail.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlSettingAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlSettingAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JFrame/fManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JFrame/fManage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnSell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnSell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnBill.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,15 +200,10 @@
       <workItem from="1744364353414" duration="5135000" />
       <workItem from="1744378724412" duration="7296000" />
       <workItem from="1744416482733" duration="13936000" />
-      <workItem from="1744460342292" duration="14261000" />
-    </task>
-    <task id="LOCAL-00020" summary="Cuong add JLableError">
-      <option name="closed" value="true" />
-      <created>1742367168329</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1742367168329</updated>
+      <workItem from="1744460342292" duration="15772000" />
+      <workItem from="1744503157895" duration="4393000" />
+      <workItem from="1744542651729" duration="653000" />
+      <workItem from="1744548790199" duration="7461000" />
     </task>
     <task id="LOCAL-00021" summary="Cuong add Error Login">
       <option name="closed" value="true" />
@@ -599,7 +589,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744371630316</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="Cuong End Sell...Insert MyDate">
+      <option name="closed" value="true" />
+      <created>1744476317887</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1744476317887</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -638,6 +636,7 @@
     <MESSAGE value="Cuong End Product" />
     <MESSAGE value="Cuong Login" />
     <MESSAGE value="Cuong SettingAccount" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cuong SettingAccount" />
+    <MESSAGE value="Cuong End Sell...Insert MyDate" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cuong End Sell...Insert MyDate" />
   </component>
 </project>

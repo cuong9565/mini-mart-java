@@ -3,21 +3,18 @@ package DTO;
 import java.sql.ResultSet;
 
 public class StaffDTO {
-    private int id;
-    private String password ;
-    private String lastName;
-    private String firstName;
-    private String gender;
-    private String address;
-    private String role;
-    private double salary;
-    private String phone;
-    private String state;
+    private int id = 0;
+    private String password = "";
+    private String lastName = "";
+    private String firstName = "";
+    private String gender = "";
+    private String address = "";
+    private String role = "";
+    private double salary = 0;
+    private String phone = "";
+    private String state = "";
 
     public StaffDTO() {}
-    public StaffDTO(int id){
-        this.id = id;
-    }
     public StaffDTO(int id, String phone ,String password , String firstName,String lastName,String gender, String address, String role, double salary, String state) {
         this.id = id;
         this.password = password;
@@ -29,6 +26,23 @@ public class StaffDTO {
         this.salary = salary;
         this.phone = phone;
         this.state = state;
+    }
+    public StaffDTO(ResultSet rs, int i){
+        try {
+            id = rs.getInt(i++);
+            phone = rs.getString(i++);
+            password = rs.getString(i++);
+            firstName = rs.getString(i++);
+            lastName = rs.getString(i++);
+            address = rs.getString(i++);
+            salary = rs.getDouble(i++);
+            role = rs.getString(i++);
+            state = rs.getString(i++);
+            gender = rs.getString(i++);
+        }
+        catch (Exception e) {
+            System.out.println("Lỗi constructor ResultSet của StaffDTO: " + e.getMessage());
+        }
     }
     public StaffDTO(ResultSet rs){
         try{

@@ -38,7 +38,7 @@ public class CustomerDAO {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if(rs.next()) customer = new CustomerDTO(rs);
-            else customer = new CustomerDTO(0);
+            else customer = new CustomerDTO();
         }
         catch (Exception e) {
             throw new RuntimeException(e.getMessage());

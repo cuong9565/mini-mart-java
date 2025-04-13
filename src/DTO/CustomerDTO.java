@@ -3,12 +3,10 @@ package DTO;
 import java.sql.ResultSet;
 
 public class CustomerDTO{
-    private int id;
-    private String phone, lastName, firstName, address, gender, state;
+    private int id = 0;
+    private String phone = "", lastName = "", firstName = "", address = "", gender = "", state = "";
+
     public CustomerDTO() {}
-    public CustomerDTO(int id){
-        this.id = id;
-    }
     public CustomerDTO(int id, String phone, String lastName, String firstName, String address, String gender, String state) {
         this.id = id;
         this.phone = phone;
@@ -17,6 +15,20 @@ public class CustomerDTO{
         this.address = address;
         this.gender = gender;
         this.state = state;
+    }
+    public CustomerDTO(ResultSet rs, int i){
+        try {
+            id = rs.getInt(i++);
+            phone = rs.getString(i++);
+            lastName = rs.getString(i++);
+            firstName = rs.getString(i++);
+            address = rs.getString(i++);
+            state = rs.getString(i++);
+            gender = rs.getString(i++);
+        }
+        catch(Exception e){
+            System.out.println("Lỗi constructor ResultSet của CustomerDTO: " + e.getMessage());
+        }
     }
     public CustomerDTO(ResultSet rs){
         try {

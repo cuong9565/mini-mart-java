@@ -39,7 +39,7 @@ public class OfferBillBUS {
         for(OfferBillDTO o : getList())
             if (o.getId()==id)
                 return o;
-        return null;
+        return new OfferBillDTO();
     }
 
     public List<OfferBillDTO> getListDiscount() {

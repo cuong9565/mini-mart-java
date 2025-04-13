@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.Calendar;
 
 public class MyDate {
-    private int dd, mm, yyyy;
+    private int dd = 0, mm = 0, yyyy = 0;
 
     public MyDate() {}
     public MyDate(int dd, int mm, int yyyy) {
@@ -20,9 +20,11 @@ public class MyDate {
         this.yyyy = calendar.get(Calendar.YEAR);
     }
     public MyDate(java.sql.Date date) {
-        this.dd = date.toLocalDate().getDayOfMonth();
-        this.mm = date.toLocalDate().getMonthValue();
-        this.yyyy = date.toLocalDate().getYear();
+        if(date != null) {
+            this.dd = date.toLocalDate().getDayOfMonth();
+            this.mm = date.toLocalDate().getMonthValue();
+            this.yyyy = date.toLocalDate().getYear();
+        }
     }
     public MyDate(String date) {
         String[] words = date.split("/");

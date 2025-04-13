@@ -368,17 +368,108 @@ INSERT INTO Staff (phone, password, firstName, lastName, address, salary, role, 
 ('0939012345', 'abc654', 'Ánh', 'Hà Thị', '62 Trần Quốc Toản, Hải Phòng', 7100000, 'Nhân viên bán hàng', 'Nữ'),
 ('0397969307', 'admin', 'Cường', 'Lê Mạnh', 'Huỳnh Thị Na, Hóc Môn, TP. HCM', 20000000, 'Quản trị viên', 'Nam');
 
+INSERT INTO Bill (idStaff, idOfferBill, idCustomer, dateCreate, price, state) VALUES
+(12, NULL, 45, '2024-03-15', 135000, 'Đã thanh toán'),
+(25, 3, NULL, '2024-06-22', 245000, 'Đã thanh toán'),
+(47, 7, 22, '2024-09-10', 78000, 'Đã thanh toán'),
+(33, NULL, 18, '2024-11-05', 320000, 'Đã thanh toán'),
+(9, 1, NULL, '2024-12-20', 165000, 'Đã thanh toán'),
+(41, 4, 37, '2025-01-12', 210000, 'Đã thanh toán'),
+(15, NULL, 29, '2024-04-18', 95000, 'Đã thanh toán'),
+(28, 6, NULL, '2024-07-30', 400000, 'Đã thanh toán'),
+(36, 2, 14, '2024-10-25', 180000, 'Đã thanh toán'),
+(4, NULL, 41, '2025-02-28', 275000, 'Đã thanh toán'),
+(50, 8, NULL, '2024-05-09', 110000, 'Đã thanh toán'),
+(22, 5, 33, '2024-08-14', 350000, 'Đã thanh toán'),
+(17, NULL, 8, '2024-02-27', 145000, 'Đã thanh toán'),
+(31, 3, NULL, '2024-12-01', 220000, 'Đã thanh toán'),
+(44, 7, 26, '2025-03-10', 185000, 'Đã thanh toán'),
+(6, NULL, 49, '2024-01-30', 300000, 'Đã thanh toán'),
+(29, 4, NULL, '2024-06-05', 90000, 'Đã thanh toán'),
+(13, 1, 15, '2024-09-19', 260000, 'Đã thanh toán'),
+(38, NULL, 42, '2025-04-01', 155000, 'Đã thanh toán'),
+(20, 6, NULL, '2024-11-15', 330000, 'Đã thanh toán');
+
+-- Thêm chi tiết hóa đơn vào bảng BillInfo
+INSERT INTO BillInfo (idBill, idProduct, price, quantity, discount, total, unit, nameProduct) VALUES
+-- Hóa đơn 1
+(1, 1, 5000, 5, 0, 25000, 'Gói', 'Mì gói Hảo Hảo'),
+(1, 2, 12000, 5, 10, 54000, 'Chai', 'Nước ngọt Pepsi'),
+(1, 4, 10000, 6, 5, 57000, 'Gói', 'Snack Oishi'),
+-- Hóa đơn 2
+(2, 5, 25000, 4, 0, 100000, 'Hộp', 'Sữa tươi Vinamilk'),
+(2, 9, 45000, 3, 10, 121500, 'Túi', 'Táo Mỹ'),
+(2, 11, 15000, 2, 0, 30000, 'Gói', 'Kẹo socola KitKat'),
+-- Hóa đơn 3
+(3, 8, 10000, 3, 0, 30000, 'Túi', 'Rau muống'),
+(3, 17, 25000, 2, 10, 45000, 'Hộp', 'Cá ngừ đóng hộp'),
+-- Hóa đơn 4
+(4, 6, 60000, 3, 5, 171000, 'Khay', 'Thịt ba chỉ'),
+(4, 14, 65000, 2, 0, 130000, 'Chai', 'Sữa tắm Lifebuoy'),
+(4, 19, 45000, 1, 0, 45000, 'Cuộn', 'Giấy vệ sinh Pulppy'),
+-- Hóa đơn 5
+(5, 10, 80000, 2, 10, 144000, 'Hộp', 'Gà rán đông lạnh'),
+(5, 12, 20000, 1, 5, 19000, 'Cái', 'Bàn chải đánh răng'),
+(5, 21, 8000, 3, 0, 24000, 'Gói', 'Mì Omachi'),
+-- Hóa đơn 6
+(6, 7, 150000, 1, 0, 150000, 'Túi', 'Tôm sú đông lạnh'),
+(6, 22, 12000, 5, 0, 60000, 'Chai', 'Coca-Cola'),
+-- Hóa đơn 7
+(7, 4, 10000, 5, 10, 45000, 'Gói', 'Snack Oishi'),
+(7, 23, 15000, 4, 0, 60000, 'Hũ', 'Muối ớt Chinsu'),
+-- Hóa đơn 8
+(8, 13, 90000, 2, 5, 171000, 'Bộ', 'Bộ dao nhà bếp'),
+(8, 18, 120000, 2, 0, 240000, 'Can', 'Nước giặt OMO'),
+-- Hóa đơn 9
+(9, 25, 20000, 5, 0, 100000, 'Hộp', 'Sữa chua Vinamilk'),
+(9, 29, 30000, 3, 10, 81000, 'Túi', 'Cam sành'),
+-- Hóa đơn 10
+(10, 16, 30000, 5, 0, 150000, 'Kg', 'Gạo ST25'),
+(10, 20, 30000, 5, 0, 150000, 'Hộp', 'Khăn giấy ướt'),
+-- Hóa đơn 11
+(11, 31, 25000, 2, 0, 50000, 'Gói', 'Kẹo dẻo Haribo'),
+(11, 35, 30000, 2, 0, 60000, 'Tuýp', 'Kem đánh răng Colgate'),
+-- Hóa đơn 12
+(12, 27, 120000, 2, 5, 228000, 'Túi', 'Mực ống đông lạnh'),
+(12, 34, 85000, 1, 0, 85000, 'Chai', 'Dầu gội Head & Shoulders'),
+-- Hóa đơn 13
+(13, 24, 35000, 3, 0, 105000, 'Gói', 'Bò khô Jack'),
+(13, 28, 12000, 4, 0, 48000, 'Túi', 'Cải xanh'),
+-- Hóa đơn 14
+(14, 30, 90000, 2, 0, 180000, 'Hộp', 'Pizza đông lạnh'),
+(14, 44, 15000, 3, 10, 40500, 'Gói', 'Khoai chiên Lay’s'),
+-- Hóa đơn 15
+(15, 9, 45000, 3, 5, 128250, 'Túi', 'Táo Mỹ'),
+(15, 47, 130000, 1, 10, 117000, 'Túi', 'Mực lá đông lạnh'),
+-- Hóa đơn 16
+(16, 46, 70000, 3, 0, 210000, 'Khay', 'Cá basa tươi'),
+(16, 49, 50000, 2, 0, 100000, 'Túi', 'Táo Fuji'),
+-- Hóa đơn 17
+(17, 2, 12000, 5, 0, 60000, 'Chai', 'Nước ngọt Pepsi'),
+(17, 21, 8000, 4, 0, 32000, 'Gói', 'Mì Omachi'),
+-- Hóa đơn 18
+(18, 5, 25000, 4, 0, 100000, 'Hộp', 'Sữa tươi Vinamilk'),
+(18, 14, 65000, 2, 0, 130000, 'Chai', 'Sữa tắm Lifebuoy'),
+(18, 33, 35000, 1, 0, 35000, 'Cái', 'Thớt nhựa'),
+-- Hóa đơn 19
+(19, 11, 15000, 5, 10, 67500, 'Gói', 'Kẹo socola KitKat'),
+(19, 39, 40000, 2, 0, 80000, 'Cuộn', 'Giấy vệ sinh Bless You'),
+-- Hóa đơn 20
+(20, 18, 120000, 2, 0, 240000, 'Can', 'Nước giặt OMO'),
+(20, 45, 30000, 3, 0, 90000, 'Hộp', 'Sữa chua uống Yakult');
 
 --  -- ---------------- SELECT -----------
 -- select * from provider;
--- select * from customer;
--- select * from staff;
+select * from customer;
+select * from staff;
 select * from bill;
 select * from billinfo;
--- select * from product;
+select * from product;
 -- select * from productdetail;
 -- select * from producttype;
--- select * from offer;
+select * from offer;
+select * from offerproduct;
+select * from offerbill;
 -- select * from productdetail;
 --  -- ------------------------------------
 --  
@@ -396,5 +487,12 @@ select * from billinfo;
 -- left join offerproduct pdoffer on pd.idOfferProduct = pdoffer.id
 -- left join offer o on pdoffer.idOffer = o.id
 -- order by pd.id asc;
+
+select bill.*, staff.*, offerbill.*, offer.*, customer.*
+from bill
+join staff on bill.idStaff = staff.id
+left join offerbill on bill.idOfferBill = offerbill.id
+left join offer on offerbill.idOffer = offer.id
+left join customer on bill.idCustomer = customer.id
 
 -- delete from bill where id = 2;

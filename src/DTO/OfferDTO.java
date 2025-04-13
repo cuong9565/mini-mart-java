@@ -4,12 +4,19 @@ import Components.MyDate;
 import java.sql.ResultSet;
 
 public class OfferDTO {
-    private int id;
-    private MyDate dateStart, dateEnd;
+    private int id = 0;
+    private MyDate dateStart = new MyDate();
+    private MyDate dateEnd = new MyDate();
 
     public OfferDTO() {}
-    public OfferDTO(int id){
-        this.id = id;
+    public OfferDTO(ResultSet rs, int i){
+        try{
+            id = rs.getInt(i++);
+            dateStart = new MyDate(rs.getDate(i++));
+            dateEnd = new MyDate(rs.getDate(i++));
+        }catch (Exception e){
+            System.out.println("Lỗi constructor ResultSet của OfferDTO" + e.getMessage());
+        }
     }
     public OfferDTO(int id, String dateStart, String dateEnd) {
         this.id = id;
@@ -20,16 +27,6 @@ public class OfferDTO {
         this.id = id;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
-    }
-
-    public OfferDTO(ResultSet rs){
-        try {
-            this.id = rs.getInt("id");
-            this.dateStart = new MyDate(rs.getDate("startDate"));
-            this.dateEnd = new MyDate(rs.getDate("endDate"));
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     public int getId() {return id;}

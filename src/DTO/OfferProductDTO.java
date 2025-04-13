@@ -18,7 +18,7 @@ public class OfferProductDTO {
         try{
             this.id = rs.getInt("idOfferProduct");
             this.discount = rs.getInt("discount");
-            if(rs.getInt("idOffer")==0) this.offer = new OfferDTO(0);
+            if(rs.getInt("idOffer")==0) this.offer = new OfferDTO();
             else this.offer = new OfferDTO(
                     rs.getInt("idOffer"),
                     new MyDate(rs.getDate("startDate")),

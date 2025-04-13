@@ -30,10 +30,6 @@ public class SupplierBUS {
         return null;
     }
 
-    public List<SupplierDTO> getListSupplierBy(String whr, String str){
-        return SupplierDAO.getInstance().getListSupplierBy(whr, str);
-    }
-
     public boolean addProvider(SupplierDTO supplier) {
         if(supplier.getName().isEmpty() || supplier.getPhone().isEmpty() || supplier.getAddress().isEmpty() || supplier.getEmail().isEmpty()) {
             error = "Không được để trống thông tin!";
