@@ -12,10 +12,10 @@ public class TypeProductDTO {
         this.id = id;
         this.name = name;
     }
-    public TypeProductDTO(ResultSet rs, int i){
+    public TypeProductDTO(ResultSet rs){
         try {
-            id = rs.getInt(i++);
-            name = rs.getString(i++);
+            id = rs.getInt("producttype.id");
+            name = rs.getString("producttype.name");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

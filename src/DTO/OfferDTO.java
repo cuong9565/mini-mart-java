@@ -19,11 +19,11 @@ public class OfferDTO {
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
     }
-    public OfferDTO(ResultSet rs, int i){
+    public OfferDTO(ResultSet rs){
         try{
-            id = rs.getInt(i++);
-            dateStart = new MyDate(rs.getDate(i++));
-            dateEnd = new MyDate(rs.getDate(i++));
+            id = rs.getInt("offer.id");
+            dateStart = new MyDate(rs.getDate("offer.startDate"));
+            dateEnd = new MyDate(rs.getDate("offer.endDate"));
         }catch (Exception e){
             System.out.println("Lỗi constructor ResultSet của OfferDTO: " + e.getMessage());
         }

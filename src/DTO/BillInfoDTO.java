@@ -3,7 +3,10 @@ package DTO;
 import java.sql.ResultSet;
 
 public class BillInfoDTO {
-    private int id = 0, idBill = 0, idProduct = 0, quantity = 0, discount = 0;
+    private int id = 0;
+    private int idBill = 0;
+    private int idProduct = 0;
+    private int quantity = 0, discount = 0;
     private double price = 0, total = 0;
     private String nameProduct = "", unit = "";
 
@@ -21,15 +24,17 @@ public class BillInfoDTO {
     }
     public BillInfoDTO(ResultSet rs) {
         try {
-            id = rs.getInt("id");
-            idBill = rs.getInt("idBill");
-            idProduct = rs.getInt("idProduct");
-            quantity = rs.getInt("quantity");
-            discount = rs.getInt("discount");
-            price = rs.getDouble("price");
-            total = rs.getDouble("total");
-            nameProduct = rs.getString("nameProduct");
-            unit = rs.getString("unit");
+            id = rs.getInt("billinfo.id");
+
+            idBill = rs.getInt("billinfo.idBill");
+            idProduct = rs.getInt("billinfo.idProduct");
+
+            price = rs.getDouble("billinfo.price");
+            quantity = rs.getInt("billinfo.quantity");
+            discount = rs.getInt("billinfo.discount");
+            total = rs.getDouble("billinfo.total");
+            unit = rs.getString("billinfo.unit");
+            nameProduct = rs.getString("billinfo.nameProduct");
         }
         catch (Exception e) {
             System.out.println(e.getMessage());

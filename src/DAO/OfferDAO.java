@@ -25,7 +25,7 @@ public class OfferDAO {
         Connection con = DataProvider.getInstance().getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) list.add(new OfferDTO(rs, 1));
+            while (rs.next()) list.add(new OfferDTO(rs));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -4,18 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong End Sell...Insert MyDate">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_7_2025_5_48_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_7_2025_5_48_PM__Changes_.xml" beforeDir="false" />
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong push">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/ProductBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/ProductBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/StaffBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/StaffBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/BillDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/BillDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/CustomerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/CustomerDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/DetailProductDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/DetailProductDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/OfferBillDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/OfferBillDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/OfferDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/OfferDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/OfferProductDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/OfferProductDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/ProductDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/ProductDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/StaffDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/StaffDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/SupplierDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/SupplierDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/TypeProductDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/TypeProductDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/BillDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/BillDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/BillInfoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/BillInfoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/CustomerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/CustomerDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/DetailProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/DetailProductDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/OfferBillDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/OfferBillDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/OfferDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/OfferDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/OfferProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/OfferProductDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DTO/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/ProductDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStaff.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStaff.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/StaffDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/StaffDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/SupplierDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/SupplierDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/TypeProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/TypeProductDTO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,12 +92,13 @@
     &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;database.query.execution&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql_aurora&quot;
+      &quot;mysql_aurora&quot;,
+      &quot;mysql&quot;
     ]
   }
 }</component>
@@ -193,14 +205,12 @@
       <workItem from="1744503157895" duration="4393000" />
       <workItem from="1744542651729" duration="653000" />
       <workItem from="1744548790199" duration="7461000" />
-    </task>
-    <task id="LOCAL-00021" summary="Cuong add Error Login">
-      <option name="closed" value="true" />
-      <created>1742368801675</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1742368801675</updated>
+      <workItem from="1744609302122" duration="683000" />
+      <workItem from="1744610004244" duration="11053000" />
+      <workItem from="1744621655467" duration="1026000" />
+      <workItem from="1744641681299" duration="390000" />
+      <workItem from="1744642143675" duration="333000" />
+      <workItem from="1744643037157" duration="3085000" />
     </task>
     <task id="LOCAL-00022" summary="Cuong add GetJPanelTitle">
       <option name="closed" value="true" />
@@ -586,7 +596,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744476317887</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="Cuong push">
+      <option name="closed" value="true" />
+      <created>1744617887927</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1744617887928</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -626,6 +644,7 @@
     <MESSAGE value="Cuong Login" />
     <MESSAGE value="Cuong SettingAccount" />
     <MESSAGE value="Cuong End Sell...Insert MyDate" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cuong End Sell...Insert MyDate" />
+    <MESSAGE value="Cuong push" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cuong push" />
   </component>
 </project>

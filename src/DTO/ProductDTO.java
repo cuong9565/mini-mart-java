@@ -30,16 +30,16 @@ public class ProductDTO {
         this.unit = unit;
         this.quantity = quantity;
     }
-    public ProductDTO(ResultSet rs, int i) {
+    public ProductDTO(ResultSet rs) {
         try {
-            id = rs.getInt(i++); i+=3;
-            name = rs.getString(i++);
-            price = rs.getDouble(i++);
-            unit = rs.getString(i++);
-            quantity = rs.getInt(i++);
-            type = new TypeProductDTO(rs, i); i+=2;
-            detail = new DetailProductDTO(rs, i); i+=2;
-            offerProduct = new OfferProductDTO(rs, i); i+=6;
+            id = rs.getInt("product.id");
+            name = rs.getString("product.name");
+            price = rs.getDouble("product.price");
+            unit = rs.getString("product.unit");
+            quantity = rs.getInt("product.quantity");
+            type = new TypeProductDTO(rs);
+            detail = new DetailProductDTO(rs);
+            offerProduct = new OfferProductDTO(rs);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());

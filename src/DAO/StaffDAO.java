@@ -27,7 +27,7 @@ public class StaffDAO {
             ps.setString(1, phone);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()) staff = new StaffDTO(rs, 1);
+            if(rs.next()) staff = new StaffDTO(rs);
             else throw  new RuntimeException("Số điện thoại hoặc mật khẩu không hợp lệ!!!\nVui lòng nhập lại!!!");
         }
         catch (Exception e) {
@@ -44,7 +44,7 @@ public class StaffDAO {
         try(PreparedStatement ps = con.prepareStatement(sql)){
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()) staff = new StaffDTO(rs, 1);
+            if(rs.next()) staff = new StaffDTO(rs);
         }
         catch (Exception e) {
             throw new RuntimeException(e.getMessage());
@@ -121,7 +121,7 @@ public class StaffDAO {
                 PreparedStatement ps = con.prepareStatement(sql);
                 ResultSet rs = ps.executeQuery();
         ){
-            while(rs.next()) list.add(new StaffDTO(rs, 1));
+            while(rs.next()) list.add(new StaffDTO(rs));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

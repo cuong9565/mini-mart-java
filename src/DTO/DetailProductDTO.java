@@ -11,10 +11,10 @@ public class DetailProductDTO {
         this.id = id;
         this.text = text;
     }
-    public DetailProductDTO(ResultSet rs, int i){
+    public DetailProductDTO(ResultSet rs){
         try {
-            id = rs.getInt(i++);
-            text = rs.getString(i++);
+            id = rs.getInt("productdetail.id");
+            text = rs.getString("productdetail.detailInfo");
         }
         catch (Exception e) {
             System.out.println(e.getMessage());

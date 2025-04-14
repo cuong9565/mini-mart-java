@@ -15,11 +15,11 @@ public class OfferProductDTO {
         this.offer = offer;
         this.discount = discount;
     }
-    public OfferProductDTO(ResultSet rs, int i){
+    public OfferProductDTO(ResultSet rs){
         try{
-            id = rs.getInt(i++); i+=1;
-            discount = rs.getInt(i++);
-            offer = new OfferDTO(rs, i);
+            id = rs.getInt("offerproduct.id");
+            discount = rs.getInt("offerproduct.discount");
+            offer = new OfferDTO(rs);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());

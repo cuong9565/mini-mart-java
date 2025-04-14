@@ -27,7 +27,7 @@ public class BillDAO {
                         "left join customer on bill.idCustomer = customer.id";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) list.add(new BillDTO(rs, 1));
+            while (rs.next()) list.add(new BillDTO(rs));
         }
         catch (Exception e) {
             System.out.println("Lỗi hàm load BillDAO " + e.getMessage());

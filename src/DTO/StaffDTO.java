@@ -27,18 +27,18 @@ public class StaffDTO {
         this.phone = phone;
         this.state = state;
     }
-    public StaffDTO(ResultSet rs, int i){
+    public StaffDTO(ResultSet rs){
         try {
-            id = rs.getInt(i++);
-            phone = rs.getString(i++);
-            password = rs.getString(i++);
-            firstName = rs.getString(i++);
-            lastName = rs.getString(i++);
-            address = rs.getString(i++);
-            salary = rs.getDouble(i++);
-            role = rs.getString(i++);
-            state = rs.getString(i++);
-            gender = rs.getString(i++);
+            id = rs.getInt("staff.id");
+            phone = rs.getString("staff.phone");
+            password = rs.getString("staff.password");
+            firstName = rs.getString("staff.firstName");
+            lastName = rs.getString("staff.lastName");
+            address = rs.getString("staff.address");
+            salary = rs.getDouble("staff.salary");
+            role = rs.getString("staff.role");
+            state = rs.getString("staff.state");
+            gender = rs.getString("staff.gender");
         }
         catch (Exception e) {
             System.out.println("Lỗi constructor ResultSet của StaffDTO: " + e.getMessage());

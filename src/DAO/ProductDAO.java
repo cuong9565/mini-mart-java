@@ -29,7 +29,7 @@ public class ProductDAO {
 
         try (PreparedStatement stmt = con.prepareStatement(sql)){
             ResultSet rs = stmt.executeQuery();
-            while(rs.next()) list.add(new ProductDTO(rs, 1));
+            while(rs.next()) list.add(new ProductDTO(rs));
         } catch (SQLException e) {
             throw new RuntimeException("Lỗi: " + e.getMessage());
         }

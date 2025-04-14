@@ -22,15 +22,15 @@ public class BillDTO {
         this.price = price;
         this.state = state;
     }
-    public BillDTO(ResultSet rs, int i){
+    public BillDTO(ResultSet rs){
         try {
-            id = rs.getInt(i++); i+=3;
-            dateCreate = new MyDate(rs.getDate(i++));
-            price = rs.getDouble(i++);
-            state = rs.getString(i++);
-            staff = new StaffDTO(rs, i); i+=10;
-            offerBill = new OfferBillDTO(rs, i); i+=6;
-            customer = new CustomerDTO(rs, i);
+            id = rs.getInt("bill.id");
+            dateCreate = new MyDate(rs.getDate("bill.dateCreate"));
+            price = rs.getDouble("bill.price");
+            state = rs.getString("bill.state");
+            staff = new StaffDTO(rs);
+            offerBill = new OfferBillDTO(rs);
+            customer = new CustomerDTO(rs);
         }
         catch(Exception e){
             System.out.println("Lỗi constructor ResultSet của BillDTO: " + e.getMessage());

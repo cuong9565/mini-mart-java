@@ -26,7 +26,7 @@ public class OfferProductDAO {
                 "order by offerproduct.id";
         try(PreparedStatement ps = con.prepareStatement(sql)){
             ResultSet rs = ps.executeQuery();
-            while(rs.next()) list.add(new OfferProductDTO(rs, 1));
+            while(rs.next()) list.add(new OfferProductDTO(rs));
         }
         catch(Exception e){
             throw new RuntimeException(e.getMessage());

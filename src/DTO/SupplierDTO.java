@@ -15,13 +15,13 @@ public class SupplierDTO {
         this.address = address;
         this.email = email;
     }
-    public SupplierDTO(ResultSet rs, int i) {
+    public SupplierDTO(ResultSet rs) {
         try {
-            id = rs.getInt(i++);
-            name = rs.getString(i++);
-            phone = rs.getString(i++);
-            address = rs.getString(i++);
-            email = rs.getString(i++);
+            id = rs.getInt("provider.id");
+            name = rs.getString("provider.name");
+            phone = rs.getString("provider.phone");
+            address = rs.getString("provider.address");
+            email = rs.getString("provider.email");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

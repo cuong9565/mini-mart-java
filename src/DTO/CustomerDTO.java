@@ -16,15 +16,15 @@ public class CustomerDTO{
         this.gender = gender;
         this.state = state;
     }
-    public CustomerDTO(ResultSet rs, int i){
+    public CustomerDTO(ResultSet rs){
         try {
-            id = rs.getInt(i++);
-            phone = rs.getString(i++);
-            lastName = rs.getString(i++);
-            firstName = rs.getString(i++);
-            address = rs.getString(i++);
-            state = rs.getString(i++);
-            gender = rs.getString(i++);
+            id = rs.getInt("customer.id");
+            phone = rs.getString("customer.phone");
+            lastName = rs.getString("customer.lastName");
+            firstName = rs.getString("customer.firstName");
+            address = rs.getString("customer.address");
+            state = rs.getString("customer.state");
+            gender = rs.getString("customer.gender");
         }
         catch(Exception e){
             System.out.println("Lỗi constructor ResultSet của CustomerDTO: " + e.getMessage());

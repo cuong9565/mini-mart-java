@@ -26,7 +26,7 @@ public class OfferBillDAO {
                 "order by offerbill.id";
         try(PreparedStatement ps = con.prepareStatement(sql)){
             ResultSet rs = ps.executeQuery();
-            while(rs.next()) list.add(new OfferBillDTO(rs, 1));
+            while(rs.next()) list.add(new OfferBillDTO(rs));
         }
         catch(Exception e){
             throw new RuntimeException(e.getMessage());

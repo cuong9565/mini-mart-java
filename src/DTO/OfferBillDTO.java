@@ -13,11 +13,11 @@ public class OfferBillDTO {
         this.offer = offer;
         this.discount = discount;
     }
-    public OfferBillDTO(ResultSet rs, int i) {
+    public OfferBillDTO(ResultSet rs) {
         try{
-            id = rs.getInt(i++);
-            discount = rs.getInt(i++); i+=1;
-            offer = new OfferDTO(rs, i);
+            id = rs.getInt("offerbill.id");
+            discount = rs.getInt("offerbill.discount");
+            offer = new OfferDTO(rs);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());

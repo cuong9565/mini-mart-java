@@ -24,7 +24,7 @@ public class SupplierDAO {
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) list.add(new SupplierDTO(rs, 1));
+            while (rs.next()) list.add(new SupplierDTO(rs));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

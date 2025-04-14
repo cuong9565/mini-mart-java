@@ -23,7 +23,7 @@ public class DetailProductDAO {
         String sql = "select * from productdetail";
         try(PreparedStatement ps = con.prepareStatement(sql)){
             ResultSet rs = ps.executeQuery();
-            while(rs.next()) list.add(new DetailProductDTO(rs, 1));
+            while(rs.next()) list.add(new DetailProductDTO(rs));
         }
         catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
