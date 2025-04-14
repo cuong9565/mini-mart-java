@@ -5,12 +5,12 @@ import Components.MyDate;
 import java.sql.ResultSet;
 
 public class ProductDTO {
-    private int id, quantity;
-    private TypeProductDTO type;
-    private DetailProductDTO detail;
-    private OfferProductDTO offerProduct;
-    private String name, unit;
-    private double price;
+    private int id = 0, quantity = 0;
+    private TypeProductDTO type = new TypeProductDTO();
+    private DetailProductDTO detail = new DetailProductDTO();
+    private OfferProductDTO offerProduct = new OfferProductDTO();
+    private String name = "", unit = "";
+    private double price = 0;
 
     public ProductDTO() {}
     public ProductDTO(int id, String name, int qty, String productUnit, double price) {
@@ -20,23 +20,6 @@ public class ProductDTO {
         this.unit = productUnit;
         this.price = price;
     }
-
-    public ProductDTO(ResultSet rs) {
-        try {
-            this.id = rs.getInt("id");
-            this.type = new TypeProductDTO(rs, 0);
-            this.detail = new DetailProductDTO(rs, 0);
-            this.offerProduct = new OfferProductDTO(rs, 0);
-            this.name = rs.getString("name");
-            this.price = rs.getDouble("price");
-            this.unit = rs.getString("unit");
-            this.quantity = rs.getInt("quantity");
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     public ProductDTO(int id, TypeProductDTO type, DetailProductDTO detail, OfferProductDTO offerProduct, String name, double price, String unit, int quantity, int discount) {
         this.id = id;
         this.type = type;
@@ -46,6 +29,21 @@ public class ProductDTO {
         this.price = price;
         this.unit = unit;
         this.quantity = quantity;
+    }
+    public ProductDTO(ResultSet rs, int i) {
+        try {
+            id = rs.getInt(i++); i+=3;
+            name = rs.getString(i++);
+            price = rs.getDouble(i++);
+            unit = rs.getString(i++);
+            quantity = rs.getInt(i++);
+            type = new TypeProductDTO(rs, i); i+=2;
+            detail = new DetailProductDTO(rs, i); i+=2;
+            offerProduct = new OfferProductDTO(rs, i); i+=6;
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public int getId() { return id; }
@@ -70,13 +68,11 @@ public class ProductDTO {
     @Override
     public String toString() {
         MyDate today = MyDate.getCurrentDate();
-
         String str;
         if(offerProduct.getId()==0) str = "Chưa có ưu đãi";
         else if(today.compareTo(offerProduct.getOffer().getDateStart())<0) str = "Chưa đến kì giảm giá";
         else if(today.compareTo(offerProduct.getOffer().getDateEnd())>0) str = "Đã qua kì giảm giá";
         else str = offerProduct.getDiscount() + "%";
-
         return str;
     }
 

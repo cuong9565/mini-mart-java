@@ -18,16 +18,18 @@ public class ProductDAO {
     public List<ProductDTO> getList() {
         List<ProductDTO> list = new ArrayList<>();
         Connection con = DataProvider.getInstance().getConnection();
-        String sql = "select pd.*, pdtype.name as type, pddetail.detailInfo as detailInfo, pdoffer.discount as discount, o.id as idOffer, o.startDate as startDate, o.endDate as endDate\n" +
-                "from product pd\n" +
-                "join producttype pdtype on pd.idProductType = pdtype.id\n" +
-                "join productdetail pddetail on pd.idProductDetail = pddetail.id\n" +
-                "left join offerproduct pdoffer on pd.idOfferProduct = pdoffer.id\n" +
-                "left join offer o on pdoffer.idOffer = o.id\n" +
-                "order by pd.id asc;";
+        String sql =
+                "select product.*, producttype.*, productdetail.*, offerproduct.*, offer.* " +
+                "from product " +
+                "join producttype on product.idProductType = producttype.id " +
+                "join productdetail on product.idProductDetail = productdetail.id " +
+                "left join offerproduct on product.idOfferProduct = offerproduct.id " +
+                "left join offer on offerproduct.idOffer = offer.id " +
+                "order by product.id asc;";
+
         try (PreparedStatement stmt = con.prepareStatement(sql)){
             ResultSet rs = stmt.executeQuery();
-            while(rs.next()) list.add(new ProductDTO(rs));
+            while(rs.next()) list.add(new ProductDTO(rs, 1));
         } catch (SQLException e) {
             throw new RuntimeException("Lỗi: " + e.getMessage());
         }

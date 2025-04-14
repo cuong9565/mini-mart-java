@@ -31,7 +31,7 @@ public class BillDAO {
     }
 
     public BillDTO getBillNotPaid(int idStaff){
-        BillDTO billDTO = new BillDTO(0);
+        BillDTO billDTO = new BillDTO();
         String sql = "select * from bill where idStaff = ? and state = 'Chưa thanh toán'";
         Connection con = DataProvider.getInstance().getConnection();
 

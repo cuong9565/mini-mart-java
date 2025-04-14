@@ -2,7 +2,6 @@ package BUS;
 
 import DAO.Bill2DAO;
 import DTO.Bill2DTO;
-import DTO.BillDTO;
 
 import java.util.ArrayList;
 import java.util.List;

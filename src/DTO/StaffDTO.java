@@ -44,23 +44,6 @@ public class StaffDTO {
             System.out.println("Lỗi constructor ResultSet của StaffDTO: " + e.getMessage());
         }
     }
-    public StaffDTO(ResultSet rs){
-        try{
-            id = Integer.parseInt(rs.getString("id"));
-            password = rs.getString("password");
-            lastName = rs.getString("lastName");
-            firstName = rs.getString("firstName");
-            gender = rs.getString("gender");
-            address = rs.getString("address");
-            role = rs.getString("role");
-            salary = Double.parseDouble(rs.getString("salary"));
-            phone = rs.getString("phone");
-            state = rs.getString("state");
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
 
     public int getId() {return id;}
     public String getPassword() {return password;}

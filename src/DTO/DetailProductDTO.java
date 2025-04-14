@@ -3,31 +3,24 @@ package DTO;
 import java.sql.ResultSet;
 
 public class DetailProductDTO {
-    private int id;
-    private String text;
+    private int id = 0;
+    private String text = "";
+
     public DetailProductDTO() {}
-    public DetailProductDTO(ResultSet rs, int curr){
-        try {
-            this.id = rs.getInt("idProductDetail");
-            this.text = rs.getString("detailInfo");
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-    public DetailProductDTO(ResultSet rs){
-        try {
-            this.id = rs.getInt("id");
-            this.text = rs.getString("detailInfo");
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
     public DetailProductDTO(int id, String text) {
         this.id = id;
         this.text = text;
     }
+    public DetailProductDTO(ResultSet rs, int i){
+        try {
+            id = rs.getInt(i++);
+            text = rs.getString(i++);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public int getId() {return id;}
     public String getText() {return text;}
 

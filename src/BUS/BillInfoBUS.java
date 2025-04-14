@@ -25,7 +25,7 @@ public class BillInfoBUS {
     public boolean addProduct(int idBill, int idProduct, int quantity){
         ProductDTO product = ProductBUS.getInstance().getItemById(idProduct);
 
-        BillInfoDTO billInfoDTO = new BillInfoDTO(0);
+        BillInfoDTO billInfoDTO = new BillInfoDTO();
         List<BillInfoDTO> lsBillInfo = BillInfoDAO.getInstance().getList(idBill);
         for(BillInfoDTO billInfo : lsBillInfo)
             if(billInfo.getIdProduct()==idProduct){
@@ -59,7 +59,7 @@ public class BillInfoBUS {
     public boolean fixQuantityProduct(int idBill, int idProduct, int quantity){
         ProductDTO product = ProductBUS.getInstance().getItemById(idProduct);
 
-        BillInfoDTO billInfoDTO = new BillInfoDTO(0);
+        BillInfoDTO billInfoDTO = new BillInfoDTO();
         List<BillInfoDTO> lsBillInfo = BillInfoDAO.getInstance().getList(idBill);
         for(BillInfoDTO billInfo : lsBillInfo)
             if(billInfo.getIdProduct()==idProduct){

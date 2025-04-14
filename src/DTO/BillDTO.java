@@ -5,18 +5,15 @@ import Components.MyDate;
 import java.sql.ResultSet;
 
 public class BillDTO {
-    private int id;
-    private int idStaff;
-    private int idOfferBill;
-    private int idCustomer;
-    private MyDate dateCreate;
-    private double price;
-    private String state;
+    private int id = 0;
+    private int idStaff = 0;
+    private int idOfferBill = 0;
+    private int idCustomer = 0;
+    private MyDate dateCreate = new MyDate();
+    private double price = 0;
+    private String state = "";
 
     public BillDTO() {}
-    public BillDTO(int id){
-        this.id = id;
-    }
     public BillDTO(ResultSet rs){
         try{
             id = rs.getInt("id");
@@ -40,6 +37,7 @@ public class BillDTO {
         this.price = price;
         this.state = state;
     }
+
     public int getId() {return id;}
     public int getIdStaff() {return idStaff;}
     public int getIdOfferBill() {return idOfferBill;}

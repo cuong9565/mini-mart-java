@@ -12,17 +12,17 @@ import java.util.List;
 
 public class BillBUS {
     private static BillBUS instance = null;
-    private List<BillDTO> list;
-    private String error = null;
-    private BillBUS() {}
+    private static List<BillDTO> list = null;
+    private static String error = null;
 
+    private BillBUS() {}
     public static BillBUS getInstance() {
         if (instance == null) instance = new BillBUS();
         return instance;
     }
 
     public BillDTO getBillNotPaid(int idStaff){
-        BillDTO billDTO = new BillDTO(0);
+        BillDTO billDTO = new BillDTO();
 
         try {billDTO = BillDAO.getInstance().getBillNotPaid(idStaff);}
         catch (Exception e) {error = e.getMessage();}

@@ -5,28 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong End Sell...Insert MyDate">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_7_2025_9_23_AM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_7_2025_9_23_AM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/Bill2BUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/Bill2BUS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BUS/BillBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/BillBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/OfferBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/OfferBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/OfferBillBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/OfferBillBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/StaffBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/StaffBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/SupplierBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/SupplierBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/MyDate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyDate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/BillInfoBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/BillInfoBUS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/BillDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/BillDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/BillInfoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/BillInfoDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/CustomerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/CustomerDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/OfferDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/OfferDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/DetailProductDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/DetailProductDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/OfferBillDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/OfferBillDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/OfferProductDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/OfferProductDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/ProductDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/ProductDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/StaffDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/StaffDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/SupplierDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/SupplierDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/TypeProductDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/TypeProductDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/Bill2DTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/Bill2DTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DTO/BillDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/BillDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/BillInfoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/BillInfoDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DTO/CustomerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/CustomerDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/DetailProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/DetailProductDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/OfferBill2DTO.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DTO/OfferBillDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/OfferBillDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DTO/OfferDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/OfferDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DTO/OfferProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/OfferProductDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/ProductDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DTO/StaffDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/StaffDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DTO/SupplierDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/SupplierDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DTO/TypeProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/TypeProductDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnBill.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,36 +77,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.FixBug.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.Manage.executor": "Run",
-    "Application.demo.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "ShowUsagesActions.previewPropertyKey": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/mini-mart-java/mysql-connector-j-9.1.0/mysql-connector-j-9.1.0.jar",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "Errors",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.FixBug.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Manage.executor&quot;: &quot;Run&quot;,
+    &quot;Application.demo.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ShowUsagesActions.previewPropertyKey&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/mini-mart-java/mysql-connector-j-9.1.0/mysql-connector-j-9.1.0.jar&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql_aurora"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql_aurora&quot;,
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\mini-mart-java\src\lib" />
@@ -204,6 +211,8 @@
       <workItem from="1744503157895" duration="4393000" />
       <workItem from="1744542651729" duration="653000" />
       <workItem from="1744548790199" duration="7461000" />
+      <workItem from="1744609302122" duration="683000" />
+      <workItem from="1744610004244" duration="7156000" />
     </task>
     <task id="LOCAL-00021" summary="Cuong add Error Login">
       <option name="closed" value="true" />

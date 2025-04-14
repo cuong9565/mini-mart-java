@@ -1,7 +1,5 @@
 package DTO;
 
-import Components.MyDate;
-
 import java.sql.ResultSet;
 
 public class OfferBillDTO {
@@ -15,21 +13,17 @@ public class OfferBillDTO {
         this.offer = offer;
         this.discount = discount;
     }
-
-    public OfferBillDTO(ResultSet rs) {
+    public OfferBillDTO(ResultSet rs, int i) {
         try{
-            this.id = rs.getInt("id");
-            this.discount = rs.getInt("discount");
-            this.offer = new OfferDTO(
-                    rs.getInt("idOffer"),
-                    new MyDate(rs.getDate("startDate")),
-                    new MyDate(rs.getDate("endDate"))
-            );
+            id = rs.getInt(i++);
+            discount = rs.getInt(i++); i+=1;
+            offer = new OfferDTO(rs, i);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
+
     public int getId() {return id;}
     public OfferDTO getOffer() {return offer;}
     public int getDiscount() {return discount;}

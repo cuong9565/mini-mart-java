@@ -20,13 +20,13 @@ public class OfferBillDAO {
         List<OfferBillDTO> list = new ArrayList<>();
         Connection con = DataProvider.getInstance().getConnection();
         String sql =
-                "select ob.*, o.startDate, o.endDate\n" +
-                        "from offerbill ob, offer o\n" +
-                        "where ob.idOffer = o.id\n" +
-                        "order by ob.id";
+                "select offerbill.*, offer.* " +
+                "from offerbill, offer " +
+                "where offerbill.idOffer = offer.id " +
+                "order by offerbill.id";
         try(PreparedStatement ps = con.prepareStatement(sql)){
             ResultSet rs = ps.executeQuery();
-            while(rs.next()) list.add(new OfferBillDTO(rs));
+            while(rs.next()) list.add(new OfferBillDTO(rs, 1));
         }
         catch(Exception e){
             throw new RuntimeException(e.getMessage());

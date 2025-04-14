@@ -18,7 +18,7 @@ public class BillInfoDAO {
     }
 
     public List<BillInfoDTO> getList(int idBill){
-        List<BillInfoDTO> list = new ArrayList<BillInfoDTO>();
+        List<BillInfoDTO> list = new ArrayList<>();
         String sql = "select * from billinfo where idBill = ?";
         Connection con = DataProvider.getInstance().getConnection();
 

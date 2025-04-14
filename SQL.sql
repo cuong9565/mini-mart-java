@@ -459,7 +459,7 @@ INSERT INTO BillInfo (idBill, idProduct, price, quantity, discount, total, unit,
 (20, 45, 30000, 3, 0, 90000, 'Hộp', 'Sữa chua uống Yakult');
 
 --  -- ---------------- SELECT -----------
--- select * from provider;
+select * from provider;
 select * from customer;
 select * from staff;
 select * from bill;
@@ -480,19 +480,29 @@ select * from offerbill;
 -- from offerproduct
 -- order by discount;
 
--- select pd.*, pdtype.name as type, pddetail.detailInfo as detail, pdoffer.discount as discount, o.id as idOffer, o.startDate as startDate, o.endDate as endDate
--- from product pd
--- join producttype pdtype on pd.idProductType = pdtype.id
--- join productdetail pddetail on pd.idProductDetail = pddetail.id
--- left join offerproduct pdoffer on pd.idOfferProduct = pdoffer.id
--- left join offer o on pdoffer.idOffer = o.id
--- order by pd.id asc;
+select product.*, producttype.*, productdetail.*, offerproduct.*, offer.*
+from product
+join producttype on product.idProductType = producttype.id
+join productdetail on product.idProductDetail = productdetail.id
+left join offerproduct on product.idOfferProduct = offerproduct.id
+left join offer on offerproduct.idOffer = offer.id
+order by product.id asc;
 
 select bill.*, staff.*, offerbill.*, offer.*, customer.*
 from bill
 join staff on bill.idStaff = staff.id
 left join offerbill on bill.idOfferBill = offerbill.id
 left join offer on offerbill.idOffer = offer.id
-left join customer on bill.idCustomer = customer.id
+left join customer on bill.idCustomer = customer.id;
+
+select offerproduct.*, offer.*
+from offerproduct, offer
+where offerproduct.idOffer = offer.id
+order by offerproduct.id;
+
+select offerbill.*, offer.*
+from offerbill, offer
+where offerbill.idOffer = offer.id
+order by offerbill.id
 
 -- delete from bill where id = 2;

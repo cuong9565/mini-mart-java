@@ -3,12 +3,21 @@ package DTO;
 import java.sql.ResultSet;
 
 public class BillInfoDTO {
-    private int id, idBill, idProduct, quantity, discount;
-    private double price, total;
-    private String nameProduct, unit;
+    private int id = 0, idBill = 0, idProduct = 0, quantity = 0, discount = 0;
+    private double price = 0, total = 0;
+    private String nameProduct = "", unit = "";
+
     public BillInfoDTO() {}
-    public BillInfoDTO(int id){
+    public BillInfoDTO(int id, int idBill, int idProduct, int quantity, int discount, double price, double total, String nameProduct, String unit) {
         this.id = id;
+        this.idBill = idBill;
+        this.idProduct = idProduct;
+        this.quantity = quantity;
+        this.discount = discount;
+        this.price = price;
+        this.total = total;
+        this.nameProduct = nameProduct;
+        this.unit = unit;
     }
     public BillInfoDTO(ResultSet rs) {
         try {
@@ -26,17 +35,7 @@ public class BillInfoDTO {
             System.out.println(e.getMessage());
         }
     }
-    public BillInfoDTO(int id, int idBill, int idProduct, int quantity, int discount, double price, double total, String nameProduct, String unit) {
-        this.id = id;
-        this.idBill = idBill;
-        this.idProduct = idProduct;
-        this.quantity = quantity;
-        this.discount = discount;
-        this.price = price;
-        this.total = total;
-        this.nameProduct = nameProduct;
-        this.unit = unit;
-    }
+
     public int getId() {return id;}
     public int getIdBill() {return idBill;}
     public int getIdProduct() {return idProduct;}

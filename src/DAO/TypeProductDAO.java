@@ -25,7 +25,7 @@ public class TypeProductDAO {
         try{
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) list.add(new TypeProductDTO(rs));
+            while (rs.next()) list.add(new TypeProductDTO(rs, 1));
         }
         catch (SQLException e) {
             throw new RuntimeException(e);

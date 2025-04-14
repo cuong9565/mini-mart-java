@@ -5,8 +5,9 @@ import Components.MyDate;
 import java.sql.ResultSet;
 
 public class OfferProductDTO {
-    private int id, discount;
-    private OfferDTO offer;
+    private int id = 0;
+    private int discount = 0;
+    private OfferDTO offer = new OfferDTO();
 
     public OfferProductDTO() {}
     public OfferProductDTO(int id, OfferDTO offer, int discount) {
@@ -14,35 +15,17 @@ public class OfferProductDTO {
         this.offer = offer;
         this.discount = discount;
     }
-    public OfferProductDTO(ResultSet rs, int curr){
+    public OfferProductDTO(ResultSet rs, int i){
         try{
-            this.id = rs.getInt("idOfferProduct");
-            this.discount = rs.getInt("discount");
-            if(rs.getInt("idOffer")==0) this.offer = new OfferDTO();
-            else this.offer = new OfferDTO(
-                    rs.getInt("idOffer"),
-                    new MyDate(rs.getDate("startDate")),
-                    new MyDate(rs.getDate("endDate"))
-            );
+            id = rs.getInt(i++); i+=1;
+            discount = rs.getInt(i++);
+            offer = new OfferDTO(rs, i);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-    public OfferProductDTO(ResultSet rs) {
-        try{
-            this.id = rs.getInt("id");
-            this.discount = rs.getInt("discount");
-            this.offer = new OfferDTO(
-                    rs.getInt("idOffer"),
-                    new MyDate(rs.getDate("startDate")),
-                    new MyDate(rs.getDate("endDate"))
-            );
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
+
     public int getId() {return id;}
     public OfferDTO getOffer() {return offer;}
     public int getDiscount() {return discount;}

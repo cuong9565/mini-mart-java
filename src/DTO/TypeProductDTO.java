@@ -12,26 +12,15 @@ public class TypeProductDTO {
         this.id = id;
         this.name = name;
     }
-    public TypeProductDTO(ResultSet rs, int curr){
+    public TypeProductDTO(ResultSet rs, int i){
         try {
-            this.id = Integer.parseInt(rs.getString("idProductType"));
-            this.name = rs.getString("type");
+            id = rs.getInt(i++);
+            name = rs.getString(i++);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    public TypeProductDTO(ResultSet rs) {
-        try {
-            this.id = Integer.parseInt(rs.getString("id"));
-            this.name = rs.getString("name");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public TypeProductDTO(Object[] obs) {
-        this.id = Integer.parseInt(obs[0].toString());
-        this.name = obs[1].toString();
-    }
+
     public int getId() {return id;}
     public String getName() {return name;}
 

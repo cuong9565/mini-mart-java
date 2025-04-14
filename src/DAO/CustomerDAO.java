@@ -21,7 +21,7 @@ public class CustomerDAO {
         try{
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()) list.add(new CustomerDTO(rs));
+            while(rs.next()) list.add(new CustomerDTO(rs, 1));
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -37,7 +37,7 @@ public class CustomerDAO {
         try(PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()) customer = new CustomerDTO(rs);
+            if(rs.next()) customer = new CustomerDTO(rs, 1);
             else customer = new CustomerDTO();
         }
         catch (Exception e) {

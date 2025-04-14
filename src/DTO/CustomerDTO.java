@@ -30,28 +30,7 @@ public class CustomerDTO{
             System.out.println("Lỗi constructor ResultSet của CustomerDTO: " + e.getMessage());
         }
     }
-    public CustomerDTO(ResultSet rs){
-        try {
-            this.id = Integer.parseInt(rs.getString("id"));
-            this.phone = rs.getString("phone");
-            this.lastName = rs.getString("lastName");
-            this.firstName = rs.getString("firstName");
-            this.address = rs.getString("address");
-            this.gender = rs.getString("gender");
-            this.state = rs.getString("state");
-        } catch (Exception e) {
-           System.out.println("Lỗi SQL: " + e.getMessage());
-        }
-    }
-    public CustomerDTO(Object[] ojs){
-        id = Integer.parseInt(ojs[0].toString());
-        phone = ojs[1].toString();
-        lastName = ojs[2].toString();
-        firstName = ojs[3].toString();
-        address = ojs[4].toString();
-        gender = ojs[5].toString();
-        state = ojs[6].toString();
-    }
+
     public int getId() {return id;}
     public String getPhone() {return phone;}
     public String getLastName() {return lastName;}
@@ -67,7 +46,6 @@ public class CustomerDTO{
     public void setAddress(String address) {this.address = address;}
     public void setGender(String gender) {this.gender = gender;}
     public void setState(String state) {this.state = state;}
-    public Object[] getObjects() {
-        return new Object[]{id, phone, lastName, firstName, address, gender, state};
-    }
+
+    public Object[] getObjects() {return new Object[]{id, phone, lastName, firstName, address, gender, state};}
 }
