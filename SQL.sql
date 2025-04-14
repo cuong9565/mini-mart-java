@@ -503,6 +503,4 @@ order by offerproduct.id;
 select offerbill.*, offer.*
 from offerbill, offer
 where offerbill.idOffer = offer.id
-order by offerbill.id
-
--- delete from bill where id = 2;
+order by offerbill.id;

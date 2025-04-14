@@ -15,38 +15,43 @@ public class BillDAO {
         return instance;
     }
 
-    public List<BillDTO> load() {
+    public List<BillDTO>load(){
         List<BillDTO> list = new ArrayList<>();
-        String sql = "select * from bill";
         Connection con = DataProvider.getInstance().getConnection();
+        String sql =
+                "select bill.*, staff.*, offerbill.*, offer.*, customer.* " +
+                        "from bill " +
+                        "join staff on bill.idStaff = staff.id " +
+                        "left join offerbill on bill.idOfferBill = offerbill.id " +
+                        "left join offer on offerbill.idOffer = offer.id " +
+                        "left join customer on bill.idCustomer = customer.id";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) list.add(new BillDTO(rs));
+            while (rs.next()) list.add(new BillDTO(rs, 1));
         }
         catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            System.out.println("Lỗi hàm load BillDAO " + e.getMessage());
         }
         DataProvider.getInstance().CloseConnection(con);
         return list;
     }
 
-    public BillDTO getBillNotPaid(int idStaff){
-        BillDTO billDTO = new BillDTO();
-        String sql = "select * from bill where idStaff = ? and state = 'Chưa thanh toán'";
+    public void addBill(int idStaff){
+        String sql = "insert into bill( idStaff, dateCreate ) values( ?, ? )";
         Connection con = DataProvider.getInstance().getConnection();
 
-        try(PreparedStatement ps = con.prepareStatement(sql)){
+        try (PreparedStatement ps = con.prepareStatement(sql)){
             ps.setInt(1, idStaff);
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()) billDTO = new BillDTO(rs);
+            ps.setDate(2, new java.sql.Date(System.currentTimeMillis()));
+            ps.executeUpdate();
         }
-        catch (SQLException e) {
+        catch (Exception e) {
             throw new RuntimeException(e);
         }
 
         DataProvider.getInstance().CloseConnection(con);
-        return billDTO;
     }
+
 
     public void updateIdCustomer(int idBill, int idCustomer){
         String sql = "update bill set idCustomer = ? where id = ?";
@@ -86,22 +91,6 @@ public class BillDAO {
         catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }
-        DataProvider.getInstance().CloseConnection(con);
-    }
-
-    public void addBill(int idStaff){
-        String sql = "insert into bill( idStaff, dateCreate ) values( ?, ? )";
-        Connection con = DataProvider.getInstance().getConnection();
-
-        try (PreparedStatement ps = con.prepareStatement(sql)){
-            ps.setInt(1, idStaff);
-            ps.setDate(2, new java.sql.Date(System.currentTimeMillis()));
-            ps.executeUpdate();
-        }
-        catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
         DataProvider.getInstance().CloseConnection(con);
     }
 

@@ -137,6 +137,7 @@ public class pnSell extends JPanel {
                 JOptionPane.showMessageDialog(thisPn, "Chưa có thông tin hóa đơn", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+
             if(BillBUS.getInstance().Pay(Integer.parseInt(tfIdBill.getText()), Double.parseDouble(lbSum.getText().replace(",", "").replace(".", "").replace("đ", "")))){
                 JOptionPane.showMessageDialog(thisPn, "Thanh toán hóa đơn thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 load();
@@ -277,12 +278,12 @@ public class pnSell extends JPanel {
         if(billDTO.getId()!=0){
             tfIdBill.setText(billDTO.getId() + "");
             // Thông tin khách hàng
-            if(billDTO.getIdCustomer()==0){
+            if(billDTO.getCustomer().getId()==0){
                 tfPhoneCustomer.setText("");
                 lbInfoCustomer.setText("");
             }
             else {
-                CustomerDTO customer = CustomerBUS.getInstance().getItemById(billDTO.getIdCustomer());
+                CustomerDTO customer = billDTO.getCustomer();
                 tfPhoneCustomer.setText(customer.getPhone());
                 lbInfoCustomer.setText(String.format(
                        """
@@ -292,12 +293,13 @@ public class pnSell extends JPanel {
                        """, customer.getId(), customer.getLastName() + " " + customer.getFirstName(), customer.getPhone()
                 ));
             }
+
             // Thông tin hóa đơn giảm giá
-            if(billDTO.getIdOfferBill()==0){
+            if(billDTO.getOfferBill().getId() == 0){
                 tfOfferBill.setText("");
             }
             else {
-                OfferBillDTO offerBill = OfferBillBUS.getInstance().getItemById(billDTO.getIdOfferBill());
+                OfferBillDTO offerBill = billDTO.getOfferBill();
                 tfOfferBill.setText(offerBill.getDiscount() + "%");
             }
         }

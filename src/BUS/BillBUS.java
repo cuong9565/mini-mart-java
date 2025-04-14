@@ -21,18 +21,30 @@ public class BillBUS {
         return instance;
     }
 
-    public BillDTO getBillNotPaid(int idStaff){
-        BillDTO billDTO = new BillDTO();
-
-        try {billDTO = BillDAO.getInstance().getBillNotPaid(idStaff);}
-        catch (Exception e) {error = e.getMessage();}
-
-        return billDTO;
-    }
-
-    public List<BillDTO> load(){
+    public List<BillDTO>load(){
         list = BillDAO.getInstance().load();
         return list;
+    }
+
+    public List<BillDTO> search(int col, String txt){
+        List<BillDTO> ls = new ArrayList<>();
+        for (BillDTO bill : list) switch (col) {
+            case 0: if(String.valueOf(bill.getId()).contains(txt)) ls.add(bill); break;
+            case 1: if((bill.getStaff().getLastName() + " " + bill.getStaff().getFirstName()).contains(txt)) ls.add(bill); break;
+            case 2: if((bill.getOfferBill().getDiscount() + "%").contains(txt)) ls.add(bill); break;
+            case 3: if((bill.getCustomer().getLastName() + " " + bill.getCustomer().getFirstName()).contains(txt)) ls.add(bill); break;
+            case 4: if(bill.getDateCreate().toString().contains(txt)) ls.add(bill); break;
+            case 5: if(String.format("%,.0fđ", bill.getPrice()).contains(txt)) ls.add(bill); break;
+            case 6: if(bill.getState().contains(txt)) ls.add(bill); break;
+        }
+        return ls;
+    }
+
+    public BillDTO getBillNotPaid(int idStaff){
+        for (BillDTO bill : load())
+            if(bill.getStaff().getId() == idStaff && bill.getState().equals("Chưa thanh toán"))
+                return bill;
+        return new BillDTO();
     }
 
     public void addBill(int idStaff){
@@ -64,6 +76,18 @@ public class BillBUS {
         return true;
     }
 
+    public boolean Cancel(int idBill){
+        try{
+            BillInfoDAO.getInstance().deleteByIdBill(idBill);
+            BillDAO.getInstance().delete(idBill);
+        }
+        catch (Exception e) {
+            error = e.getMessage();
+            return false;
+        }
+        return true;
+    }
+
     public boolean Pay(int idBill, double price){
         try{
             BillDAO.getInstance().Pay(idBill, price);
@@ -86,17 +110,5 @@ public class BillBUS {
         return true;
     }
 
-    public boolean Cancel(int idBill){
-        try{
-            BillInfoDAO.getInstance().deleteByIdBill(idBill);
-            BillDAO.getInstance().delete(idBill);
-        }
-        catch (Exception e) {
-            error = e.getMessage();
-            return false;
-        }
-        return true;
-    }
-
-    public String getError(){return error;}
+    public String getError() {return error;}
 }

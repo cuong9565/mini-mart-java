@@ -1,6 +1,5 @@
 package GUI.JPanel;
 
-import BUS.Bill2BUS;
 import BUS.BillBUS;
 import Components.*;
 import DTO.*;
@@ -11,7 +10,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.List;
 
 public class pnBill extends JPanel {
     JPanel pnHeader = new MyJPanel(MyColor.White);
@@ -145,7 +143,7 @@ public class pnBill extends JPanel {
     }
 
     public void loadBill()  {
-        Bill2BUS.getInstance().load();
+        BillBUS.getInstance().load();
         textChange();
     }
 
@@ -153,7 +151,7 @@ public class pnBill extends JPanel {
         tbBill.dftbModel.setRowCount(0);
         int col = cbSearch.getSelectedIndex();
         String txt = tfSearch.getText();
-        for(Bill2DTO bill: Bill2BUS.getInstance().search(col, txt))
+        for(BillDTO bill: BillBUS.getInstance().search(col, txt))
             tbBill.dftbModel.addRow(bill.getRowObjects());
     }
 }
