@@ -1,6 +1,7 @@
 package DAO;
 
 import DTO.OfferDTO;
+import com.mysql.cj.x.protobuf.MysqlxPrepare;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -71,10 +72,10 @@ public class OfferDAO {
         try(PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, offer.getId());
             res = ps.executeUpdate();
+            }
+            catch (SQLException e){
+                throw new RuntimeException(e);
+            }
+            return res>0;
         }
-        catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-        return res>0;
-    }
 }

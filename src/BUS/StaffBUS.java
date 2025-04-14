@@ -3,6 +3,7 @@ package BUS;
 import DAO.StaffDAO;
 import DTO.StaffDTO;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,7 +117,7 @@ public class StaffBUS {
         return staff;
     }
 
-    public List<StaffDTO> getStaffListBy(int col, String txt) {
+    public List<StaffDTO>getStaffListBy(int col, String txt) {
         List<StaffDTO> ls = new ArrayList<>();
         for (StaffDTO staff : list) {
             switch (col) {
@@ -153,7 +154,9 @@ public class StaffBUS {
         }
         return true;
     }
-    public boolean update(StaffDTO staff){
+
+
+public boolean update(StaffDTO staff){
         if (staff.getFirstName().isEmpty() || staff.getLastName().isEmpty() || staff.getPhone().isEmpty() || staff.getAddress().isEmpty() || staff.getPassword().isEmpty()){
             error = "Không được để trống thông tin!!!";
             return false;

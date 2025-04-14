@@ -28,7 +28,6 @@ public class SupplierDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         DataProvider.getInstance().CloseConnection(con);
         return list;
     }

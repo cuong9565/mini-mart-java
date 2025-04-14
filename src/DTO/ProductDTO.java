@@ -82,4 +82,9 @@ public class ProductDTO {
     public Object[] getRowObjectsSell() {
         return new Object[]{id, name, getFormatPrice(), unit, quantity};
     }
+
+
+    public int getDiscountVal (){
+        return offerProduct.getId();
+    }
 }

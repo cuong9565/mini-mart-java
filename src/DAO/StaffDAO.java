@@ -1,10 +1,12 @@
 package DAO;
 
 import DTO.StaffDTO;
+import com.mysql.cj.x.protobuf.MysqlxPrepare;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -148,7 +150,6 @@ public class StaffDAO {
         DataProvider.getInstance().CloseConnection(con);
         return res>0;
     }
-
     public boolean update(StaffDTO staff) {
         int res = 0;
         String sql = "update staff set phone = ?, password = ?, firstName = ?, lastName = ?, address = ?, salary = ?, state = ?, role = ?, gender = ? where id = ?";

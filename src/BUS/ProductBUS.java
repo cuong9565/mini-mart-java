@@ -115,4 +115,32 @@ public class ProductBUS {
     public String getError() {return error;}
 
 
+    public List<ProductDTO> SearchAd(int select1, int select2, int  select3) {
+        List<ProductDTO> newlist = new ArrayList<>();
+          for(ProductDTO item : list) {
+              boolean match = true;
+              //giá
+              if (select1 == 1) {
+                  if (item.getPrice() > 99000) match = false;
+              } else if (select1== 2) {
+                  if (item.getPrice() <= 99000) match = false;
+              }
+              // ggiá
+              if (select2 == 1) {
+                  if (item.getDiscountVal()==0) match = false;
+              } else if (select2 == 2) {
+                  if (item.getDiscountVal()>0) match = false;
+              }
+              //sl
+              if (select3 == 1) {
+                  if (item.getQuantity() >= 10) match = false;
+              } else if (select3 == 2) {
+                  if (item.getQuantity() <= 50) match = false;
+              }
+              if (match) {
+                  newlist.add(item);
+              }
+          }
+          return newlist;
+    }
 }

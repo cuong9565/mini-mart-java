@@ -100,7 +100,6 @@ public class pnStaff extends JPanel {
         });
         btnIn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
                 List<Object[]> list = tbStaff.ImportExel(8);
                 if(list==null) return;
                 String error = null;
@@ -157,7 +156,6 @@ public class pnStaff extends JPanel {
         add(tbStaff.scrPn);
         add(pnFooter);
         // endregion
-
     }
 
     public void loadStaff()  {

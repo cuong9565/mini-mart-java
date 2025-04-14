@@ -21,6 +21,7 @@ public class pnProduct extends JPanel {
     JPanel pnFooter = new MyJPanel(MyColor.White);
     JPanel pnFunc = new MyJPanel(MyColor.White, "Chức năng");
     JPanel pnSearch = new MyJPanel(MyColor.White, "Tìm kiếm");
+    JPanel pnSearchadvance = new MyJPanel(MyColor.White, "Tìm kiếm Nâng Cao");
     JButton btnAdd = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Thêm", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnEdit = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#FF9800"), Color.decode("#FFD966"), "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnDelete = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#F44336"), Color.decode("#FF7568"), "Xóa", SwingConstants.CENTER, SwingConstants.CENTER);
@@ -30,9 +31,11 @@ public class pnProduct extends JPanel {
     JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Mã", "Loại", "Giảm giá", "Tên sản phẩm", "Giá bán", "Đơn vị", "Số lượng"}, 12);
-
+    JComboBox<String>cbSearchad1 = new MyJComboBox<>(new String[]{"Giá từ","0-99k","Trên 99k",}, 12);
+    JComboBox<String>cbSearchad2 = new MyJComboBox<>(new String[]{"Giảm giá","Có Giảm Giá","Không giảm giá"}, 12);
+    JComboBox<String>cbSearchad3 = new MyJComboBox<>(new String[]{"Số Lượng","Sắp hết hàng(<10)","Còn nhiều(>50)"}, 12);
+    JButton btnsearch = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Lọc", SwingConstants.CENTER, SwingConstants.CENTER);
     MyJTable tbProduct = new MyJTable(new String[]{"Mã", "Loại", "Giảm giá", "Tên sản phẩm", "Giá bán", "Đơn vị", "Số lượng"}, new int[]{30, 100, 100, 100, 100, 30}, new int[]{1, 2, 3}, new int[]{});
-
     pnProduct thisPanel = this;
 
     public pnProduct(fManage frame) {
@@ -47,12 +50,17 @@ public class pnProduct extends JPanel {
         btnIn.setBounds(225,20,60,60);
         btnOut.setBounds(295,20,60,60);
         btnDetail.setBounds(365, 20, 60,60);
-        pnSearch.setBounds(670,0,500,90);
-        cbSearch.setBounds(685, 30, 150, 30);
-        tfSearch.setBounds(845, 30, 200, 30);
-        btnRefresh.setBounds(1055,30,100,30);
+        pnSearch.setBounds(660,0,500,90);
+        cbSearch.setBounds(675, 30, 150, 30);
+        tfSearch.setBounds(835, 30, 200, 30);
+        btnRefresh.setBounds(1045,30,100,30);
         pnFooter.setBounds(0,100,1170, 650);
-        tbProduct.scrPn.setBounds(0,100,1170,650);
+        tbProduct.scrPn.setBounds(0,150,1170,580);
+        pnSearchadvance.setBounds(0,90,440,60);
+        cbSearchad1.setBounds(10, 110, 90, 35);
+        cbSearchad2.setBounds(110, 110, 90, 35);
+        cbSearchad3.setBounds(210, 110, 110, 35);
+        btnsearch.setBounds(330,110,90,35);
         // endregion
         // region EVENT CHO PANEL NÀY
         addComponentListener(new ComponentAdapter() {
@@ -134,8 +142,26 @@ public class pnProduct extends JPanel {
             public void removeUpdate(DocumentEvent e) {textChange();}
             public void changedUpdate(DocumentEvent e) {textChange();}
         });
+        btnsearch.addActionListener(e->{
+         List<ProductDTO> newproduct = ProductBUS.getInstance().SearchAd(cbSearchad1.getSelectedIndex(),cbSearchad2.getSelectedIndex(),cbSearchad3.getSelectedIndex());
+         if(newproduct.isEmpty()){
+             JOptionPane.showMessageDialog(this,"Không có sản phẩm nào phù hợp !","Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+         }
+         else {
+             tbProduct.dftbModel.setRowCount(0);
+             for (ProductDTO item : newproduct){
+                 tbProduct.dftbModel.addRow(item.getRowObjects());
+             }
+         }
+        });
         // endregion
         // region ADD
+        add(cbSearchad1);
+        add(cbSearchad2);
+        add(cbSearchad3);
+        add(btnsearch);
+        add(pnSearchadvance);
+        add(tbProduct.scrPn);
         add(btnAdd);
         add(btnEdit);
         add(btnDelete);
@@ -148,7 +174,6 @@ public class pnProduct extends JPanel {
         add(tfSearch);
         add(pnSearch);
         add(pnHeader);
-        add(tbProduct.scrPn);
         add(pnFooter);
         // endregion
     }
