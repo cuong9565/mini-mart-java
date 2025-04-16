@@ -20,7 +20,7 @@ public class OfferProductDAO {
         List<OfferProductDTO> list = new ArrayList<>();
         Connection con = DataProvider.getInstance().getConnection();
         String sql =
-                "select offerproduct.*, offer.* " +
+                "select * " +
                 "from offerproduct, offer " +
                 "where offerproduct.idOffer = offer.id " +
                 "order by offerproduct.id";
@@ -51,7 +51,7 @@ public class OfferProductDAO {
     }
 
     public boolean add(OfferProductDTO offerProductDTO){
-        int res = 0;
+        int res;
         String sql = "insert into offerproduct(idOffer, discount) values(?,?)";
         Connection con = DataProvider.getInstance().getConnection();
         try(PreparedStatement ps = con.prepareStatement(sql)){
@@ -67,7 +67,7 @@ public class OfferProductDAO {
     }
 
     public boolean update(OfferProductDTO offerProductDTO){
-        int res = 0;
+        int res;
         String sql = "update offerproduct set discount = ?, idOffer = ? where id = ?";
         Connection con = DataProvider.getInstance().getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)){
@@ -84,7 +84,7 @@ public class OfferProductDAO {
     }
 
     public boolean delete(int id){
-        int res = 0;
+        int res;
         String sql = "delete from offerproduct where id = ?";
         Connection con = DataProvider.getInstance().getConnection();
         try {

@@ -4,6 +4,7 @@ import DAO.BillInfoDAO;
 import DTO.BillInfoDTO;
 import DTO.ProductDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BillInfoBUS {
@@ -20,6 +21,20 @@ public class BillInfoBUS {
     public List<BillInfoDTO>loadByIdBill(int idBill){
         list = BillInfoDAO.getInstance().getList(idBill);
         return list;
+    }
+
+    public List<BillInfoDTO>Search(int col, String txt){
+        List<BillInfoDTO>ls = new ArrayList<>();
+        for(BillInfoDTO b : list) switch (col) {
+            case 0: if(String.valueOf(b.getIdProduct()).contains(txt)) ls.add(b); break;
+            case 1: if(b.getNameProduct().contains(txt)) ls.add(b); break;
+            case 2: if(b.getFormatPrice().contains(txt)) ls.add(b); break;
+            case 3: if(String.valueOf(b.getQuantity()).contains(txt)) ls.add(b); break;
+            case 4: if((b.getDiscount() + "%").contains(txt)) ls.add(b); break;
+            case 5: if(b.getUnit().contains(txt)) ls.add(b); break;
+            case 6: if(b.getFormatTotal().contains(txt)) ls.add(b); break;
+        }
+        return ls;
     }
 
     public boolean addProduct(int idBill, int idProduct, int quantity){

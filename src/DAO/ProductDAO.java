@@ -19,7 +19,7 @@ public class ProductDAO {
         List<ProductDTO> list = new ArrayList<>();
         Connection con = DataProvider.getInstance().getConnection();
         String sql =
-                "select product.*, producttype.*, productdetail.*, offerproduct.*, offer.* " +
+                "select * " +
                 "from product " +
                 "join producttype on product.idProductType = producttype.id " +
                 "join productdetail on product.idProductDetail = productdetail.id " +

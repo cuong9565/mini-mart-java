@@ -20,7 +20,7 @@ public class OfferBillDAO {
         List<OfferBillDTO> list = new ArrayList<>();
         Connection con = DataProvider.getInstance().getConnection();
         String sql =
-                "select offerbill.*, offer.* " +
+                "select * " +
                 "from offerbill, offer " +
                 "where offerbill.idOffer = offer.id " +
                 "order by offerbill.id";

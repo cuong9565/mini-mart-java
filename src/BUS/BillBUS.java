@@ -26,6 +26,13 @@ public class BillBUS {
         return list;
     }
 
+    public BillDTO getBillById(int id){
+        for (BillDTO billDTO : load()) {
+            if(billDTO.getId() == id) return billDTO;
+        }
+        return new BillDTO();
+    }
+
     public List<BillDTO> search(int col, String txt){
         List<BillDTO> ls = new ArrayList<>();
         for (BillDTO bill : list) switch (col) {
@@ -86,6 +93,16 @@ public class BillBUS {
             return false;
         }
         return true;
+    }
+
+    public void delete(int id){
+        try {
+            BillInfoDAO.getInstance().deleteByIdBill(id);
+            BillDAO.getInstance().delete(id);
+        }
+        catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     public boolean Pay(int idBill, double price){

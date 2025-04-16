@@ -33,7 +33,7 @@ public class DetailProductDAO {
     }
 
     public boolean add(DetailProductDTO dp) {
-        int res = 0;
+        int res;
         Connection con = DataProvider.getInstance().getConnection();
         String sql = "insert into productdetail(detailInfo) values(?)";
         try(PreparedStatement ps = con.prepareStatement(sql)){
@@ -48,7 +48,7 @@ public class DetailProductDAO {
     }
 
     public boolean update(DetailProductDTO dp) {
-        int res = 0;
+        int res;
         Connection con = DataProvider.getInstance().getConnection();
         String sql = "update productdetail set detailInfo = ? where id = ?";
         try(PreparedStatement ps = con.prepareStatement(sql)){
@@ -64,7 +64,7 @@ public class DetailProductDAO {
     }
 
     public boolean delete(DetailProductDTO dp) {
-        int res = 0;
+        int res;
         Connection con = DataProvider.getInstance().getConnection();
         String sql = "delete from productdetail where id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)){

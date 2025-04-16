@@ -19,12 +19,12 @@ public class BillDAO {
         List<BillDTO> list = new ArrayList<>();
         Connection con = DataProvider.getInstance().getConnection();
         String sql =
-                "select bill.*, staff.*, offerbill.*, offer.*, customer.* " +
-                        "from bill " +
-                        "join staff on bill.idStaff = staff.id " +
-                        "left join offerbill on bill.idOfferBill = offerbill.id " +
-                        "left join offer on offerbill.idOffer = offer.id " +
-                        "left join customer on bill.idCustomer = customer.id";
+                "select * " +
+                "from bill " +
+                "join staff on bill.idStaff = staff.id " +
+                "left join offerbill on bill.idOfferBill = offerbill.id " +
+                "left join offer on offerbill.idOffer = offer.id " +
+                "left join customer on bill.idCustomer = customer.id";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) list.add(new BillDTO(rs));

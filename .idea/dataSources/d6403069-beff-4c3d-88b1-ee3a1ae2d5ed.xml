@@ -1005,7 +1005,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     </schema>
     <schema id="291" parent="1" name="mini_mart_java">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2025-04-14.14:20:34</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-04-14.17:07:26</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="292" parent="1" name="mysql">
