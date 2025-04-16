@@ -22,7 +22,7 @@ public class dlSearchCustomer extends JDialog {
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Mã số", "Số điện thoại" , "Họ", "Tên", "Địa chỉ", "Giới tính", "Trạng thái"}, 12);
 
-    MyJTable tbCustomer = new MyJTable(new String[]{"Mã số", "Số điện thoại" , "Họ", "Tên", "Địa chỉ", "Giới tính", "Trạng thái"}, new int[]{50, 100, 100, 100, 300, 35}, new int[]{2, 3, 4}, new int[]{});
+    MyJTable tbCustomer = new MyJTable(new String[]{"Mã số", "Số điện thoại" , "Họ", "Tên", "Địa chỉ", "Giới tính", "Trạng thái"}, new int[]{50, 100, 100, 100, 200, 35}, new int[]{2, 3, 4}, new int[]{});
 
     JButton btnSave = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Green, MyColor.LightGreen, "Xác nhận", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnEsc = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Red, MyColor.LightRed, "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
@@ -32,28 +32,27 @@ public class dlSearchCustomer extends JDialog {
     public dlSearchCustomer(fManage parentFrame, pnSell parentPanel) {
         super(parentFrame, true);
         setTitle("Tìm kiếm khách hàng");
-        setSize(1000,650);
+        setSize(800,650);
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         loadCustomer();
 
         // region setBounds
-        pnMain.setBounds(0,0,1000,650);
+        pnMain.setBounds(0,0,800,650);
 
         lbHeader.setOpaque(true);
         lbHeader.setBackground(MyColor.DarkBlue);
-        lbHeader.setBounds(0,0,1000,60);
+        lbHeader.setBounds(0,0,800,60);
 
-        pnSearch.setBounds(470,60,500,90);
-        cbSearch.setBounds(485, 90, 150, 30);
-        tfSearch.setBounds(645, 90, 200, 30);
-        btnRefresh.setBounds(855,90,100,30);
+        pnSearch.setBounds(270,60,500,90);
+        cbSearch.setBounds(285, 90, 150, 30);
+        tfSearch.setBounds(445, 90, 200, 30);
+        btnRefresh.setBounds(655,90,100,30);
 
-        tbCustomer.scrPn.setBounds(10, 160, 960, 330);
-        btnSave.setBounds(340,520,150,40);
-        btnEsc.setBounds(510,520,150,40);
-
+        tbCustomer.scrPn.setBounds(10, 160, 760, 330);
+        btnSave.setBounds(240,520,150,40);
+        btnEsc.setBounds(410,520,150,40);
         // endregion
 
         // region Event

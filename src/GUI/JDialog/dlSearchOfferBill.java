@@ -31,28 +31,27 @@ public class dlSearchOfferBill extends JDialog {
     public dlSearchOfferBill(fManage parentFrame, pnSell parentPanel) {
         super(parentFrame, true);
         setTitle("Tìm kiếm giảm giá hóa đơn");
-        setSize(1000,650);
+        setSize(800,650);
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         loadOfferBill();
 
         // region setBounds
-        pnMain.setBounds(0,0,1000,650);
+        pnMain.setBounds(0,0,800,650);
 
         lbHeader.setOpaque(true);
         lbHeader.setBackground(MyColor.DarkBlue);
-        lbHeader.setBounds(0,0,1000,60);
+        lbHeader.setBounds(0,0,800,60);
 
-        pnSearch.setBounds(470,60,500,90);
-        cbSearch.setBounds(485, 90, 150, 30);
-        tfSearch.setBounds(645, 90, 200, 30);
-        btnRefresh.setBounds(855,90,100,30);
+        pnSearch.setBounds(270,60,500,90);
+        cbSearch.setBounds(285, 90, 150, 30);
+        tfSearch.setBounds(445, 90, 200, 30);
+        btnRefresh.setBounds(655,90,100,30);
 
-        tbOfferBill.scrPn.setBounds(10, 160, 960, 330);
-        btnSave.setBounds(340,520,150,40);
-        btnEsc.setBounds(510,520,150,40);
-
+        tbOfferBill.scrPn.setBounds(10, 160, 760, 330);
+        btnSave.setBounds(240,520,150,40);
+        btnEsc.setBounds(410,520,150,40);
         // endregion
 
         // region Event
