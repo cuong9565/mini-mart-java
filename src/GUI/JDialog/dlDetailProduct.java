@@ -1,6 +1,5 @@
 package GUI.JDialog;
 
-import BUS.*;
 import Components.*;
 import DTO.*;
 import GUI.JFrame.fManage;
@@ -8,9 +7,6 @@ import GUI.JPanel.pnProduct;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Objects;
 
 public class dlDetailProduct extends JDialog {
     JPanel pnMain = new MyJPanel(MyColor.White);
@@ -21,7 +17,7 @@ public class dlDetailProduct extends JDialog {
     JButton btnEsc = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Red, MyColor.LightRed, "Thoát", SwingConstants.CENTER, SwingConstants.CENTER);
 
     JDialog dialog = this;
-    int posCbDiscount = 0;
+
     public dlDetailProduct(fManage parentFrame, pnProduct parentPanel, ProductDTO productDTO) {
         super(parentFrame,true);
         setTitle("Thông tin chi tiết");
@@ -42,11 +38,7 @@ public class dlDetailProduct extends JDialog {
         taDetail.sp.setBounds(50,100,200,170);
         btnEsc.setBounds(75,300,150,40);
 
-        btnEsc.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dialog.dispose();
-            }
-        });
+        btnEsc.addActionListener(_ -> dialog.dispose());
 
         add(lbDetail);
         add(taDetail.sp);

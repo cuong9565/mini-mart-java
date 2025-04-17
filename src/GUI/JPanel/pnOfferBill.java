@@ -2,19 +2,15 @@ package GUI.JPanel;
 
 import BUS.OfferBUS;
 import BUS.OfferBillBUS;
-import BUS.SupplierBUS;
 import Components.*;
 import DTO.*;
 import GUI.JDialog.*;
-import GUI.JFrame.fManage;
-import com.mysql.cj.protocol.Message;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class pnOfferBill extends JPanel {
@@ -35,7 +31,7 @@ public class pnOfferBill extends JPanel {
 
     pnOfferBill thisPanel = this;
 
-    public pnOfferBill(pnDiscount parent) {
+    public pnOfferBill() {
         setLayout(null);
         setBackground(MyColor.White);
         // region SET BOUNDS
@@ -57,13 +53,8 @@ public class pnOfferBill extends JPanel {
         addComponentListener(new ComponentAdapter() {
             public void componentShown(ComponentEvent e) {loadOfferBill();}
         });
-        btnAdd.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new dlAddOfferBill(thisPanel);
-            }
-        });
-        btnEdit.addActionListener(e -> {
+        btnAdd.addActionListener(_ -> new dlAddOfferBill(thisPanel));
+        btnEdit.addActionListener(_ -> {
             int i = tbOfferBill.getSelectedRow();
             if (i >= 0) {
                 int id = Integer.parseInt(tbOfferBill.getFirstColumn(i));
@@ -72,7 +63,7 @@ public class pnOfferBill extends JPanel {
             } else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần sửa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
         });
 
-        btnDelete.addActionListener(e -> {
+        btnDelete.addActionListener(_ -> {
             int i = tbOfferBill.getSelectedRow();
             if (i >= 0) {
                 int id = Integer.parseInt(tbOfferBill.getFirstColumn(i));
@@ -84,13 +75,13 @@ public class pnOfferBill extends JPanel {
             } else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xóa!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         });
 
-        btnRefresh.addActionListener(e -> {
+        btnRefresh.addActionListener(_ -> {
             tfSearch.setText("");
             cbSearch.setSelectedIndex(0);
             loadOfferBill();
         });
 
-        btnIn.addActionListener(e -> {
+        btnIn.addActionListener(_ -> {
             List<Object[]> list = tbOfferBill.ImportExel(3);
             if(list==null) return;
             String error = "";
@@ -108,9 +99,7 @@ public class pnOfferBill extends JPanel {
             loadOfferBill();
         });
         btnOut.addActionListener(_ -> tbOfferBill.ExportExel("Danh sách giảm giá hóa đơn"));
-        cbSearch.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {textChange();}
-        });
+        cbSearch.addActionListener(_ -> textChange());
         tfSearch.addFocusListener(new FocusAdapter() {
             public void focusGained(FocusEvent e) {textChange();}
         });

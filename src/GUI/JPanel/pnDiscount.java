@@ -1,26 +1,12 @@
 package GUI.JPanel;
 
-import BUS.CustomerBUS;
-import BUS.SupplierBUS;
 import Components.*;
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 import Components.MyColor;
 import Components.MyJButton;
-import DTO.CustomerDTO;
-import DTO.SupplierDTO;
-import GUI.JDialog.dlAddCustomer;
-import GUI.JDialog.dlEditCustomer;
 import GUI.JFrame.fManage;
 
 public class pnDiscount extends JPanel {
@@ -30,8 +16,8 @@ public class pnDiscount extends JPanel {
     JButton btnOffer = new MyJButton(Font.PLAIN, 12, MyColor.Black, MyColor.LightGray, "Thời gian giảm giá", SwingConstants.CENTER,SwingConstants.CENTER);
     JButton btnOfferProduct = new MyJButton(Font.PLAIN, 12, MyColor.Black, MyColor.LightGray, "Giảm giá sản phẩm", SwingConstants.CENTER,SwingConstants.CENTER);
     JButton btnOfferBill = new MyJButton(Font.PLAIN, 12, MyColor.Black, MyColor.LightGray, "Giảm giá hóa đơn", SwingConstants.CENTER,SwingConstants.CENTER);
-    JButton lsBtn[] = new JButton[]{btnOffer, btnOfferProduct, btnOfferBill};
-    JPanel lsPn[] = new JPanel[]{new pnOffer(this), new pnOfferProduct(), new pnOfferBill(this)};
+    JButton[] lsBtn = new JButton[]{btnOffer, btnOfferProduct, btnOfferBill};
+    JPanel[] lsPn = new JPanel[]{new pnOffer(), new pnOfferProduct(), new pnOfferBill()};
 
     int currCursor = 0;
 
@@ -58,16 +44,14 @@ public class pnDiscount extends JPanel {
 
         for(int i=0; i<lsBtn.length; i++) {
             final int I = i;
-            lsBtn[i].addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    lsBtn[currCursor].setBackground(MyColor.LightGray);
-                    lsBtn[currCursor].setBorder(BorderFactory.createEmptyBorder());
-                    lsPn[currCursor].setVisible(false);
-                    currCursor = I;
-                    lsBtn[I].setBackground(MyColor.White);
-                    lsBtn[I].setBorder(new MatteBorder(0,0,2,0,MyColor.UnderLineBlue));
-                    lsPn[I].setVisible(true);
-                }
+            lsBtn[i].addActionListener(_ -> {
+                lsBtn[currCursor].setBackground(MyColor.LightGray);
+                lsBtn[currCursor].setBorder(BorderFactory.createEmptyBorder());
+                lsPn[currCursor].setVisible(false);
+                currCursor = I;
+                lsBtn[I].setBackground(MyColor.White);
+                lsBtn[I].setBorder(new MatteBorder(0,0,2,0,MyColor.UnderLineBlue));
+                lsPn[I].setVisible(true);
             });
             pnNav.add(lsBtn[i]);
             pnContent.add(lsPn[i]);

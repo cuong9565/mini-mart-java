@@ -41,6 +41,7 @@ public class dlAddOfferBill extends JDialog {
         btnSave.setBounds(100, 160, 150, 40);
         btnEsc.setBounds(270, 160, 150, 40);
         // endregion
+
         for(OfferDTO o: OfferBUS.getInstance().getList()) cbTime.addItem(o);
         btnEsc.addActionListener(_ -> dispose());
         btnSave.addActionListener(_ -> {

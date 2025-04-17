@@ -30,7 +30,7 @@ public class pnOffer extends JPanel {
     MyJTable tbOffer = new MyJTable(new String[]{"Mã số", "Ngày bắt đầu", "Ngày kết thúc"}, new int[]{}, new int[]{}, new int[]{});
     pnOffer thisPanel = this;
 
-    public pnOffer(pnDiscount parent) {
+    public pnOffer() {
         setLayout(null);
         setBackground(MyColor.White);
         // region SET BOUNDS
@@ -62,7 +62,7 @@ public class pnOffer extends JPanel {
             } else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần sửa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
         });
 
-        btnDelete.addActionListener(e -> {
+        btnDelete.addActionListener(_ -> {
             int i = tbOffer.getSelectedRow();
             if (i >= 0) {
                 int id = Integer.parseInt(tbOffer.getFirstColumn(i));
@@ -76,13 +76,13 @@ public class pnOffer extends JPanel {
             } else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xóa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
         });
 
-        btnRefresh.addActionListener(e -> {
+        btnRefresh.addActionListener(_ -> {
             tfSearch.setText("");
             cbSearch.setSelectedIndex(0);
             loadOffer();
         });
 
-        btnIn.addActionListener(e -> {
+        btnIn.addActionListener(_ -> {
             List<Object[]> list = tbOffer.ImportExel(2);
             if(list==null) return;
             String error = null;
@@ -97,10 +97,8 @@ public class pnOffer extends JPanel {
             loadOffer();
         });
 
-        btnOut.addActionListener(e -> tbOffer.ExportExel("Danh sách khuyến mãi"));
-        cbSearch.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {textChange();}
-        });
+        btnOut.addActionListener(_ -> tbOffer.ExportExel("Danh sách khuyến mãi"));
+        cbSearch.addActionListener(_ -> textChange());
         tfSearch.addFocusListener(new FocusAdapter() {
             public void focusGained(FocusEvent e) {textChange();}
         });

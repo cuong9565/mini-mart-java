@@ -102,10 +102,13 @@ CREATE TABLE ImportOrder (
 CREATE TABLE ImportOrderDetail (
     id INT AUTO_INCREMENT PRIMARY KEY,
     idProduct INT NOT NULL,
+    idImportOrder INT NOT NULL,
+
     quantity INT,
     price DOUBLE,
     unit VARCHAR(100) CHARACTER SET UTF8MB4,
-    FOREIGN KEY (idProduct) REFERENCES Product(id)
+    FOREIGN KEY (idProduct) REFERENCES Product(id),
+    FOREIGN KEY (idImportOrder) REFERENCES ImportOrder(id)
 );
 
 -- Tạo bảng Bill

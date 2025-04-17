@@ -1,193 +1,68 @@
 package GUI.JPanel;
 
-import Components.MyColor;
-import Components.MyJLabel;
-
+import Components.*;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.border.MatteBorder;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
+import Components.MyColor;
+import Components.MyJButton;
+import GUI.JFrame.fManage;
 
 public class pnStatistic extends JPanel {
-    DefaultTableModel model = new DefaultTableModel(); // Model cho bảng sản phẩm
-    DefaultTableModel priceModel = new DefaultTableModel(); // Model cho bảng phiếu
+    JPanel pnMain = new MyJPanel(MyColor.White);
+    JPanel pnNav = new MyJPanel(MyColor.LightGray);
+    JPanel pnContent = new MyJPanel(MyColor.White);
+    JButton btnOffer = new MyJButton(Font.PLAIN, 12, MyColor.Black, MyColor.LightGray, "Thống kê theo hóa đơn", SwingConstants.CENTER,SwingConstants.CENTER);
+    JButton btnOfferProduct = new MyJButton(Font.PLAIN, 12, MyColor.Black, MyColor.LightGray, "Thống kê theo sản phẩm", SwingConstants.CENTER,SwingConstants.CENTER);
+    JButton btnOfferBill = new MyJButton(Font.PLAIN, 12, MyColor.Black, MyColor.LightGray, "Thống kê theo khách hàng", SwingConstants.CENTER,SwingConstants.CENTER);
+    JButton[] lsBtn = new JButton[]{btnOffer, btnOfferProduct, btnOfferBill};
+    JPanel[] lsPn = new JPanel[]{new pnStatisticBill(), new pnStatisticProduct(), new pnStatisticCustomer()};
 
-    JLabel numBlue = new MyJLabel(Font.BOLD, 50, MyColor.White, "100", SwingConstants.CENTER, SwingConstants.CENTER);
-    JLabel lbBlue = new MyJLabel(Font.BOLD, 16, MyColor.White, "Sản phẩm trong kho", SwingConstants.CENTER, SwingConstants.CENTER);
-    JLabel numOrange = new MyJLabel(Font.BOLD, 50, MyColor.White, "100", SwingConstants.CENTER, SwingConstants.CENTER);
-    JLabel lbOrange = new MyJLabel(Font.BOLD, 16, MyColor.White, "Nhà cung cấp", SwingConstants.CENTER, SwingConstants.CENTER);
-    JLabel numGreen = new MyJLabel(Font.BOLD, 50, MyColor.White, "100", SwingConstants.CENTER, SwingConstants.CENTER);
-    JLabel lbGreen = new MyJLabel(Font.BOLD, 16, MyColor.White, "Tài khoản", SwingConstants.CENTER, SwingConstants.CENTER);
+    int currCursor = 0;
 
-    JPanel jPanelLayout = new JPanel();
-    JPanel jPanel1 = new JPanel();
-    JPanel jPanel2 = new JPanel();
-    JPanel jPanel3 = new JPanel();
-    JPanel jPanel4 = new JPanel(); // Tab "Sản phẩm"
-    JPanel jPanel5 = new JPanel(); // Tab "Phiếu"
-    JPanel jPanel6 = new JPanel(); // Tab "Tài khoản"
-    JTabbedPane tabPane = new JTabbedPane();
-
-    // Sản phẩm
-    JPanel panelProduct = new JPanel();
-    JTextField txtSearch1 = new JTextField();
-    JPanel productTablePanel = new JPanel();
-    JTable tbStatistic;
-
-    // Phiếu
-    JPanel panelPrice = new JPanel();
-    JLabel lbMinPrice = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Từ", SwingConstants.CENTER, SwingConstants.CENTER);
-    JLabel lbMaxPrice = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Đến", SwingConstants.CENTER, SwingConstants.CENTER);
-    JTextField txtMinPrice = new JTextField();
-    JTextField txtMaxPrice = new JTextField();
-    JPanel priceTablePanel = new JPanel();
-    JTable tbPrice;
-    JPanel panelDate = new JPanel();
-    JLabel lbFrom = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Từ", SwingConstants.CENTER, SwingConstants.CENTER);
-    JLabel lbTo = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Đến", SwingConstants.CENTER, SwingConstants.CENTER);
-    JTextField txtSearch2 = new JTextField();
-    JTextField txtSearch3 = new JTextField();
-
-    public pnStatistic() {
+    public pnStatistic(fManage fmanage) {
         setLayout(null);
         setBackground(MyColor.White);
 
-        // --- 3 khung đầu ---
-        jPanel1.setBackground(Color.decode("#45e7f3"));
-        jPanel1.setLayout(null);
-        numBlue.setBounds(115, 50, 100, 80);
-        lbBlue.setBounds(110, 110, 200, 30);
-        jPanel1.add(numBlue);
-        jPanel1.add(lbBlue);
+        pnMain.setBounds(0,0,1170,800);
+        pnNav.setBounds(0,0,1170, 30);
+        pnContent.setBounds(0,30,1170,800);
 
-        jPanel2.setBackground(Color.decode("#f3a145"));
-        jPanel2.setLayout(null);
-        numOrange.setBounds(115, 50, 100, 80);
-        lbOrange.setBounds(85, 110, 200, 30);
-        jPanel2.add(numOrange);
-        jPanel2.add(lbOrange);
+        btnOffer.setMaximumSize(new Dimension(150, 30));
+        btnOffer.setMinimumSize(new Dimension(150, 30));
+        btnOffer.setPreferredSize(new Dimension(150, 30));
+        btnOfferProduct.setPreferredSize(new Dimension(150, 30));
+        btnOfferProduct.setMaximumSize(new Dimension(150, 30));
+        btnOfferProduct.setMinimumSize(new Dimension(150, 30));
+        btnOfferBill.setPreferredSize(new Dimension(150, 30));
+        btnOfferBill.setMaximumSize(new Dimension(150, 30));
+        btnOfferBill.setMinimumSize(new Dimension(150, 30));
 
-        jPanel3.setBackground(Color.decode("#a1f345"));
-        jPanel3.setLayout(null);
-        numGreen.setBounds(115, 50, 100, 80);
-        lbGreen.setBounds(70, 110, 200, 30);
-        jPanel3.add(numGreen);
-        jPanel3.add(lbGreen);
+        pnNav.setLayout(new BoxLayout(pnNav,BoxLayout.X_AXIS));
+        pnContent.setLayout(new CardLayout());
 
-        jPanelLayout.setLayout(new GridLayout(1, 3, 10, 10));
-        jPanelLayout.add(jPanel1);
-        jPanelLayout.add(jPanel2);
-        jPanelLayout.add(jPanel3);
-        jPanelLayout.setBounds(10, 10, 950, 200);
+        for(int i=0; i<lsBtn.length; i++) {
+            final int I = i;
+            lsBtn[i].addActionListener(_ -> {
+                lsBtn[currCursor].setBackground(MyColor.LightGray);
+                lsBtn[currCursor].setBorder(BorderFactory.createEmptyBorder());
+                lsPn[currCursor].setVisible(false);
+                currCursor = I;
+                lsBtn[I].setBackground(MyColor.White);
+                lsBtn[I].setBorder(new MatteBorder(0,0,2,0,MyColor.UnderLineBlue));
+                lsPn[I].setVisible(true);
+            });
+            pnNav.add(lsBtn[i]);
+            pnContent.add(lsPn[i]);
+        }
 
-        // --- Định nghĩa viền ---
-        Border border = BorderFactory.createLineBorder(Color.gray, 1);
+        lsBtn[currCursor].doClick();
 
-        // --- Tab "Sản phẩm" ---
-        jPanel4.setLayout(null);
-        jPanel4.setBackground(Color.decode("#FFFFFF"));
-
-        // Panel tìm kiếm sản phẩm
-        panelProduct.setBorder(BorderFactory.createTitledBorder(border, "Tìm kiếm"));
-        panelProduct.setBackground(Color.decode("#FFFFFF"));
-        panelProduct.setBounds(30, 10, 380, 90);
-        panelProduct.setLayout(null);
-        txtSearch1.setFont(new Font("Arial", Font.PLAIN, 14));
-        txtSearch1.setHorizontalAlignment(JTextField.LEFT);
-        txtSearch1.setBounds(20, 30, 330, 36);
-        txtSearch1.setBorder(BorderFactory.createCompoundBorder(
-                border, BorderFactory.createEmptyBorder(5, 5, 5, 5)
-        ));
-        panelProduct.add(txtSearch1);
-        jPanel4.add(panelProduct);
-
-        // Panel lọc theo ngày
-        panelDate.setBorder(BorderFactory.createTitledBorder(border, "Lọc theo ngày"));
-        panelDate.setBackground(Color.decode("#FFFFFF"));
-        panelDate.setBounds(450, 10, 490, 90);
-        panelDate.setLayout(null);
-        lbFrom.setBounds(20, 30, 30, 30);
-        panelDate.add(lbFrom);
-        txtSearch2.setFont(new Font("Arial", Font.PLAIN, 14));
-        txtSearch2.setHorizontalAlignment(JTextField.LEFT);
-        txtSearch2.setBounds(60, 30, 150, 30);
-        txtSearch2.setBorder(BorderFactory.createCompoundBorder(
-                border, BorderFactory.createEmptyBorder(5, 5, 5, 5)
-        ));
-        panelDate.add(txtSearch2);
-        lbTo.setBounds(240, 30, 40, 30);
-        panelDate.add(lbTo);
-        txtSearch3.setFont(new Font("Arial", Font.PLAIN, 14));
-        txtSearch3.setHorizontalAlignment(JTextField.LEFT);
-        txtSearch3.setBounds(290, 30, 150, 30);
-        txtSearch3.setBorder(BorderFactory.createCompoundBorder(
-                border, BorderFactory.createEmptyBorder(5, 5, 5, 5)
-        ));
-        panelDate.add(txtSearch3);
-        jPanel4.add(panelDate);
-
-        // Bảng sản phẩm
-        String[] columns = {"STT", "Mã sản phẩm", "Tên sản phẩm", "Số lượng nhập", "Số lượng xuất"};
-        model.setColumnIdentifiers(columns);
-        tbStatistic = new JTable(model);
-        JScrollPane scrollPane = new JScrollPane(tbStatistic);
-        productTablePanel.setBackground(Color.decode("#FFFFFF"));
-        productTablePanel.setLayout(new GridLayout(1, 1));
-        productTablePanel.add(scrollPane);
-        productTablePanel.setBounds(10, 110, 930, 350);
-        jPanel4.add(productTablePanel);
-
-        // --- Tab "Phiếu" ---
-        jPanel5.setLayout(null);
-        jPanel5.setBackground(Color.decode("#FFFFFF"));
-
-        // Panel "Lọc theo giá"
-        panelPrice.setBorder(BorderFactory.createTitledBorder(border, "Lọc theo giá"));
-        panelPrice.setBackground(Color.decode("#FFFFFF"));
-        panelPrice.setBounds(30, 10, 380, 90);
-        panelPrice.setLayout(null);
-        lbMinPrice.setBounds(20, 30, 30, 30);
-        panelPrice.add(lbMinPrice);
-        txtMinPrice.setFont(new Font("Arial", Font.PLAIN, 14));
-        txtMinPrice.setHorizontalAlignment(JTextField.LEFT);
-        txtMinPrice.setBounds(50, 30, 120, 30);
-        txtMinPrice.setBorder(BorderFactory.createCompoundBorder(
-                border, BorderFactory.createEmptyBorder(5, 5, 5, 5)
-        ));
-        panelPrice.add(txtMinPrice);
-        lbMaxPrice.setBounds(190, 30, 40, 30);
-        panelPrice.add(lbMaxPrice);
-        txtMaxPrice.setFont(new Font("Arial", Font.PLAIN, 14));
-        txtMaxPrice.setHorizontalAlignment(JTextField.LEFT);
-        txtMaxPrice.setBounds(230, 30, 120, 30);
-        txtMaxPrice.setBorder(BorderFactory.createCompoundBorder(
-                border, BorderFactory.createEmptyBorder(5, 5, 5, 5)
-        ));
-        panelPrice.add(txtMaxPrice);
-        jPanel5.add(panelPrice);
-
-        // Bảng phiếu
-        String[] priceColumns = {"STT", "Mã phiếu", "Tổng giá", "Ngày tạo"};
-        priceModel.setColumnIdentifiers(priceColumns);
-        tbPrice = new JTable(priceModel);
-        JScrollPane priceScrollPane = new JScrollPane(tbPrice);
-        priceTablePanel.setBackground(Color.decode("#FFFFFF"));
-        priceTablePanel.setLayout(new GridLayout(1, 1));
-        priceTablePanel.add(priceScrollPane);
-        priceTablePanel.setBounds(10, 110, 930, 350);
-        jPanel5.add(priceTablePanel);
-
-        // --- Tab "Tài khoản" ---
-        jPanel6.setBackground(Color.decode("#FFFFFF"));
-
-        // --- Thêm các tab vào TabPane ---
-        tabPane.add("Sản phẩm", jPanel4);
-        tabPane.add("Phiếu", jPanel5);
-        tabPane.add("Tài khoản", jPanel6);
-        tabPane.setBounds(10, 220, 950, 500); // Tăng chiều cao để chứa bảng
-
-        // --- Thêm thành phần vào panel chính ---
-        add(tabPane);
-        add(jPanelLayout);
+        add(pnNav);
+        add(pnContent);
+        add(pnMain);
     }
 }

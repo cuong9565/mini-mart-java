@@ -1,6 +1,7 @@
 package Components;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.Calendar;
 
 public class MyDate {
@@ -40,6 +41,18 @@ public class MyDate {
         LocalDate date = LocalDate.now();
         return new MyDate(date.getDayOfMonth(), date.getMonthValue(), date.getYear());
     }
+    public static MyDate getMinInMonth() {
+        LocalDate currentDate = LocalDate.now();
+        YearMonth ym = YearMonth.of(currentDate.getYear(), currentDate.getMonthValue());
+        LocalDate date = ym.atDay(1);
+        return new MyDate(date.getDayOfMonth(), date.getMonthValue(), date.getYear());
+    }
+    public static MyDate getMaxInMonth() {
+        LocalDate currentDate = LocalDate.now();
+        YearMonth ym = YearMonth.of(currentDate.getYear(), currentDate.getMonthValue());
+        LocalDate date = ym.atEndOfMonth();
+        return new MyDate(date.getDayOfMonth(), date.getMonthValue(), date.getYear());
+    }
 
     public void setDd(int dd) {this.dd = dd;}
     public void setMm(int mm) {this.mm = mm;}
@@ -57,6 +70,10 @@ public class MyDate {
                 return 0;
             }
         }
+    }
+
+    public boolean bettween(MyDate l, MyDate r) {
+        return compareTo(l)>=0 && compareTo(r)<=0;
     }
 
     @Override

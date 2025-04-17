@@ -47,7 +47,7 @@ public class fManage extends JFrame {
         LoadThisAccount();
         JButton[] lsBtn = new JButton[]{btnStatistic, btnImport, btnSell, btnProduct, btnTypeProduct, btnCustomer, btnBill, btnDiscount, btnStaff, btnSupplier};
         JPanel[] lsPn = new JPanel[]{
-                new pnStatistic(),
+                new pnStatistic(currFrame),
                 new pnImport(),
                 new pnSell(currFrame, thisAccount),
                 new pnProduct(currFrame),
