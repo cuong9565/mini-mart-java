@@ -19,6 +19,24 @@ public class StaffDAO {
         return instance;
     }
 
+    public int getNumberStaff(){
+        int res = 0;
+        Connection con = DataProvider.getInstance().getConnection();
+        String sql =
+                "select count(*) as result " +
+                "from staff";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) res = rs.getInt("result");
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+        DataProvider.getInstance().CloseConnection(con);
+        return res;
+    }
+
     public StaffDTO Login(String phone, String password) {
         StaffDTO staff = new StaffDTO();
         Connection con = DataProvider.getInstance().getConnection();

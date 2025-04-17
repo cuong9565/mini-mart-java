@@ -15,4 +15,6 @@ public class MyColor {
     public static Color BrightRed = Color.decode("#FF0000");
     public static Color Green = Color.decode("#00C800");
     public static Color LightGreen = Color.decode("#64FF64");
+    public static Color Orange = Color.decode("#FFA500");
+    public static Color Purple = Color.decode("#800080");
 }

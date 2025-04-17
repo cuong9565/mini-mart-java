@@ -4,20 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong thu nho dialog">
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong update statistics">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d6403069-beff-4c3d-88b1-ee3a1ae2d5ed.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d6403069-beff-4c3d-88b1-ee3a1ae2d5ed.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_10_2025_9_34_AM_[Changes]/MyJButton$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_10_2025_9_34_AM_[Changes]/MyJButton$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_10_2025_9_34_AM_[Changes]/MyJButton.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_10_2025_9_34_AM_[Changes]/MyJLabel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_10_2025_9_34_AM_[Changes]/MyJPanel$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_10_2025_9_34_AM_[Changes]/MyJPanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_10_2025_9_34_AM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_10_2025_9_34_AM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SQL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/MyDate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyDate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddOfferBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddOfferBill.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlDetailProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlDetailProduct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JFrame/fManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JFrame/fManage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnDiscount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnDiscount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnOffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnOffer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnOfferBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnOfferBill.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStatistic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStatistic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/CustomerBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/CustomerBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/ProductBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/ProductBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/StaffBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/StaffBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/MyColor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyColor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/CustomerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/CustomerDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/ProductDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/ProductDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/StaffDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/StaffDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticBill.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticCustomer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -206,15 +212,9 @@
       <workItem from="1744762643465" duration="1845000" />
       <workItem from="1744766031344" duration="7531000" />
       <workItem from="1744807796691" duration="4510000" />
-      <workItem from="1744849282399" duration="19275000" />
-    </task>
-    <task id="LOCAL-00024" summary="Cuong update">
-      <option name="closed" value="true" />
-      <created>1742394166352</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1742394166352</updated>
+      <workItem from="1744849282399" duration="19495000" />
+      <workItem from="1744893388405" duration="4621000" />
+      <workItem from="1744899822268" duration="3327000" />
     </task>
     <task id="LOCAL-00025" summary="Cuong update">
       <option name="closed" value="true" />
@@ -600,7 +600,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744812316842</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="Cuong update statistics">
+      <option name="closed" value="true" />
+      <created>1744869240368</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1744869240369</updated>
+    </task>
+    <option name="localTasksCounter" value="74" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -618,7 +626,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Cuong update Login Form" />
     <MESSAGE value="Cuong update Manager Form" />
     <MESSAGE value="Cuong update Setting Account Panel" />
     <MESSAGE value="Cuong update Color + SettingAccountFrame" />
@@ -643,6 +650,7 @@
     <MESSAGE value="Cuong push" />
     <MESSAGE value="Cuong pnBill" />
     <MESSAGE value="Cuong thu nho dialog" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cuong thu nho dialog" />
+    <MESSAGE value="Cuong update statistics" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cuong update statistics" />
   </component>
 </project>

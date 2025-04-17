@@ -17,6 +17,10 @@ public class CustomerBUS {
         return instance;
     }
 
+    public int getNumberCustomer() {
+        return CustomerDAO.getInstance().getNumberCustomer();
+    }
+
     public CustomerDTO getItemById(int id){
         return CustomerDAO.getInstance().getItemById(id);
     }

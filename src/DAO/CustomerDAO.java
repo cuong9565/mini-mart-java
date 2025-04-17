@@ -129,4 +129,21 @@ public class CustomerDAO {
         DataProvider.getInstance().CloseConnection(con);
         return res;
     }
+
+    public int getNumberCustomer(){
+        int res = 0;
+        Connection con = DataProvider.getInstance().getConnection();
+        String sql =
+                "select count(*) as result\n" +
+                "from Customer";
+        try(PreparedStatement ps = con.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) res = rs.getInt("result");
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return res;
+    }
 }

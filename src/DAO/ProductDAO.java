@@ -119,6 +119,20 @@ public class ProductDAO {
         return res;
     }
 
-
-
+    public int getNumberProduct(){
+        int res = 0;
+        String sql =
+                "select count(*) as result " +
+                "from product";
+        Connection con = DataProvider.getInstance().getConnection();
+        try (PreparedStatement ps = con.prepareStatement(sql)){
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) res = rs.getInt("result");
+        }
+        catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return res;
+    }
 }

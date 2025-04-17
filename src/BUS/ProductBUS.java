@@ -143,4 +143,8 @@ public class ProductBUS {
           }
           return newlist;
     }
+
+    public int getNumberProduct(){
+        return ProductDAO.getInstance().getNumberProduct();
+    }
 }

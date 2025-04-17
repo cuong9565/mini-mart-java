@@ -19,6 +19,10 @@ public class StaffBUS {
         return instance;
     }
 
+    public int getNumberStaff(){
+        return StaffDAO.getInstance().getNumberStaff();
+    }
+
     public StaffDTO Login(String phone, String password){
         StaffDTO staff;
         if(phone.isEmpty()){
