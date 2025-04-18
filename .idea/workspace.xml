@@ -4,26 +4,38 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong update statistics">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_10_2025_9_34_AM_[Changes]/MyJButton$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_10_2025_9_34_AM_[Changes]/MyJButton$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_10_2025_9_34_AM_[Changes]/MyJButton.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_10_2025_9_34_AM_[Changes]/MyJLabel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_10_2025_9_34_AM_[Changes]/MyJPanel$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_10_2025_9_34_AM_[Changes]/MyJPanel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_10_2025_9_34_AM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_10_2025_9_34_AM__Changes_.xml" beforeDir="false" />
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong thu nho dialog">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/CustomerBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/CustomerBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/OfferBillBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/OfferBillBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/OfferProductBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/OfferProductBUS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BUS/ProductBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/ProductBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/StaffBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/StaffBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/MyColor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyColor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/CustomerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/CustomerDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/ProductDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/ProductDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/StaffDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/StaffDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticBill.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticCustomer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddOfferBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddOfferBill.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddOfferProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddOfferProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddoffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddoffer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditOfferBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditOfferBill.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditOfferProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditOfferProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditStaff.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditStaff.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditSupplier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditTypeProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditTypeProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlImportDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlImportDetail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlSearchCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlSearchCustomer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlSearchOfferBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlSearchOfferBill.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlSettingAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlSettingAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JFrame/fLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JFrame/fLogin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JFrame/fManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JFrame/fManage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnBill.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnChangeInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnChangeInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnChangePassword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnChangePassword.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnImport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnImport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnOffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnOffer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnOfferBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnOfferBill.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnOfferProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnOfferProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnSell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnSell.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,37 +80,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.FixBug.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.Manage.executor": "Run",
-    "Application.demo.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "ShowUsagesActions.previewPropertyKey": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/mini-mart-java/mysql-connector-j-9.1.0/mysql-connector-j-9.1.0.jar",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "database.query.execution",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.FixBug.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Manage.executor&quot;: &quot;Run&quot;,
+    &quot;Application.demo.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ShowUsagesActions.previewPropertyKey&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/mini-mart-java/mysql-connector-j-9.1.0/mysql-connector-j-9.1.0.jar&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;database.query.execution&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql_aurora",
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql_aurora&quot;,
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\mini-mart-java\src\lib" />
@@ -212,9 +224,15 @@
       <workItem from="1744762643465" duration="1845000" />
       <workItem from="1744766031344" duration="7531000" />
       <workItem from="1744807796691" duration="4510000" />
-      <workItem from="1744849282399" duration="19495000" />
-      <workItem from="1744893388405" duration="4621000" />
-      <workItem from="1744899822268" duration="3327000" />
+      <workItem from="1744849282399" duration="19275000" />
+    </task>
+    <task id="LOCAL-00024" summary="Cuong update">
+      <option name="closed" value="true" />
+      <created>1742394166352</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1742394166352</updated>
     </task>
     <task id="LOCAL-00025" summary="Cuong update">
       <option name="closed" value="true" />
@@ -600,15 +618,7 @@
       <option name="project" value="LOCAL" />
       <updated>1744812316842</updated>
     </task>
-    <task id="LOCAL-00073" summary="Cuong update statistics">
-      <option name="closed" value="true" />
-      <created>1744869240368</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1744869240369</updated>
-    </task>
-    <option name="localTasksCounter" value="74" />
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -626,6 +636,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="Cuong update Login Form" />
     <MESSAGE value="Cuong update Manager Form" />
     <MESSAGE value="Cuong update Setting Account Panel" />
     <MESSAGE value="Cuong update Color + SettingAccountFrame" />
@@ -650,7 +661,6 @@
     <MESSAGE value="Cuong push" />
     <MESSAGE value="Cuong pnBill" />
     <MESSAGE value="Cuong thu nho dialog" />
-    <MESSAGE value="Cuong update statistics" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cuong update statistics" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cuong thu nho dialog" />
   </component>
 </project>

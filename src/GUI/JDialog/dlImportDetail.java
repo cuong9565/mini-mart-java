@@ -43,5 +43,6 @@ public class dlImportDetail extends JDialog {
 
         add(pnMain);
         setVisible(true);
+
     }
 }

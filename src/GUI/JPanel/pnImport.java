@@ -33,6 +33,7 @@ public class pnImport extends JPanel {
 
     JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
+    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Mã", "Tên", "Đơn giá", "Đơn vị", "Số lượng"}, 12);
 
     MyJTable tbProduct = new MyJTable(new String[]{"Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn vị", "Đơn giá"}, 12, new int[]{50, 150, 100, 50}, new int[]{1}, new int[]{});
     MyJTable tbImport = new MyJTable(new String[]{"STT", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn vị", "Đơn giá"}, 12, new int[]{15, 15, 50, 15, 15}, new int[]{}, new int[]{});
@@ -45,10 +46,13 @@ public class pnImport extends JPanel {
     JButton btnDelete = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Xóa", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnEdit = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnImport = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Nhập hàng", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnList = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Xem chi tiết", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnList = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Xem đơn nhập", SwingConstants.CENTER, SwingConstants.CENTER);
+    JLabel lbQuantityFix = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Số lượng: ", SwingConstants.LEFT, SwingConstants.CENTER);
+    JSpinner snQuantityFix = new MyJSpinner(1, 1, 1000000000, 1);
 
     JLabel lbTotal = new MyJLabel(Font.BOLD, 14, MyColor.Black, "Tổng tiền: ", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbAmount = new MyJLabel(Font.BOLD, 14, MyColor.Black, "0đ", SwingConstants.LEFT, SwingConstants.CENTER);
+
 
     private final ImportBUS importBUS = ImportBUS.getInstance();
     private final ProductDAO productDAO = ProductDAO.getInstance();
@@ -57,31 +61,29 @@ public class pnImport extends JPanel {
     fManage frame;
     pnImport thisPanel = this;
 
-    public pnImport() {
-        initComponents();
-        loadSuppliers();
-        loadProducts();
-        updateTotal();
-        addListeners(frame, thisPanel);
-    }
+    StaffDTO staffLoginGlobal;
 
-    private void initComponents() {
+
+    public pnImport(StaffDTO staffLogin) {
         setLayout(null);
         setBackground(MyColor.White);
+
+        staffLoginGlobal = staffLogin;
 
         // Set bounds
         pnMain.setBounds(0, 0, 1170, 750);
         pnInfoImport.setBounds(0, 0, 1160, 70);
         pnSearch.setBounds(0, 70, 460, 60);
 
-        lbID.setBounds(240, 10, 200, 20);
-        tfID.setBounds(240, 30, 200, 30);
-        lbCreate.setBounds(460, 10, 200, 20);
-        tfCreate.setBounds(460, 30, 200, 30);
-        lbSupply.setBounds(680, 10, 200, 20);
-        cboSupplier.setBounds(680, 30, 200, 30);
+        lbID.setBounds(480, 70, 200, 20);
+        tfID.setBounds(480, 90, 200, 30);
+        lbCreate.setBounds(700, 70, 200, 20);
+        tfCreate.setBounds(700, 90, 200, 30);
+        lbSupply.setBounds(920, 70, 200, 20);
+        cboSupplier.setBounds(920, 90, 200, 30);
 
-        tfSearch.setBounds(10, 90, 340, 30);
+        cbSearch.setBounds(10, 90, 140, 30);
+        tfSearch.setBounds(160, 90, 190, 30);
         btnRefresh.setBounds(360, 90, 90, 30);
 
         tbProduct.scrPn.setBounds(0, 140, 460, 550);
@@ -92,13 +94,16 @@ public class pnImport extends JPanel {
         btnAdd.setBounds(180, 700, 100, 30);
 
         btnExportExcel.setBounds(480, 650, 100, 30);
-        btnDelete.setBounds(590, 650, 100, 30);
-        btnEdit.setBounds(700, 650, 100, 30);
-        btnList.setBounds(810, 650, 120, 30);
+        btnDelete.setBounds(480, 650, 100, 30);
+        btnEdit.setBounds(880, 650, 100, 30);
+        btnList.setBounds(810, 700, 120, 30);
         btnImport.setBounds(950, 700, 100, 30);
+        lbQuantityFix.setBounds(700,650,100,30);
+        snQuantityFix.setBounds(770,650,100,30);
 
         lbTotal.setBounds(480, 700, 80, 30);
         lbAmount.setBounds(560, 700, 190, 30);
+
 
         // Add components
         add(lbID);
@@ -107,6 +112,7 @@ public class pnImport extends JPanel {
         add(tfCreate);
         add(lbSupply);
         add(cboSupplier);
+        add(cbSearch);
         add(btnRefresh);
         add(tfSearch);
         add(tbProduct.scrPn);
@@ -114,16 +120,25 @@ public class pnImport extends JPanel {
         add(lbQuantity);
         add(snQuantity);
         add(btnAdd);
-        add(btnExportExcel);
+        //add(btnExportExcel);
         add(btnDelete);
         add(btnEdit);
         add(btnImport);
         add(btnList);
+        add(lbQuantityFix);
+        add(snQuantityFix);
         add(lbTotal);
         add(lbAmount);
         add(pnSearch);
         add(pnInfoImport);
         add(pnMain);
+
+        tfCreate.setText(staffLogin.getLastName() + " " + staffLogin.getFirstName());
+
+        loadSuppliers();
+        loadProducts();
+        updateTotal();
+        addListeners(frame, thisPanel);
     }
 
     private void loadSuppliers() {
@@ -142,6 +157,8 @@ public class pnImport extends JPanel {
             cboSupplier.addItem("Error loading suppliers");
         }
     }
+
+
 
     private void loadProducts() {
         List<ProductDTO> products = productDAO.getList();
@@ -188,7 +205,7 @@ public class pnImport extends JPanel {
     private void clearForm() {
         tfID.setText("");
         tfCreate.setText("");
-        snQuantity.setValue(0);
+        snQuantity.setValue(1);
         cboSupplier.setSelectedIndex(0);
         selectedProducts.clear();
         updateTotal();
@@ -257,12 +274,31 @@ public class pnImport extends JPanel {
                     String priceStr = tbProduct.dftbModel.getValueAt(selectedRow, 4).toString().replace("đ", "").replace(",", "");
                     double price = Double.parseDouble(priceStr);
 
-                    if (qty > productQuantity) {
-                        JOptionPane.showMessageDialog(this, "Số lượng phải bé hơn số lượng sản phẩm hiện có");
+                    int existingQuantity = 0;
+                    for (ProductDTO product : selectedProducts) {
+                        if (product.getId() == productID) {
+                            existingQuantity = product.getQuantity();
+                            break;
+                        }
+                    }
+                    if (existingQuantity + qty > productQuantity) {
+                        JOptionPane.showMessageDialog(this, "Tổng số lượng phải bé hơn số lượng sản phẩm hiện có: " + productQuantity);
                         return;
                     }
-                    ProductDTO product = new ProductDTO(productID, productName, qty, productUnit, price);
-                    selectedProducts.add(product);
+
+                    boolean productExists = false;
+                    for (ProductDTO product : selectedProducts) {
+                        if (product.getId() == productID) {
+                            product.setQuantity(product.getQuantity() + qty); // Increase quantity
+                            productExists = true;
+                            break;
+                        }
+                    }
+
+                    if (!productExists) {
+                        ProductDTO product = new ProductDTO(productID, productName, qty, productUnit, price);
+                        selectedProducts.add(product);
+                    }
 
                     loadImports();
                     updateTotal();
@@ -274,6 +310,41 @@ public class pnImport extends JPanel {
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm");
+            }
+        });
+
+        btnEdit.addActionListener(e -> {
+            int selectedRow = tbImport.getSelectedRow();
+            if (selectedRow != -1) {
+                try {
+                    int productID = (int) tbImport.dftbModel.getValueAt(selectedRow, 1);
+                    int newQuantity = (int) snQuantityFix.getValue();
+
+                    if (newQuantity <= 0) {
+                        JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn 0");
+                        return;
+                    }
+
+                    ProductDTO productInStock = productDAO.getItemById(productID);
+                    if (productInStock == null) {
+                        JOptionPane.showMessageDialog(this, "Không tìm thấy sản phẩm trong kho!");
+                        return;
+                    }
+                    for (ProductDTO product : selectedProducts) {
+                        if (product.getId() == productID) {
+                            product.setQuantity(newQuantity);
+                            break;
+                        }
+                    }
+
+                    loadImports();
+                    updateTotal();
+                    JOptionPane.showMessageDialog(this, "Cập nhật số lượng thành công!");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Lỗi khi chỉnh sửa: " + ex.getMessage());
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm trong bảng nhập hàng!");
             }
         });
 
