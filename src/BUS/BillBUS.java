@@ -37,12 +37,9 @@ public class BillBUS {
         List<BillDTO> ls = new ArrayList<>();
         for (BillDTO bill : list) switch (col) {
             case 0: if(String.valueOf(bill.getId()).contains(txt)) ls.add(bill); break;
-            case 1: if((bill.getStaff().getLastName() + " " + bill.getStaff().getFirstName()).contains(txt)) ls.add(bill); break;
-            case 2: if((bill.getOfferBill().getDiscount() + "%").contains(txt)) ls.add(bill); break;
-            case 3: if((bill.getCustomer().getLastName() + " " + bill.getCustomer().getFirstName()).contains(txt)) ls.add(bill); break;
-            case 4: if(bill.getDateCreate().toString().contains(txt)) ls.add(bill); break;
-            case 5: if(String.format("%,.0fđ", bill.getPrice()).contains(txt)) ls.add(bill); break;
-            case 6: if(bill.getState().contains(txt)) ls.add(bill); break;
+            case 1: if(bill.getDateCreate().toString().contains(txt)) ls.add(bill); break;
+            case 2: if(String.format("%,.0fđ", bill.getPrice()).contains(txt)) ls.add(bill); break;
+            case 3: if(bill.getState().contains(txt)) ls.add(bill); break;
         }
         return ls;
     }

@@ -22,11 +22,11 @@ public class pnSell extends JPanel {
     JLabel lbInfoCustomer = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbOfferBill = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Giảm giá hóa đơn", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbNameStaff = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Tên nhân viên", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbPhoneCustomer = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Số điện thoại khách hàng", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbNameCustomer = new MyJLabel(Font.PLAIN, 14, MyColor.Black,"Họ tên khách hàng", SwingConstants.LEFT, SwingConstants.CENTER);
     JTextField tfIdBill = new MyJTextFieldInput(Font.PLAIN, 14, false);
     JTextField tfOfferBill = new MyJTextFieldInput(Font.PLAIN, 14, false);
     JTextField tfNameStaff = new MyJTextFieldInput(Font.PLAIN, 14, false);
-    JTextField tfPhoneCustomer = new MyJTextFieldInput(Font.PLAIN, 14, false);
+    JTextField tfNameCustomer = new MyJTextFieldInput(Font.PLAIN, 14, false);
 
     JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
@@ -69,8 +69,8 @@ public class pnSell extends JPanel {
         // region setBounds
         pnMain.setBounds(0,0,1170, 750);
         pnInfoCustomer.setBounds(0,0,1160, 70);
-        pnInfoBill.setBounds(480,70,680, 135);
         lbInfoCustomer.setBounds(20,20,1120, 30);
+        pnInfoBill.setBounds(480,70,680, 135);
 
         lbIdBill.setBounds(500,85,200,20);
         tfIdBill.setBounds(500,105,200,30);
@@ -82,9 +82,8 @@ public class pnSell extends JPanel {
         btnSearchOfferBill.setBounds(705, 174, 20, 20);
         btnRemoveOfferBill.setBounds(730, 174, 20, 20);
 
-
-        lbPhoneCustomer.setBounds(890,145,200,20);
-        tfPhoneCustomer.setBounds(890,165,200,30);
+        lbNameCustomer.setBounds(890,145,200,20);
+        tfNameCustomer.setBounds(890,165,200,30);
         btnSearchCustomer.setBounds(1095, 174, 20, 20);
         btnRemoveCustomer.setBounds(1120, 174, 20, 20);
 
@@ -101,9 +100,9 @@ public class pnSell extends JPanel {
         btnAddQuantity.setBounds(180, 700, 100, 30);
 
         btnDelete.setBounds(480, 650, 100, 30);
-        lbQuantityFix.setBounds(700, 650, 70, 30);
-        snQuantityFix.setBounds(770, 650, 100, 30);
-        btnEdit.setBounds(880, 650, 100, 30);
+        btnEdit.setBounds(1060, 650, 100, 30);
+        lbQuantityFix.setBounds(880,650,100,30);
+        snQuantityFix.setBounds(950,650,100,30);
 
         lbTotal.setBounds(480, 700, 80, 30);
         lbSum.setBounds(560, 700, 190, 30);
@@ -111,9 +110,7 @@ public class pnSell extends JPanel {
         btnCancel.setBounds(1060, 700, 100, 30);
         // endregion
 
-        // region setText
         tfNameStaff.setText(staffLogin.getLastName() + " " + staffLogin.getFirstName());
-        // endregion
 
         // region setEvent
         addComponentListener(new ComponentAdapter() {
@@ -225,8 +222,8 @@ public class pnSell extends JPanel {
         add(tfNameStaff);
         add(lbOfferBill);
         add(tfOfferBill);
-        add(lbPhoneCustomer);
-        add(tfPhoneCustomer);
+        add(lbNameCustomer);
+        add(tfNameCustomer);
         add(btnRefresh);
         add(cbSearch);
         add(tfSearch);
@@ -257,7 +254,7 @@ public class pnSell extends JPanel {
     }
 
     public void loadProduct(){
-        ProductBUS.getInstance().getList();
+        ProductBUS.getInstance().load();
         textProductChange();
     }
 
@@ -279,12 +276,12 @@ public class pnSell extends JPanel {
             tfIdBill.setText(billDTO.getId() + "");
             // Thông tin khách hàng
             if(billDTO.getCustomer().getId()==0){
-                tfPhoneCustomer.setText("");
+                tfNameCustomer.setText("");
                 lbInfoCustomer.setText("");
             }
             else {
                 CustomerDTO customer = billDTO.getCustomer();
-                tfPhoneCustomer.setText(customer.getPhone());
+                tfNameCustomer.setText(customer.getLastName() + " " + customer.getFirstName());
                 lbInfoCustomer.setText(String.format(
                        """
                        <html>
@@ -305,7 +302,7 @@ public class pnSell extends JPanel {
         }
         else {
             tfIdBill.setText("");
-            tfPhoneCustomer.setText("");
+            tfNameCustomer.setText("");
             tfOfferBill.setText("");
         }
     }

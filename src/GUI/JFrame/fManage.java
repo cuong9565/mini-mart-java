@@ -23,6 +23,7 @@ public class fManage extends JFrame {
     JButton btnTypeProduct = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, "Loại sản phẩm", SwingConstants.LEFT, SwingConstants.CENTER);
     JButton btnCustomer = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, "Khách hàng", SwingConstants.LEFT, SwingConstants.CENTER);
     JButton btnBill = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, "Hóa đơn", SwingConstants.LEFT, SwingConstants.CENTER);
+    JButton btnImportOrder = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, "Đơn nhập", SwingConstants.LEFT, SwingConstants.CENTER);
     JButton btnDiscount = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, "Giảm giá", SwingConstants.LEFT, SwingConstants.CENTER);
     JButton btnStaff = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White,  "Nhân viên", SwingConstants.LEFT, SwingConstants.CENTER);
     JButton btnSupplier = new MyJButton(Font.PLAIN, 14, MyColor.Black, MyColor.White, "Nhà cung cấp", SwingConstants.LEFT, SwingConstants.CENTER);
@@ -45,15 +46,16 @@ public class fManage extends JFrame {
 
         thisAccount = accountLogin;
         LoadThisAccount();
-        JButton[] lsBtn = new JButton[]{btnStatistic, btnImport, btnSell, btnProduct, btnTypeProduct, btnCustomer, btnBill, btnDiscount, btnStaff, btnSupplier};
+        JButton[] lsBtn = new JButton[]{btnStatistic, btnImport, btnSell, btnProduct, btnTypeProduct, btnCustomer, btnBill, btnImportOrder, btnDiscount, btnStaff, btnSupplier};
         JPanel[] lsPn = new JPanel[]{
                 new pnStatistic(currFrame),
-                new pnImport(),
+                new pnImport(currFrame, thisAccount),
                 new pnSell(currFrame, thisAccount),
                 new pnProduct(currFrame),
                 new pnTypeProduct(currFrame),
                 new pnCustomer(currFrame),
-                new pnBill(currFrame),
+                new pnBill(),
+                new pnImportOrder(),
                 new pnDiscount(currFrame),
                 new pnStaff(currFrame),
                 new pnSupplier(currFrame)};
@@ -67,6 +69,7 @@ public class fManage extends JFrame {
         btnTypeProduct.setMaximumSize(new Dimension(180, 30));
         btnCustomer.setMaximumSize(new Dimension(180, 30));
         btnBill.setMaximumSize(new Dimension(180, 30));
+        btnImportOrder.setMaximumSize(new Dimension(180, 30));
         btnDiscount.setMaximumSize(new Dimension(180, 30));
         btnStaff.setMaximumSize(new Dimension(180, 30));
         btnSupplier.setMaximumSize(new Dimension(180, 30));

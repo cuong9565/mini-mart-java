@@ -18,8 +18,8 @@ public class SupplierBUS {
         return instance;
     }
 
-    public List<SupplierDTO> getListSupplier() {
-        supplierList = SupplierDAO.getInstance().getListSupplier();
+    public List<SupplierDTO> load() {
+        supplierList = SupplierDAO.getInstance().load();
         return supplierList;
     }
 

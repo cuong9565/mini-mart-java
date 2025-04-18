@@ -1,9 +1,10 @@
 package GUI.JPanel;
 
-import BUS.BillBUS;
-import BUS.BillInfoBUS;
+import BUS.ImportBUS;
+import BUS.ImportInfoBUS;
 import Components.*;
-import DTO.*;
+import DTO.ImportDTO;
+import DTO.ImportInfoDTO;
 import GUI.JFrame.fManage;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.*;
 
-public class pnBill extends JPanel {
+public class pnImportOrder extends JPanel {
     JPanel pnHeader = new MyJPanel(MyColor.White);
     JPanel pnFooter = new MyJPanel(MyColor.White);
     JPanel pnFunc = new MyJPanel(MyColor.White, "Chức năng");
@@ -23,17 +24,16 @@ public class pnBill extends JPanel {
     JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Mã HĐ", "Ngày tạo", "Thành tiền", "Trạng thái"}, 12);
-    MyJTable tbBill = new MyJTable(new String[]{"Mã HĐ", "Ngày tạo", "Thành tiền", "Trạng thái"}, new int[]{100, 100, 150, 150}, new int[]{}, new int[]{});
+    MyJTable tbImport = new MyJTable(new String[]{"Mã HĐ", "Ngày tạo", "Thành tiền", "Trạng thái"}, new int[]{100, 100, 150, 150}, new int[]{}, new int[]{});
 
-    MyJTable tbBillInfo = new MyJTable(new String[]{"Mã SP", "Tên SP" , "Đơn giá", "Số lượng", "Giảm giá", "Đơn vị ", "Thành tiền"}, new int[]{50, 125, 125, 75, 75, 75, 125}, new int[]{1, 5}, new int[]{});
-    JPanel pnBill = new MyJPanel(MyColor.White, "Thông tin chi tiết hóa đơn");
+    MyJTable tbImportInfo = new MyJTable(new String[]{"Mã SP", "Tên SP" , "Đơn giá", "Số lượng", "Đơn vị ", "Thành tiền"}, new int[]{50, 150, 125, 100, 100, 125}, new int[]{1, 5}, new int[]{});
+    JPanel pnImport = new MyJPanel(MyColor.White, "Thông tin chi tiết hóa đơn");
     JLabel lbStaff = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "<html><u>Không có thông tin nhân viên</u></html>", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbCustomer = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "<html><u>Không có thông tin khách hàng</u></html>", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbOfferBill = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "<html><u>Không có thông tin giảm giá</u></html>", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbSupplier = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "<html><u>Không có thông tin nhà cung cấp</u></html>", SwingConstants.LEFT, SwingConstants.CENTER);
 
-    pnBill thisPanel = this;
+    pnImportOrder thisPanel = this;
 
-    public pnBill() {
+    public pnImportOrder() {
         setLayout(null);
         setBackground(MyColor.White);
 
@@ -48,57 +48,51 @@ public class pnBill extends JPanel {
         tfSearch.setBounds(845, 30, 200, 30);
         btnRefresh.setBounds(1055,30,100,30);
         pnFooter.setBounds(0,100,1170, 650);
-        tbBill.scrPn.setBounds(0,100,500,650);
+        tbImport.scrPn.setBounds(0,100,500,650);
 
-        pnBill.setBounds(520, 100, 650, 100);
+        pnImport.setBounds(520, 100, 650, 100);
         lbStaff.setBounds(530, 110, 630, 30);
-        lbCustomer.setBounds(530, 140, 630, 30);
-        lbOfferBill.setBounds(530, 170, 630, 30);
+        lbSupplier.setBounds(530, 140, 630, 30);
 
-        tbBillInfo.scrPn.setBounds(520, 210, 650, 540);
+        tbImportInfo.scrPn.setBounds(520, 210, 650, 540);
         // endregion
 
         // region event
         addComponentListener(new ComponentAdapter() {
-            public void componentShown(ComponentEvent e) {loadBill();}
+            public void componentShown(ComponentEvent e) {load();}
         });
-        tbBill.getSelectionModel().addListSelectionListener(_ -> {
-            int rowSelect = tbBill.getSelectedRow();
+        tbImport.getSelectionModel().addListSelectionListener(_ -> {
+            int rowSelect = tbImport.getSelectedRow();
             if(rowSelect != -1) {
-                int id = Integer.parseInt(tbBill.getFirstColumn(rowSelect));
-                BillDTO bill = BillBUS.getInstance().getBillById(id);
+                int id = Integer.parseInt(tbImport.getFirstColumn(rowSelect));
+                ImportDTO importDTO = ImportBUS.getInstance().getImportById(id);
                 lbStaff.setText(
-                        String.format("<html>Mã nhân viên: <b>%d</b> --- Tên nhân viên: <b>%s</b> --- Số điện thoại: <b>%s</b></html>", bill.getStaff().getId(), bill.getStaff().getLastName() + " " + bill.getStaff().getFirstName(), bill.getStaff().getPhone())
+                        String.format("<html>Mã nhân viên: <b>%d</b> --- Tên nhân viên: <b>%s</b> --- Số điện thoại: <b>%s</b></html>", importDTO.getStaff().getId(), importDTO.getStaff().getLastName() + " " + importDTO.getStaff().getFirstName(), importDTO.getStaff().getPhone())
                 );
-                if(bill.getCustomer().getId()!=0)
-                    lbCustomer.setText(
-                            String.format("<html>Mã khách hàng: <b>%d</b> --- Tên khách hàng: <b>%s</b> --- Số điện thoại: <b>%s</b></html>", bill.getCustomer().getId(), bill.getCustomer().getLastName() + " " + bill.getCustomer().getFirstName(), bill.getCustomer().getPhone())
+                if(importDTO.getSupplier().getId()!=0)
+                    lbSupplier.setText(
+                            String.format("<html>Mã nhà cung cấp: <b>%d</b> --- Tên nhà cung cấp: <b>%s</b> --- Số điện thoại: <b>%s</b></html>", importDTO.getSupplier().getId(), importDTO.getSupplier().getName(), importDTO.getSupplier().getPhone())
                     );
-                else lbCustomer.setText("<html><u>Không có thông tin khách hàng</u></html>");
-                if(bill.getOfferBill().getId()!=0)
-                    lbOfferBill.setText(
-                            String.format("<html>Mã giảm giá: <b>%d</b> --- Phần trăm giảm giá: <b>%s</b></html>", bill.getOfferBill().getId(), bill.getOfferBill().getDiscount() + "%")
-                    );
-                else lbOfferBill.setText("<html><u>Không có thông tin giảm giá</u></html>");
-                tbBillInfo.dftbModel.setRowCount(0);
-                for(BillInfoDTO billInfo: BillInfoBUS.getInstance().loadByIdBill(id))
-                    tbBillInfo.dftbModel.addRow(billInfo.getSellObjects());
+                else lbSupplier.setText("<html><u>Không có thông tin nhà cung cấp</u></html>");
+
+                tbImportInfo.dftbModel.setRowCount(0);
+                for(ImportInfoDTO importInfoDTO: ImportInfoBUS.getInstance().loadByIdImport(id))
+                    tbImportInfo.dftbModel.addRow(importInfoDTO.getSellObjects());
             }
             else {
                 lbStaff.setText("<html><u>Không có thông tin nhân viên</u></html>");
-                lbCustomer.setText("<html><u>Không có thông tin khách hàng</u></html>");
-                lbOfferBill.setText("<html><u>Không có thông tin giảm giá</u></html>");
-                tbBillInfo.dftbModel.setRowCount(0);
+                lbSupplier.setText("<html><u>Không có thông tin nhà cung cấp</u></html>");
+                tbImportInfo.dftbModel.setRowCount(0);
             }
         });
         btnDelete.addActionListener(_ -> {
-            int i = tbBill.getSelectedRow();
+            int i = tbImport.getSelectedRow();
             if(i>=0){
-                int id = Integer.parseInt(tbBill.getFirstColumn(i));
+                int id = Integer.parseInt(tbImport.getFirstColumn(i));
                 try {
-                    BillBUS.getInstance().delete(id);
+                    ImportBUS.getInstance().delete(id);
                     JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    loadBill();
+                    load();
                 }
                 catch (Exception e){
                     JOptionPane.showMessageDialog(thisPanel, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -107,7 +101,7 @@ public class pnBill extends JPanel {
             else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xóa", "Lỗi", JOptionPane.ERROR_MESSAGE);
         });
         btnDetail.addActionListener(_ -> {
-            int i = tbBill.getSelectedRow();
+            int i = tbImport.getSelectedRow();
             if(i>=0){
                 JOptionPane.showMessageDialog(thisPanel, "Tạo PDF đi!!!");
             }
@@ -116,9 +110,9 @@ public class pnBill extends JPanel {
         btnRefresh.addActionListener(_ -> {
             tfSearch.setText("");
             cbSearch.setSelectedIndex(0);
-            loadBill();
+            load();
         });
-        btnOut.addActionListener(_ -> tbBill.ExportExel("Danh sách hóa đơn"));
+        btnOut.addActionListener(_ -> tbImport.ExportExel("Danh sách đơn nhập hàng"));
         cbSearch.addActionListener(_ -> textChange());
         tfSearch.addFocusListener(new FocusAdapter() {
             public void focusGained(FocusEvent e) {textChange();}
@@ -131,9 +125,8 @@ public class pnBill extends JPanel {
         // endregion
 
         // region add
-        add(lbCustomer);
+        add(lbSupplier);
         add(lbStaff);
-        add(lbOfferBill);
         add(btnDelete);
         add(btnOut);
         add(btnDetail);
@@ -143,23 +136,23 @@ public class pnBill extends JPanel {
         add(tfSearch);
         add(pnSearch);
         add(pnHeader);
-        add(tbBillInfo.scrPn);
-        add(tbBill.scrPn);
-        add(pnBill);
+        add(tbImportInfo.scrPn);
+        add(tbImport.scrPn);
+        add(pnImport);
         add(pnFooter);
         // endregion
     }
 
-    public void loadBill()  {
-        BillBUS.getInstance().load();
+    public void load()  {
+        ImportBUS.getInstance().load();
         textChange();
     }
 
     public void textChange(){
-        tbBill.dftbModel.setRowCount(0);
+        tbImport.dftbModel.setRowCount(0);
         int col = cbSearch.getSelectedIndex();
         String txt = tfSearch.getText();
-        for(BillDTO bill: BillBUS.getInstance().search(col, txt))
-            tbBill.dftbModel.addRow(bill.getRowObjects());
+        for(ImportDTO bill: ImportBUS.getInstance().search(col, txt))
+            tbImport.dftbModel.addRow(bill.getRowObjects());
     }
 }

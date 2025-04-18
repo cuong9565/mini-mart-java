@@ -16,8 +16,6 @@ public class dlImportDetail extends JDialog {
     JLabel lbHeader = new MyJLabel(Font.BOLD, 24, MyColor.White, "Danh sách đơn nhập hàng", SwingConstants.CENTER, SwingConstants.CENTER);
     MyJTable tbImportOrders = new MyJTable(new String[]{"Mã phiếu nhập", "Nhân viên", "Nhà cung cấp", "Ngày tạo", "Tổng tiền", "Chi tiết"}, new int[]{20, 100, 60, 300}, new int[]{1, 3, 4}, new int[]{});
 
-    private final ImportDAO importDAO = ImportDAO.getInstance();
-
     public dlImportDetail(fManage parentFrame, pnImport parentPanel) {
         super(parentFrame, true);
         setTitle("Xem danh sách nhập hàng");

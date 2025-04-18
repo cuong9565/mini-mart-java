@@ -76,43 +76,34 @@ public class dlAddProduct extends JDialog {
         lbHeader.setBounds(0,0,760,60);
         // endregion
         // region Event
-       cbDiscount.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int i = cbDiscount.getSelectedIndex();
-                if(i!=posCbDiscount) {
-                    posCbDiscount = i;
-                    cbOffer.removeAllItems();
-                    for(OfferDTO offer: OfferBUS.getInstance().getListByOfferProduct((OfferProductDTO) cbDiscount.getSelectedItem()))
-                        cbOffer.addItem(offer);
-                }
-            }
+        cbDiscount.addActionListener(_ -> {
+           int i = cbDiscount.getSelectedIndex();
+           if(i!=posCbDiscount) {
+               posCbDiscount = i;
+               cbOffer.removeAllItems();
+               for(OfferDTO offer: OfferBUS.getInstance().getListByOfferProduct((OfferProductDTO) cbDiscount.getSelectedItem()))
+                   cbOffer.addItem(offer);
+           }
         });
-        btnEsc.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dialog.dispose();
-            }
-        });
-        btnSave.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                TypeProductDTO typeSelected = (TypeProductDTO) cbType.getSelectedItem();
-                OfferProductDTO offerProductSelected = (OfferProductDTO) cbDiscount.getSelectedItem();
-                OfferDTO offerSelected = (OfferDTO) cbOffer.getSelectedItem();
+        btnEsc.addActionListener(_ -> dialog.dispose());
+        btnSave.addActionListener(_ -> {
+            TypeProductDTO typeSelected = (TypeProductDTO) cbType.getSelectedItem();
+            OfferProductDTO offerProductSelected = (OfferProductDTO) cbDiscount.getSelectedItem();
+            OfferDTO offerSelected = (OfferDTO) cbOffer.getSelectedItem();
 
-                int idProductType = typeSelected.getId();
-                String detail = taDetail.getText();
-                int idOfferProduct = (offerProductSelected.getId()==0?0:OfferProductBUS.getInstance().getIdBy(offerProductSelected.getDiscount(), offerSelected.getId()));
-                String name = tfName.getText();
-                double price = Double.parseDouble(snPrice.getValue().toString());
-                String unit = tfUnit.getText();
-                int quantity = 0;
-                if(ProductBUS.getInstance().add(idProductType, detail, idOfferProduct, name, price, unit, quantity)){
-                    JOptionPane.showMessageDialog(dialog, "Thêm thông tin sản phẩm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    parentPanel.loadProduct();
-                    dispose();
-                }
-                else JOptionPane.showMessageDialog(dialog, "Lỗi: " + ProductBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
+            int idProductType = typeSelected.getId();
+            String detail = taDetail.getText();
+            int idOfferProduct = (offerProductSelected.getId()==0?0:OfferProductBUS.getInstance().getIdBy(offerProductSelected.getDiscount(), offerSelected.getId()));
+            String name = tfName.getText();
+            double price = Double.parseDouble(snPrice.getValue().toString());
+            String unit = tfUnit.getText();
+            int quantity = 0;
+            if(ProductBUS.getInstance().add(idProductType, detail, idOfferProduct, name, price, unit, quantity)){
+                JOptionPane.showMessageDialog(dialog, "Thêm thông tin sản phẩm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                parentPanel.loadProduct();
+                dispose();
             }
+            else JOptionPane.showMessageDialog(dialog, "Lỗi: " + ProductBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
         });
         // endregion
         // region ADD

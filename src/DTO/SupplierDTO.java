@@ -42,4 +42,9 @@ public class SupplierDTO {
     public Object[] getObjects() {
         return new Object[]{id, name, phone, address, email};
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

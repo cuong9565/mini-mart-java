@@ -56,9 +56,6 @@ public class BillDTO {
     public Object[] getRowObjects(){
         return new Object[]{
                 id,
-                staff.getLastName() + " " + staff.getFirstName(),
-                offerBill.getDiscount() + "%",
-                (customer.getId()==0?"":customer.getLastName() + " " + customer.getFirstName()),
                 dateCreate.toString(),
                 String.format("%,.0fđ", price),
                 state,

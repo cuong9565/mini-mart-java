@@ -1,52 +1,59 @@
 package DTO;
 
+import Components.MyDate;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 
 public class ImportDTO {
-    private int idImport, idStaff, idSupplier;
-    private double total;
-    private Timestamp date;
+    private int id = 0;
+    private StaffDTO staff = new StaffDTO();
+    private SupplierDTO customer = new SupplierDTO();
+    private MyDate dateCreate = new MyDate();
+    private double price = 0;
+    private String state = "";
 
     public ImportDTO() {}
-
-    public ImportDTO(Object[] obj) {
-        this.idImport = (int) obj[0];
-        this.idStaff = (int) obj[1];
-        this.idSupplier =  (int) obj[2];
-        this.total = (double) obj[3];
-        this.date = (Timestamp) obj[4];
+    public ImportDTO(int id, StaffDTO staff, SupplierDTO customer, MyDate dateCreate, double price, String state) {
+        this.id = id;
+        this.staff = staff;
+        this.customer = customer;
+        this.dateCreate = dateCreate;
+        this.price = price;
+        this.state = state;
     }
-    public ImportDTO(ResultSet rs) {
+    public ImportDTO(ResultSet rs){
         try {
-            this.idImport = Integer.parseInt(rs.getString("id"));
-            this.idStaff= Integer.parseInt(rs.getString("idStaff"));
-            this.idSupplier = Integer.parseInt(rs.getString("idProvider"));
-            this.total = Integer.parseInt(rs.getString("total"));
-            this.date = Timestamp.valueOf(rs.getString("date"));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            id = rs.getInt("importorder.id");
+            dateCreate = new MyDate(rs.getDate("importorder.dateCreate"));
+            price = rs.getDouble("importorder.total");
+            state = rs.getString("importorder.state");
+            staff = new StaffDTO(rs);
+            customer = new SupplierDTO(rs);
+        }
+        catch(Exception e){
+            System.out.println("Lỗi constructor ResultSet của ImportDTO: " + e.getMessage());
         }
     }
 
-    public ImportDTO(int idImport, int idStaff, int idSupplier, double total, Timestamp date) {
-        this.idImport = idImport;
-        this.idStaff = idStaff;
-        this.idSupplier = idSupplier;
-        this.total = total;
-        this.date = date;
-    }
+    public int getId() {return id;}
+    public StaffDTO getStaff() {return staff;}
+    public SupplierDTO getSupplier() {return customer;}
+    public MyDate getDateCreate() {return dateCreate;}
+    public double getPrice() {return price;}
+    public String getState() {return state;}
 
-    public int getIdImport() {return idImport;}
-    public void setIdImport(int idImport) {this.idImport = idImport;}
-    public int getIdStaff() {return idStaff;}
-    public void setIdStaff(int idStaff) {this.idStaff = idStaff;}
-    public int getIdSupplier() {return idSupplier;}
-    public void setIdSupplier(int idSupplier) {this.idSupplier = idSupplier;}
-    public double getTotal() {return total;}
-    public void setTotal(double total) {this.total = total;}
-    public Timestamp getDate() {return date;}
-    public void setDate(Timestamp date) {this.date = date;}
-    public Object[] getObjects() {return new Object[]{idImport,idStaff,idSupplier,date,total};} //co the bi loi
+    public void setId(int id) {this.id = id;}
+    public void setStaff(StaffDTO staff) {this.staff = staff;}
+    public void setSupplier(SupplierDTO customer) {this.customer = customer;}
+    public void setDateCreate(MyDate dateCreate) {this.dateCreate = dateCreate;}
+    public void setPrice(double price) {this.price = price;}
+    public void setState(String state) {this.state = state;}
+
+    public Object[] getRowObjects(){
+        return new Object[]{
+                id,
+                dateCreate.toString(),
+                String.format("%,.0fđ", price),
+                state
+        };
+    }
 }

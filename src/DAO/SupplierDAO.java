@@ -16,7 +16,7 @@ public class SupplierDAO {
         return instance;
     }
 
-    public List<SupplierDTO> getListSupplier() {
+    public List<SupplierDTO> load() {
         List<SupplierDTO>list = new ArrayList<>();
         String sql = "select * from provider";
         Connection con = DataProvider.getInstance().getConnection();

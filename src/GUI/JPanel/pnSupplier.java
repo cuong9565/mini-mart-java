@@ -156,7 +156,7 @@ public class pnSupplier extends JPanel {
 
     public void loadSupplier()  {
         tbSupplier.dftbModel.setRowCount(0);
-        for(SupplierDTO supplier: SupplierBUS.getInstance().getListSupplier())
+        for(SupplierDTO supplier: SupplierBUS.getInstance().load())
             tbSupplier.dftbModel.addRow(supplier.getObjects());
         textChange();
     }

@@ -1,6 +1,7 @@
 package DAO;
 
-import DTO.*;
+import DTO.ImportDTO;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,136 +9,123 @@ import java.util.List;
 public class ImportDAO {
     private static ImportDAO instance = null;
 
-    public ImportDAO() {}
+    private ImportDAO() {}
     public static ImportDAO getInstance() {
         if (instance == null) instance = new ImportDAO();
         return instance;
     }
 
-
-    public List<ImportDTO> getListImport() {
-        List<ImportDTO> list = new ArrayList<ImportDTO>();
-        String sql = "select * from ImportOrder";
+    public ImportDTO getImportById(int id){
+        ImportDTO importDTO = new ImportDTO();
         Connection con = DataProvider.getInstance().getConnection();
-
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
+        String sql =
+                "select * " +
+                "from importorder " +
+                "left join staff on importorder.idStaff = staff.id " +
+                "left join provider on importorder.idProvider = provider.id " +
+                "where importorder.id = ?";;
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) list.add(new ImportDTO(rs));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            if (rs.next()) return new ImportDTO(rs);
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
         }
         DataProvider.getInstance().CloseConnection(con);
-        return list;
+        return importDTO;
     }
 
-    public List<ImportDTO> getListImportBy(String whr, String str) {
+    public List<ImportDTO>load(){
         List<ImportDTO> list = new ArrayList<>();
-        String sql = String.format("select * form importorder where %s like ?", whr);
         Connection con = DataProvider.getInstance().getConnection();
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, "%" + str + "%");
+        String sql =
+                "select * " +
+                "from importorder " +
+                "left join staff on importorder.idStaff = staff.id " +
+                "left join provider on importorder.idProvider = provider.id " +
+                "order by importorder.id";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) list.add(new ImportDTO(rs));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        }
+        catch (Exception e) {
+            System.out.println("Lỗi hàm load ImportDAO " + e.getMessage());
         }
         DataProvider.getInstance().CloseConnection(con);
         return list;
     }
 
-    public boolean addImport(ImportDTO imp) throws Exception {
-        String sql = "INSERT INTO ImportOrder(idStaff, idProvider, dateCreate, total) VALUES(?, ?, ?, ?)";
+    public void delete(int id){
+        String sql = "delete from importorder where id = ?";
         Connection con = DataProvider.getInstance().getConnection();
-        try {
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, imp.getIdStaff());
-            ps.setInt(2, imp.getIdSupplier());
-            ps.setTimestamp(3, imp.getDate());
-            ps.setDouble(4, imp.getTotal());
-            int res = ps.executeUpdate();
-            if (res > 0) {
-                ResultSet rs = ps.getGeneratedKeys();
-                if (rs.next()) {
-                    imp.setIdImport(rs.getInt(1)); // Lấy ID tự động sinh
-                }
-                return true;
-            }
-            return false;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            DataProvider.getInstance().CloseConnection(con);
+        try (PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setInt(1, id);
+            ps.executeUpdate();
         }
-    }
-
-    public int addImports(List<ImportDTO> listImport) {
-        int res = 0, pos = 1;
-        String sql = "insert into ImportOrder(id, idStaff, idProvider, dateCreate, total) values(?, ?, ?, ?, ?)";
-        for(int i=1; i<listImport.size(); i++) sql += ",(?,?,?,?,?)";
-        Connection con = DataProvider.getInstance().getConnection();
-        try{
-            PreparedStatement ps = con.prepareStatement(sql);
-            for(ImportDTO imp: listImport) {
-                ps.setInt(pos, imp.getIdImport());
-                ps.setInt(pos, imp.getIdStaff());
-                ps.setInt(pos, imp.getIdSupplier());
-                ps.setTimestamp(pos, imp.getDate());
-                ps.setDouble(pos, imp.getTotal());
-            }
-            res = ps.executeUpdate();
-        }catch (Exception e) {
-            throw new RuntimeException(e);
+        catch (Exception e){
+            throw new RuntimeException(e.getMessage());
         }
         DataProvider.getInstance().CloseConnection(con);
-        return res;
     }
 
-    public boolean editImport(ImportDTO imp) throws Exception {
-        int res = 0;
-        String sql = "update ImportOrder set idStaff = ?, idProvider = ?, dateCreate = ?, total = ? where id = ?";
-        try {
-            Connection con = DataProvider.getInstance().getConnection();
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, imp.getIdImport());
-            ps.setInt(2, imp.getIdStaff());
-            ps.setInt(3, imp.getIdSupplier());
-            ps.setTimestamp(4, imp.getDate());
-            ps.setDouble(5, imp.getTotal());
-            res = ps.executeUpdate();
-            DataProvider.getInstance().CloseConnection(con);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        if (res > 0)
-            return true;
-        else {
-            throw new Exception("Không thể thay đổi thông tin!");
-        }
-    }
-
-
-
-    public boolean deleteImport(ImportDTO imp) throws Exception {
-        int res = 0;
-        String sql = "delete from ImportOrder where id = ?";
-        try {
-            Connection con = DataProvider.getInstance().getConnection();
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1,imp.getIdImport());
-            res = ps.executeUpdate();
-            DataProvider.getInstance().CloseConnection(con);
-        } catch (Exception e) {
-            throw new Exception("Loi SQl: " + e.getMessage());
-        }
-        if(res>0) return true;
-        else throw new Exception("Không thể xóa");
-    }
-
-
+//    public void addImport(int idStaff){
+//        String sql = "insert into bill( idStaff, dateCreate ) values( ?, ? )";
+//        Connection con = DataProvider.getInstance().getConnection();
+//
+//        try (PreparedStatement ps = con.prepareStatement(sql)){
+//            ps.setInt(1, idStaff);
+//            ps.setDate(2, new java.sql.Date(System.currentTimeMillis()));
+//            ps.executeUpdate();
+//        }
+//        catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        DataProvider.getInstance().CloseConnection(con);
+//    }
+//
+//
+//    public void updateIdCustomer(int idImport, int idCustomer){
+//        String sql = "update bill set idCustomer = ? where id = ?";
+//        Connection con = DataProvider.getInstance().getConnection();
+//        try(PreparedStatement ps = con.prepareStatement(sql)){
+//            if(idCustomer==0) ps.setNull(1, Types.INTEGER);
+//            else ps.setInt(1, idCustomer);
+//            ps.setInt(2, idImport);
+//            ps.executeUpdate();
+//        }
+//        catch (Exception e){
+//            throw new RuntimeException(e.getMessage());
+//        }
+//    }
+//
+//    public void updateIdOfferImport(int idImport, int idOfferImport){
+//        String sql = "update bill set idOfferImport = ? where id = ?";
+//        Connection con = DataProvider.getInstance().getConnection();
+//        try(PreparedStatement ps = con.prepareStatement(sql)){
+//            if(idOfferImport==0) ps.setNull(1, Types.INTEGER);
+//            else ps.setInt(1, idOfferImport);
+//            ps.setInt(2, idImport);
+//            ps.executeUpdate();
+//        }
+//        catch (Exception e){
+//            throw new RuntimeException(e.getMessage());
+//        }
+//    }
+//
+//    public void Pay(int idImport, double price){
+//        String sql = "update bill set price = ?, state = ? where id = ?";
+//        Connection con = DataProvider.getInstance().getConnection();
+//        try (PreparedStatement ps = con.prepareStatement(sql)){
+//            ps.setDouble(1, price);
+//            ps.setString(2, "Đã thanh toán");
+//            ps.setInt(3, idImport);
+//            ps.executeUpdate();
+//        }
+//        catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//        DataProvider.getInstance().CloseConnection(con);
+//    }
 }
-
-
-
-

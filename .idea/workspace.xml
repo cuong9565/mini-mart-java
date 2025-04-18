@@ -4,38 +4,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong thu nho dialog">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong statistics customer">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d6403069-beff-4c3d-88b1-ee3a1ae2d5ed.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d6403069-beff-4c3d-88b1-ee3a1ae2d5ed.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/OfferBillBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/OfferBillBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/OfferProductBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/OfferProductBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/BillBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/BillBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/ImportBUS.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BUS/ProductBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/ProductBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddOfferBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddOfferBill.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddOfferProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddOfferProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/SupplierBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/SupplierBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/ImportDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/ImportDtlDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/SupplierDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/SupplierDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/BillDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/BillDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/ImportDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/ImportDtlDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/SupplierDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/SupplierDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddProduct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddoffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddoffer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditOfferBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditOfferBill.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditOfferProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditOfferProduct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditProduct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditStaff.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditStaff.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditSupplier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditTypeProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditTypeProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlDetailBill.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlImportDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlImportDetail.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlSearchCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlSearchCustomer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlSearchOfferBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlSearchOfferBill.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlSettingAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlSettingAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JFrame/fLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JFrame/fLogin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/JFrame/fManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JFrame/fManage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnBill.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnChangeInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnChangeInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnChangePassword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnChangePassword.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnImport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnImport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnOffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnOffer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnOfferBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnOfferBill.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnOfferProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnOfferProduct.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnSell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnSell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnSupplier.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -224,15 +217,12 @@
       <workItem from="1744762643465" duration="1845000" />
       <workItem from="1744766031344" duration="7531000" />
       <workItem from="1744807796691" duration="4510000" />
-      <workItem from="1744849282399" duration="19275000" />
-    </task>
-    <task id="LOCAL-00024" summary="Cuong update">
-      <option name="closed" value="true" />
-      <created>1742394166352</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1742394166352</updated>
+      <workItem from="1744849282399" duration="19495000" />
+      <workItem from="1744893388405" duration="4621000" />
+      <workItem from="1744899822268" duration="3327000" />
+      <workItem from="1744970921507" duration="2777000" />
+      <workItem from="1744978397271" duration="6191000" />
+      <workItem from="1744988404714" duration="6544000" />
     </task>
     <task id="LOCAL-00025" summary="Cuong update">
       <option name="closed" value="true" />
@@ -618,7 +608,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744812316842</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="Cuong update statistics">
+      <option name="closed" value="true" />
+      <created>1744869240368</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1744869240369</updated>
+    </task>
+    <option name="localTasksCounter" value="74" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -636,7 +634,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Cuong update Login Form" />
     <MESSAGE value="Cuong update Manager Form" />
     <MESSAGE value="Cuong update Setting Account Panel" />
     <MESSAGE value="Cuong update Color + SettingAccountFrame" />
@@ -661,6 +658,7 @@
     <MESSAGE value="Cuong push" />
     <MESSAGE value="Cuong pnBill" />
     <MESSAGE value="Cuong thu nho dialog" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cuong thu nho dialog" />
+    <MESSAGE value="Cuong update statistics" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cuong update statistics" />
   </component>
 </project>
