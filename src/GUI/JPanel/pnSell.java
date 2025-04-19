@@ -303,6 +303,7 @@ public class pnSell extends JPanel {
         else {
             tfIdBill.setText("");
             tfNameCustomer.setText("");
+            lbInfoCustomer.setText("");
             tfOfferBill.setText("");
         }
     }

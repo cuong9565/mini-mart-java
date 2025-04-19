@@ -38,6 +38,43 @@ public class ImportInfoDAO {
         return list;
     }
 
+    public void insert(ImportInfoDTO importInfo) {
+        String sql = "insert into importorderdetail(idImportOrder, idProduct, price, quantity, unit, nameProduct) values(?, ?, ?, ?, ?, ?)";
+        Connection con = DataProvider.getInstance().getConnection();
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, importInfo.getIdImport());
+            ps.setInt(2, importInfo.getIdProduct());
+            ps.setDouble(3, importInfo.getPrice());
+            ps.setInt(4, importInfo.getQuantity());
+            ps.setString(5, importInfo.getUnit());
+            ps.setString(6, importInfo.getNameProduct());
+            ps.executeUpdate();
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        DataProvider.getInstance().CloseConnection(con);
+    }
+
+    public void update(ImportInfoDTO importInfo) {
+        String sql = "update importorderdetail set idImportOrder = ?, idProduct = ?, price = ?, quantity = ?, unit = ?, nameProduct = ? where id = ?";
+        Connection con = DataProvider.getInstance().getConnection();
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, importInfo.getIdImport());
+            ps.setInt(2, importInfo.getIdProduct());
+            ps.setDouble(3, importInfo.getPrice());
+            ps.setInt(4, importInfo.getQuantity());
+            ps.setString(5, importInfo.getUnit());
+            ps.setString(6, importInfo.getNameProduct());
+            ps.setInt(7, importInfo.getId());
+            ps.executeUpdate();
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        DataProvider.getInstance().CloseConnection(con);
+    }
+
     public void deleteByIdImport(int idImport){
         String sql = "delete from importorderdetail where idImportOrder = ?";
         Connection con = DataProvider.getInstance().getConnection();
@@ -51,66 +88,18 @@ public class ImportInfoDAO {
         DataProvider.getInstance().CloseConnection(con);
     }
 
+    public void delete(int idImport, int idProduct) {
+        String sql = "delete from importorderdetail where idImportOrder = ? and idProduct = ?";
+        Connection con = DataProvider.getInstance().getConnection();
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idImport);
+            ps.setInt(2, idProduct);
+            ps.executeUpdate();
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        DataProvider.getInstance().CloseConnection(con);
+    }
 
-//    public boolean insert(ImportInfoDTO billInfo) {
-//        int res = 0;
-//        String sql = "insert into billinfo(idImport, idProduct, price, quantity, discount, total, unit, nameProduct) values(?, ?, ?, ?, ?, ?, ?, ?)";
-//        Connection con = DataProvider.getInstance().getConnection();
-//        try (PreparedStatement ps = con.prepareStatement(sql)) {
-//            ps.setInt(1, billInfo.getIdImport());
-//            ps.setInt(2, billInfo.getIdProduct());
-//            ps.setDouble(3, billInfo.getPrice());
-//            ps.setInt(4, billInfo.getQuantity());
-//            ps.setDouble(5, billInfo.getDiscount());
-//            ps.setDouble(6, billInfo.getTotal());
-//            ps.setString(7, billInfo.getUnit());
-//            ps.setString(8, billInfo.getNameProduct());
-//            res = ps.executeUpdate();
-//        }
-//        catch (Exception e) {
-//            throw new RuntimeException(e.getMessage());
-//        }
-//        DataProvider.getInstance().CloseConnection(con);
-//        return res>0;
-//    }
-//
-//    public boolean update(ImportInfoDTO billInfo) {
-//        int res = 0;
-//        String sql = "update billinfo set idImport = ?, idProduct = ?, price = ?, quantity = ?, discount = ?, total = ?, unit = ?, nameProduct = ? where id = ?";
-//        Connection con = DataProvider.getInstance().getConnection();
-//        try (PreparedStatement ps = con.prepareStatement(sql)) {
-//            ps.setInt(1, billInfo.getIdImport());
-//            ps.setInt(2, billInfo.getIdProduct());
-//            ps.setDouble(3, billInfo.getPrice());
-//            ps.setInt(4, billInfo.getQuantity());
-//            ps.setDouble(5, billInfo.getDiscount());
-//            ps.setDouble(6, billInfo.getTotal());
-//            ps.setString(7, billInfo.getUnit());
-//            ps.setString(8, billInfo.getNameProduct());
-//            ps.setInt(9, billInfo.getId());
-//            res = ps.executeUpdate();
-//        }
-//        catch (Exception e) {
-//            throw new RuntimeException(e.getMessage());
-//        }
-//        DataProvider.getInstance().CloseConnection(con);
-//        return res>0;
-//    }
-//
-//    public boolean delete(int idImport, int idProduct) {
-//        int res = 0;
-//        String sql = "delete from billinfo where idImport = ? and idProduct = ?";
-//        Connection con = DataProvider.getInstance().getConnection();
-//        try (PreparedStatement ps = con.prepareStatement(sql)) {
-//            ps.setInt(1, idImport);
-//            ps.setInt(2, idProduct);
-//            res = ps.executeUpdate();
-//        }
-//        catch (Exception e) {
-//            throw new RuntimeException(e.getMessage());
-//        }
-//        DataProvider.getInstance().CloseConnection(con);
-//        return res>0;
-//    }
-//
 }

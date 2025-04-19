@@ -29,6 +29,10 @@ public class ImportBUS {
         return ImportDAO.getInstance().getImportById(id);
     }
 
+    public ImportDTO getImportNotPaidByIdStaff(int idStaff){
+        return ImportDAO.getInstance().getImportNotPaidByIdStaff(idStaff);
+    }
+
     public List<ImportDTO> search(int col, String txt){
         List<ImportDTO> ls = new ArrayList<>();
         for (ImportDTO importDTO : list) switch (col) {
@@ -38,6 +42,24 @@ public class ImportBUS {
             case 3: if(importDTO.getState().contains(txt)) ls.add(importDTO); break;
         }
         return ls;
+    }
+
+    public void addImportByIdStaff(int idStaff){
+        try {
+            ImportDAO.getInstance().addImportByIdStaff(idStaff);
+        }
+        catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public void updateIdSupplier(int idImport, int idSupplier){
+        try {
+            ImportDAO.getInstance().updateIdSupplier(idImport, idSupplier);
+        }
+        catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     public void delete(int id){
@@ -50,75 +72,16 @@ public class ImportBUS {
         }
     }
 
-//    public ImportDTO getImportById(int id){
-//        for (ImportDTO billDTO : load()) {
-//            if(billDTO.getId() == id) return billDTO;
-//        }
-//        return new ImportDTO();
-//    }
-//
-//
-//    public ImportDTO getImportNotPaid(int idStaff){
-//        for (ImportDTO bill : load())
-//            if(bill.getStaff().getId() == idStaff && bill.getState().equals("Chưa thanh toán"))
-//                return bill;
-//        return new ImportDTO();
-//    }
-//
-//    public void addImport(int idStaff){
-//        if(getImportNotPaid(idStaff).getId()!=0) return; // Đã có Import trong danh sách
-//
-//        try {ImportDAO.getInstance().addImport(idStaff);}
-//        catch (Exception e) {
-//            throw new RuntimeException(e.getMessage());
-//        }
-//    }
-//
-//    public void updateIdCustomer(int idImport, int idCustomer){
-//        try {
-//            ImportDAO.getInstance().updateIdCustomer(idImport, idCustomer);
-//        }
-//        catch (Exception e) {
-//            throw new RuntimeException(e.getMessage());
-//        }
-//    }
-//
-//    public void updateIdOfferImport(int idImport, int idOfferImport){
-//        try {
-//            ImportDAO.getInstance().updateIdOfferImport(idImport, idOfferImport);
-//        }
-//        catch (Exception e) {
-//            throw new RuntimeException(e.getMessage());
-//        }
-//    }
-//
-//    public void Cancel(int idImport){
-//        try{
-//            ImportInfoDAO.getInstance().deleteByIdImport(idImport);
-//            ImportDAO.getInstance().delete(idImport);
-//        }
-//        catch (Exception e) {
-//            throw new RuntimeException(e.getMessage());
-//        }
-//    }
-//
-//
-//    public void Pay(int idImport, double price){
-//        try{
-//            ImportDAO.getInstance().Pay(idImport, price);
-//        }
-//        catch (Exception e) {
-//            throw new RuntimeException(e.getMessage());
-//        }
-//
-//        try{
-//            for(ImportInfoDTO billInfoS : ImportInfoBUS.getInstance().loadByIdImport(idImport)){
-//                ProductDTO product = ProductDAO.getInstance().getItemById(billInfoS.getIdProduct());
-//                ProductDAO.getInstance().updateQuantity(product.getId(), product.getQuantity() - billInfoS.getQuantity());
-//            }
-//        }
-//        catch (Exception e) {
-//            throw new RuntimeException(e.getMessage());
-//        }
-//    }
+    public void Pay(int idImport, double price){
+        try{
+            ImportDAO.getInstance().Pay(idImport, price);
+            for(ImportInfoDTO importDTO : ImportInfoBUS.getInstance().loadByIdImport(idImport)){
+                ProductDTO product = ProductDAO.getInstance().getItemById(importDTO.getIdProduct());
+                ProductDAO.getInstance().updateQuantity(product.getId(), product.getQuantity() + importDTO.getQuantity());
+            }
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }

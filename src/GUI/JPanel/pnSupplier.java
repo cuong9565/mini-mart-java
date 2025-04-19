@@ -59,74 +59,50 @@ public class pnSupplier extends JPanel {
         });
         // endregion
         // region EVENT
-        btnAdd.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new dlAddSupplier(frame, thisPanel);
+        btnAdd.addActionListener(_ -> new dlAddSupplier(frame, thisPanel));
+        btnEdit.addActionListener(_ -> {
+            int i = tbSupplier.getSelectedRow();
+            if (i >=0){
+                int id = Integer.parseInt(tbSupplier.getFirstColumn(i));
+                SupplierDTO supplier = SupplierBUS.getInstance().getSupplierById(id);
+                new dlEditSupplier(frame, thisPanel, supplier);
             }
+            else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần sửa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
         });
-        btnEdit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int i = tbSupplier.getSelectedRow();
-                if (i >=0){
-                    int id = Integer.parseInt(tbSupplier.getFirstColumn(i));
-                    SupplierDTO supplier = SupplierBUS.getInstance().getSupplierById(id);
-                    new dlEditSupplier(frame, thisPanel, supplier);
-                }
-                else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần sửa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-        btnDelete.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int i = tbSupplier.getSelectedRow();
-                if (i >=0){
-                    int id = Integer.parseInt(tbSupplier.getFirstColumn(i));
-                    SupplierDTO supplierNew = SupplierBUS.getInstance().getSupplierById(id);
-                    if(SupplierBUS.getInstance().deleteSupplier(supplierNew)){
-                        JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                        loadSupplier();
-                    }
-                    else JOptionPane.showMessageDialog(thisPanel, SupplierBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
-                }
-                else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xóa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-        btnRefresh.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tfSearch.setText("");
-                cbSearch.setSelectedIndex(0);
-                loadSupplier();
-            }
-        });
-        btnIn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                List<Object[]> list = tbSupplier.ImportExel(4);
-                if(list==null) return;
-                List<SupplierDTO> suppliers = new ArrayList<>();
-                for (Object[] ob : list)
-                    suppliers.add(new SupplierDTO(-1, ob[0].toString(), ob[1].toString(), ob[2].toString(), ob[3].toString()));
-                if(SupplierBUS.getInstance().addSuppliers(suppliers)){
-                    JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + SupplierBUS.getInstance().getNumLine() + " nhà cung cấp");
+        btnDelete.addActionListener(_ -> {
+            int i = tbSupplier.getSelectedRow();
+            if (i >=0){
+                int id = Integer.parseInt(tbSupplier.getFirstColumn(i));
+                SupplierDTO supplierNew = SupplierBUS.getInstance().getSupplierById(id);
+                if(SupplierBUS.getInstance().deleteSupplier(supplierNew)){
+                    JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     loadSupplier();
                 }
-                else {
-                    JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + SupplierBUS.getInstance().getError());
-                }
+                else JOptionPane.showMessageDialog(thisPanel, SupplierBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
+            }
+            else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xóa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+        });
+        btnRefresh.addActionListener(_ -> {
+            tfSearch.setText("");
+            cbSearch.setSelectedIndex(0);
+            loadSupplier();
+        });
+        btnIn.addActionListener(_ -> {
+            List<Object[]> list = tbSupplier.ImportExel(4);
+            if(list==null) return;
+            List<SupplierDTO> suppliers = new ArrayList<>();
+            for (Object[] ob : list)
+                suppliers.add(new SupplierDTO(-1, ob[0].toString(), ob[1].toString(), ob[2].toString(), ob[3].toString()));
+            if(SupplierBUS.getInstance().addSuppliers(suppliers)){
+                JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + SupplierBUS.getInstance().getNumLine() + " nhà cung cấp");
+                loadSupplier();
+            }
+            else {
+                JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + SupplierBUS.getInstance().getError());
             }
         });
-        btnOut.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tbSupplier.ExportExel("Danh sách nhà cung cấp");
-            }
-        });
-        cbSearch.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {textChange();}
-        });
+        btnOut.addActionListener(_ -> tbSupplier.ExportExel("Danh sách nhà cung cấp"));
+        cbSearch.addActionListener(_ -> textChange());
         tfSearch.addFocusListener(new FocusAdapter() {
             public void focusGained(FocusEvent e) {textChange();}
         });

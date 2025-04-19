@@ -1,5 +1,6 @@
 package DAO;
 
+import Components.MyDate;
 import DTO.ImportDTO;
 
 import java.sql.*;
@@ -23,11 +24,32 @@ public class ImportDAO {
                 "from importorder " +
                 "left join staff on importorder.idStaff = staff.id " +
                 "left join provider on importorder.idProvider = provider.id " +
-                "where importorder.id = ?";;
+                "where importorder.id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) return new ImportDTO(rs);
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return importDTO;
+    }
+
+    public ImportDTO getImportNotPaidByIdStaff(int idStaff){
+        ImportDTO importDTO = new ImportDTO();
+        Connection con = DataProvider.getInstance().getConnection();
+        String sql =
+                "select * " +
+                "from importorder " +
+                "left join staff on importorder.idStaff = staff.id " +
+                "left join provider on importorder.idProvider = provider.id " +
+                "where importorder.idStaff = ? and importorder.state = 'Chưa thanh toán'";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idStaff);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) importDTO = new ImportDTO(rs);
         }
         catch (Exception e) {
             throw new RuntimeException(e.getMessage());
@@ -56,6 +78,36 @@ public class ImportDAO {
         return list;
     }
 
+    public void addImportByIdStaff(int idStaff){
+        Connection con = DataProvider.getInstance().getConnection();
+        String sql =
+                "insert into importorder(idStaff, dateCreate) values(?,?)";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idStaff);
+            ps.setDate(2, MyDate.getCurrentDate().getSqlDate());
+            ps.executeUpdate();
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        DataProvider.getInstance().CloseConnection(con);
+    }
+
+    public void updateIdSupplier(int idImport, int idSupplier){
+        Connection con = DataProvider.getInstance().getConnection();
+        String sql =
+                "update importorder set idProvider = ? where id = ?";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idSupplier);
+            ps.setInt(2, idImport);
+            ps.executeUpdate();
+        }
+        catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+        DataProvider.getInstance().CloseConnection(con);
+    }
+
     public void delete(int id){
         String sql = "delete from importorder where id = ?";
         Connection con = DataProvider.getInstance().getConnection();
@@ -69,63 +121,18 @@ public class ImportDAO {
         DataProvider.getInstance().CloseConnection(con);
     }
 
-//    public void addImport(int idStaff){
-//        String sql = "insert into bill( idStaff, dateCreate ) values( ?, ? )";
-//        Connection con = DataProvider.getInstance().getConnection();
-//
-//        try (PreparedStatement ps = con.prepareStatement(sql)){
-//            ps.setInt(1, idStaff);
-//            ps.setDate(2, new java.sql.Date(System.currentTimeMillis()));
-//            ps.executeUpdate();
-//        }
-//        catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        DataProvider.getInstance().CloseConnection(con);
-//    }
-//
-//
-//    public void updateIdCustomer(int idImport, int idCustomer){
-//        String sql = "update bill set idCustomer = ? where id = ?";
-//        Connection con = DataProvider.getInstance().getConnection();
-//        try(PreparedStatement ps = con.prepareStatement(sql)){
-//            if(idCustomer==0) ps.setNull(1, Types.INTEGER);
-//            else ps.setInt(1, idCustomer);
-//            ps.setInt(2, idImport);
-//            ps.executeUpdate();
-//        }
-//        catch (Exception e){
-//            throw new RuntimeException(e.getMessage());
-//        }
-//    }
-//
-//    public void updateIdOfferImport(int idImport, int idOfferImport){
-//        String sql = "update bill set idOfferImport = ? where id = ?";
-//        Connection con = DataProvider.getInstance().getConnection();
-//        try(PreparedStatement ps = con.prepareStatement(sql)){
-//            if(idOfferImport==0) ps.setNull(1, Types.INTEGER);
-//            else ps.setInt(1, idOfferImport);
-//            ps.setInt(2, idImport);
-//            ps.executeUpdate();
-//        }
-//        catch (Exception e){
-//            throw new RuntimeException(e.getMessage());
-//        }
-//    }
-//
-//    public void Pay(int idImport, double price){
-//        String sql = "update bill set price = ?, state = ? where id = ?";
-//        Connection con = DataProvider.getInstance().getConnection();
-//        try (PreparedStatement ps = con.prepareStatement(sql)){
-//            ps.setDouble(1, price);
-//            ps.setString(2, "Đã thanh toán");
-//            ps.setInt(3, idImport);
-//            ps.executeUpdate();
-//        }
-//        catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//        DataProvider.getInstance().CloseConnection(con);
-//    }
+    public void Pay(int idImport, double price){
+        String sql = "update importorder set total = ?, state = ? where id = ?";
+        Connection con = DataProvider.getInstance().getConnection();
+        try (PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setDouble(1, price);
+            ps.setString(2, "Đã thanh toán");
+            ps.setInt(3, idImport);
+            ps.executeUpdate();
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        DataProvider.getInstance().CloseConnection(con);
+    }
 }

@@ -22,76 +22,49 @@ public class ImportInfoBUS {
         return list;
     }
 
-//    public boolean addProduct(int idImport, int idProduct, int quantity){
-//        ProductDTO product = ProductBUS.getInstance().getItemById(idProduct);
-//
-//        ImportInfoDTO billInfoDTO = new ImportInfoDTO();
-//        List<ImportInfoDTO> lsImportInfo = ImportInfoDAO.getInstance().getList(idImport);
-//        for(ImportInfoDTO billInfo : lsImportInfo)
-//            if(billInfo.getIdProduct()==idProduct){
-//                billInfoDTO = billInfo;
-//                quantity += billInfo.getQuantity();
-//                break;
-//            }
-//
-//        if(quantity > product.getQuantity()){
-//            error = "Số lượng nhập vượt quá số lượng sản phẩm trong kho";
-//            return false;
-//        }
-//
-//        int discount = 0;
-//        if(product.toString().contains("%")) discount = product.getOfferProduct().getDiscount();
-//        double total = product.getPrice() * (100 - discount) / 100 * quantity;
-//        if(billInfoDTO.getId() != 0){ // Nếu có thì cập nhật lại số lượng
-//            billInfoDTO.setQuantity(quantity);
-//            billInfoDTO.setTotal(total);
-//            billInfoDTO.setDiscount(discount);
-//            ImportInfoDAO.getInstance().update(billInfoDTO);
-//        }
-//        else { // Nếu không có thì thêm mới 1 billInfo
-//            billInfoDTO = new ImportInfoDTO(-1, idImport, idProduct, quantity, discount, product.getPrice(), total, product.getName(), product.getUnit());
-//            ImportInfoDAO.getInstance().insert(billInfoDTO);
-//        }
-//
-//        return true;
-//    }
-//
-//    public boolean fixQuantityProduct(int idImport, int idProduct, int quantity){
-//        ProductDTO product = ProductBUS.getInstance().getItemById(idProduct);
-//
-//        ImportInfoDTO billInfoDTO = new ImportInfoDTO();
-//        List<ImportInfoDTO> lsImportInfo = ImportInfoDAO.getInstance().getList(idImport);
-//        for(ImportInfoDTO billInfo : lsImportInfo)
-//            if(billInfo.getIdProduct()==idProduct){
-//                billInfoDTO = billInfo;
-//                break;
-//            }
-//
-//        if(quantity > product.getQuantity()){
-//            error = "Số lượng nhập vượt quá số lượng sản phẩm trong kho";
-//            return false;
-//        }
-//
-//        int discount = 0;
-//        if(product.toString().contains("%")) discount = product.getOfferProduct().getDiscount();
-//        double total = product.getPrice() * (100 - discount) / 100 * quantity;
-//
-//        billInfoDTO.setQuantity(quantity);
-//        billInfoDTO.setDiscount(discount);
-//        billInfoDTO.setTotal(total);
-//        ImportInfoDAO.getInstance().update(billInfoDTO);
-//
-//        return true;
-//    }
-//
-//    public boolean deleteProduct(int idImport, int idProduct){
-//        try {
-//            ImportInfoDAO.getInstance().delete(idImport, idProduct);
-//        }
-//        catch(Exception e){
-//            error = e.getMessage();
-//            return false;
-//        }
-//        return true;
-//    }
+
+    public void addProduct(int idImport, ProductDTO product, int quantity){
+        ImportInfoDTO importInfoDTO = new ImportInfoDTO();
+        for(ImportInfoDTO importInfo : ImportInfoDAO.getInstance().loadByIdImport(idImport))
+            if(importInfo.getIdProduct()==product.getId()){
+                importInfoDTO = importInfo;
+                quantity += importInfo.getQuantity();
+                break;
+            }
+
+        double total = product.getPrice() * quantity;
+        if(importInfoDTO.getId() != 0){ // Nếu có thì cập nhật lại số lượng
+            importInfoDTO.setQuantity(quantity);
+            importInfoDTO.setTotal(total);
+            ImportInfoDAO.getInstance().update(importInfoDTO);
+        }
+        else { // Nếu không có thì thêm mới 1 importInfo
+            importInfoDTO = new ImportInfoDTO(-1, idImport, product.getId(), quantity, product.getPrice(), total, product.getName(), product.getUnit());
+            ImportInfoDAO.getInstance().insert(importInfoDTO);
+        }
+    }
+
+    public boolean updateProduct(int idImport, ProductDTO product, int quantity){
+        ImportInfoDTO importInfoDTO = new ImportInfoDTO();
+        for(ImportInfoDTO importInfo : ImportInfoBUS.getInstance().loadByIdImport(idImport))
+            if(importInfo.getIdProduct()==product.getId()){
+                importInfoDTO = importInfo;
+                break;
+            }
+
+        double total = product.getPrice() * quantity;
+        importInfoDTO.setQuantity(quantity);
+        importInfoDTO.setTotal(total);
+        ImportInfoDAO.getInstance().update(importInfoDTO);
+        return true;
+    }
+
+    public void deleteProduct(int idImport, int idProduct){
+        try {
+            ImportInfoDAO.getInstance().delete(idImport, idProduct);
+        }
+        catch(Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }
