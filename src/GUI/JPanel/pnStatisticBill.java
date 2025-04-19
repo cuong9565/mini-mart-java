@@ -16,10 +16,10 @@ public class pnStatisticBill extends JPanel {
     JPanel pnNumProduct = new MyJPanel(MyColor.Orange);
     JPanel pnNumStaff = new MyJPanel(MyColor.Purple);
     JPanel pnNumTotal = new MyJPanel(MyColor.Green);
-    JLabel lbNumCustomer = new MyJLabel(Font.BOLD, 25, MyColor.White, "Khách hàng", SwingConstants.CENTER, SwingConstants.CENTER);
-    JLabel lbNumProduct = new MyJLabel(Font.BOLD, 25, MyColor.White, "Sản phẩm", SwingConstants.CENTER, SwingConstants.CENTER);
-    JLabel lbNumStaff = new MyJLabel(Font.BOLD, 25, MyColor.White, "Nhân viên", SwingConstants.CENTER, SwingConstants.CENTER);
-    JLabel lbNumTotal = new MyJLabel(Font.BOLD, 25, MyColor.White, "Doanh thu", SwingConstants.CENTER, SwingConstants.CENTER);
+    JLabel lbNumCustomer = new MyJLabel(Font.BOLD, 22, MyColor.White, "Khách hàng", SwingConstants.CENTER, SwingConstants.CENTER);
+    JLabel lbNumProduct = new MyJLabel(Font.BOLD, 22, MyColor.White, "Sản phẩm", SwingConstants.CENTER, SwingConstants.CENTER);
+    JLabel lbNumStaff = new MyJLabel(Font.BOLD, 22, MyColor.White, "Nhân viên", SwingConstants.CENTER, SwingConstants.CENTER);
+    JLabel lbNumTotal = new MyJLabel(Font.BOLD, 22, MyColor.White, "Doanh thu", SwingConstants.CENTER, SwingConstants.CENTER);
     JPanel pnFill = new MyJPanel(MyColor.White, "Lọc theo ngày");
     JLabel lbStartDate = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Từ: ", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbEndDate = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Đến: ", SwingConstants.LEFT, SwingConstants.CENTER);
@@ -29,9 +29,7 @@ public class pnStatisticBill extends JPanel {
 
     JLabel lbHeader = new MyJLabel(Font.BOLD, 24, MyColor.White, "Tổng đơn nhập và đơn xuất", SwingConstants.CENTER, SwingConstants.CENTER);
 
-    MyJTable tbStatistic = new MyJTable(new String[]{"Quý", "Quý 1", "Quý 2", "Quý 3", "Quý 4"}, 16, new int[]{}, new int[]{}, new int[]{});
-    JLabel lbTotal = new MyJLabel(Font.BOLD, 14, MyColor.Black, "Tổng doanh thu: 0đ", SwingConstants.LEFT, SwingConstants.CENTER);
-
+    MyJTable tbStatistic = new MyJTable(new String[]{"Quý", "Quý 1", "Quý 2", "Quý 3", "Quý 4", "Tổng cộng"}, 16, new int[]{}, new int[]{}, new int[]{});
 
     public pnStatisticBill() {
         setLayout(null);
@@ -57,16 +55,17 @@ public class pnStatisticBill extends JPanel {
         lbHeader.setOpaque(true);
         lbHeader.setBackground(MyColor.DarkBlue);
         lbHeader.setBounds(0, 260, 1170, 50);
-        tbStatistic.scrPn.setBounds(0, 310, 1170, 260);
-        lbTotal.setBounds(0, 600, 1170, 30);
+        tbStatistic.scrPn.setBounds(0, 310, 1170, 156);
 
         // endregion
 
         addComponentListener(new ComponentAdapter() {
             public void componentShown(ComponentEvent e) {load();}
         });
+        btnFill.addActionListener(_->load());
 
-        add(lbTotal);
+        tbStatistic.setRowHeight(40);
+
         add(lbHeader);
         add(tbStatistic.scrPn);
         add(lbStartDate);
@@ -92,9 +91,18 @@ public class pnStatisticBill extends JPanel {
         int numCustomer = CustomerBUS.getInstance().getNumberCustomer();
         int numProduct = ProductBUS.getInstance().getNumberProduct();
         int numStaff = StaffBUS.getInstance().getNumberStaff();
+        double numTotal = ProductStatisticBUS.getInstance().getProfit();
 
         lbNumCustomer.setText(String.format("<html>%d<br>Khách hàng</html>", numCustomer));
         lbNumProduct.setText(String.format("<html>%d<br>Sản phẩm</html>", numProduct));
         lbNumStaff.setText(String.format("<html>%d<br>Nhân viên</html>", numStaff));
+        lbNumTotal.setText(String.format("<html>%,.0fđ<br>Doanh thu</html>", numTotal));
+
+        MyDate startDate = spStartDate.getMyDate();
+        MyDate endDate = spEndDate.getMyDate();
+        tbStatistic.dftbModel.setRowCount(0);
+        tbStatistic.dftbModel.addRow(ProductStatisticBUS.getInstance().getRowObjectImport(startDate, endDate));
+        tbStatistic.dftbModel.addRow(ProductStatisticBUS.getInstance().getRowObjectExport(startDate, endDate));
+        tbStatistic.dftbModel.addRow(ProductStatisticBUS.getInstance().getRowObjectProfit(startDate, endDate));
     }
 }

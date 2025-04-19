@@ -60,9 +60,7 @@ public class pnStatisticProduct extends JPanel {
         addComponentListener(new ComponentAdapter() {
             public void componentShown(ComponentEvent e) {load();}
         });
-        btnFill.addActionListener(_ -> {
-            load();
-        });
+        btnFill.addActionListener(_ -> load());
         // endregion
 
         // region add

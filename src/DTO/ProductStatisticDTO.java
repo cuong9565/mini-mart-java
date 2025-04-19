@@ -25,6 +25,23 @@ public class ProductStatisticDTO {
             System.out.println("Lỗi ProductStatisticDTO; " + e.getMessage());
         }
     }
+    public ProductStatisticDTO(ResultSet rs, int pos) {
+        try {
+            id = rs.getInt("product.id");
+            name = rs.getString("product.name");
+
+            date = new MyDate(rs.getDate("importorder.dateCreate"));
+
+            int quantity = rs.getInt("importorderdetail.quantity");
+            double price = rs.getDouble("importorderdetail.price");
+            double total = quantity * price;
+
+            setQ(date.getMm(), total);
+        }
+        catch (Exception e) {
+            System.out.println("Lỗi ProductStatisticDTO; " + e.getMessage());
+        }
+    }
     public ProductStatisticDTO(int id, String name, MyDate date) {
         this.id = id;
         this.name = name;

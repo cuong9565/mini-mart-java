@@ -730,3 +730,15 @@ WHERE id BETWEEN 1 AND 50;
 -- from offerbill, offer
 -- where offerbill.idOffer = offer.id
 -- order by offerbill.id;
+
+-- select * from importorder;
+--
+-- select sum(importorder.total) as result
+-- from importorder;
+--
+-- select sum(bill.price) as result
+-- from bill;
+--
+-- select sum(total) as result
+-- from importorder
+-- where (month(dateCreate) between 1 and 3) and (dateCreate between now() and now())

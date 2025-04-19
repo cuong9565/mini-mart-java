@@ -62,7 +62,7 @@ public class MyJTable extends JTable {
         getTableHeader().setForeground(MyColor.White);
         getTableHeader().setReorderingAllowed(false);
         getTableHeader().setBorder(null);
-        getTableHeader().setPreferredSize(new Dimension(this.getTableHeader().getWidth(), 33));
+        getTableHeader().setPreferredSize(new Dimension(this.getTableHeader().getWidth(), 35));
 
         // Set cho content
         setFont(new Font("Roboto", Font.PLAIN, 14));

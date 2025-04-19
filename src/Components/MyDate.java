@@ -80,6 +80,7 @@ public class MyDate {
     public String toString() {return String.format("%02d/%02d/%04d", dd, mm, yyyy);}
     public java.sql.Date getSqlDate() {return java.sql.Date.valueOf(LocalDate.of(yyyy, mm, dd));}
     // Util Date
+    // Util Date
     public java.util.Date getUtilDate(){
         Calendar calendar = Calendar.getInstance();
         calendar.set(yyyy, mm-1 , dd);
