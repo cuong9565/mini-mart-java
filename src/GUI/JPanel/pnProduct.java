@@ -55,12 +55,14 @@ public class pnProduct extends JPanel {
         tfSearch.setBounds(835, 30, 200, 30);
         btnRefresh.setBounds(1045,30,100,30);
         pnFooter.setBounds(0,100,1170, 650);
-        tbProduct.scrPn.setBounds(0,150,1170,580);
-        pnSearchadvance.setBounds(0,90,440,60);
-        cbSearchad1.setBounds(10, 110, 90, 35);
-        cbSearchad2.setBounds(110, 110, 90, 35);
-        cbSearchad3.setBounds(210, 110, 110, 35);
-        btnsearch.setBounds(330,110,90,35);
+        tbProduct.scrPn.setBounds(0,180,1170,550);
+
+        pnSearchadvance.setBounds(0,90,440,90);
+        cbSearchad1.setBounds(10, 120, 90, 35);
+        cbSearchad2.setBounds(110, 120, 90, 35);
+        cbSearchad3.setBounds(210, 120, 110, 35);
+        btnsearch.setBounds(330,120,90,35);
+
         // endregion
         // region EVENT CHO PANEL NÀY
         addComponentListener(new ComponentAdapter() {

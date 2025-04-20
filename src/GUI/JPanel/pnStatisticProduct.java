@@ -34,23 +34,24 @@ public class pnStatisticProduct extends JPanel {
         // region setBounds
         pnMain.setBounds(0, 0, 1200, 800);
 
-        pnFill.setBounds(0, 0, 1170, 60);
-        lbStartDate.setBounds(10, 20, 30, 30);
-        spStartDate.setBounds(40, 20, 100, 30);
-        lbEndDate.setBounds(150, 20, 40, 30);
-        spEndDate.setBounds(190, 20, 100, 30);
-        btnFill.setBounds(310, 20, 100, 30);
+
+        pnFill.setBounds(0, 0, 450, 90);
+        lbStartDate.setBounds(10, 30, 30, 30);
+        spStartDate.setBounds(37, 30, 100, 30);
+        lbEndDate.setBounds(160, 30, 40, 30);
+        spEndDate.setBounds(192, 30, 100, 30);
+        btnFill.setBounds(330, 30, 100, 30);
 
         lbHeaderImport.setOpaque(true);
         lbHeaderImport.setBackground(MyColor.DarkBlue);
-        lbHeaderImport.setBounds(0, 60, 570, 50);
-        tbImport.scrPn.setBounds(0, 110, 570, 460);
+        lbHeaderImport.setBounds(0, 90, 570, 50);
+        tbImport.scrPn.setBounds(0, 140, 570, 430);
         lbTotalImport.setBounds(0, 600, 570, 30);
 
         lbHeaderExport.setOpaque(true);
         lbHeaderExport.setBackground(MyColor.DarkBlue);
-        lbHeaderExport.setBounds(600, 60, 570, 50);
-        tbExport.scrPn.setBounds(600, 110, 570, 460);
+        lbHeaderExport.setBounds(600, 90, 570, 50);
+        tbExport.scrPn.setBounds(600, 140, 570, 430);
         lbTotalExport.setBounds(600, 600, 570, 30);
 
         lbTotal.setBounds(0, 630, 570, 30);

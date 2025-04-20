@@ -45,17 +45,17 @@ public class pnStatisticBill extends JPanel {
         pnNumTotal.setBounds(970,0,200,200);
         lbNumTotal.setBounds(970,0,200,200);
 
-        pnFill.setBounds(0, 200, 1170, 60);
-        lbStartDate.setBounds(10, 220, 30, 30);
-        spStartDate.setBounds(40, 220, 100, 30);
-        lbEndDate.setBounds(150, 220, 40, 30);
-        spEndDate.setBounds(190, 220, 100, 30);
-        btnFill.setBounds(310, 220, 100, 30);
+        pnFill.setBounds(0, 200, 450, 90);
+        lbStartDate.setBounds(10, 230, 30, 30);
+        spStartDate.setBounds(37, 230, 100, 30);
+        lbEndDate.setBounds(160, 230, 40, 30);
+        spEndDate.setBounds(192, 230, 100, 30);
+        btnFill.setBounds(330, 230, 100, 30);
 
         lbHeader.setOpaque(true);
         lbHeader.setBackground(MyColor.DarkBlue);
-        lbHeader.setBounds(0, 260, 1170, 50);
-        tbStatistic.scrPn.setBounds(0, 310, 1170, 156);
+        lbHeader.setBounds(0, 290, 1170, 50);
+        tbStatistic.scrPn.setBounds(0, 340, 1170, 156);
 
         // endregion
 

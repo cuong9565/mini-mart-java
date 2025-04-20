@@ -36,10 +36,17 @@ public class pnStatisticCustomer extends JPanel {
         spEndDate.setBounds(190, 20, 100, 30);
         btnFill.setBounds(310, 20, 100, 30);
 
+        pnFill.setBounds(0, 0, 450, 90);
+        lbStartDate.setBounds(10, 30, 30, 30);
+        spStartDate.setBounds(37, 30, 100, 30);
+        lbEndDate.setBounds(160, 30, 40, 30);
+        spEndDate.setBounds(192, 30, 100, 30);
+        btnFill.setBounds(330, 30, 100, 30);
+
         lbHeaderCustomer.setOpaque(true);
         lbHeaderCustomer.setBackground(MyColor.DarkBlue);
-        lbHeaderCustomer.setBounds(0, 60, 1170, 50);
-        tbCustomer.scrPn.setBounds(0, 110, 1170, 460);
+        lbHeaderCustomer.setBounds(0, 90, 1170, 50);
+        tbCustomer.scrPn.setBounds(0, 140, 1170, 430);
         lbTotalCustomer.setBounds(0, 600, 1170, 30);
 
         // endregion
