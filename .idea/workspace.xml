@@ -4,18 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong end pnImportOrder">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d6403069-beff-4c3d-88b1-ee3a1ae2d5ed.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d6403069-beff-4c3d-88b1-ee3a1ae2d5ed.xml" afterDir="false" />
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong update statistics">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/poi_bin_5_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/poi_bin_5_2.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SQL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/MyDate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyDate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/MyJTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/ProductStatisticBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/ProductStatisticBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/ProductStatisticDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/ProductStatisticDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DTO/ProductStatisticDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/ProductStatisticDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticBill.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnBill.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +34,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/cuong9565/mini-mart-java.git&quot;,
-    &quot;accountId&quot;: &quot;f4c729e0-ab1e-41b9-93d0-47692b69cd9a&quot;
+    &quot;accountId&quot;: &quot;841f6dbc-65b0-4d01-920f-e01d8a5e3138&quot;
   }
 }</component>
   <component name="ProblemsViewState">
@@ -60,37 +52,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.FixBug.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Manage.executor&quot;: &quot;Run&quot;,
-    &quot;Application.demo.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;ShowUsagesActions.previewPropertyKey&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/mini-mart-java/mysql-connector-j-9.1.0/mysql-connector-j-9.1.0.jar&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;database.query.execution&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.FixBug.executor": "Run",
+    "Application.Main.executor": "Debug",
+    "Application.Manage.executor": "Run",
+    "Application.demo.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ShowUsagesActions.previewPropertyKey": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/tphu/java_appilation/mini-mart-java/lib/itextpdf-5.5.13.3.jar",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "database.query.execution",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql_aurora&quot;,
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql_aurora",
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\mini-mart-java\src\lib" />
@@ -108,14 +100,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -207,12 +191,22 @@
       <workItem from="1744849282399" duration="19495000" />
       <workItem from="1744893388405" duration="4621000" />
       <workItem from="1744899822268" duration="3327000" />
-      <workItem from="1744970921507" duration="2777000" />
-      <workItem from="1744978397271" duration="6191000" />
-      <workItem from="1744988404714" duration="6632000" />
-      <workItem from="1745021777075" duration="8874000" />
-      <workItem from="1745036031243" duration="64000" />
-      <workItem from="1745057496499" duration="6104000" />
+    </task>
+    <task id="LOCAL-00025" summary="Cuong update">
+      <option name="closed" value="true" />
+      <created>1742438306939</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1742438306939</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Cuong update">
+      <option name="closed" value="true" />
+      <created>1742438325681</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1742438325681</updated>
     </task>
     <task id="LOCAL-00027" summary="Cuong update JTable">
       <option name="closed" value="true" />
@@ -590,23 +584,7 @@
       <option name="project" value="LOCAL" />
       <updated>1744869240369</updated>
     </task>
-    <task id="LOCAL-00074" summary="Cuong pnImportOrder">
-      <option name="closed" value="true" />
-      <created>1744995273202</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1744995273203</updated>
-    </task>
-    <task id="LOCAL-00075" summary="Cuong end pnImportOrder">
-      <option name="closed" value="true" />
-      <created>1745036063608</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1745036063608</updated>
-    </task>
-    <option name="localTasksCounter" value="76" />
+    <option name="localTasksCounter" value="74" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -624,6 +602,8 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="Cuong update Manager Form" />
+    <MESSAGE value="Cuong update Setting Account Panel" />
     <MESSAGE value="Cuong update Color + SettingAccountFrame" />
     <MESSAGE value="Cuong update SettingAccountFrame" />
     <MESSAGE value="Cuong fix GetJPanel" />
@@ -647,8 +627,6 @@
     <MESSAGE value="Cuong pnBill" />
     <MESSAGE value="Cuong thu nho dialog" />
     <MESSAGE value="Cuong update statistics" />
-    <MESSAGE value="Cuong pnImportOrder" />
-    <MESSAGE value="Cuong end pnImportOrder" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cuong end pnImportOrder" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cuong update statistics" />
   </component>
 </project>
