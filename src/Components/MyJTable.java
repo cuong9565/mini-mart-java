@@ -91,12 +91,12 @@ public class MyJTable extends JTable {
 
 
         // Set cho header
-        getTableHeader().setFont(new Font("Roboto", Font.PLAIN, fontSize));
-        getTableHeader().setBackground(MyColor.LightGray);
-        getTableHeader().setForeground(MyColor.Black);
+        getTableHeader().setFont(new Font("Roboto", Font.BOLD, 14));
+        getTableHeader().setBackground(MyColor.UnderLineBlue);
+        getTableHeader().setForeground(MyColor.White);
         getTableHeader().setReorderingAllowed(false);
         getTableHeader().setBorder(null);
-        getTableHeader().setPreferredSize(new Dimension(this.getTableHeader().getWidth(), 33));
+        getTableHeader().setPreferredSize(new Dimension(this.getTableHeader().getWidth(), 35));
 
         // Set kich thuoc tung cot
         TableColumnModel columnModel = this.getColumnModel();
