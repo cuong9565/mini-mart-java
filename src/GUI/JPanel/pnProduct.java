@@ -8,7 +8,6 @@ import GUI.JDialog.dlAddProduct;
 import GUI.JDialog.dlDetailProduct;
 import GUI.JDialog.dlEditProduct;
 import GUI.JFrame.fManage;
-
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -32,12 +31,12 @@ public class pnProduct extends JPanel {
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Mã", "Loại", "Giảm giá", "Tên sản phẩm", "Giá bán", "Đơn vị", "Số lượng"}, 12);
     JComboBox<String>cbSearchad1 = new MyJComboBox<>(new String[]{"Giá từ","0-99k","Trên 99k",}, 12);
-    JComboBox<String>cbSearchad2 = new MyJComboBox<>(new String[]{"Giảm giá","Có Giảm Giá","Không giảm giá"}, 12);
-    JComboBox<String>cbSearchad3 = new MyJComboBox<>(new String[]{"Số Lượng","Sắp hết hàng(<10)","Còn nhiều(>50)"}, 12);
+    JComboBox<TypeProductDTO>cbSearchad2 = new MyJComboBox<>(new TypeProductDTO[]{}, 12);
+    JCheckBox checkOR = new JCheckBox("Tìm theo OR");
+    JComboBox<String>cbSearchad3 = new MyJComboBox<>(new String[]{"Số Lượng","Sắp hết hàng(<=20)","Còn nhiều(>50)"}, 12);
     JButton btnsearch = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Lọc", SwingConstants.CENTER, SwingConstants.CENTER);
     MyJTable tbProduct = new MyJTable(new String[]{"Mã", "Loại", "Giảm giá", "Tên sản phẩm", "Giá bán", "Đơn vị", "Số lượng"}, new int[]{30, 100, 100, 100, 100, 30}, new int[]{1, 2, 3}, new int[]{});
     pnProduct thisPanel = this;
-
     public pnProduct(fManage frame) {
         setLayout(null);
         setBackground(MyColor.White);
@@ -57,13 +56,18 @@ public class pnProduct extends JPanel {
         pnFooter.setBounds(0,100,1170, 650);
         tbProduct.scrPn.setBounds(0,180,1170,550);
 
-        pnSearchadvance.setBounds(0,90,440,90);
+        pnSearchadvance.setBounds(0,90,540,90);
         cbSearchad1.setBounds(10, 120, 90, 35);
         cbSearchad2.setBounds(110, 120, 90, 35);
         cbSearchad3.setBounds(210, 120, 110, 35);
-        btnsearch.setBounds(330,120,90,35);
-
+        checkOR.setBounds(330,120,100,35);
+        btnsearch.setBounds(440,120,90,35);
         // endregion
+        TypeProductDTO typetitile = new TypeProductDTO(0,"Loại sản phẩm");
+        cbSearchad2.addItem(typetitile);
+        for(TypeProductDTO type : TypeProductBUS.getInstance().getList()){
+            cbSearchad2.addItem(type);
+        }
         // region EVENT CHO PANEL NÀY
         addComponentListener(new ComponentAdapter() {
             public void componentShown(ComponentEvent e) {loadProduct();}
@@ -107,6 +111,10 @@ public class pnProduct extends JPanel {
         btnRefresh.addActionListener(_ -> {
             tfSearch.setText("");
             cbSearch.setSelectedIndex(0);
+            checkOR.setSelected(false);
+            cbSearchad1.setSelectedIndex(0);
+            cbSearchad3.setSelectedIndex(0);
+            cbSearchad2.setSelectedIndex(0);
             loadProduct();
         });
         btnIn.addActionListener(_ -> {
@@ -145,7 +153,8 @@ public class pnProduct extends JPanel {
             public void changedUpdate(DocumentEvent e) {textChange();}
         });
         btnsearch.addActionListener(e->{
-         List<ProductDTO> newproduct = ProductBUS.getInstance().SearchAd(cbSearchad1.getSelectedIndex(),cbSearchad2.getSelectedIndex(),cbSearchad3.getSelectedIndex());
+            TypeProductDTO typenew =(TypeProductDTO) cbSearchad2.getSelectedItem() ;
+            List<ProductDTO> newproduct = ProductBUS.getInstance().SearchAd(cbSearchad1.getSelectedIndex(),typenew,cbSearchad3.getSelectedIndex(),checkOR.isSelected());
          if(newproduct.isEmpty()){
              JOptionPane.showMessageDialog(this,"Không có sản phẩm nào phù hợp !","Thông Báo", JOptionPane.INFORMATION_MESSAGE);
          }
@@ -161,6 +170,7 @@ public class pnProduct extends JPanel {
         add(cbSearchad1);
         add(cbSearchad2);
         add(cbSearchad3);
+        add(checkOR);
         add(btnsearch);
         add(pnSearchadvance);
         add(tbProduct.scrPn);
@@ -179,7 +189,6 @@ public class pnProduct extends JPanel {
         add(pnFooter);
         // endregion
     }
-
     public void loadProduct()  {
         ProductBUS.getInstance().load();
         textChange();

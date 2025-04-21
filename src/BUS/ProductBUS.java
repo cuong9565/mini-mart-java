@@ -4,6 +4,7 @@ import DAO.DetailProductDAO;
 import DAO.ProductDAO;
 import DTO.DetailProductDTO;
 import DTO.ProductDTO;
+import DTO.TypeProductDTO;
 import org.apache.commons.math3.stat.descriptive.summary.Product;
 
 import java.util.ArrayList;
@@ -114,35 +115,49 @@ public class ProductBUS {
 
     public String getError() {return error;}
 
+    public List<ProductDTO> SearchAd(int priceOp, TypeProductDTO type, int quantityOp, boolean isOr) {
+        List<ProductDTO> resultList = new ArrayList<>();
+        for (ProductDTO item : list) {
+            boolean matchPrice = false;
+            boolean matchType = false;
+            boolean matchQuantity = false;
+            //Giá
+            if (priceOp == 1) {
+                matchPrice = item.getPrice() <= 99000;
+            } else if (priceOp == 2) {
+                matchPrice = item.getPrice() > 99000;
+            }
+            //loại
+            if (type!= null && type.getId() != 0 && item.getType() != null) {
+                // id= 0 là măc định
+                matchType = item.getType().getName().equals(type.getName());
+            }
+            // sl
+            if (quantityOp == 1) {
+                matchQuantity = item.getQuantity() <= 20;
+            } else if (quantityOp == 2) {
+                matchQuantity = item.getQuantity() > 50;
+            }
 
-    public List<ProductDTO> SearchAd(int select1, int select2, int  select3) {
-        List<ProductDTO> newlist = new ArrayList<>();
-          for(ProductDTO item : list) {
-              boolean match = true;
-              //giá
-              if (select1 == 1) {
-                  if (item.getPrice() > 99000) match = false;
-              } else if (select1== 2) {
-                  if (item.getPrice() <= 99000) match = false;
-              }
-              // ggiá
-              if (select2 == 1) {
-                  if (item.getDiscountVal()==0) match = false;
-              } else if (select2 == 2) {
-                  if (item.getDiscountVal()>0) match = false;
-              }
-              //sl
-              if (select3 == 1) {
-                  if (item.getQuantity() >= 10) match = false;
-              } else if (select3 == 2) {
-                  if (item.getQuantity() <= 50) match = false;
-              }
-              if (match) {
-                  newlist.add(item);
-              }
-          }
-          return newlist;
+            if (isOr) {
+                if ((priceOp != 0 && matchPrice) ||
+                        (type != null && type.getId() != 0 && matchType) ||
+                        (quantityOp != 0 && matchQuantity)) {
+                    resultList.add(item);
+                }
+            } else {
+                boolean match = true;
+                if (priceOp != 0 && !matchPrice) match = false;
+                if (type != null && type.getId() != 0 && !matchType) match = false;
+                if (quantityOp!= 0 && !matchQuantity) match = false;
+                if (match) {
+                    resultList.add(item);
+                }
+            }
+        }
+        return resultList;
     }
+
 
     public int getNumberProduct(){
         return ProductDAO.getInstance().getNumberProduct();
