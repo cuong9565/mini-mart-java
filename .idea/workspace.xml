@@ -4,13 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong end pnImportOrder">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Search Or">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticBill.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticCustomer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJButton.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJLabel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPanel$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mini-mart-java/Components/MyJPanel.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +42,7 @@
   }
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -208,14 +209,6 @@
       <workItem from="1745021777075" duration="8874000" />
       <workItem from="1745036031243" duration="64000" />
       <workItem from="1745057496499" duration="6104000" />
-    </task>
-    <task id="LOCAL-00027" summary="Cuong update JTable">
-      <option name="closed" value="true" />
-      <created>1742556044547</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1742556044547</updated>
     </task>
     <task id="LOCAL-00028" summary="Cuong update">
       <option name="closed" value="true" />
@@ -601,7 +594,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745036063608</updated>
     </task>
-    <option name="localTasksCounter" value="76" />
+    <task id="LOCAL-00076" summary="Search Or">
+      <option name="closed" value="true" />
+      <created>1745248703303</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1745248703304</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -619,7 +620,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Cuong update Color + SettingAccountFrame" />
     <MESSAGE value="Cuong update SettingAccountFrame" />
     <MESSAGE value="Cuong fix GetJPanel" />
     <MESSAGE value="Cuong fix MyJTextField" />
@@ -644,6 +644,7 @@
     <MESSAGE value="Cuong update statistics" />
     <MESSAGE value="Cuong pnImportOrder" />
     <MESSAGE value="Cuong end pnImportOrder" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cuong end pnImportOrder" />
+    <MESSAGE value="Search Or" />
+    <option name="LAST_COMMIT_MESSAGE" value="Search Or" />
   </component>
 </project>
