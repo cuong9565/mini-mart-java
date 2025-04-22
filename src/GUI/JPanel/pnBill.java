@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.FileOutputStream;
 import java.util.List;
+
 public class pnBill extends JPanel {
     JPanel pnHeader = new MyJPanel(MyColor.White);
     JPanel pnFooter = new MyJPanel(MyColor.White);

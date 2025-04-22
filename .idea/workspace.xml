@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong end pnImportOrder">
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong update check same">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnBill.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticBill.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticCustomer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticProduct.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,6 +206,7 @@
       <workItem from="1745021777075" duration="8874000" />
       <workItem from="1745036031243" duration="64000" />
       <workItem from="1745057496499" duration="6104000" />
+      <workItem from="1745334004478" duration="361000" />
     </task>
     <task id="LOCAL-00027" summary="Cuong update JTable">
       <option name="closed" value="true" />
