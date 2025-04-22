@@ -137,7 +137,7 @@ public class MyJTable extends JTable {
     }
 
     public List<Object[]> ImportExel(int col){
-        List<Object[]> list = new ArrayList<Object[]>();
+        List<Object[]> list = new ArrayList<>();
         JFileChooser chooser = new JFileChooser();
         chooser.setDialogTitle("Chọn tệp để mở");
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -161,7 +161,7 @@ public class MyJTable extends JTable {
                     list.add(data);
                 }
             }catch (Exception e){
-                JOptionPane.showMessageDialog(null, "Lỗi: " + e.getMessage());
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         }
         else list = null;

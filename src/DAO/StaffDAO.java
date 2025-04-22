@@ -13,10 +13,26 @@ import java.util.List;
 
 public class StaffDAO {
     private static StaffDAO instance = null;
+
     private StaffDAO() {}
     public static StaffDAO getInstance() {
         if (instance == null) instance = new StaffDAO();
         return instance;
+    }
+
+    public boolean checkSamePhone(String phone){
+        boolean check = false;
+        String sql = "select * from staff where phone = ?";
+        Connection con = DataProvider.getInstance().getConnection();
+        try (PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setString(1, phone);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) check = true;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return check;
     }
 
     public int getNumberStaff(){
@@ -38,7 +54,7 @@ public class StaffDAO {
     }
 
     public StaffDTO Login(String phone, String password) {
-        StaffDTO staff = new StaffDTO();
+        StaffDTO staff;
         Connection con = DataProvider.getInstance().getConnection();
         String sql = "select * from staff where phone = ? and password = ?";
         try(PreparedStatement ps = con.prepareStatement(sql)){
@@ -46,7 +62,7 @@ public class StaffDAO {
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
             if(rs.next()) staff = new StaffDTO(rs);
-            else throw  new RuntimeException("Số điện thoại hoặc mật khẩu không hợp lệ!!!\nVui lòng nhập lại!!!");
+            else throw new RuntimeException("Số điện thoại hoặc mật khẩu không hợp lệ!!!\nVui lòng nhập lại!!!");
         }
         catch (Exception e) {
             throw new RuntimeException(e.getMessage());
@@ -71,7 +87,7 @@ public class StaffDAO {
         return staff;
     }
 
-    public boolean CheckPassword(int id, String currPassword) {
+    public void CheckPassword(int id, String currPassword) {
         boolean result;
         Connection con = DataProvider.getInstance().getConnection();
         String sql = "select * from staff where id = ? and password = ?";
@@ -79,37 +95,31 @@ public class StaffDAO {
             ps.setInt(1, id);
             ps.setString(2, currPassword);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()) result = true;
-            else {
-                DataProvider.getInstance().CloseConnection(con);
-                throw new RuntimeException("Mật khẩu hiện tại không đúng!!!");
-            }
+            result = rs.next();
         }
         catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
         DataProvider.getInstance().CloseConnection(con);
-        return result;
+
+        if(!result) throw new RuntimeException("Mật khẩu hiện tại không đúng!!!");
     }
 
-    public boolean UpdateStaffPassword(int id, String password){
-        int res = 0;
+    public void UpdateStaffPassword(int id, String password){
         Connection con = DataProvider.getInstance().getConnection();
         String sql = "update staff set password = ? where id = ?";
         try(PreparedStatement ps = con.prepareStatement(sql)){
             ps.setString(1, password);
             ps.setInt(2, id);
-            res = ps.executeUpdate();
+            ps.executeUpdate();
         }
         catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
         DataProvider.getInstance().CloseConnection(con);
-        return res>0;
     }
 
-    public boolean UpdateAccount(StaffDTO staff) {
-        int res = 0;
+    public void UpdateAccount(StaffDTO staff) {
         String sql = "update staff set phone = ?, password = ?, firstName = ?, lastName = ?, address = ?, salary = ?, role = ?, gender = ? where id = ?";
         Connection con = DataProvider.getInstance().getConnection();
         try(PreparedStatement ps = con.prepareStatement(sql)){
@@ -122,16 +132,15 @@ public class StaffDAO {
             ps.setString(7, staff.getRole());
             ps.setString(8, staff.getGender());
             ps.setInt(9, staff.getId());
-            res = ps.executeUpdate();
+            ps.executeUpdate();
         }
         catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
         DataProvider.getInstance().CloseConnection(con);
-        return res>0;
     }
 
-    public List<StaffDTO> getList(){
+    public List<StaffDTO> load(){
         List<StaffDTO> list = new ArrayList<>();
         String sql = "select * from staff";
         Connection con = DataProvider.getInstance().getConnection();
@@ -141,14 +150,13 @@ public class StaffDAO {
         ){
             while(rs.next()) list.add(new StaffDTO(rs));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
         DataProvider.getInstance().CloseConnection(con);
         return list;
     }
 
-    public boolean add(StaffDTO staff) {
-        int res = 0;
+    public void add(StaffDTO staff) {
         String sql = "insert into staff(phone, password, firstName, lastName, address, salary, role, gender) values(?,?,?,?,?,?,?,?)";
         Connection con = DataProvider.getInstance().getConnection();
         try(PreparedStatement ps = con.prepareStatement(sql)){
@@ -160,16 +168,14 @@ public class StaffDAO {
             ps.setDouble(6, staff.getSalary());
             ps.setString(7, staff.getRole());
             ps.setString(8, staff.getGender());
-            res = ps.executeUpdate();
+            ps.executeUpdate();
         }
         catch (Exception e){
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
         DataProvider.getInstance().CloseConnection(con);
-        return res>0;
     }
-    public boolean update(StaffDTO staff) {
-        int res = 0;
+    public void update(StaffDTO staff) {
         String sql = "update staff set phone = ?, password = ?, firstName = ?, lastName = ?, address = ?, salary = ?, state = ?, role = ?, gender = ? where id = ?";
         Connection con = DataProvider.getInstance().getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)){
@@ -183,26 +189,23 @@ public class StaffDAO {
             ps.setString(8, staff.getRole());
             ps.setString(9, staff.getGender());
             ps.setInt(10, staff.getId());
-            res = ps.executeUpdate();
+            ps.executeUpdate();
         }
         catch (Exception e){
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
-        return res>0;
     }
 
-    public boolean delete(int id) {
-        int res = 0;
+    public void delete(int id) {
         String sql = "delete from staff where id = ?";
         Connection con = DataProvider.getInstance().getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)){
             ps.setInt(1, id);
-            res = ps.executeUpdate();
+            ps.executeUpdate();
         }
         catch (Exception e){
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
         DataProvider.getInstance().CloseConnection(con);
-        return res>0;
     }
 }

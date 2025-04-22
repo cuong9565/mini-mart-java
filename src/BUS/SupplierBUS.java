@@ -8,8 +8,6 @@ import java.util.List;
 
 public class SupplierBUS {
     private static SupplierBUS instance = null;
-    private static String error = null;
-    private static int numLine = 0;
     private static List<SupplierDTO>supplierList;
 
     public SupplierBUS() {}
@@ -18,98 +16,11 @@ public class SupplierBUS {
         return instance;
     }
 
+    // List
     public List<SupplierDTO> load() {
         supplierList = SupplierDAO.getInstance().load();
         return supplierList;
     }
-
-    public SupplierDTO getSupplierById(int id) {
-        for (SupplierDTO supplier : supplierList)
-            if (supplier.getId() == id)
-                return supplier;
-        return null;
-    }
-
-    public boolean addProvider(SupplierDTO supplier) {
-        if(supplier.getName().isEmpty() || supplier.getPhone().isEmpty() || supplier.getAddress().isEmpty() || supplier.getEmail().isEmpty()) {
-            error = "Không được để trống thông tin!";
-            return false;
-        }
-        if(!supplier.getPhone().matches("^0[0-9]{8,10}$")){
-            error = "Số điện thoại không hợp lệ!";
-            return false;
-        }
-        if(!supplier.getEmail().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")){
-            error = "Email không hợp lệ!";
-            return false;
-        }
-        try{
-            if(SupplierDAO.getInstance().addSupplier(supplier)){
-                return true;
-            }
-        }catch (Exception e){
-            error = e.getMessage();
-            return false;
-        }
-        return false;
-    }
-
-    public boolean addSuppliers(List<SupplierDTO>listSupplier) {
-        if(listSupplier == null || listSupplier.isEmpty()) {
-            error = "Không lấy được dữ liệu!!!";
-            return false;
-        }
-
-        try{
-            numLine = SupplierDAO.getInstance().addSuppliers(listSupplier);
-        }
-        catch (Exception e){
-            error = e.getMessage();
-            return false;
-        }
-        return true;
-    }
-
-    public boolean editSupplier(SupplierDTO supplier) {
-        if(supplier.getName().isEmpty() || supplier.getPhone().isEmpty() || supplier.getAddress().isEmpty() || supplier.getEmail().isEmpty()) {
-            error = "Không được để trống thông tin!";
-            return false;
-        }
-        if(!supplier.getPhone().matches("^0[0-9]{8,10}$")){
-            error = "Số điện thoại không hợp lệ!";
-            return false;
-        }
-        if(!supplier.getEmail().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")){
-            error = "Email không hợp lệ!";
-            return false;
-        }
-        try{
-            if(SupplierDAO.getInstance().editSupplier(supplier)){
-                return true;
-            }
-        }catch (Exception e){
-            error = e.getMessage();
-            return false;
-        }
-        return false;
-    }
-
-    public boolean deleteSupplier(SupplierDTO supplier) {
-        try{
-            if(SupplierDAO.getInstance().deleteSupplier(supplier)){
-                return true;
-            }
-        }
-        catch (Exception e){
-            error = e.getMessage();
-            return false;
-        }
-        return false;
-    }
-
-    public String getError(){return error;}
-    public int getNumLine(){return numLine;}
-    public List<SupplierDTO>getSupplierList(){return supplierList;}
     public List<SupplierDTO>getSupplierListBy(int col, String txt){
         List<SupplierDTO>list = new ArrayList<>();
         for (SupplierDTO supplier : supplierList) {
@@ -122,5 +33,64 @@ public class SupplierBUS {
             }
         }
         return list;
+    }
+
+    // Item
+    public SupplierDTO getSupplierById(int id) {
+        return SupplierDAO.getInstance().getSupplierById(id);
+    }
+
+    // check
+    public boolean checkSamePhoneSupplier(String phone){
+        return SupplierDAO.getInstance().checkSamePhoneSupplier(phone);
+    }
+
+    // add
+    public void addProvider(SupplierDTO supplier) {
+        try{
+            if(supplier.getName().isEmpty() || supplier.getPhone().isEmpty() || supplier.getAddress().isEmpty() || supplier.getEmail().isEmpty())
+                throw new RuntimeException("Không được để trống thông tin!");
+
+            if(!supplier.getPhone().matches("^0[0-9]{8,10}$"))
+                throw new RuntimeException("Số điện thoại không hợp lệ!");
+
+            if(checkSamePhoneSupplier(supplier.getPhone()))
+                throw new RuntimeException(String.format("Số điện thoại %s đã tồn tại!", supplier.getPhone()));
+
+            SupplierDAO.getInstance().addSupplier(supplier);
+
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    // update
+    public void editSupplier(SupplierDTO supplier) {
+        try{
+            if(supplier.getName().isEmpty() || supplier.getPhone().isEmpty() || supplier.getAddress().isEmpty() || supplier.getEmail().isEmpty())
+                throw new RuntimeException("Không được để trống thông tin!");
+
+            if(!supplier.getPhone().matches("^0[0-9]{8,10}$"))
+                throw new RuntimeException("Số điện thoại không hợp lệ!");
+
+            SupplierDTO currSupplier = SupplierDAO.getInstance().getSupplierById(supplier.getId());
+            if(checkSamePhoneSupplier(supplier.getPhone()) && !currSupplier.getPhone().equals(supplier.getPhone()))
+                throw new RuntimeException(String.format("Số điện thoại %s đã tồn tại!", supplier.getPhone()));
+
+            SupplierDAO.getInstance().editSupplier(supplier);
+
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    // delete
+    public void deleteSupplier(SupplierDTO supplier) {
+        try{
+            SupplierDAO.getInstance().deleteSupplier(supplier);
+        }
+        catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

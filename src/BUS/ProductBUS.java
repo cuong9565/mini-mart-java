@@ -100,16 +100,14 @@ public class ProductBUS {
         return true;
     }
 
-    public boolean delete(ProductDTO product){
+    public void delete(ProductDTO product){
         try {
             ProductDAO.getInstance().delete(product);
             DetailProductDAO.getInstance().delete(product.getDetail());
         }
         catch (Exception e) {
-            error = e.getMessage();
-            return false;
+            throw new RuntimeException(e.getMessage());
         }
-        return true;
     }
 
     public String getError() {return error;}

@@ -9,9 +9,7 @@ import java.util.List;
 
 public class StaffBUS {
     private static StaffBUS instance = null;
-    private List<StaffDTO>list;
-    private String error = null;
-    private int NumLine = 0;
+    private List<StaffDTO>list = null;
 
     private StaffBUS() {}
     public static StaffBUS getInstance() {
@@ -19,108 +17,11 @@ public class StaffBUS {
         return instance;
     }
 
-    public int getNumberStaff(){
-        return StaffDAO.getInstance().getNumberStaff();
-    }
-
-    public StaffDTO Login(String phone, String password){
-        StaffDTO staff;
-        if(phone.isEmpty()){
-            error = "Số điện thoại không được để trống!!!";
-            return new StaffDTO();
-        }
-        if(password.isEmpty()){
-            error = "Mật khẩu không được để trống!!!";
-            return new StaffDTO();
-        }
-        if(!phone.matches("^0[0-9]{8,10}$")){
-            error = "Số điện thoại định dạng không hợp lệ!!!";
-            return new StaffDTO();
-        }
-        try {
-            staff = StaffDAO.getInstance().Login(phone, password);
-        }
-        catch(Exception e){
-            error = e.getMessage();
-            return new StaffDTO();
-        }
-        return staff;
-    }
-
-    public boolean UpdateStaffPassword(int id, String currPassword, String newPassword, String confirmPassword){
-        if(currPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()){
-            error = "Không được để trống thông tin!!!\nVui lòng nhập lại";
-            return false;
-        }
-        if(!newPassword.equals(confirmPassword)){
-            error = "Mật khẩu mới và mật khẩu xác nhận không khớp nhau!!!\nVui lòng nhập lại";
-            return false;
-        }
-        try {
-            StaffDAO.getInstance().CheckPassword(id, currPassword);
-        }
-        catch (Exception e){
-            error = e.getMessage();
-            return false;
-        }
-        try {
-            StaffDAO.getInstance().UpdateStaffPassword(id, newPassword);
-        }
-        catch (Exception e){
-            error = e.getMessage();
-            return false;
-        }
-        return true;
-    }
-
-    public boolean UpdateAccount(StaffDTO staff){
-        if(staff.getLastName().isEmpty()){
-            error = "Họ khách hàng không được để trống!!!";
-            return false;
-        }
-        if(staff.getFirstName().isEmpty()){
-            error = "Tên khách hàng không được để trống!!!";
-            return false;
-        }
-        if(staff.getPhone().isEmpty()){
-            error = "Số điện thoại không được để trống!!!";
-            return false;
-        }
-        if(staff.getPassword().isEmpty()){
-            error = "Mật khẩu không được để trống!!!";
-            return false;
-        }
-        if(!staff.getPhone().matches("^0[0-9]{8,10}$")){
-            error = "Số điện thoại định dạng không hợp lệ!!!";
-            return false;
-        }
-        try {
-            StaffDAO.getInstance().UpdateAccount(staff);
-        }
-        catch(Exception e){
-            error = e.getMessage();
-            return false;
-        }
-        return true;
-    }
-
-    public List<StaffDTO> getList() {
-        list = StaffDAO.getInstance().getList();
+    // List
+    public List<StaffDTO> load() {
+        list = StaffDAO.getInstance().load();
         return list;
     }
-
-    public StaffDTO getStaffById(int id) {
-        StaffDTO staff;
-        try {
-            staff = StaffDAO.getInstance().GetStaffById(id);
-        }
-        catch(Exception e){
-            error = e.getMessage();
-            staff = new StaffDTO();
-        }
-        return staff;
-    }
-
     public List<StaffDTO>getStaffListBy(int col, String txt) {
         List<StaffDTO> ls = new ArrayList<>();
         for (StaffDTO staff : list) {
@@ -140,56 +41,126 @@ public class StaffBUS {
         return ls;
     }
 
-    public boolean add(StaffDTO staff){
-        if (staff.getFirstName().isEmpty() || staff.getLastName().isEmpty() || staff.getPhone().isEmpty() || staff.getAddress().isEmpty() || staff.getPassword().isEmpty()){
-            error = "Không được để trống thông tin!!!";
-            return false;
-        }
-        if(!staff.getPhone().matches("^0[0-9]{8,10}$")){
-            error = "Số điện thoại định dạng không hợp lệ!!!";
-            return false;
-        }
+    // Item
+    public StaffDTO getStaffById(int id) {
+        return StaffDAO.getInstance().GetStaffById(id);
+    }
+
+    // Check
+    public boolean checkSamePhone(String phone){
+        return StaffDAO.getInstance().checkSamePhone(phone);
+    }
+    public int getNumberStaff(){
+        return StaffDAO.getInstance().getNumberStaff();
+    }
+    public StaffDTO Login(String phone, String password){
+        StaffDTO staff;
         try {
+            if(phone.isEmpty())
+                throw new RuntimeException("Số điện thoại không được để trống!!!");
+
+            if(password.isEmpty())
+                throw new RuntimeException("Mật khẩu không được để trống!!!");
+
+            if(!phone.matches("^0[0-9]{8,10}$")){
+                throw new RuntimeException("Số điện thoại định dạng không hợp lệ!!!");
+            }
+
+            staff = StaffDAO.getInstance().Login(phone, password);
+        }
+        catch(Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+        return staff;
+    }
+
+    // Add
+    public void add(StaffDTO staff){
+        try {
+            if (staff.getFirstName().isEmpty() || staff.getLastName().isEmpty() || staff.getPhone().isEmpty() || staff.getAddress().isEmpty() || staff.getPassword().isEmpty())
+                throw new RuntimeException("Không được để trống thông tin!!!");
+
+            if(!staff.getPhone().matches("^0[0-9]{8,10}$"))
+                throw new RuntimeException("Số điện thoại định dạng không hợp lệ!!!");
+
+            if(checkSamePhone(staff.getPhone()))
+                throw new RuntimeException(String.format("Số điện thoại %s đã tồn tại!!!", staff.getPhone()));
+
             StaffDAO.getInstance().add(staff);
         }
         catch (Exception e) {
-            error = "Lỗi: " + e.getMessage();
-            return false;
+            throw new RuntimeException(e.getMessage());
         }
-        return true;
     }
 
-
-public boolean update(StaffDTO staff){
-        if (staff.getFirstName().isEmpty() || staff.getLastName().isEmpty() || staff.getPhone().isEmpty() || staff.getAddress().isEmpty() || staff.getPassword().isEmpty()){
-            error = "Không được để trống thông tin!!!";
-            return false;
-        }
-        if(!staff.getPhone().matches("^0[0-9]{8,10}$")){
-            error = "Số điện thoại định dạng không hợp lệ!!!";
-            return false;
-        }
+    // update
+    public void UpdateStaffPassword(int id, String currPassword, String newPassword, String confirmPassword){
         try {
+            if(currPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty())
+                throw new RuntimeException("Không được để trống thông tin!!!\nVui lòng nhập lại");
+
+            if(!newPassword.equals(confirmPassword))
+                throw new RuntimeException("Mật khẩu mới và mật khẩu xác nhận không khớp nhau!!!\nVui lòng nhập lại");
+
+            StaffDAO.getInstance().CheckPassword(id, currPassword);
+            StaffDAO.getInstance().UpdateStaffPassword(id, newPassword);
+        }
+        catch(Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+    public void UpdateAccount(StaffDTO staff){
+        try {
+            if(staff.getLastName().isEmpty())
+                throw new RuntimeException("Họ khách hàng không được để trống!!!");
+
+            if(staff.getFirstName().isEmpty())
+                throw new RuntimeException("Tên khách hàng không được để trống!!!");
+
+            if(staff.getPhone().isEmpty())
+                throw new RuntimeException("Số điện thoại không được để trống!!!");
+
+            if(staff.getPassword().isEmpty())
+                throw new RuntimeException("Mật khẩu không được để trống!!!");
+
+            if(!staff.getPhone().matches("^0[0-9]{8,10}$"))
+                throw new RuntimeException("Số điện thoại định dạng không hợp lệ!!!");
+
+            StaffDTO currStaff = StaffDAO.getInstance().GetStaffById(staff.getId());
+            if (checkSamePhone(staff.getPhone()) && !currStaff.getPhone().equals(staff.getPhone()))
+                throw new RuntimeException(String.format("Số điện thoại %s đã tồn tại!!!", staff.getPhone()));
+
+            StaffDAO.getInstance().UpdateAccount(staff);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+    public void update(StaffDTO staff){
+        try {
+            if (staff.getFirstName().isEmpty() || staff.getLastName().isEmpty() || staff.getPhone().isEmpty() || staff.getAddress().isEmpty() || staff.getPassword().isEmpty())
+                throw new RuntimeException("Không được để trống thông tin!!!");
+
+            if(!staff.getPhone().matches("^0[0-9]{8,10}$"))
+                throw new RuntimeException("Số điện thoại định dạng không hợp lệ!!!");
+
+            StaffDTO currStaff = StaffDAO.getInstance().GetStaffById(staff.getId());
+            if (checkSamePhone(staff.getPhone()) && !currStaff.getPhone().equals(staff.getPhone()))
+                throw new RuntimeException(String.format("Số điện thoại %s đã tồn tại!!!", staff.getPhone()));
+
             StaffDAO.getInstance().update(staff);
         }
         catch (Exception e) {
-            error = "Lỗi: " + e.getMessage();
-            return false;
+            throw new RuntimeException(e.getMessage());
         }
-        return true;
     }
 
-    public boolean delete(int id){
+    // Delete
+    public void delete(int id){
         try {
             StaffDAO.getInstance().delete(id);
         }
         catch (Exception e) {
-            error = "Lỗi: " + e.getMessage();
-            return false;
+            throw new RuntimeException(e.getMessage());
         }
-        return true;
     }
-
-    public String getError() {return error;}
-    public int getNumLine() {return NumLine;}
 }

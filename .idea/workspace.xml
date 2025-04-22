@@ -4,13 +4,42 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong end pnImportOrder">
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong update gui">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d6403069-beff-4c3d-88b1-ee3a1ae2d5ed.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d6403069-beff-4c3d-88b1-ee3a1ae2d5ed.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_14_2025_1_32_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_14_2025_1_32_PM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_14_2025_7_43_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_14_2025_7_43_PM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_14_2025_9_22_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_14_2025_9_22_PM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_15_2025_10_48_AM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_15_2025_10_48_AM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/OfferBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/OfferBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/ProductBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/ProductBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/StaffBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/StaffBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/SupplierBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/SupplierBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/MyJTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyJTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/OfferDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/OfferDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/ProductDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/ProductDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/StaffDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/StaffDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/SupplierDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/SupplierDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddStaff.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddStaff.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddSupplier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlAddoffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlAddoffer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditStaff.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditStaff.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditSupplier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JDialog/dlEditoffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JDialog/dlEditoffer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JFrame/fLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JFrame/fLogin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnChangeInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnChangeInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnChangePassword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnChangePassword.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnOffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnOffer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticBill.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticCustomer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStaff.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStaff.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnSupplier.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,14 +237,13 @@
       <workItem from="1745021777075" duration="8874000" />
       <workItem from="1745036031243" duration="64000" />
       <workItem from="1745057496499" duration="6104000" />
-    </task>
-    <task id="LOCAL-00027" summary="Cuong update JTable">
-      <option name="closed" value="true" />
-      <created>1742556044547</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1742556044547</updated>
+      <workItem from="1745203790341" duration="183000" />
+      <workItem from="1745216599066" duration="3508000" />
+      <workItem from="1745223763410" duration="185000" />
+      <workItem from="1745285672599" duration="189000" />
+      <workItem from="1745292271484" duration="2637000" />
+      <workItem from="1745315287852" duration="8699000" />
+      <workItem from="1745330247692" duration="3181000" />
     </task>
     <task id="LOCAL-00028" summary="Cuong update">
       <option name="closed" value="true" />
@@ -601,7 +629,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745036063608</updated>
     </task>
-    <option name="localTasksCounter" value="76" />
+    <task id="LOCAL-00076" summary="Cuong update gui">
+      <option name="closed" value="true" />
+      <created>1745158967709</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1745158967709</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -619,7 +655,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Cuong update Color + SettingAccountFrame" />
     <MESSAGE value="Cuong update SettingAccountFrame" />
     <MESSAGE value="Cuong fix GetJPanel" />
     <MESSAGE value="Cuong fix MyJTextField" />
@@ -644,6 +679,7 @@
     <MESSAGE value="Cuong update statistics" />
     <MESSAGE value="Cuong pnImportOrder" />
     <MESSAGE value="Cuong end pnImportOrder" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cuong end pnImportOrder" />
+    <MESSAGE value="Cuong update gui" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cuong update gui" />
   </component>
 </project>

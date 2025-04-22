@@ -98,13 +98,16 @@ public class fLogin extends JFrame {
     }
 
     public void Login() {
-        String phone = tfPhone.getText();
-        String password = String.valueOf(pfPassword.getPassword());
-        StaffDTO accountLogin =  StaffBUS.getInstance().Login(phone, password);
-        if(accountLogin.getId()!=0){
-            new fManage(this, accountLogin);
-            setVisible(false);
+        try {
+            String phone = tfPhone.getText();
+            String password = String.valueOf(pfPassword.getPassword());
+            StaffDTO accountLogin = StaffBUS.getInstance().Login(phone, password);
+            if(accountLogin.getId()!=0){
+                new fManage(this, accountLogin);
+                setVisible(false);
+            }
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
-        else JOptionPane.showMessageDialog(this, StaffBUS.getInstance().getError(), "Lỗi", JOptionPane.ERROR_MESSAGE);
     }
 }

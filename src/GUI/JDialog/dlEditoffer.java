@@ -7,7 +7,6 @@ import GUI.JPanel.pnOffer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Date;
 
 public class dlEditoffer extends JDialog {
     JPanel pnMain = new MyJPanel(MyColor.White);
@@ -17,8 +16,8 @@ public class dlEditoffer extends JDialog {
     JLabel lbEndDate = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Ngày kết thúc*", SwingConstants.LEFT, SwingConstants.CENTER);
 
     JTextField tfId = new MyJTextFieldInput(Font.PLAIN, 14, false);
-    MyJSpinner spStartDate = new MyJSpinner(MyDate.getCurrentDate());
-    MyJSpinner spEndDate = new MyJSpinner(MyDate.getCurrentDate());
+    MyJSpinner spStartDate;
+    MyJSpinner spEndDate;
 
     JButton btnSave = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Green, MyColor.LightGreen, "Cập nhật", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnEsc = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Red, MyColor.LightRed, "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
@@ -31,7 +30,13 @@ public class dlEditoffer extends JDialog {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
-        // region Set Bounds
+        // region setText
+        tfId.setText(String.valueOf(offer.getId()));
+        spStartDate = new MyJSpinner(offer.getDateStart());
+        spEndDate = new MyJSpinner(offer.getDateEnd());
+        // endregion
+
+        // region setBounds
         lbHeader.setOpaque(true);
         lbHeader.setBackground(MyColor.DarkBlue);
         lbHeader.setBounds(0, 0, 540, 60);
@@ -45,18 +50,17 @@ public class dlEditoffer extends JDialog {
         btnSave.setBounds(100, 260, 150, 40);
         btnEsc.setBounds(270, 260, 150, 40);
         // endregion
-        tfId.setText(String.valueOf(offer.getId()));
-        spStartDate.setValue(offer.getDateStart());
-        spEndDate.setValue(offer.getDateEnd());
 
-        btnEsc.addActionListener(e -> dispose());
-        btnSave.addActionListener(e -> {
+        btnEsc.addActionListener(_ -> dispose());
+        btnSave.addActionListener(_ -> {
             OfferDTO offerNew = new OfferDTO(offer.getId(), spStartDate.getMyDate(), spEndDate.getMyDate());
-            if (OfferBUS.getInstance().update(offerNew)) {
+            try{
+                OfferBUS.getInstance().update(offerNew);
                 JOptionPane.showMessageDialog(this, "Cập nhật thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 parentPanel.loadOffer();
-            } else {
-                JOptionPane.showMessageDialog(this, "Lỗi: " + OfferBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
+            }
+            catch(Exception e){
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         });
 

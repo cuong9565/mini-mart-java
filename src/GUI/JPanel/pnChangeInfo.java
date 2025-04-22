@@ -82,11 +82,14 @@ public class pnChangeInfo extends JPanel {
         btnEsc.addActionListener(_ -> dialog.dispose());
         btnSave.addActionListener(_ -> {
             StaffDTO staff = new StaffDTO(accountLogin.getId(), tfPhone.getText(), accountLogin.getPassword(), tfFirstName.getText(), tfLastName.getText(),(bgGender.radioButtons[0].isSelected()?"Nam":"Nữ"), tfAddress.getText(), tfType.getText(), accountLogin.getSalary(), accountLogin.getState());
-            if(StaffBUS.getInstance().UpdateAccount(staff)){
+            try {
+                StaffBUS.getInstance().UpdateAccount(staff);
                 JOptionPane.showMessageDialog(thisPanel, "Lưu thông tin thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 parentFrame.LoadThisAccount();
             }
-            else JOptionPane.showMessageDialog(thisPanel, StaffBUS.getInstance().getError(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            catch(Exception e) {
+                JOptionPane.showMessageDialog(thisPanel, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
         });
         // endregion
 

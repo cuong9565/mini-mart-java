@@ -8,8 +8,6 @@ import GUI.JPanel.pnSupplier;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class dlAddSupplier extends JDialog {
     JPanel pnMain = new MyJPanel(MyColor.White);
@@ -53,22 +51,16 @@ public class dlAddSupplier extends JDialog {
         lbHeader.setBounds(0,0,540,60);
         // endregion
         // region Event
-        btnEsc.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dialog.dispose();
-            }
-        });
-        btnSave.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        btnEsc.addActionListener(_ -> dialog.dispose());
+        btnSave.addActionListener(_ -> {
+            try {
                 SupplierDTO supplier = new SupplierDTO(-1, tfName.getText(), tfPhone.getText(), tfAddress.getText(), tfEmail.getText());
-                boolean check = SupplierBUS.getInstance().addProvider(supplier);
-
-                if(check){
-                    JOptionPane.showMessageDialog(dialog, "Thêm thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    parentPanel.loadSupplier();
-                    dialog.dispose();
-                }
-                else JOptionPane.showMessageDialog(dialog, SupplierBUS.getInstance().getError(), "Thông báo", JOptionPane.WARNING_MESSAGE);
+                SupplierBUS.getInstance().addProvider(supplier);
+                JOptionPane.showMessageDialog(dialog, "Thêm thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                parentPanel.loadSupplier();
+                dialog.dispose();
+            } catch (RuntimeException ex) {
+                JOptionPane.showMessageDialog(dialog, ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         });
         // endregion11

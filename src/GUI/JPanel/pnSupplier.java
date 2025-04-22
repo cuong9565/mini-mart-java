@@ -6,7 +6,6 @@ import DTO.*;
 import GUI.JDialog.dlAddSupplier;
 import GUI.JDialog.dlEditSupplier;
 import GUI.JFrame.fManage;
-import com.mysql.cj.protocol.Message;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -67,41 +66,54 @@ public class pnSupplier extends JPanel {
                 SupplierDTO supplier = SupplierBUS.getInstance().getSupplierById(id);
                 new dlEditSupplier(frame, thisPanel, supplier);
             }
-            else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần sửa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần sửa!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         });
         btnDelete.addActionListener(_ -> {
             int i = tbSupplier.getSelectedRow();
             if (i >=0){
-                int id = Integer.parseInt(tbSupplier.getFirstColumn(i));
-                SupplierDTO supplierNew = SupplierBUS.getInstance().getSupplierById(id);
-                if(SupplierBUS.getInstance().deleteSupplier(supplierNew)){
-                    JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    loadSupplier();
+                int select = JOptionPane.showConfirmDialog(thisPanel, "Bạn có chắc muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if(select == JOptionPane.YES_OPTION){
+                    try {
+                        int id = Integer.parseInt(tbSupplier.getFirstColumn(i));
+                        SupplierDTO supplierNew = SupplierBUS.getInstance().getSupplierById(id);
+                        SupplierBUS.getInstance().deleteSupplier(supplierNew);
+                        JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        loadSupplier();
+                    }
+                    catch (RuntimeException e) {
+                        JOptionPane.showMessageDialog(thisPanel, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
-                else JOptionPane.showMessageDialog(thisPanel, SupplierBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
             }
             else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xóa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
         });
+        btnIn.addActionListener(_ -> {
+            List<Object[]> list = tbSupplier.ImportExel(4);
+            if(list==null) return;
+            int select = JOptionPane.showConfirmDialog(thisPanel, "Bạn có chắc chắn muốn thêm?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(select == JOptionPane.YES_OPTION){
+                List<SupplierDTO> suppliers = new ArrayList<>();
+                int success = 0;
+                for (Object[] ob : list)
+                    suppliers.add(new SupplierDTO(-1, ob[0].toString(), ob[1].toString(), ob[2].toString(), ob[3].toString()));
+                try {
+                    for (SupplierDTO supplier : suppliers){
+                        SupplierBUS.getInstance().addProvider(supplier);
+                        success++;
+                    }
+                } catch (RuntimeException e) {
+                    JOptionPane.showMessageDialog(thisPanel,e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+                JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + success + " nhà cung cấp", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                loadSupplier();
+            }
+        });
+        btnOut.addActionListener(_ -> tbSupplier.ExportExel("Danh sách nhà cung cấp"));
         btnRefresh.addActionListener(_ -> {
             tfSearch.setText("");
             cbSearch.setSelectedIndex(0);
             loadSupplier();
         });
-        btnIn.addActionListener(_ -> {
-            List<Object[]> list = tbSupplier.ImportExel(4);
-            if(list==null) return;
-            List<SupplierDTO> suppliers = new ArrayList<>();
-            for (Object[] ob : list)
-                suppliers.add(new SupplierDTO(-1, ob[0].toString(), ob[1].toString(), ob[2].toString(), ob[3].toString()));
-            if(SupplierBUS.getInstance().addSuppliers(suppliers)){
-                JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + SupplierBUS.getInstance().getNumLine() + " nhà cung cấp");
-                loadSupplier();
-            }
-            else {
-                JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + SupplierBUS.getInstance().getError());
-            }
-        });
-        btnOut.addActionListener(_ -> tbSupplier.ExportExel("Danh sách nhà cung cấp"));
         cbSearch.addActionListener(_ -> textChange());
         tfSearch.addFocusListener(new FocusAdapter() {
             public void focusGained(FocusEvent e) {textChange();}

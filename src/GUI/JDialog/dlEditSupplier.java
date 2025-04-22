@@ -66,14 +66,14 @@ public class dlEditSupplier extends JDialog {
         // region Event
         btnEsc.addActionListener(_ -> dialog.dispose());
         btnSave.addActionListener(_ -> {
-            SupplierDTO supplierNew = new SupplierDTO(supplier.getId(), tfName.getText(), tfPhone.getText(), tfAddress.getText(), tfEmail.getText());
-            boolean check = SupplierBUS.getInstance().editSupplier(supplierNew);
-
-            if(check){
+            try {
+                SupplierDTO supplierNew = new SupplierDTO(supplier.getId(), tfName.getText(), tfPhone.getText(), tfAddress.getText(), tfEmail.getText());
+                SupplierBUS.getInstance().editSupplier(supplierNew);
                 JOptionPane.showMessageDialog(dialog, "Thay đổi thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 parentPanel.loadSupplier();
+            } catch (RuntimeException e) {
+                JOptionPane.showMessageDialog(dialog, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
-            else JOptionPane.showMessageDialog(dialog, SupplierBUS.getInstance().getError(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         });
         // endregion
 

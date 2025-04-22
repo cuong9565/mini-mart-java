@@ -38,17 +38,20 @@ public class pnChangePassword extends JPanel {
         // region Event
         btnEsc.addActionListener(_ -> dialog.dispose());
         btnSave.addActionListener(_ -> {
-            if(StaffBUS.getInstance().UpdateStaffPassword(
-                    accountLogin.getId(),
-                    String.valueOf(pfPassword.getPassword()),
-                    String.valueOf(pfNewPassword.getPassword()),
-                    String.valueOf(pfConfirmPassword.getPassword()))
-            ){
+            try {
+                StaffBUS.getInstance().UpdateStaffPassword(
+                        accountLogin.getId(),
+                        String.valueOf(pfPassword.getPassword()),
+                        String.valueOf(pfNewPassword.getPassword()),
+                        String.valueOf(pfConfirmPassword.getPassword())
+                );
                 JOptionPane.showMessageDialog(thisPanel, "Đổi mật khẩu thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 parentFrame.LoadThisAccount();
                 accountLogin.setPassword(String.valueOf(pfPassword.getPassword()));
             }
-            else JOptionPane.showMessageDialog(thisPanel, StaffBUS.getInstance().getError(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            catch (Exception e) {
+                JOptionPane.showMessageDialog(thisPanel, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
         });
         // endregion
 

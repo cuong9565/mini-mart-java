@@ -35,7 +35,7 @@ public class dlEditStaff extends JDialog {
 
     MyButtonGroup bgGender = new MyButtonGroup(new String[]{"Nam", "Nữ"});
 
-    JComboBox<String> cbRole = new MyJComboBox<>(new String[]{"Quản lý", "Thu ngân", "Nhân viên bán hàng", "Nhân viên kho"}, 12);
+    JComboBox<String> cbRole = new MyJComboBox<>(new String[]{"Quản trị viên", "Quản lý", "Thu ngân", "Nhân viên bán hàng", "Nhân viên kho"}, 12);
     JSpinner snSalary = new MyJSpinner(100, 100, 1000000000, 100);
 
     JButton btnSave = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Green, MyColor.LightGreen, "Xác nhận", SwingConstants.CENTER, SwingConstants.CENTER);
@@ -126,11 +126,13 @@ public class dlEditStaff extends JDialog {
         btnEsc.addActionListener(_ -> dialog.dispose());
         btnSave.addActionListener(_ -> {
             StaffDTO staffNew = new StaffDTO(staff.getId(), tfPhone.getText(), tfPassword.getText(), tfFirstName.getText(), tfLastName.getText(), (bgGender.radioButtons[0].isSelected()?"Nam":"Nữ"), tfAddress.getText(), (String) cbRole.getSelectedItem(), Double.parseDouble(snSalary.getValue().toString()), tfState.getText());
-            if(StaffBUS.getInstance().update(staffNew)){
+            try {
+                StaffBUS.getInstance().update(staffNew);
                 JOptionPane.showMessageDialog(dialog, "Sửa thông tin nhân viên thành công!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
                 parentPanel.loadStaff();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(dialog, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
-            else JOptionPane.showMessageDialog(dialog, StaffBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
         });
         // endregion11
         // region ADD

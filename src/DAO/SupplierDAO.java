@@ -16,6 +16,7 @@ public class SupplierDAO {
         return instance;
     }
 
+    // List
     public List<SupplierDTO> load() {
         List<SupplierDTO>list = new ArrayList<>();
         String sql = "select * from provider";
@@ -26,35 +27,47 @@ public class SupplierDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) list.add(new SupplierDTO(rs));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
         DataProvider.getInstance().CloseConnection(con);
         return list;
     }
 
-    public int addSuppliers(List<SupplierDTO> listSuppliers) {
-        int res = 0, pos = 1;
-        String sql = "insert into provider(name, phone, address, email) values(?,?,?,?)";
-        for(int i=1; i<listSuppliers.size(); i++) sql += ",(?,?,?,?)";
+    // Item
+    public SupplierDTO getSupplierById(int id) {
+        SupplierDTO supplier = new SupplierDTO();
+        String sql = "select * from provider where id = ?";
         Connection con = DataProvider.getInstance().getConnection();
-        try{
-            PreparedStatement ps = con.prepareStatement(sql);
-            for(SupplierDTO supplier: listSuppliers) {
-                ps.setString(pos++, supplier.getName());
-                ps.setString(pos++, supplier.getPhone());
-                ps.setString(pos++, supplier.getAddress());
-                ps.setString(pos++, supplier.getEmail());
-            }
-            res = ps.executeUpdate();
-        }catch (Exception e) {
-            throw new RuntimeException(e);
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) supplier = new SupplierDTO(rs);
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return supplier;
+    }
+
+    // Check
+    public boolean checkSamePhoneSupplier(String phone){
+        boolean res = false;
+        String sql = "select * from provider where phone = ?";
+        Connection con = DataProvider.getInstance().getConnection();
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, phone);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) res = true;
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
         }
         DataProvider.getInstance().CloseConnection(con);
         return res;
     }
 
-    public boolean addSupplier(SupplierDTO supplier) throws Exception {
-        int res = 0;
+    // Add
+    public void addSupplier(SupplierDTO supplier) throws Exception {
         String sql = "insert into Provider(name, phone, address, email) values(?, ?, ?, ?)";
         try {
             Connection con = DataProvider.getInstance().getConnection();
@@ -63,21 +76,16 @@ public class SupplierDAO {
             ps.setString(2, supplier.getPhone());
             ps.setString(3, supplier.getAddress());
             ps.setString(4, supplier.getEmail());
-            res = ps.executeUpdate();
+            ps.executeUpdate();
             DataProvider.getInstance().CloseConnection(con);
         }
         catch (Exception e) {
-            throw new Exception("Lỗi SQL: " + e.getMessage());
-        }
-
-        if(res>0) return true;
-        else {
-            throw new Exception("Không thể thêm nhà cung cấp!");
+            throw new Exception(e.getMessage());
         }
     }
 
-    public boolean editSupplier(SupplierDTO supplier) throws Exception {
-        int res = 0;
+    // Update
+    public void editSupplier(SupplierDTO supplier) throws Exception {
         String sql = "update provider set name = ?, phone = ?, address = ?, email = ? where id = ?";
         try {
             Connection con = DataProvider.getInstance().getConnection();
@@ -87,33 +95,26 @@ public class SupplierDAO {
             ps.setString(3, supplier.getAddress());
             ps.setString(4, supplier.getEmail());
             ps.setInt(5, supplier.getId());
-            res = ps.executeUpdate();
+            ps.executeUpdate();
             DataProvider.getInstance().CloseConnection(con);
         }
         catch (Exception e) {
-            throw new Exception("Lỗi SQL: " + e.getMessage());
-        }
-
-        if(res>0) return true;
-        else {
-            throw new Exception("Không thể thay đổi thông tin nhà cung cấp!");
+            throw new Exception(e.getMessage());
         }
     }
 
-    public boolean deleteSupplier(SupplierDTO supplier) throws Exception {
-        int res = 0;
+    // Delete
+    public void deleteSupplier(SupplierDTO supplier) throws Exception {
         String sql = "delete from provider where id = ?";
         try {
             Connection con = DataProvider.getInstance().getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, supplier.getId());
-            res = ps.executeUpdate();
+            ps.executeUpdate();
             DataProvider.getInstance().CloseConnection(con);
         }
         catch (Exception e) {
-            throw new Exception("Lỗi SQL: " + e.getMessage());
+            throw new Exception(e.getMessage());
         }
-        if(res>0) return true;
-        else throw new Exception("Không thể xóa nhà cung cấp!");
     }
 }

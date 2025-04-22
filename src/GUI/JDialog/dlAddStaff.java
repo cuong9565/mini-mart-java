@@ -32,7 +32,7 @@ public class dlAddStaff extends JDialog {
 
     MyButtonGroup bgGender = new MyButtonGroup(new String[]{"Nam", "Nữ"});
 
-    JComboBox<String> cbRole = new MyJComboBox<>(new String[]{"Quản lý", "Thu ngân", "Nhân viên bán hàng", "Nhân viên kho"}, 12);
+    JComboBox<String> cbRole = new MyJComboBox<>(new String[]{"Quản trị viên", "Quản lý", "Thu ngân", "Nhân viên bán hàng", "Nhân viên kho"}, 12);
     JSpinner snSalary = new MyJSpinner(100, 100, 1000000000, 100);
 
 
@@ -79,24 +79,22 @@ public class dlAddStaff extends JDialog {
         lbHeader.setBounds(0,0,540,60);
         // endregion
         // region Event
-        btnEsc.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        btnEsc.addActionListener(_ -> dialog.dispose());
+        btnSave.addActionListener(_ -> {
+            StaffDTO staff = new StaffDTO(-1, tfPhone.getText(), tfPassword.getText(), tfFirstName.getText(), tfLastName.getText(), (bgGender.radioButtons[0].isSelected()?"Nam":"Nữ"), tfAddress.getText(), (String) cbRole.getSelectedItem(), Double.parseDouble(snSalary.getValue().toString()), "");
+            try {
+                StaffBUS.getInstance().add(staff);
+                JOptionPane.showMessageDialog(dialog, "Thêm nhân viên thành công!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+                parentPanel.loadStaff();
                 dialog.dispose();
+
+            }catch (Exception e){
+                JOptionPane.showMessageDialog(dialog, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+
             }
         });
-        btnSave.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                StaffDTO staff = new StaffDTO(-1, tfPhone.getText(), tfPassword.getText(), tfFirstName.getText(), tfLastName.getText(), (bgGender.radioButtons[0].isSelected()?"Nam":"Nữ"), tfAddress.getText(), (String) cbRole.getSelectedItem(), Double.parseDouble(snSalary.getValue().toString()), "");
-                if(StaffBUS.getInstance().add(staff)){
-                    JOptionPane.showMessageDialog(dialog, "Thêm nhân viên thành công!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
-                    parentPanel.loadStaff();
-                    dialog.dispose();
-                }
-                else JOptionPane.showMessageDialog(dialog, StaffBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-        // endregion11
-        // region ADD
+        // endregion
+        // region Add
         add(lbLastName);
         add(tfLastName);
         add(lbFirstName);

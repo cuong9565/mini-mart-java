@@ -3,7 +3,6 @@ package DAO;
 import DTO.*;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ProductDAO {
@@ -46,7 +45,7 @@ public class ProductDAO {
     }
 
     public int add(int idProductType, int idProductDetail, int idOfferProduct, String name, double price, String unit, int quantity){
-        int res = 0;
+        int res;
         String sql = "insert into product(idProductType, idProductDetail, idOfferProduct, name, price, unit, quantity) values(?,?,?,?,?,?,?)";
         Connection con = DataProvider.getInstance().getConnection();
         try(PreparedStatement ps = con.prepareStatement(sql)){
@@ -67,7 +66,7 @@ public class ProductDAO {
     }
 
     public int update(int id, int idProductType, int idOfferProduct, String name, double price, String unit, int quantity){
-        int res = 0;
+        int res;
         Connection con = DataProvider.getInstance().getConnection();
         String sql = "update product set idProductType = ?, idOfferProduct = ?, name = ?, price = ?, unit = ?, quantity = ? where id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)){
@@ -89,7 +88,7 @@ public class ProductDAO {
     }
 
     public int updateQuantity(int id, int quantity){
-        int res = 0;
+        int res;
         Connection con = DataProvider.getInstance().getConnection();
         String sql = "update product set quantity = ? where id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)){
@@ -105,7 +104,7 @@ public class ProductDAO {
     }
 
     public int delete(ProductDTO product) {
-        int res = 0;
+        int res;
         Connection con = DataProvider.getInstance().getConnection();
         String sql = "delete from product where id = ?";
         try(PreparedStatement ps = con.prepareStatement(sql)){
@@ -113,7 +112,7 @@ public class ProductDAO {
             res = ps.executeUpdate();
         }
         catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e.getMessage());
         }
         DataProvider.getInstance().CloseConnection(con);
         return res;

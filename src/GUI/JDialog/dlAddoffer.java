@@ -43,12 +43,14 @@ public class dlAddoffer extends JDialog {
         btnEsc.addActionListener(_ -> dispose());
         btnSave.addActionListener(_ -> {
             OfferDTO offer = new OfferDTO(-1, spStartDate.getMyDate(), spEndDate.getMyDate());
-            if (OfferBUS.getInstance().add(offer)) {
+            try {
+                OfferBUS.getInstance().add(offer);
                 JOptionPane.showMessageDialog(this, "Thêm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 parentPanel.loadOffer();
                 dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, OfferBUS.getInstance().getError(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+            catch (Exception e){
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         });
         // region ADD

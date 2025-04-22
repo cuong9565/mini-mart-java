@@ -1,7 +1,7 @@
 package DAO;
 
+import Components.MyDate;
 import DTO.OfferDTO;
-import com.mysql.cj.x.protobuf.MysqlxPrepare;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +19,41 @@ public class OfferDAO {
         return instance;
     }
 
+    // Item
+    public OfferDTO getOfferById(int id) {
+        OfferDTO offer = new OfferDTO();
+        String sql = "select * from offer where id = ?";
+        Connection con = DataProvider.getInstance().getConnection();
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) offer = new OfferDTO(rs);
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return offer;
+    }
+
+    // Check
+    public boolean isSameDay(MyDate l, MyDate r) {
+        boolean res;
+        String sql = "select * from offer where startDate = ? and endDate = ?";
+        Connection con = DataProvider.getInstance().getConnection();
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setDate(1, l.getSqlDate());
+            ps.setDate(2, r.getSqlDate());
+            ResultSet rs = ps.executeQuery();
+            res = rs.next();
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return res;
+    }
+
     public List<OfferDTO> getList() {
         List<OfferDTO> list = new ArrayList<>();
         String sql = "select * from offer";
@@ -27,26 +62,23 @@ public class OfferDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) list.add(new OfferDTO(rs));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
         return list;
     }
 
-    public boolean add(OfferDTO offer) {
-        int res = 0;
-        String sql = "INSERT INTO offer(startDate, endDate) VALUES (?, ?)";
+    public void add(OfferDTO offer) {
+        String sql = "insert into offer(startDate, endDate) values (?, ?)";
         Connection con = DataProvider.getInstance().getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setDate(1, offer.getDateStart().getSqlDate());
             ps.setDate(2, offer.getDateEnd().getSqlDate());
-            res = ps.executeUpdate();
+            ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
         DataProvider.getInstance().CloseConnection(con);
-        return res > 0;
     }
-
 
     public boolean update(OfferDTO offer) {
         int res = 0;
@@ -59,23 +91,23 @@ public class OfferDAO {
             res = ps.executeUpdate();
         }
         catch (SQLException e){
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
         DataProvider.getInstance().CloseConnection(con);
         return res>0;
     }
 
-    public boolean delete(OfferDTO offer) {
-        int res = 0;
+    // Delete
+    public void delete(int id) {
         String sql = "delete from offer where id = ?";
         Connection con = DataProvider.getInstance().getConnection();
         try(PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, offer.getId());
-            res = ps.executeUpdate();
-            }
-            catch (SQLException e){
-                throw new RuntimeException(e);
-            }
-            return res>0;
+            ps.setInt(1, id);
+            ps.executeUpdate();
         }
+        catch (SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
+        DataProvider.getInstance().CloseConnection(con);
+    }
 }

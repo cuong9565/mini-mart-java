@@ -58,21 +58,25 @@ public class pnOffer extends JPanel {
             if (i >= 0) {
                 int id = Integer.parseInt(tbOffer.getFirstColumn(i));
                  OfferDTO offer = OfferBUS.getInstance().getOfferById(id);
-                 new dlEditoffer( thisPanel, offer);
+                 new dlEditoffer(thisPanel, offer);
             } else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần sửa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
         });
 
         btnDelete.addActionListener(_ -> {
             int i = tbOffer.getSelectedRow();
             if (i >= 0) {
-                int id = Integer.parseInt(tbOffer.getFirstColumn(i));
-                 OfferDTO offer = OfferBUS.getInstance().getOfferById(id);
-                 if (OfferBUS.getInstance().delete(offer)) {
-                     JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!");
-                     loadOffer();
-                 } else {
-                     JOptionPane.showMessageDialog(thisPanel, OfferBUS.getInstance().getError(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-                 }
+                int choose = JOptionPane.showConfirmDialog(thisPanel, "Bạn có chắc chắn muốn xóa?", "Thông báo", JOptionPane.YES_NO_OPTION);
+                if(choose==JOptionPane.YES_OPTION) {
+                    try {
+                        int id = Integer.parseInt(tbOffer.getFirstColumn(i));
+                        OfferBUS.getInstance().delete(id);
+                        JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!");
+                        loadOffer();
+                    }
+                    catch(Exception e) {
+                         JOptionPane.showMessageDialog(thisPanel, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
             } else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xóa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
         });
 
@@ -85,16 +89,21 @@ public class pnOffer extends JPanel {
         btnIn.addActionListener(_ -> {
             List<Object[]> list = tbOffer.ImportExel(2);
             if(list==null) return;
-            String error = null;
-            int success = 0;
-            for (Object[] ob : list) {
-                OfferDTO offer = new OfferDTO(-1, ob[0].toString(), ob[1].toString());
-                if(OfferBUS.getInstance().add(offer)) success++;
-                else error += ("\n" + OfferBUS.getInstance().getError());
+            int choose = JOptionPane.showConfirmDialog(thisPanel, "Bạn có chắc chắn muốn nhập?", "Thông báo", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            if(choose==JOptionPane.YES_OPTION) {
+                int success = 0;
+                try {
+                    for (Object[] ob : list) {
+                        OfferDTO offer = new OfferDTO(-1, ob[0].toString(), ob[1].toString());
+                        OfferBUS.getInstance().add(offer);
+                        success++;
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(thisPanel, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+                JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + success + " thời gian giảm giá", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                loadOffer();
             }
-            JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + success + " thời gian giảm giá");
-            if(error!=null) JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + error);
-            loadOffer();
         });
 
         btnOut.addActionListener(_ -> tbOffer.ExportExel("Danh sách khuyến mãi"));
