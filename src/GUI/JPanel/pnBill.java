@@ -226,17 +226,17 @@ public class pnBill extends JPanel {
                             cell.setHorizontalAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
                             table.addCell(cell);
 
-                            cell = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(String.valueOf(data[2]) + "đ", fontNormal));
+                            cell = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(String.valueOf(data[2]) , fontNormal));
                             cell.setPadding(5);
                             cell.setHorizontalAlignment(com.itextpdf.text.Element.ALIGN_RIGHT);
                             table.addCell(cell);
 
-                            cell = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(String.valueOf(data[4]) + "%", fontNormal));
+                            cell = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(String.valueOf(data[4]) , fontNormal));
                             cell.setPadding(5);
                             cell.setHorizontalAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
                             table.addCell(cell);
 
-                            cell = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(String.valueOf(data[6]) + "đ", fontNormal));
+                            cell = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(String.valueOf(data[6]) , fontNormal));
                             cell.setPadding(5);
                             cell.setHorizontalAlignment(com.itextpdf.text.Element.ALIGN_RIGHT);
                             table.addCell(cell);
@@ -260,7 +260,6 @@ public class pnBill extends JPanel {
                         thankYou.setAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
                         document.add(thankYou);
                         document.close();
-
                         JOptionPane.showMessageDialog(thisPanel, "Xuất file PDF thành công:\n" + fileName);
                     }
                 } catch (Exception ex) {

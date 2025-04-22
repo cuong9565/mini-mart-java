@@ -62,6 +62,7 @@ public class pnProduct extends JPanel {
         cbSearchad2.setBounds(110, 120, 90, 35);
         cbSearchad3.setBounds(210, 120, 110, 35);
         btnsearch.setBounds(330,120,90,35);
+
         // endregion
         // region EVENT CHO PANEL NÀY
         addComponentListener(new ComponentAdapter() {
@@ -82,15 +83,13 @@ public class pnProduct extends JPanel {
         btnDelete.addActionListener(_ -> {
             int i = tbProduct.getSelectedRow();
             if(i>=0){
-                try {
-                    int id = Integer.parseInt(tbProduct.getFirstColumn(i));
-                    ProductDTO product = ProductBUS.getInstance().getItemById(id);
-                    ProductBUS.getInstance().delete(product);
+                int id = Integer.parseInt(tbProduct.getFirstColumn(i));
+                ProductDTO product = ProductBUS.getInstance().getItemById(id);
+                if(ProductBUS.getInstance().delete(product)){
                     JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin sản phẩm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     loadProduct();
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(thisPanel, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
+                else JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + ProductBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
             }
             else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xóa!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
 
@@ -145,7 +144,7 @@ public class pnProduct extends JPanel {
             public void removeUpdate(DocumentEvent e) {textChange();}
             public void changedUpdate(DocumentEvent e) {textChange();}
         });
-        btnsearch.addActionListener(_->{
+        btnsearch.addActionListener(e->{
          List<ProductDTO> newproduct = ProductBUS.getInstance().SearchAd(cbSearchad1.getSelectedIndex(),cbSearchad2.getSelectedIndex(),cbSearchad3.getSelectedIndex());
          if(newproduct.isEmpty()){
              JOptionPane.showMessageDialog(this,"Không có sản phẩm nào phù hợp !","Thông Báo", JOptionPane.INFORMATION_MESSAGE);
