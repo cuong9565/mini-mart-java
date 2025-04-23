@@ -2,6 +2,7 @@ package GUI.JPanel;
 
 import BUS.ProductBUS;
 import BUS.StaffBUS;
+import BUS.SupplierBUS;
 import Components.*;
 import DTO.*;
 import GUI.JDialog.dlAddStaff;
@@ -97,11 +98,12 @@ public class pnStaff extends JPanel {
         btnIn.addActionListener(_ -> {
             List<Object[]> list = tbStaff.ImportExel(8);
             if(list==null) return;
-            int success = 0;
             int select = JOptionPane.showConfirmDialog(thisPanel, "Bạn có chắc chắn muốn thêm?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (select == JOptionPane.YES_OPTION) {
-                try {
-                    for (Object[] ob : list) {
+            if(select == JOptionPane.YES_OPTION){
+                int success = 0;
+                StringBuilder error = new StringBuilder();
+                for (Object[] ob : list){
+                    try {
                         String lastName = (String) ob[0];
                         String firstName = (String) ob[1];
                         String gender = (String) ob[2];
@@ -114,10 +116,12 @@ public class pnStaff extends JPanel {
                         StaffBUS.getInstance().add(staff);
                         success++;
                     }
+                    catch (RuntimeException e) {
+                        error.append(e.getMessage()).append("\n");
+                    }
                 }
-                catch (Exception e) {
-                    JOptionPane.showMessageDialog(thisPanel,e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-                }
+                if(!error.isEmpty())
+                    JOptionPane.showMessageDialog(thisPanel, error.toString(), "Lỗi", JOptionPane.INFORMATION_MESSAGE);
                 JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + success + " nhân viên", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 loadStaff();
             }

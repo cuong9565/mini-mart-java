@@ -67,23 +67,20 @@ public class dlAddCustomer extends JDialog {
         // endregion
 
         // region Event
-        btnEsc.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        btnEsc.addActionListener(_ -> dialog.dispose());
+        btnSave.addActionListener(_ -> {
+            CustomerDTO customer = new CustomerDTO(-1, tfPhone.getText(), tfLastName.getText(), tfFirstName.getText(), tfAddress.getText(), ((bgGender.radioButtons[0].isSelected())?"Nam":"Nữ"), "Mở");
+            try{
+                CustomerBUS.getInstance().add(customer);
+                JOptionPane.showMessageDialog(dialog, "Thêm khách hàng thành công","Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                parentPanel.loadCustomer();
                 dialog.dispose();
             }
-        });
-        btnSave.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                CustomerDTO customer = new CustomerDTO(-1, tfPhone.getText(), tfLastName.getText(), tfFirstName.getText(), tfAddress.getText(), ((bgGender.radioButtons[0].isSelected())?"Nam":"Nữ"), "Mở");
-                if(CustomerBUS.getInstance().add(customer)){
-                    JOptionPane.showMessageDialog(dialog, "Thêm khách hàng thành công!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
-                    parentPanel.loadCustomer();
-                    dialog.dispose();
-                }
-                else JOptionPane.showMessageDialog(dialog, CustomerBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
+            catch(Exception e){
+                JOptionPane.showMessageDialog(dialog, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         });
-        // endregion11
+        // endregion
 
         add(lbLastName);
         add(tfLastName);
@@ -97,7 +94,6 @@ public class dlAddCustomer extends JDialog {
         for(JRadioButton rb: bgGender.radioButtons) add(rb);
         add(btnSave);
         add(btnEsc);
-
         add(lbHeader);
         add(pnMain);
 

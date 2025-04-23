@@ -9,8 +9,6 @@ import java.util.List;
 public class TypeProductBUS {
     private static TypeProductBUS instance = null;
     private static List<TypeProductDTO>list = null;
-    private static String error = null;
-    private static int numLine = 0;
 
     public TypeProductBUS() {}
     public static TypeProductBUS getInstance() {
@@ -18,24 +16,25 @@ public class TypeProductBUS {
         return instance;
     }
 
+    // Check Same Name
+    public boolean isSameName(String name){
+        return TypeProductDAO.getInstance().isSameName(name);
+    }
+
+    // Item
     public TypeProductDTO getItemById(int id){
-        for(TypeProductDTO item : list)
-            if(item.getId() == id) return item;
-        return null;
+        return TypeProductDAO.getInstance().getItemById(id);
     }
-
     public TypeProductDTO getItemByName(String name){
-        for (TypeProductDTO item : getList())
-            if(item.getName().equals(name)) return item;
-        return null;
+        return TypeProductDAO.getInstance().getItemByName(name);
     }
 
+    // List
     public List<TypeProductDTO> getList(){
         list = TypeProductDAO.getInstance().getList();
         return list;
     }
-
-    public List<TypeProductDTO> getListBy(int col, String txt){
+    public List<TypeProductDTO> getListBy(int col, String txt){ // Search
         List<TypeProductDTO>products = new ArrayList<>();
         for (TypeProductDTO product: list) switch (col){
             case 0: if(String.valueOf(product.getId()).contains(txt)) products.add(product); break;
@@ -44,57 +43,45 @@ public class TypeProductBUS {
         return products;
     }
 
-    public boolean add(TypeProductDTO product){
-        if(product.getName().isEmpty()){
-            error = "Không được để trống thông tin!!!";
-            return false;
-        }
+    // Insert
+    public void add(TypeProductDTO product){
         try{
+            if(product.getName().isEmpty())
+                throw new Exception("Không được để trống thông tin!!!");
+
+            if(isSameName(product.getName()))
+                throw new Exception(String.format("Tên loại '%s' đã tồn tại", product.getName()));
+
             TypeProductDAO.getInstance().add(product);
         }
         catch (Exception e){
-            error = "Lỗi: " + e.getMessage();
-            return false;
+            throw new RuntimeException(e.getMessage());
         }
-        return true;
     }
 
-    public boolean adds(List<TypeProductDTO> list){
+    // Update
+    public void edit(TypeProductDTO newProduct){
         try {
-            numLine = TypeProductDAO.getInstance().adds(list);
+            if(newProduct.getName().isEmpty())
+                throw new Exception("Không được để trống thông tin!!!");
+
+            TypeProductDTO currProduct = TypeProductDAO.getInstance().getItemById(newProduct.getId());
+            if(isSameName(newProduct.getName()) && !currProduct.getName().equals(newProduct.getName()))
+                throw new Exception(String.format("Tên loại '%s' đã tồn tại", newProduct.getName()));
+
+            TypeProductDAO.getInstance().edit(newProduct);
         }
         catch (Exception e){
-            error = e.getMessage();
-            return false;
+            throw new RuntimeException(e.getMessage());
         }
-        return true;
     }
 
-    public boolean edit(TypeProductDTO product){
-        if(product.getName().isEmpty()){
-            error = "Không được để trống thông tin!!!";
-            return false;
-        }
-        try {
-            TypeProductDAO.getInstance().edit(product);
-        }
-        catch (Exception e){
-            error = "Lỗi: " + e.getMessage();
-            return false;
-        }
-        return true;
-    }
-
-    public boolean delete(TypeProductDTO product){
+    // Delete
+    public void delete(TypeProductDTO product){
         try {
             TypeProductDAO.getInstance().delete(product);
         }catch (Exception e){
-            error = "Lỗi: " + e.getMessage();
-            return false;
+            throw new RuntimeException(e.getMessage());
         }
-        return true;
     }
-
-    public String getError(){return error;}
-    public int getNumLine(){return numLine;}
 }

@@ -47,12 +47,13 @@ public class dlAddOfferBill extends JDialog {
         btnSave.addActionListener(_ -> {
             OfferDTO offer = (OfferDTO) cbTime.getSelectedItem();
             OfferBillDTO offerProduct = new OfferBillDTO(-1, offer, Integer.parseInt(spDiscount.getValue().toString()));
-            if (OfferBillBUS.getInstance().add(offerProduct)) {
+            try {
+                OfferBillBUS.getInstance().add(offerProduct);
                 JOptionPane.showMessageDialog(this, "Thêm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 parentPanel.loadOfferBill();
                 dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, OfferBillBUS.getInstance().getError(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } catch (RuntimeException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         });
         // region ADD

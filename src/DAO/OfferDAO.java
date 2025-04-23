@@ -36,6 +36,23 @@ public class OfferDAO {
         return offer;
     }
 
+    public OfferDTO getItemByDate(MyDate startDate, MyDate endDate) {
+        OfferDTO offer = new OfferDTO();
+        String sql = "select * from offer where startDate = ? and endDate = ?";
+        Connection con = DataProvider.getInstance().getConnection();
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setDate(1, startDate.getSqlDate());
+            ps.setDate(2, endDate.getSqlDate());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) offer = new OfferDTO(rs);
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return offer;
+    }
+
     // Check
     public boolean isSameDay(MyDate l, MyDate r) {
         boolean res;

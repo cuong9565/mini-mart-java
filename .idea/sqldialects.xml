@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/src/DAO/CustomerDAO.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/DAO/DetailProductDAO.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/DAO/ImportDAO.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/DAO/OfferBillDAO.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/DAO/OfferDAO.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/DAO/OfferProductDAO.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/DAO/ProductDAO.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/DAO/ProductStatisticDAO.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/DAO/StaffDAO.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/DAO/SupplierDAO.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/DAO/TypeProductDAO.java" dialect="GenericSQL" />
   </component>
 </project>

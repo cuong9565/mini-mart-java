@@ -7,9 +7,7 @@ import java.util.List;
 
 public class CustomerBUS {
     private static CustomerBUS instance = null;
-    private static String error = null;
-    private static int numLine = 0;
-    private static List<CustomerDTO>customerList;
+    private static List<CustomerDTO>customerList = null;
 
     public CustomerBUS() {}
     public static CustomerBUS getInstance() {
@@ -17,84 +15,25 @@ public class CustomerBUS {
         return instance;
     }
 
+    // Check
+    public boolean isSamePhone(String phone){
+        return CustomerDAO.getInstance().isSamePhone(phone);
+    }
     public int getNumberCustomer() {
         return CustomerDAO.getInstance().getNumberCustomer();
     }
 
+    // Item
     public CustomerDTO getItemById(int id){
         return CustomerDAO.getInstance().getItemById(id);
     }
 
+    // List
     public List<CustomerDTO>getAllList(){
         customerList = CustomerDAO.getInstance().getAllList();
         return customerList;
     }
-
-    public boolean add(CustomerDTO customer) {
-        if(customer.getPhone().isEmpty() || customer.getLastName().isEmpty() || customer.getFirstName().isEmpty() || customer.getAddress().isEmpty()) {
-            error = "Dữ liệu không được để trống!!!";
-            return false;
-        }
-        if(!customer.getPhone().matches("^0[0-9]{8,10}$")){
-            error = "Số điện thoại định dạng không hợp lệ!!!";
-            return false;
-        }
-        try{
-            CustomerDAO.getInstance().add(customer);
-        }
-        catch (Exception e) {
-            error = "Lỗi SQL: " + e.getMessage();
-            return false;
-        }
-        return true;
-    }
-
-    public boolean adds(List<CustomerDTO> customers) {
-        if(customers.isEmpty() || customers==null) {
-            error = "Dữ liệu không hợp lệ";
-            return false;
-        }
-        try{
-            numLine = CustomerDAO.getInstance().adds(customers);
-        }
-        catch (Exception e) {
-            error = "Lỗi " + e.getMessage();
-            return false;
-        }
-        return true;
-    }
-
-    public boolean update(CustomerDTO customer) {
-        if(customer.getPhone().isEmpty() || customer.getLastName().isEmpty() || customer.getFirstName().isEmpty() || customer.getAddress().isEmpty()) {
-            error = "Dữ liệu không được để trống!!!";
-            return false;
-        }
-        if(!customer.getPhone().matches("^0[0-9]{8,10}$")){
-            error = "Số điện thoại định dạng không hợp lệ!!!";
-            return false;
-        }
-        try {
-            CustomerDAO.getInstance().update(customer);
-        }
-        catch (Exception e) {
-            error = "Lỗi SQL: " + e.getMessage();
-            return false;
-        }
-        return true;
-    }
-
-    public boolean delete(CustomerDTO customer) {
-        try{
-            CustomerDAO.getInstance().delete(customer);
-        }catch (Exception e) {
-            error = e.getMessage();
-        }
-        return true;
-    }
-
-    public String getError(){return error;}
-    public int getNumLine(){return numLine;}
-    public List<CustomerDTO>getSupplierListBy(int col, String txt){
+    public List<CustomerDTO>getSupplierListBy(int col, String txt){ // Search
         List<CustomerDTO>list = new ArrayList<>();
         for (CustomerDTO customer: customerList) {
             switch (col) {
@@ -108,5 +47,53 @@ public class CustomerBUS {
             }
         }
         return list;
+    }
+
+    // Insert
+    public void add(CustomerDTO customer) {
+        try{
+            if(customer.getPhone().isEmpty() || customer.getLastName().isEmpty() || customer.getFirstName().isEmpty() || customer.getAddress().isEmpty())
+                throw new Exception("Dữ liệu không được để trống!!!");
+
+            if(!customer.getPhone().matches("^0[0-9]{8,10}$"))
+                throw new Exception("Số điện thoại định dạng không hợp lệ!!!");
+
+            if(isSamePhone(customer.getPhone()))
+                throw new Exception(String.format("Số điện thoại %s đã tồn tại!!!", customer.getPhone()));
+
+            CustomerDAO.getInstance().add(customer);
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    // Update
+    public void update(CustomerDTO newCustomer) {
+        try {
+            if(newCustomer.getPhone().isEmpty() || newCustomer.getLastName().isEmpty() || newCustomer.getFirstName().isEmpty() || newCustomer.getAddress().isEmpty())
+                throw new Exception("Dữ liệu không được để trống!!!");
+
+            if(!newCustomer.getPhone().matches("^0[0-9]{8,10}$"))
+                throw new Exception("Số điện thoại định dạng không hợp lệ!!!");
+
+            CustomerDTO currCustomer = CustomerDAO.getInstance().getItemById(newCustomer.getId());
+            if(isSamePhone(newCustomer.getPhone()) && !currCustomer.getPhone().equals(newCustomer.getPhone()))
+                throw new Exception(String.format("Số điện thoại %s đã tồn tại!!!", newCustomer.getPhone()));
+
+            CustomerDAO.getInstance().update(newCustomer);
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    // Delete
+    public void delete(CustomerDTO customer) {
+        try{
+            CustomerDAO.getInstance().delete(customer);
+        }catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

@@ -11,6 +11,7 @@ import java.util.List;
 
 public class DetailProductDAO {
     private static DetailProductDAO instance = null;
+
     private DetailProductDAO() {}
     public static DetailProductDAO getInstance() {
         if (instance == null) instance = new DetailProductDAO();
@@ -32,49 +33,43 @@ public class DetailProductDAO {
         return list;
     }
 
-    public boolean add(DetailProductDTO dp) {
-        int res;
+    public void add(DetailProductDTO dp) {
         Connection con = DataProvider.getInstance().getConnection();
         String sql = "insert into productdetail(detailInfo) values(?)";
         try(PreparedStatement ps = con.prepareStatement(sql)){
             ps.setString(1, dp.getText());
-            res = ps.executeUpdate();
+            ps.executeUpdate();
         }
         catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
         DataProvider.getInstance().CloseConnection(con);
-        return res>0;
     }
 
-    public boolean update(DetailProductDTO dp) {
-        int res;
+    public void update(DetailProductDTO dp) {
         Connection con = DataProvider.getInstance().getConnection();
         String sql = "update productdetail set detailInfo = ? where id = ?";
         try(PreparedStatement ps = con.prepareStatement(sql)){
             ps.setString(1, dp.getText());
             ps.setInt(2, dp.getId());
-            res = ps.executeUpdate();
+            ps.executeUpdate();
         }
         catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
         DataProvider.getInstance().CloseConnection(con);
-        return res>0;
     }
 
-    public boolean delete(DetailProductDTO dp) {
-        int res;
+    public void delete(DetailProductDTO dp) {
         Connection con = DataProvider.getInstance().getConnection();
         String sql = "delete from productdetail where id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)){
             ps.setInt(1, dp.getId());
-            res = ps.executeUpdate();
+            ps.executeUpdate();
         }
         catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
         DataProvider.getInstance().CloseConnection(con);
-        return res>0;
     }
 }

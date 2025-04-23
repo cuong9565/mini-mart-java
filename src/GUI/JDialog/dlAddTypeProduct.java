@@ -8,8 +8,6 @@ import GUI.JPanel.pnTypeProduct;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class dlAddTypeProduct extends JDialog {
     JPanel pnMain = new MyJPanel(MyColor.White);
@@ -41,26 +39,21 @@ public class dlAddTypeProduct extends JDialog {
         lbHeader.setBounds(0,0,540,60);
         // endregion
 
-        // region Event
-        btnEsc.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        // region event
+        btnEsc.addActionListener(_ -> dialog.dispose());
+        btnSave.addActionListener(_ -> {
+            try {
+                TypeProductDTO product = new TypeProductDTO(-1, tfName.getText());
+                TypeProductBUS.getInstance().add(product);
+                JOptionPane.showMessageDialog(dialog, "Thêm thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                parentPanel.loadTypeProduct();
                 dialog.dispose();
             }
-        });
-        btnSave.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                TypeProductDTO product = new TypeProductDTO(-1, tfName.getText());
-                boolean check = TypeProductBUS.getInstance().add(product);
-
-                if(check){
-                    JOptionPane.showMessageDialog(dialog, "Thêm thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    parentPanel.loadTypeProduct();
-                    dialog.dispose();
-                }
-                else JOptionPane.showMessageDialog(dialog, TypeProductBUS.getInstance().getError(), "Thông báo", JOptionPane.WARNING_MESSAGE);
+            catch (Exception e) {
+                JOptionPane.showMessageDialog(dialog, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         });
-        // endregion11
+        // endregion
 
         add(lbName);
         add(tfName);

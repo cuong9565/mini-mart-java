@@ -134,12 +134,13 @@ public class dlEditProduct extends JDialog {
             double price = Double.parseDouble(snPrice.getValue().toString());
             String unit = tfUnit.getText();
             int quantity = Integer.parseInt(snQuantity.getValue().toString());
-
-            if(ProductBUS.getInstance().update(id, idProductType, detail, idOfferProduct, name, price, unit, quantity)){
+            try {
+                ProductBUS.getInstance().update(id, idProductType, detail, idOfferProduct, name, price, unit, quantity);
                 JOptionPane.showMessageDialog(dialog, "Thay đổi thông tin sản phẩm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 parentPanel.loadProduct();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(dialog, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
-            else JOptionPane.showMessageDialog(dialog, "Lỗi: " + ProductBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
         });
         // endregion
         // region ADD

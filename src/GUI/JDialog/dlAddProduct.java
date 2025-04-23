@@ -44,12 +44,13 @@ public class dlAddProduct extends JDialog {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
-        // region SET TEXT
+        // region setText
         for(TypeProductDTO type: TypeProductBUS.getInstance().getList()) cbType.addItem(type);
         for(OfferProductDTO offerProduct: OfferProductBUS.getInstance().getListDiscount()) cbDiscount.addItem(offerProduct);
         for(OfferDTO offer: OfferBUS.getInstance().getListByOfferProduct((OfferProductDTO) cbDiscount.getSelectedItem())) cbOffer.addItem(offer);
         // endregion
-        // region SET BOUNDS
+
+        // region setBounds
         pnMain.setBounds(0,0,760,440);
         lbName.setBounds(50,80,200,20);
         tfName.setBounds(50,100,200,30);
@@ -75,7 +76,8 @@ public class dlAddProduct extends JDialog {
         lbHeader.setBackground(MyColor.DarkBlue);
         lbHeader.setBounds(0,0,760,60);
         // endregion
-        // region Event
+
+        // region setEvent
         cbDiscount.addActionListener(_ -> {
            int i = cbDiscount.getSelectedIndex();
            if(i!=posCbDiscount) {
@@ -98,15 +100,18 @@ public class dlAddProduct extends JDialog {
             double price = Double.parseDouble(snPrice.getValue().toString());
             String unit = tfUnit.getText();
             int quantity = 0;
-            if(ProductBUS.getInstance().add(idProductType, detail, idOfferProduct, name, price, unit, quantity)){
-                JOptionPane.showMessageDialog(dialog, "Thêm thông tin sản phẩm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            try {
+                ProductBUS.getInstance().add(idProductType, detail, idOfferProduct, name, price, unit, quantity);
+                JOptionPane.showMessageDialog(dialog, "Thêm thông tin sản phẩm thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 parentPanel.loadProduct();
                 dispose();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(dialog, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
-            else JOptionPane.showMessageDialog(dialog, "Lỗi: " + ProductBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
         });
         // endregion
-        // region ADD
+
+        // region add
         add(lbName);
         add(tfName);
         add(lbType);

@@ -21,6 +21,16 @@ public class OfferBUS {
         list = OfferDAO.getInstance().getList();
         return list;
     }
+    public List<OfferDTO> getListByOfferProduct(OfferProductDTO offerProduct) {
+        List<OfferDTO> ls = new ArrayList<>();
+        if (offerProduct.getId() == 0) ls.add(new OfferDTO());
+        else {
+            for (OfferProductDTO op : OfferProductBUS.getInstance().load())
+                if (op.getDiscount() == offerProduct.getDiscount())
+                    ls.add(op.getOffer());
+        }
+        return ls;
+    }
 
     // Search
     public List<OfferDTO> getListBy(int col, String txt) {
@@ -39,27 +49,13 @@ public class OfferBUS {
     public OfferDTO getOfferById(int id) {
         return OfferDAO.getInstance().getOfferById(id);
     }
-
-    public OfferDTO getItemByDate(String dateStart, String dateEnd) {
-        for (OfferDTO o : getList())
-            if(o.getDateStart().toString().contains(dateStart) && o.getDateEnd().toString().contains(dateEnd)) return o;
-        return null;
+    public OfferDTO getItemByDate(MyDate startDate, MyDate endDate) {
+        return OfferDAO.getInstance().getItemByDate(startDate, endDate);
     }
 
     // Check
     public boolean isSameDay(MyDate l, MyDate r) {
         return OfferDAO.getInstance().isSameDay(l, r);
-    }
-
-    public List<OfferDTO> getListByOfferProduct(OfferProductDTO offerProduct) {
-        List<OfferDTO> ls = new ArrayList<>();
-        if (offerProduct.getId() == 0) ls.add(new OfferDTO());
-        else {
-            for (OfferProductDTO op : OfferProductBUS.getInstance().getList())
-                if (op.getDiscount() == offerProduct.getDiscount())
-                    ls.add(op.getOffer());
-        }
-        return ls;
     }
 
     // Insert

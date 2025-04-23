@@ -66,12 +66,18 @@ public class pnOfferBill extends JPanel {
         btnDelete.addActionListener(_ -> {
             int i = tbOfferBill.getSelectedRow();
             if (i >= 0) {
-                int id = Integer.parseInt(tbOfferBill.getFirstColumn(i));
-                if(OfferBillBUS.getInstance().delete(id)){
-                    JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                int choose = JOptionPane.showConfirmDialog(thisPanel, "Bạn có chắc muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+                if(choose == JOptionPane.YES_OPTION) {
+                    int id = Integer.parseInt(tbOfferBill.getFirstColumn(i));
+                    try {
+                        OfferBillBUS.getInstance().delete(id);
+                        JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    catch (Exception e){
+                        JOptionPane.showMessageDialog(thisPanel, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    }
                     loadOfferBill();
                 }
-                else JOptionPane.showMessageDialog(thisPanel, OfferBillBUS.getInstance().getError(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             } else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xóa!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         });
 
@@ -84,19 +90,27 @@ public class pnOfferBill extends JPanel {
         btnIn.addActionListener(_ -> {
             List<Object[]> list = tbOfferBill.ImportExel(3);
             if(list==null) return;
-            String error = "";
-            int success = 0;
-            for (Object[] ob : list) {
-                OfferDTO offer = OfferBUS.getInstance().getItemByDate(ob[0].toString(), ob[1].toString());
-                OfferBillDTO offerProduct = new OfferBillDTO(-1, offer, Integer.parseInt(ob[2].toString().replace("%", "")));
-                if(OfferBillBUS.getInstance().add(offerProduct)) success++;
-                else {
-                    error = (OfferBillBUS.getInstance().getError());
+            int choose = JOptionPane.showConfirmDialog(thisPanel, "Bạn có chắc chắn muốn thêm?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(choose == JOptionPane.YES_OPTION){
+                int success = 0;
+                StringBuilder error = new StringBuilder();
+                for (Object[] ob : list) {
+                    try{
+                        OfferDTO offer = OfferBUS.getInstance().getItemByDate(new MyDate(ob[0].toString()), new MyDate(ob[1].toString()));
+                        OfferBillDTO offerProduct = new OfferBillDTO(-1, offer, Integer.parseInt(ob[2].toString().replace("%", "")));
+                        OfferBillBUS.getInstance().add(offerProduct);
+                        success++;
+                    }
+                    catch (Exception e){
+                        error.append(e.getMessage()).append("\n");
+                    }
+
                 }
+                if(!error.isEmpty())
+                    JOptionPane.showMessageDialog(thisPanel, error.toString(), "Lỗi", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(thisPanel, "Đã thêm thành công " + success + " thông tin", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                loadOfferBill();
             }
-            JOptionPane.showMessageDialog(thisPanel, "Đã thêm thành công " + success + " thông tin");
-            if(!error.isEmpty()) JOptionPane.showMessageDialog(thisPanel, error, "Lỗi", JOptionPane.ERROR_MESSAGE);
-            loadOfferBill();
         });
         btnOut.addActionListener(_ -> tbOfferBill.ExportExel("Danh sách giảm giá hóa đơn"));
         cbSearch.addActionListener(_ -> textChange());

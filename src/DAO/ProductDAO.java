@@ -14,7 +14,52 @@ public class ProductDAO {
         return instance;
     }
 
-    public List<ProductDTO> getList() {
+    // Check same product
+    public boolean isSameProduct(String name, String unit){
+        boolean res;
+        Connection con = DataProvider.getInstance().getConnection();
+        String sql = "select * from product where name=? and unit=?";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, name);
+            ps.setString(2, unit);
+            ResultSet rs = ps.executeQuery();
+            res = rs.next();
+            rs.close();
+        }
+        catch(Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+        return res;
+    }
+
+    // Item
+    public ProductDTO getItemById(int id) {
+        ProductDTO product = new ProductDTO();
+        Connection con = DataProvider.getInstance().getConnection();
+        String sql =
+                "select * " +
+                "from product " +
+                "left join producttype on product.idProductType = producttype.id " +
+                "left join productdetail on product.idProductDetail = productdetail.id " +
+                "left join offerproduct on product.idOfferProduct = offerproduct.id " +
+                "left join offer on offerproduct.idOffer = offer.id " +
+                "where product.id = ? " +
+                "order by product.id;";
+        try (PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) product = new ProductDTO(rs);
+            rs.close();
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return product;
+    }
+
+    // List
+    public List<ProductDTO> load() {
         List<ProductDTO> list = new ArrayList<>();
         Connection con = DataProvider.getInstance().getConnection();
         String sql =
@@ -26,26 +71,19 @@ public class ProductDAO {
                 "left join offer on offerproduct.idOffer = offer.id " +
                 "order by product.id asc;";
 
-        try (PreparedStatement stmt = con.prepareStatement(sql)){
-            ResultSet rs = stmt.executeQuery();
+        try (PreparedStatement ps = con.prepareStatement(sql)){
+            ResultSet rs = ps.executeQuery();
             while(rs.next()) list.add(new ProductDTO(rs));
+            rs.close();
         } catch (SQLException e) {
-            throw new RuntimeException("Lỗi: " + e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
         DataProvider.getInstance().CloseConnection(con);
         return list;
     }
 
-    public ProductDTO getItemById(int id) {
-        for(ProductDTO product : getList()) {
-            if(product.getId() == id)
-                return product;
-        }
-        return null;
-    }
-
-    public int add(int idProductType, int idProductDetail, int idOfferProduct, String name, double price, String unit, int quantity){
-        int res;
+    // Insert
+    public void add(int idProductType, int idProductDetail, int idOfferProduct, String name, double price, String unit, int quantity){
         String sql = "insert into product(idProductType, idProductDetail, idOfferProduct, name, price, unit, quantity) values(?,?,?,?,?,?,?)";
         Connection con = DataProvider.getInstance().getConnection();
         try(PreparedStatement ps = con.prepareStatement(sql)){
@@ -57,16 +95,15 @@ public class ProductDAO {
             ps.setDouble(5, price);
             ps.setString(6, unit);
             ps.setInt(7, quantity);
-            res = ps.executeUpdate();
+            ps.executeUpdate();
         }catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e.getMessage());
         }
         DataProvider.getInstance().CloseConnection(con);
-        return res;
     }
 
-    public int update(int id, int idProductType, int idOfferProduct, String name, double price, String unit, int quantity){
-        int res;
+    // Update
+    public void update(int id, int idProductType, int idOfferProduct, String name, double price, String unit, int quantity){
         Connection con = DataProvider.getInstance().getConnection();
         String sql = "update product set idProductType = ?, idOfferProduct = ?, name = ?, price = ?, unit = ?, quantity = ? where id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)){
@@ -78,44 +115,39 @@ public class ProductDAO {
             ps.setString(5, unit);
             ps.setInt(6, quantity);
             ps.setInt(7, id);
-            res = ps.executeUpdate();
-        }
-        catch (SQLException e) {
-            throw new RuntimeException();
-        }
-        DataProvider.getInstance().CloseConnection(con);
-        return res;
-    }
-
-    public int updateQuantity(int id, int quantity){
-        int res;
-        Connection con = DataProvider.getInstance().getConnection();
-        String sql = "update product set quantity = ? where id = ?";
-        try (PreparedStatement ps = con.prepareStatement(sql)){
-            ps.setInt(1, quantity);
-            ps.setInt(2, id);
-            res = ps.executeUpdate();
-        }
-        catch (Exception e) {
-            throw new RuntimeException();
-        }
-        DataProvider.getInstance().CloseConnection(con);
-        return res;
-    }
-
-    public int delete(ProductDTO product) {
-        int res;
-        Connection con = DataProvider.getInstance().getConnection();
-        String sql = "delete from product where id = ?";
-        try(PreparedStatement ps = con.prepareStatement(sql)){
-            ps.setInt(1, product.getId());
-            res = ps.executeUpdate();
+            ps.executeUpdate();
         }
         catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
         DataProvider.getInstance().CloseConnection(con);
-        return res;
+    }
+
+    public void updateQuantity(int id, int quantity){
+        Connection con = DataProvider.getInstance().getConnection();
+        String sql = "update product set quantity = ? where id = ?";
+        try (PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setInt(1, quantity);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        }
+        catch (Exception e) {
+            throw new RuntimeException();
+        }
+        DataProvider.getInstance().CloseConnection(con);
+    }
+
+    public void delete(ProductDTO product) {
+        Connection con = DataProvider.getInstance().getConnection();
+        String sql = "delete from product where id = ?";
+        try(PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setInt(1, product.getId());
+            ps.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        DataProvider.getInstance().CloseConnection(con);
     }
 
     public int getNumberProduct(){

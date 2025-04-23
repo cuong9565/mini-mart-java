@@ -12,7 +12,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class pnSupplier extends JPanel {
@@ -92,18 +91,19 @@ public class pnSupplier extends JPanel {
             if(list==null) return;
             int select = JOptionPane.showConfirmDialog(thisPanel, "Bạn có chắc chắn muốn thêm?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if(select == JOptionPane.YES_OPTION){
-                List<SupplierDTO> suppliers = new ArrayList<>();
                 int success = 0;
-                for (Object[] ob : list)
-                    suppliers.add(new SupplierDTO(-1, ob[0].toString(), ob[1].toString(), ob[2].toString(), ob[3].toString()));
-                try {
-                    for (SupplierDTO supplier : suppliers){
-                        SupplierBUS.getInstance().addProvider(supplier);
+                StringBuilder error = new StringBuilder();
+                for (Object[] ob : list){
+                    try {
+                        SupplierBUS.getInstance().addProvider(new SupplierDTO(-1, ob[0].toString(), ob[1].toString(), ob[2].toString(), ob[3].toString()));
                         success++;
                     }
-                } catch (RuntimeException e) {
-                    JOptionPane.showMessageDialog(thisPanel,e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    catch (RuntimeException e) {
+                        error.append(e.getMessage()).append("\n");
+                    }
                 }
+                if(!error.isEmpty())
+                    JOptionPane.showMessageDialog(thisPanel, error.toString(), "Lỗi", JOptionPane.INFORMATION_MESSAGE);
                 JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + success + " nhà cung cấp", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 loadSupplier();
             }

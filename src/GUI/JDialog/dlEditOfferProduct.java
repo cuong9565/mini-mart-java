@@ -58,11 +58,12 @@ public class dlEditOfferProduct extends JDialog {
         btnSave.addActionListener(_ -> {
             OfferDTO offer = (OfferDTO) cbTime.getSelectedItem();
             OfferProductDTO offerProduct = new OfferProductDTO(parentOfferProduct.getId(), offer, Integer.parseInt(spDiscount.getValue().toString()));
-            if (OfferProductBUS.getInstance().update(offerProduct)) {
-                JOptionPane.showMessageDialog(this, "Sửa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            try {
+                OfferProductBUS.getInstance().update(offerProduct);
+                JOptionPane.showMessageDialog(this, "Sửa thông tin thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 parentPanel.loadOfferProduct();
-            } else {
-                JOptionPane.showMessageDialog(this, OfferProductBUS.getInstance().getError(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         });
         // region ADD

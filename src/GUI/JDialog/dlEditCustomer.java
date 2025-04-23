@@ -1,18 +1,13 @@
 package GUI.JDialog;
 
 import BUS.CustomerBUS;
-import BUS.SupplierBUS;
 import Components.*;
 import DTO.CustomerDTO;
-import DTO.SupplierDTO;
 import GUI.JFrame.fManage;
 import GUI.JPanel.pnCustomer;
-import GUI.JPanel.pnSupplier;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class dlEditCustomer extends JDialog {
     JPanel pnMain = new MyJPanel(MyColor.White);
@@ -48,7 +43,7 @@ public class dlEditCustomer extends JDialog {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
-        // region SET BOUNDS
+        // region setBounds
         pnMain.setBounds(0,0,540,580);
 
         lbId.setBounds(50,80,420,20);
@@ -78,7 +73,8 @@ public class dlEditCustomer extends JDialog {
         lbHeader.setBackground(MyColor.DarkBlue);
         lbHeader.setBounds(0,0,540,60);
         // endregion
-        // region SET TEXT
+
+        // region setText
         tfId.setText(customer.getId() + "");
         tfLastName.setText(customer.getLastName());
         tfFirstName.setText(customer.getFirstName());
@@ -96,38 +92,34 @@ public class dlEditCustomer extends JDialog {
             btnState.setBackground(MyColor.LightBlue);
         }
         // endregion
-        // region EVENT
-        btnEsc.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dialog.dispose();
-            }
-        });
-        btnSave.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+
+        // region event
+        btnEsc.addActionListener(_ -> dialog.dispose());
+        btnSave.addActionListener(_ -> {
+            try{
                 CustomerDTO customerNew = new CustomerDTO(customer.getId(), tfPhone.getText(), tfLastName.getText(), tfFirstName.getText(), tfAddress.getText(), ((bgGender.radioButtons[0].isSelected())?"Nam":"Nữ"), tfState.getText());
-                if(CustomerBUS.getInstance().update(customerNew)){
-                    JOptionPane.showMessageDialog(dialog, "Sửa thông tin khách hàng thành công!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
-                    parentPanel.loadCustomer();
-                }
-                else JOptionPane.showMessageDialog(dialog, CustomerBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
+                CustomerBUS.getInstance().update(customerNew);
+                JOptionPane.showMessageDialog(dialog, "Sửa thông tin khách hàng thành công!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+                parentPanel.loadCustomer();
+            }catch (Exception e){
+                JOptionPane.showMessageDialog(dialog, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         });
-        btnState.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if(tfState.getText().compareTo("Đang hoạt động")==0){
-                    btnState.setText("Mở tài khoản");
-                    btnState.setBackground(MyColor.LightBlue);
-                    tfState.setText("Đã bị khóa");
-                }
-                else {
-                    btnState.setText("Khóa tài khoản");
-                    btnState.setBackground(MyColor.LightRed);
-                    tfState.setText("Đang hoạt động");
-                }
+        btnState.addActionListener(_ -> {
+            if(tfState.getText().compareTo("Đang hoạt động")==0){
+                btnState.setText("Mở tài khoản");
+                btnState.setBackground(MyColor.LightBlue);
+                tfState.setText("Đã bị khóa");
+            }
+            else {
+                btnState.setText("Khóa tài khoản");
+                btnState.setBackground(MyColor.LightRed);
+                tfState.setText("Đang hoạt động");
             }
         });
-        // endregion11
-        // region ADD
+        // endregion
+
+        // region add
         add(lbId);
         add(tfId);
         add(lbLastName);

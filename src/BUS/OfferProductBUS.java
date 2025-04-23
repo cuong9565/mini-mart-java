@@ -1,7 +1,6 @@
 package BUS;
 
 import DAO.OfferProductDAO;
-import DAO.SupplierDAO;
 import DTO.OfferDTO;
 import DTO.OfferProductDTO;
 
@@ -9,9 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OfferProductBUS {
-    private static OfferProductBUS instance;
+    private static OfferProductBUS instance = null;
     private static List<OfferProductDTO>list = null;
-    private static String error = null;
 
     public OfferProductBUS() {}
     public static OfferProductBUS getInstance() {
@@ -19,11 +17,11 @@ public class OfferProductBUS {
         return instance;
     }
 
-    public List<OfferProductDTO> getList() {
+    // List
+    public List<OfferProductDTO> load() {
         list = OfferProductDAO.getInstance().getList();
         return list;
     }
-
     public List<OfferProductDTO> getListBy(int col, String txt) {
         List<OfferProductDTO> ls = new ArrayList<>();
         for(OfferProductDTO o : list) switch (col){
@@ -34,14 +32,6 @@ public class OfferProductBUS {
         }
         return ls;
     }
-
-    public OfferProductDTO getItemById(int id) {
-        for(OfferProductDTO o : list)
-            if (o.getId()==id)
-                return o;
-        return null;
-    }
-
     public List<OfferProductDTO> getListDiscount() {
         List<OfferProductDTO> ls = new ArrayList<>();
         ls.add(new OfferProductDTO(0, new OfferDTO(), 0));
@@ -52,55 +42,62 @@ public class OfferProductBUS {
         return ls;
     }
 
+    // Item
+    public OfferProductDTO getItemById(int id) {
+        return OfferProductDAO.getInstance().getItemById(id);
+    }
     public int getIdBy(int discount, int idOffer) {
-        for(OfferProductDTO o : getList())
+        for(OfferProductDTO o : load())
             if (o.getDiscount() == discount && o.getOffer().getId() == idOffer)
                 return o.getId();
         return 0;
     }
 
-    public boolean add(OfferProductDTO o) {
-        if(o.getOffer()==null) {
-            error = "Thời gian giảm giá không được để trống!!!";
-            return false;
-        }
+    // Check Same OfferProduct
+    public boolean isSameOfferProduct(OfferProductDTO o){
+        return OfferProductDAO.getInstance().isSameOfferProduct(o);
+    }
+
+    // Add
+    public void add(OfferProductDTO o) {
         try {
+            if(o.getOffer().getId()==0)
+                throw new Exception("Thời gian giảm giá không được để trống!!!");
+
+            if(isSameOfferProduct(o))
+                throw new Exception(String.format("Thời gian từ %s đến %s với giảm giá %s đã tồn tại!!!", o.getOffer().getDateStart(), o.getOffer().getDateEnd(), o.getDiscount() + "%"));
+
             OfferProductDAO.getInstance().add(o);
         }
         catch (Exception e) {
-            error = e.getMessage();
-            return false;
+            throw new RuntimeException(e.getMessage());
         }
-        return true;
     }
 
-    public boolean update(OfferProductDTO o) {
-        if(o.getOffer()==null) {
-            error = "Thời gian giảm giá không được để trống!!!";
-            return false;
-        }
+    // Update
+    public void update(OfferProductDTO o) {
         try {
+            if(o.getOffer().getId()==0)
+                throw new Exception("Thời gian giảm giá không được để trống!!!");
+
+            OfferProductDTO currO = OfferProductDAO.getInstance().getItemById(o.getId());
+            if(isSameOfferProduct(o) && (currO.getOffer().getId()!=o.getOffer().getId() || currO.getDiscount()!=o.getDiscount()))
+                throw new Exception(String.format("Thời gian từ %s đến %s với giảm giá %s đã tồn tại!!!", o.getOffer().getDateStart(), o.getOffer().getDateEnd(), o.getDiscount() + "%"));
+
             OfferProductDAO.getInstance().update(o);
         }
         catch (Exception e) {
-            error = e.getMessage();
-            return false;
+            throw new RuntimeException(e.getMessage());
         }
-        return true;
     }
 
-    public boolean delete(int id) {
+    // Delete
+    public void delete(int id) {
         try{
-            if(OfferProductDAO.getInstance().delete(id)){
-                return true;
-            }
+            OfferProductDAO.getInstance().delete(id);
         }
         catch (Exception e){
-            error = e.getMessage();
-            return false;
+            throw new RuntimeException(e.getMessage());
         }
-        return false;
     }
-
-    public String getError(){return error;}
 }

@@ -1,17 +1,14 @@
 package BUS;
 
 import DAO.OfferBillDAO;
-import DAO.SupplierDAO;
-import DTO.OfferDTO;
 import DTO.OfferBillDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class OfferBillBUS {
-    private static OfferBillBUS instance;
+    private static OfferBillBUS instance = null;
     private static List<OfferBillDTO>list = null;
-    private static String error = null;
 
     public OfferBillBUS() {}
     public static OfferBillBUS getInstance() {
@@ -35,71 +32,56 @@ public class OfferBillBUS {
         return ls;
     }
 
+    // Item
     public OfferBillDTO getItemById(int id) {
-        for(OfferBillDTO o : getList())
-            if (o.getId()==id)
-                return o;
-        return new OfferBillDTO();
+        return OfferBillDAO.getInstance().getItemById(id);
     }
 
-    public List<OfferBillDTO> getListDiscount() {
-        List<OfferBillDTO> ls = new ArrayList<>();
-        ls.add(new OfferBillDTO(0, new OfferDTO(), 0));
-        for (OfferBillDTO o : getList())
-            if(o.getDiscount() != ls.getLast().getDiscount())
-                ls.add(o);
-        return ls;
+    // Check Same OfferBill
+    public boolean isSameOfferBill(OfferBillDTO o){
+        return OfferBillDAO.getInstance().isSameOfferBill(o);
     }
 
-    public int getIdBy(int discount, int idOffer) {
-        for(OfferBillDTO o : getList())
-            if (o.getDiscount() == discount && o.getOffer().getId() == idOffer)
-                return o.getId();
-        return 0;
-    }
-
-    public boolean add(OfferBillDTO o) {
-        if(o.getOffer()==null) {
-            error = "Thời gian giảm giá không được để trống!!!";
-            return false;
-        }
+    // Add
+    public void add(OfferBillDTO o) {
         try {
+            if(o.getOffer().getId()==0)
+                throw new Exception("Thời gian giảm giá không được để trống!!!");
+
+            if(isSameOfferBill(o))
+                throw new Exception(String.format("Thời gian từ %s đến %s với giảm giá %s đã tồn tại!!!", o.getOffer().getDateStart(), o.getOffer().getDateEnd(), o.getDiscount() + "%"));
+
             OfferBillDAO.getInstance().add(o);
         }
         catch (Exception e) {
-            error = e.getMessage();
-            return false;
+            throw new RuntimeException(e.getMessage());
         }
-        return true;
     }
 
-    public boolean update(OfferBillDTO o) {
-        if(o.getOffer()==null) {
-            error = "Thời gian giảm giá không được để trống!!!";
-            return false;
-        }
+    // Update
+    public void update(OfferBillDTO o) {
         try {
+            if(o.getOffer().getId()==0)
+                throw new Exception("Thời gian giảm giá không được để trống!!!");
+
+            OfferBillDTO currO = OfferBillDAO.getInstance().getItemById(o.getId());
+            if(isSameOfferBill(o) && (currO.getOffer().getId()!=o.getOffer().getId() || currO.getDiscount()!=o.getDiscount()))
+                throw new Exception(String.format("Thời gian từ %s đến %s với giảm giá %s đã tồn tại!!!", o.getOffer().getDateStart(), o.getOffer().getDateEnd(), o.getDiscount() + "%"));
+
             OfferBillDAO.getInstance().update(o);
         }
         catch (Exception e) {
-            error = e.getMessage();
-            return false;
+            throw new RuntimeException(e.getMessage());
         }
-        return true;
     }
 
-    public boolean delete(int id) {
+    // Delete
+    public void delete(int id) {
         try{
-            if(OfferBillDAO.getInstance().delete(id)){
-                return true;
-            }
+            OfferBillDAO.getInstance().delete(id);
         }
         catch (Exception e){
-            error = e.getMessage();
-            return false;
+            throw new RuntimeException(e.getMessage());
         }
-        return false;
     }
-
-    public String getError(){return error;}
 }

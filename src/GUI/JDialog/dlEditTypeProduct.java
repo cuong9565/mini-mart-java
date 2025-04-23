@@ -49,16 +49,17 @@ public class dlEditTypeProduct extends JDialog {
         // region EVENT
         btnEsc.addActionListener(_ -> dialog.dispose());
         btnSave.addActionListener(_ -> {
-            TypeProductDTO productNew = new TypeProductDTO(product.getId(), tfName.getText());
-            boolean check = TypeProductBUS.getInstance().edit(productNew);
-
-            if(check){
+            try {
+                TypeProductDTO productNew = new TypeProductDTO(product.getId(), tfName.getText());
+                TypeProductBUS.getInstance().edit(productNew);
                 JOptionPane.showMessageDialog(dialog, "Sửa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 parentPanel.loadTypeProduct();
             }
-            else JOptionPane.showMessageDialog(dialog, TypeProductBUS.getInstance().getError(), "Thông báo", JOptionPane.WARNING_MESSAGE);
+            catch (Exception e){
+                JOptionPane.showMessageDialog(dialog, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
         });
-        // endregion11
+        // endregion
         // region ADD
         add(lbId);
         add(tfId);

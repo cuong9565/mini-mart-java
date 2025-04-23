@@ -5,7 +5,6 @@ import DAO.ProductDAO;
 import DTO.DetailProductDTO;
 import DTO.ProductDTO;
 import DTO.TypeProductDTO;
-import org.apache.commons.math3.stat.descriptive.summary.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,25 +13,32 @@ public class ProductBUS {
     private static ProductBUS instance = null;
     private static List<ProductDTO> list = null;
     private static String error = null;
+
     public ProductBUS() {}
     public static ProductBUS getInstance() {
         if (instance == null) instance = new ProductBUS();
         return instance;
     }
 
-    public ProductDTO getItemById(int id) {
-        for(ProductDTO p : load())
-            if(p.getId() == id)
-                return p;
-        return null;
+    // Check Same Product By Name And Unit
+    public boolean isSameProduct(String name, String unit){
+        return ProductDAO.getInstance().isSameProduct(name, unit);
+    }
+    public int getNumberProduct(){
+        return ProductDAO.getInstance().getNumberProduct();
     }
 
+    // Item
+    public ProductDTO getItemById(int id) {
+        return ProductDAO.getInstance().getItemById(id);
+    }
+
+    // List
     public List<ProductDTO> load() {
-        list = ProductDAO.getInstance().getList();
+        list = ProductDAO.getInstance().load();
         return list;
     }
-
-    public List<ProductDTO> getListSearch(int col, String txt) {
+    public List<ProductDTO> getListSearch(int col, String txt) { // Search
         List<ProductDTO> ls = new ArrayList<>();
         for (ProductDTO p : list) switch (col) {
             case 0: if (String.valueOf(p.getId()).contains(txt)) ls.add(p); break;
@@ -45,8 +51,7 @@ public class ProductBUS {
         }
         return ls;
     }
-
-    public List<ProductDTO> getListSearchSell(int col, String txt) {
+    public List<ProductDTO> getListSearchSell(int col, String txt) { // Search
         List<ProductDTO> ls = new ArrayList<>();
         for(ProductDTO p : list) switch (col) {
             case 0: if (String.valueOf(p.getId()).contains(txt)) ls.add(p); break;
@@ -57,63 +62,7 @@ public class ProductBUS {
         }
         return ls;
     }
-
-    public boolean add(int idProductType, String detail, int idOfferProduct, String name, double price, String unit, int quantity){
-        if(name.isEmpty() || unit.isEmpty()) {
-            error = "Không được để trống thông tin!!!";
-            return false;
-        }
-        try {
-            DetailProductDAO.getInstance().add(new DetailProductDTO(-1, detail));
-            int idProductDetail = DetailProductBUS.getInstance().getList().getLast().getId();
-            ProductDAO.getInstance().add(idProductType, idProductDetail, idOfferProduct, name, price, unit, quantity);
-        }
-        catch (Exception e) {
-            error = e.getMessage();
-            return false;
-        }
-        return true;
-    }
-
-    public boolean update(int id, int idProductType, DetailProductDTO detail, int idOfferProduct, String name, double price, String unit, int quantity){
-        if(name.isEmpty() || unit.isEmpty()) {
-            error = "Không được để trống thôn tin!!!";
-            return false;
-        }
-        try{
-            DetailProductDAO.getInstance().update(detail);
-            ProductDAO.getInstance().update(id, idProductType, idOfferProduct, name, price, unit, quantity);
-        }catch (Exception e) {
-            error = e.getMessage();
-            return false;
-        }
-        return true;
-    }
-
-    public boolean updateQuantity(int idProduct, int quantity){
-        try {
-            ProductDAO.getInstance().updateQuantity(idProduct, quantity);
-        }
-        catch (Exception e) {
-            error = e.getMessage();
-            return false;
-        }
-        return true;
-    }
-
-    public void delete(ProductDTO product){
-        try {
-            ProductDAO.getInstance().delete(product);
-            DetailProductDAO.getInstance().delete(product.getDetail());
-        }
-        catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-
-    public String getError() {return error;}
-
-    public List<ProductDTO> SearchAd(int priceOp, TypeProductDTO type, int quantityOp, boolean isOr) {
+    public List<ProductDTO> SearchAd(int priceOp, TypeProductDTO type, int quantityOp, boolean isOr) { // Search
         List<ProductDTO> resultList = new ArrayList<>();
         for (ProductDTO item : list) {
             boolean matchPrice = false;
@@ -156,8 +105,48 @@ public class ProductBUS {
         return resultList;
     }
 
+    // Insert
+    public void add(int idProductType, String detail, int idOfferProduct, String name, double price, String unit, int quantity){
+        try {
+            if(name.isEmpty() || unit.isEmpty())
+                throw new RuntimeException("Không được để trống thông tin!!!");
 
-    public int getNumberProduct(){
-        return ProductDAO.getInstance().getNumberProduct();
+            if (isSameProduct(name, unit))
+                throw new RuntimeException(String.format("Tên sản phẩm '%s' cùng đơn vị '%s' đã tồn tại!!!", name, unit));
+
+            DetailProductDAO.getInstance().add(new DetailProductDTO(-1, detail));
+            int idProductDetail = DetailProductBUS.getInstance().getList().getLast().getId();
+            ProductDAO.getInstance().add(idProductType, idProductDetail, idOfferProduct, name, price, unit, quantity);
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
+
+    public void update(int id, int idProductType, DetailProductDTO detail, int idOfferProduct, String name, double price, String unit, int quantity){
+        try{
+            if(name.isEmpty() || unit.isEmpty())
+                throw new RuntimeException("Không được để trống thông tin!!!");
+
+            ProductDTO curr = ProductDAO.getInstance().getItemById(id);
+            if (isSameProduct(name, unit) && (!curr.getName().equals(name) || !curr.getUnit().equals(unit)))
+                throw new RuntimeException(String.format("Tên sản phẩm '%s' cùng đơn vị '%s' đã tồn tại!!!", name, unit));
+
+            DetailProductDAO.getInstance().update(detail);
+            ProductDAO.getInstance().update(id, idProductType, idOfferProduct, name, price, unit, quantity);
+        }catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public void delete(ProductDTO product){
+        try {
+            ProductDAO.getInstance().delete(product);
+            DetailProductDAO.getInstance().delete(product.getDetail());
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
 }

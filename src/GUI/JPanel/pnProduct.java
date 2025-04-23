@@ -128,29 +128,30 @@ public class pnProduct extends JPanel {
         });
 
         btnIn.addActionListener(_ -> {
-            List<Object[]> list = tbProduct.ImportExel(4);
+            List<Object[]> list = tbProduct.ImportExel(5);
             if(list==null) return;
-            String error = null;
-            int success = 0;
-            for (Object[] ob : list) {
-                int idProductType = TypeProductBUS.getInstance().getItemByName(ob[0].toString()).getId();
-                String detail = "";
-                int idOfferProduct = 0;
-                String name = ob[1].toString();
-                double price = Double.parseDouble(ob[2].toString().replace("đ", "").replace(",", ""));
-                String unit = ob[3].toString();
-
-                if(ProductBUS.getInstance().add(idProductType, detail, idOfferProduct, name, price, unit, 0)){
-                    success++;
+            if(JOptionPane.showConfirmDialog(thisPanel, "Bạn có chắc chắn muốn nhập?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION){
+                int success = 0;
+                StringBuilder error = new StringBuilder();
+                for (Object[] ob : list) {
+                    try {
+                        int idOfferProduct = 0;
+                        int idProductType = TypeProductBUS.getInstance().getItemByName(ob[0].toString()).getId();
+                        String name = ob[1].toString();
+                        double price = Double.parseDouble(ob[2].toString().replace("đ", "").replace(",", ""));
+                        String unit = ob[3].toString();
+                        String detail = ob[4].toString();
+                        ProductBUS.getInstance().add(idProductType, detail, idOfferProduct, name, price, unit, 0);
+                        success++;
+                    }
+                    catch (Exception e) {
+                        error.append(e.getMessage()).append("\n");
+                    }
                 }
-                else{
-                    error = ProductBUS.getInstance().getError();
-                }
+                if(!error.isEmpty()) JOptionPane.showMessageDialog(thisPanel, error, "Lỗi", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + success + " sản phẩm", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                loadProduct();
             }
-
-            JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + success + " sản phẩm");
-            if(error!=null) JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + error);
-            loadProduct();
         });
         btnOut.addActionListener(_ -> tbProduct.ExportExel("Danh sách sản phẩm"));
         cbSearch.addActionListener(_ -> textChange());
@@ -162,7 +163,7 @@ public class pnProduct extends JPanel {
             public void removeUpdate(DocumentEvent e) {textChange();}
             public void changedUpdate(DocumentEvent e) {textChange();}
         });
-        btnsearch.addActionListener(e->{
+        btnsearch.addActionListener(_->{
             TypeProductDTO typenew =(TypeProductDTO) cbSearchad2.getSelectedItem() ;
             List<ProductDTO> newproduct = ProductBUS.getInstance().SearchAd(cbSearchad1.getSelectedIndex(),typenew,cbSearchad3.getSelectedIndex(),checkOR.isSelected());
             if(newproduct.isEmpty()){

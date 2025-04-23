@@ -1,20 +1,17 @@
 package GUI.JPanel;
 
 import BUS.CustomerBUS;
-import BUS.SupplierBUS;
 import Components.*;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.List;
 
 import Components.MyColor;
 import Components.MyJButton;
 import DTO.CustomerDTO;
-import DTO.SupplierDTO;
 import GUI.JDialog.dlAddCustomer;
 import GUI.JDialog.dlEditCustomer;
 import GUI.JFrame.fManage;
@@ -40,7 +37,7 @@ public class pnCustomer extends JPanel {
         setLayout(null);
         setBackground(MyColor.White);
 
-        // region SET BOUNDS
+        // region setBounds
         pnHeader.setBounds(0,0,1170, 90);
         pnFunc.setBounds(0,0,370,90);
         btnAdd.setBounds(15,20,60,60);
@@ -60,74 +57,63 @@ public class pnCustomer extends JPanel {
             public void componentShown(ComponentEvent e) {loadCustomer();}
         });
         // region EVENT
-        btnAdd.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new dlAddCustomer(fmanage, thisPanel);
+        btnAdd.addActionListener(_ -> new dlAddCustomer(fmanage, thisPanel));
+        btnEdit.addActionListener(_ -> {
+            int i = tbCustomer.getSelectedRow();
+            if(i==-1) JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn tài khoản để sửa thông tin!!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            else {
+                int id = Integer.parseInt(tbCustomer.getFirstColumn(i));
+                CustomerDTO customer = CustomerBUS.getInstance().getItemById(id);
+                new dlEditCustomer(fmanage, thisPanel, customer);
             }
         });
-        btnEdit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int i = tbCustomer.getSelectedRow();
-                if(i==-1) JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn tài khoản để sửa thông tin!!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-                else {
-                    int id = Integer.parseInt(tbCustomer.getFirstColumn(i));
-                    CustomerDTO customer = CustomerBUS.getInstance().getItemById(id);
-                    new dlEditCustomer(fmanage, thisPanel, customer);
-                }
-            }
-        });
-        btnDelete.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int i = tbCustomer.getSelectedRow();
-                if(i==-1) JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn khách hàng cần xóa!!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-                else {
-                    int id = Integer.parseInt(tbCustomer.getFirstColumn(i));
-                    CustomerDTO customer = CustomerBUS.getInstance().getItemById(id);
-                    if(CustomerBUS.getInstance().delete(customer)){
+        btnDelete.addActionListener(_ -> {
+            int i = tbCustomer.getSelectedRow();
+            if(i==-1) JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn khách hàng cần xóa!!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            else {
+                int choose = JOptionPane.showConfirmDialog(thisPanel, "Bạn có chắc chắn muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+                if (choose == JOptionPane.YES_OPTION) {
+                    try {
+                        int id = Integer.parseInt(tbCustomer.getFirstColumn(i));
+                        CustomerDTO customer = CustomerBUS.getInstance().getItemById(id);
+                        CustomerBUS.getInstance().delete(customer);
                         JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin khách hàng thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         loadCustomer();
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(thisPanel, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
                     }
-                    else JOptionPane.showMessageDialog(thisPanel, CustomerBUS.getInstance().getError(), "Thông báo", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
-        btnRefresh.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cbSearch.setSelectedIndex(0);
-                tfSearch.setText("");
+        btnOut.addActionListener(_ -> tbCustomer.ExportExel("Danh sách khách hàng"));
+        btnIn.addActionListener(_ -> {
+            List<Object[]> list = tbCustomer.ImportExel(5);
+            if(list==null) return;
+            int choose = JOptionPane.showConfirmDialog(thisPanel, "Bạn có chắc chắn muốn thêm?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+            if (choose == JOptionPane.YES_OPTION) {
+                int success = 0;
+                StringBuilder error = new StringBuilder();
+                for (Object[] ob : list){
+                    try {
+                        CustomerDTO customer = new CustomerDTO(-1, ob[0].toString(), ob[1].toString(), ob[2].toString(), ob[3].toString(), ob[4].toString(), "");
+                        CustomerBUS.getInstance().add(customer);
+                        success++;
+                    } catch (Exception e) {
+                        error.append(e.getMessage()).append("\n");
+                    }
+                }
+                if(!error.isEmpty())
+                    JOptionPane.showMessageDialog(thisPanel, error.toString(), "Lỗi", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + success + " khách hàng");
                 loadCustomer();
             }
         });
-        btnOut.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tbCustomer.ExportExel("Danh sách khách hàng");
-            }
+        btnRefresh.addActionListener(_ -> {
+            cbSearch.setSelectedIndex(0);
+            tfSearch.setText("");
+            loadCustomer();
         });
-        btnIn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                java.util.List<Object[]> list = tbCustomer.ImportExel(6);
-                if(list==null) return;
-                List<CustomerDTO> customers = new ArrayList<>();
-                for (Object[] ob : list)
-                    customers.add(new CustomerDTO(-1, ob[0].toString(), ob[1].toString(), ob[2].toString(), ob[3].toString(), ob[4].toString(), ob[5].toString()));
-                if(CustomerBUS.getInstance().adds(customers)){
-                    JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + CustomerBUS.getInstance().getNumLine() + " khách hàng");
-                    loadCustomer();
-                }
-                else {
-                    JOptionPane.showMessageDialog(thisPanel, "Lỗi: " + CustomerBUS.getInstance().getError());
-                }
-            }
-        });
-        cbSearch.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {textChange();}
-        });
+        cbSearch.addActionListener(_ -> textChange());
         tfSearch.addFocusListener(new FocusAdapter() {
             public void focusGained(FocusEvent e) {textChange();}
         });
@@ -155,9 +141,7 @@ public class pnCustomer extends JPanel {
     }
 
     public void loadCustomer(){
-        tbCustomer.dftbModel.setRowCount(0);
-        for(CustomerDTO customer: CustomerBUS.getInstance().getAllList())
-            tbCustomer.dftbModel.addRow(customer.getObjects());
+        CustomerBUS.getInstance().getAllList();
         textChange();
     }
 

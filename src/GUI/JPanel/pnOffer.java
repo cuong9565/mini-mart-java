@@ -92,15 +92,18 @@ public class pnOffer extends JPanel {
             int choose = JOptionPane.showConfirmDialog(thisPanel, "Bạn có chắc chắn muốn nhập?", "Thông báo", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
             if(choose==JOptionPane.YES_OPTION) {
                 int success = 0;
-                try {
-                    for (Object[] ob : list) {
+                StringBuilder error = new StringBuilder();
+                for (Object[] ob : list) {
+                    try {
                         OfferDTO offer = new OfferDTO(-1, ob[0].toString(), ob[1].toString());
                         OfferBUS.getInstance().add(offer);
                         success++;
+                    } catch (Exception e) {
+                        error.append(e.getMessage()).append("\n");
                     }
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(thisPanel, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
+                if(!error.isEmpty())
+                    JOptionPane.showMessageDialog(thisPanel, error.toString(), "Lỗi", JOptionPane.INFORMATION_MESSAGE);
                 JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + success + " thời gian giảm giá", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 loadOffer();
             }

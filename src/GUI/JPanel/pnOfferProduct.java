@@ -66,13 +66,19 @@ public class pnOfferProduct extends JPanel {
         btnDelete.addActionListener(_ -> {
             int i = tbOfferProduct.getSelectedRow();
             if (i >= 0) {
-                int id = Integer.parseInt(tbOfferProduct.getFirstColumn(i));
-                if(OfferProductBUS.getInstance().delete(id)){
-                    JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    loadOfferProduct();
+                int choose = JOptionPane.showConfirmDialog(thisPanel, "Bạn có chắc muốn xóa", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if(choose == JOptionPane.YES_OPTION) {
+                    try {
+                        int id = Integer.parseInt(tbOfferProduct.getFirstColumn(i));
+                        OfferProductBUS.getInstance().delete(id);
+                        JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        loadOfferProduct();
+                    }catch (Exception e) {
+                        JOptionPane.showMessageDialog(thisPanel, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
-                else JOptionPane.showMessageDialog(thisPanel, OfferProductBUS.getInstance().getError(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-            } else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xóa!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+            else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn thông tin cần xóa!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         });
 
         btnRefresh.addActionListener(_ -> {
@@ -84,19 +90,25 @@ public class pnOfferProduct extends JPanel {
         btnIn.addActionListener(_ -> {
             List<Object[]> list = tbOfferProduct.ImportExel(3);
             if(list==null) return;
-            String error = "";
-            int success = 0;
-            for (Object[] ob : list) {
-                OfferDTO offer = OfferBUS.getInstance().getItemByDate(ob[0].toString(), ob[1].toString());
-                OfferProductDTO offerProduct = new OfferProductDTO(-1, offer, Integer.parseInt(ob[2].toString().replace("%", "")));
-                if(OfferProductBUS.getInstance().add(offerProduct)) success++;
-                else {
-                    error = (OfferProductBUS.getInstance().getError());
+            int choose = JOptionPane.showConfirmDialog(thisPanel, "Bạn có chắc chắn muốn thêm?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(choose == JOptionPane.YES_OPTION) {
+                int success = 0;
+                StringBuilder error = new StringBuilder();
+                for (Object[] ob : list) {
+                    try {
+                        OfferDTO offer = OfferBUS.getInstance().getItemByDate(new MyDate(ob[0].toString()), new MyDate(ob[1].toString()));
+                        OfferProductDTO offerProduct = new OfferProductDTO(-1, offer, Integer.parseInt(ob[2].toString().replace("%", "")));
+                        OfferProductBUS.getInstance().add(offerProduct);
+                        success++;
+                    } catch (Exception e) {
+                        error.append(e.getMessage()).append("\n");
+                    }
                 }
+                if(!error.isEmpty())
+                    JOptionPane.showMessageDialog(thisPanel, error.toString(), "Lỗi", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(thisPanel, "Đã thêm thành công " + success + " thông tin");
+                loadOfferProduct();
             }
-            JOptionPane.showMessageDialog(thisPanel, "Đã thêm thành công " + success + " thông tin");
-            if(!error.isEmpty()) JOptionPane.showMessageDialog(thisPanel, error, "Lỗi", JOptionPane.ERROR_MESSAGE);
-            loadOfferProduct();
         });
         btnOut.addActionListener(_ -> tbOfferProduct.ExportExel("Danh sách giảm giá sản phẩm"));
         cbSearch.addActionListener(_-> textChange());
@@ -127,9 +139,7 @@ public class pnOfferProduct extends JPanel {
     }
 
     public void loadOfferProduct() {
-        tbOfferProduct.dftbModel.setRowCount(0);
-        for (OfferProductDTO offer : OfferProductBUS.getInstance().getList())
-            tbOfferProduct.dftbModel.addRow(offer.getObjects());
+        OfferProductBUS.getInstance().load();
         textChange();
     }
     public void textChange() {
