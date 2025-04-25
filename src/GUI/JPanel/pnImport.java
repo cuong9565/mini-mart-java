@@ -49,6 +49,7 @@ public class pnImport extends JPanel {
 
     JButton btnExportExcel = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Nhập Excel", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnDelete = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Xóa", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnNewimport = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Tạo mới", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnEdit = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
     JLabel lbQuantityFix = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Số lượng: ", SwingConstants.LEFT, SwingConstants.CENTER);
     JSpinner snQuantityFix = new MyJSpinner(1, 1, 1000000000, 1);
@@ -99,7 +100,7 @@ public class pnImport extends JPanel {
 
         btnExportExcel.setBounds(480, 650, 100, 30);
         btnDelete.setBounds(480, 650, 100, 30);
-
+        btnNewimport.setBounds(590,650,100,30);
         btnEdit.setBounds(1060, 650, 100, 30);
         lbQuantityFix.setBounds(880,650,100,30);
         snQuantityFix.setBounds(950,650,100,30);
@@ -188,7 +189,9 @@ public class pnImport extends JPanel {
             }
 
         });
-
+        btnNewimport.addActionListener(e->{
+            load();
+        });
         // Supplier
         btnSearchSupplier.addActionListener(_-> new dlSearchSupplier(parentFrame, thisPanel));
 
@@ -213,15 +216,19 @@ public class pnImport extends JPanel {
                 JOptionPane.showMessageDialog(thisPanel, "Chưa có thông tin hóa đơn", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
             if(tfNameSupplier.getText().isEmpty()){
                 JOptionPane.showMessageDialog(thisPanel, "Chưa có thông tin nhà cung cấp", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
+            if(tbImportInfo.getRowCount()==0){
+                JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn sản phẩm!", "Lỗi", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            int confirm = JOptionPane.showConfirmDialog(thisPanel, "Xác nhận thanh toán?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (confirm != JOptionPane.YES_OPTION) return;
             try {
                 ImportBUS.getInstance().Pay(Integer.parseInt(tfIdImport.getText()), Double.parseDouble(lbAmount.getText().replace(",", "").replace(".", "").replace("đ", "")));
-                load();
+                 loadProduct();
                 JOptionPane.showMessageDialog(thisPanel, "Thanh toán hóa đơn thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             }
             catch(Exception e) {
@@ -247,6 +254,7 @@ public class pnImport extends JPanel {
         add(snQuantity);
         add(btnAdd);
         add(btnDelete);
+        add(btnNewimport);
         add(btnEdit);
         add(btnPay);
         add(btnCancel);

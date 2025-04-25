@@ -47,6 +47,8 @@ public class pnSell extends JPanel {
     JButton btnAddQuantity = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Thêm", SwingConstants.CENTER, SwingConstants.CENTER);
 
     JButton btnDelete = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Xóa", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnNewsell = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Tạo mới", SwingConstants.CENTER, SwingConstants.CENTER);
+
     JButton btnEdit = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
     JLabel lbQuantityFix = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Số lượng: ", SwingConstants.LEFT, SwingConstants.CENTER);
     JSpinner snQuantityFix = new MyJSpinner(1, 1, 1000000000, 1);
@@ -100,6 +102,7 @@ public class pnSell extends JPanel {
         btnAddQuantity.setBounds(180, 700, 100, 30);
 
         btnDelete.setBounds(480, 650, 100, 30);
+        btnNewsell.setBounds(590,650,100,30);
         btnEdit.setBounds(1060, 650, 100, 30);
         lbQuantityFix.setBounds(880,650,100,30);
         snQuantityFix.setBounds(950,650,100,30);
@@ -130,14 +133,19 @@ public class pnSell extends JPanel {
         });
             // Bill
         btnPay.addActionListener(_-> {
-            if(tfIdBill.getText().isEmpty()){
+            int confirm = JOptionPane.showConfirmDialog(thisPn, "Xác nhận thanh toán?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (confirm != JOptionPane.YES_OPTION) return;
+            if(tfIdBill.getText().isEmpty()||tfNameCustomer.getText().isEmpty()){
                 JOptionPane.showMessageDialog(thisPn, "Chưa có thông tin hóa đơn", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
+            if (tbBillInfo.getRowCount()==0){
+                JOptionPane.showMessageDialog(thisPn, "Vui lòng chọn sản phẩm!", "Lỗi", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
             if(BillBUS.getInstance().Pay(Integer.parseInt(tfIdBill.getText()), Double.parseDouble(lbSum.getText().replace(",", "").replace(".", "").replace("đ", "")))){
                 JOptionPane.showMessageDialog(thisPn, "Thanh toán hóa đơn thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                load();
+                loadProduct();
             }
             else JOptionPane.showMessageDialog(thisPn, BillBUS.getInstance().getError(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         });
@@ -181,6 +189,9 @@ public class pnSell extends JPanel {
                 else JOptionPane.showMessageDialog(thisPn, BillInfoBUS.getInstance().getError(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
             else JOptionPane.showMessageDialog(thisPn, "Vui lòng chọn mục cần xóa", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        });
+        btnNewsell.addActionListener(e->{
+            load();
         });
         btnEdit.addActionListener(_->{
             int i = tbBillInfo.getSelectedRow();
@@ -233,6 +244,7 @@ public class pnSell extends JPanel {
         add(snQuantity);
         add(btnAddQuantity);
         add(btnDelete);
+        add(btnNewsell);
         add(btnEdit);
         add(lbQuantityFix);
         add(snQuantityFix);
@@ -255,7 +267,7 @@ public class pnSell extends JPanel {
 
     public void loadProduct(){
         ProductBUS.getInstance().load();
-        textProductChange();
+       textProductChange();
     }
 
     public void textProductChange(){
