@@ -130,7 +130,7 @@ public class pnBill extends JPanel {
             public void changedUpdate(DocumentEvent e) {textChange();}
         });
 
-        btnPDF.addActionListener(e -> {
+        btnPDF.addActionListener(_ -> {
             int i = tbBill.getSelectedRow();
             if(i >= 0){
                 try {

@@ -102,14 +102,14 @@ public class pnSell extends JPanel {
         btnAddQuantity.setBounds(180, 700, 100, 30);
 
         btnDelete.setBounds(480, 650, 100, 30);
-        btnNewsell.setBounds(590,650,100,30);
         btnEdit.setBounds(1060, 650, 100, 30);
         lbQuantityFix.setBounds(880,650,100,30);
         snQuantityFix.setBounds(950,650,100,30);
 
         lbTotal.setBounds(480, 700, 80, 30);
         lbSum.setBounds(560, 700, 190, 30);
-        btnPay.setBounds(950, 700, 100, 30);
+        btnPay.setBounds(840,700,100,30);
+        btnNewsell.setBounds(950, 700, 100, 30);
         btnCancel.setBounds(1060, 700, 100, 30);
         // endregion
 
@@ -133,9 +133,7 @@ public class pnSell extends JPanel {
         });
             // Bill
         btnPay.addActionListener(_-> {
-            int confirm = JOptionPane.showConfirmDialog(thisPn, "Xác nhận thanh toán?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (confirm != JOptionPane.YES_OPTION) return;
-            if(tfIdBill.getText().isEmpty()||tfNameCustomer.getText().isEmpty()){
+            if(tfIdBill.getText().isEmpty()){
                 JOptionPane.showMessageDialog(thisPn, "Chưa có thông tin hóa đơn", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -143,11 +141,15 @@ public class pnSell extends JPanel {
                 JOptionPane.showMessageDialog(thisPn, "Vui lòng chọn sản phẩm!", "Lỗi", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            if(BillBUS.getInstance().Pay(Integer.parseInt(tfIdBill.getText()), Double.parseDouble(lbSum.getText().replace(",", "").replace(".", "").replace("đ", "")))){
-                JOptionPane.showMessageDialog(thisPn, "Thanh toán hóa đơn thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                loadProduct();
+
+            int confirm = JOptionPane.showConfirmDialog(thisPn, String.format("Tổng số tiền là: %s\nXác nhận thanh toán?", lbSum.getText()), "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (confirm == JOptionPane.YES_OPTION) {
+                if(BillBUS.getInstance().Pay(Integer.parseInt(tfIdBill.getText()), Double.parseDouble(lbSum.getText().replace(",", "").replace(".", "").replace("đ", "")))){
+                    JOptionPane.showMessageDialog(thisPn, "Thanh toán hóa đơn thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    tfIdBill.setText("");
+                }
+                else JOptionPane.showMessageDialog(thisPn, BillBUS.getInstance().getError(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
-            else JOptionPane.showMessageDialog(thisPn, BillBUS.getInstance().getError(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         });
 
         btnCancel.addActionListener(_-> {
@@ -190,9 +192,7 @@ public class pnSell extends JPanel {
             }
             else JOptionPane.showMessageDialog(thisPn, "Vui lòng chọn mục cần xóa", "Lỗi", JOptionPane.ERROR_MESSAGE);
         });
-        btnNewsell.addActionListener(e->{
-            load();
-        });
+        btnNewsell.addActionListener(_ -> load());
         btnEdit.addActionListener(_->{
             int i = tbBillInfo.getSelectedRow();
             if(i>=0){

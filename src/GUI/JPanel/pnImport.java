@@ -100,14 +100,14 @@ public class pnImport extends JPanel {
 
         btnExportExcel.setBounds(480, 650, 100, 30);
         btnDelete.setBounds(480, 650, 100, 30);
-        btnNewimport.setBounds(590,650,100,30);
         btnEdit.setBounds(1060, 650, 100, 30);
         lbQuantityFix.setBounds(880,650,100,30);
         snQuantityFix.setBounds(950,650,100,30);
 
         lbTotal.setBounds(480, 700, 80, 30);
         lbAmount.setBounds(560, 700, 190, 30);
-        btnPay.setBounds(950, 700, 100, 30);
+        btnPay.setBounds(840,700,100,30);
+        btnNewimport.setBounds(950, 700, 100, 30);
         btnCancel.setBounds(1060, 700, 100, 30);
         // endregion
 
@@ -225,14 +225,15 @@ public class pnImport extends JPanel {
                 return;
             }
             int confirm = JOptionPane.showConfirmDialog(thisPanel, "Xác nhận thanh toán?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (confirm != JOptionPane.YES_OPTION) return;
-            try {
-                ImportBUS.getInstance().Pay(Integer.parseInt(tfIdImport.getText()), Double.parseDouble(lbAmount.getText().replace(",", "").replace(".", "").replace("đ", "")));
-                 loadProduct();
-                JOptionPane.showMessageDialog(thisPanel, "Thanh toán hóa đơn thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            }
-            catch(Exception e) {
-                JOptionPane.showMessageDialog(thisPanel, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            if (confirm == JOptionPane.YES_OPTION){
+                try {
+                    ImportBUS.getInstance().Pay(Integer.parseInt(tfIdImport.getText()), Double.parseDouble(lbAmount.getText().replace(",", "").replace(".", "").replace("đ", "")));
+                    JOptionPane.showMessageDialog(thisPanel, "Thanh toán hóa đơn thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    tfIdImport.setText("");
+                }
+                catch(Exception e) {
+                    JOptionPane.showMessageDialog(thisPanel, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
