@@ -2,6 +2,7 @@ package GUI.JPanel;
 
 import BUS.CustomerBUS;
 import BUS.ProductBUS;
+import BUS.ProductStatisticBUS;
 import BUS.StaffBUS;
 import Components.*;
 

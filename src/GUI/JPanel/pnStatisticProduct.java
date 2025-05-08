@@ -1,5 +1,6 @@
 package GUI.JPanel;
 
+import BUS.ProductStatisticBUS;
 import Components.*;
 import DTO.ProductStatisticDTO;
 

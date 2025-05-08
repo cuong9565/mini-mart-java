@@ -4,11 +4,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="">
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong update Pay">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/d6403069-beff-4c3d-88b1-ee3a1ae2d5ed.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d6403069-beff-4c3d-88b1-ee3a1ae2d5ed.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_21_2025_1_33_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_21_2025_1_33_PM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_21_2025_10_17_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_21_2025_10_17_PM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_22_2025_10_07_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_22_2025_10_07_PM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_22_2025_10_27_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_22_2025_10_27_PM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_25_2025_4_30_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_25_2025_4_30_PM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_27_2025_9_40_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_27_2025_9_40_PM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/CustomerStatisticBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/CustomerStatisticBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BUS/ProductBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/ProductBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/ProductStatisticBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/ProductStatisticBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/BillDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/BillDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/BillInfoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/BillInfoDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/ImportDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/ImportDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/ProductStatisticDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/ProductStatisticDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/SupplierDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/SupplierDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnBill.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnImportOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnImportOrder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticBill.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticProduct.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,15 +237,13 @@
       <workItem from="1745401531355" duration="2838000" />
       <workItem from="1745798601463" duration="2514000" />
       <workItem from="1745803052893" duration="1247000" />
-      <workItem from="1745826245715" duration="432000" />
-    </task>
-    <task id="LOCAL-00029" summary="Cuong update">
-      <option name="closed" value="true" />
-      <created>1742560945357</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1742560945357</updated>
+      <workItem from="1745826245715" duration="684000" />
+      <workItem from="1745848556238" duration="268000" />
+      <workItem from="1746173598807" duration="165000" />
+      <workItem from="1746278547373" duration="131000" />
+      <workItem from="1746425542141" duration="5752000" />
+      <workItem from="1746431704748" duration="4824000" />
+      <workItem from="1746710830082" duration="348000" />
     </task>
     <task id="LOCAL-00030" summary="Cuong update">
       <option name="closed" value="true" />
@@ -608,7 +629,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745766877867</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="Cuong update Pay">
+      <option name="closed" value="true" />
+      <created>1745826691521</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1745826691522</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -135,4 +135,67 @@ public class ImportDAO {
         }
         DataProvider.getInstance().CloseConnection(con);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//            Tổng tiền phiếu nhập theo năm
+    public double TongImportByYear(int year){
+        double res = 0;
+        Connection con = DataProvider.getInstance().getConnection();
+        String sql =
+                "select sum(total) as result " +
+                "from importorder " +
+                "where year(dateCreate) = ?";
+        try(PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setInt(1, year);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next())
+                res = rs.getDouble("result");
+        }
+        catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        DataProvider.getInstance().CloseConnection(con);
+        return res;
+    }
+
+
 }

@@ -12,7 +12,6 @@ import java.util.List;
 public class ProductBUS {
     private static ProductBUS instance = null;
     private static List<ProductDTO> list = null;
-    private static String error = null;
 
     public ProductBUS() {}
     public static ProductBUS getInstance() {
@@ -148,5 +147,4 @@ public class ProductBUS {
             throw new RuntimeException(e.getMessage());
         }
     }
-
 }

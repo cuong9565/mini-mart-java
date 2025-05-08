@@ -7,6 +7,7 @@ import DTO.*;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.xml.transform.Result;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileOutputStream;
@@ -97,9 +98,12 @@ public class pnBill extends JPanel {
             if(i>=0){
                 int id = Integer.parseInt(tbBill.getFirstColumn(i));
                 try {
-                    BillBUS.getInstance().delete(id);
-                    JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    loadBill();
+                    int res = JOptionPane.showConfirmDialog(thisPanel,"Bạn có chắc muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+                    if(res==JOptionPane.YES_OPTION){
+                        BillBUS.getInstance().delete(id);
+                        JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        loadBill();
+                    }
                 }
                 catch (Exception e){
                     JOptionPane.showMessageDialog(thisPanel, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);

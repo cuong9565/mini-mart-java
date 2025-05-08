@@ -1,5 +1,6 @@
 package DAO;
 
+import Components.MyDate;
 import DTO.BillDTO;
 
 import java.sql.*;
@@ -42,7 +43,7 @@ public class BillDAO {
 
         try (PreparedStatement ps = con.prepareStatement(sql)){
             ps.setInt(1, idStaff);
-            ps.setDate(2, new java.sql.Date(System.currentTimeMillis()));
+            ps.setDate(2, MyDate.getCurrentDate().getSqlDate());
             ps.executeUpdate();
         }
         catch (Exception e) {

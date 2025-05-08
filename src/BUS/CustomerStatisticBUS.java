@@ -18,6 +18,7 @@ public class CustomerStatisticBUS {
 
     public List<CustomerStatisticDTO>loadByDate(MyDate l, MyDate r) {
         CustomerStatisticDTO curr = new CustomerStatisticDTO();
+
         List<CustomerStatisticDTO> list = new ArrayList<>();
         for(CustomerStatisticDTO customer: CustomerStatisticDAO.getInstance().load()){
             if(curr.getId()!=customer.getId())
