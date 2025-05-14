@@ -56,11 +56,10 @@ public class BillInfoBUS {
 
         int discount = 0;
 //        if(product.toString().contains("%"))
-        if (!product.getOfferProduct().getOffer().getDateEnd().getSqlDate().before(new Date())){
-            discount = product.getOfferProduct().getOffer().getValue();
-            System.out.println("vi pham ngay");
-        }
-        System.out.println(discount);
+//        if (!product.getOfferProduct().getOffer().getDateEnd().getSqlDate().before(new Date())){
+//            discount = product.getOfferProduct().getOffer().getValue();
+//            System.out.println("vi pham ngay");
+//        }
         double total = product.getPrice() * (100 - discount) / 100 * quantity;
         if(billInfoDTO.getId() != 0){ // Nếu có thì cập nhật lại số lượng
             billInfoDTO.setQuantity(quantity);
