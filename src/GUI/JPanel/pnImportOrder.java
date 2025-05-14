@@ -90,9 +90,12 @@ public class pnImportOrder extends JPanel {
             if(i>=0){
                 int id = Integer.parseInt(tbImport.getFirstColumn(i));
                 try {
-                    ImportBUS.getInstance().delete(id);
-                    JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    load();
+                    int res = JOptionPane.showConfirmDialog(thisPanel,"Bạn có chắc muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+                    if(res==JOptionPane.YES_OPTION){
+                        ImportBUS.getInstance().delete(id);
+                        JOptionPane.showMessageDialog(thisPanel, "Xóa thông tin thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        load();
+                    }
                 }
                 catch (Exception e){
                     JOptionPane.showMessageDialog(thisPanel, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);

@@ -3,6 +3,7 @@ package GUI.JPanel;
 import BUS.CustomerBUS;
 import BUS.ProductBUS;
 import BUS.StaffBUS;
+import BUS.TypeProductBUS;
 import Components.*;
 
 import javax.swing.*;
@@ -91,7 +92,7 @@ public class pnStatisticBill extends JPanel {
         int numCustomer = CustomerBUS.getInstance().getNumberCustomer();
         int numProduct = ProductBUS.getInstance().getNumberProduct();
         int numStaff = StaffBUS.getInstance().getNumberStaff();
-        double numTotal = ProductStatisticBUS.getInstance().getProfit();
+        double numTotal = TypeProductBUS.ProductStatisticBUS.getInstance().getProfit();
 
         lbNumCustomer.setText(String.format("<html>%d<br>Khách hàng</html>", numCustomer));
         lbNumProduct.setText(String.format("<html>%d<br>Sản phẩm</html>", numProduct));
@@ -101,8 +102,8 @@ public class pnStatisticBill extends JPanel {
         MyDate startDate = spStartDate.getMyDate();
         MyDate endDate = spEndDate.getMyDate();
         tbStatistic.dftbModel.setRowCount(0);
-        tbStatistic.dftbModel.addRow(ProductStatisticBUS.getInstance().getRowObjectImport(startDate, endDate));
-        tbStatistic.dftbModel.addRow(ProductStatisticBUS.getInstance().getRowObjectExport(startDate, endDate));
-        tbStatistic.dftbModel.addRow(ProductStatisticBUS.getInstance().getRowObjectProfit(startDate, endDate));
+        tbStatistic.dftbModel.addRow(TypeProductBUS.ProductStatisticBUS.getInstance().getRowObjectImport(startDate, endDate));
+        tbStatistic.dftbModel.addRow(TypeProductBUS.ProductStatisticBUS.getInstance().getRowObjectExport(startDate, endDate));
+        tbStatistic.dftbModel.addRow(TypeProductBUS.ProductStatisticBUS.getInstance().getRowObjectProfit(startDate, endDate));
     }
 }

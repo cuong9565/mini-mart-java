@@ -32,7 +32,6 @@ public class SupplierDAO {
         DataProvider.getInstance().CloseConnection(con);
         return list;
     }
-
     // Item
     public SupplierDTO getSupplierById(int id) {
         SupplierDTO supplier = new SupplierDTO();

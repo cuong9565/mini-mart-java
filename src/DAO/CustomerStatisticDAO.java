@@ -37,4 +37,5 @@ public class CustomerStatisticDAO {
         DataProvider.getInstance().CloseConnection(con);
         return ls;
     }
+
 }

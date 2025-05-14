@@ -70,7 +70,6 @@ public class TypeProductDAO {
         List<TypeProductDTO> list = new ArrayList<>();
         Connection con = DataProvider.getInstance().getConnection();
         String sql = "select * from producttype";
-
         try{
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();

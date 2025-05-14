@@ -61,6 +61,9 @@ public class OfferBUS {
     // Insert
     public void add(OfferDTO offer) {
         try {
+            if(offer.getName().isEmpty() || offer.getCategory().isEmpty() || offer.getValue()==0){
+                throw new RuntimeException("Vui lòng nhập đầy đủ thông tin");
+            }
             if(offer.getDateStart().compareTo(offer.getDateEnd())>0)
                 throw new RuntimeException("Ngày bắt đầu phải trước ngày kết thúc!!!");
 
@@ -82,7 +85,6 @@ public class OfferBUS {
             OfferDTO currOffer = OfferDAO.getInstance().getOfferById(offer.getId());
             if(isSameDay(offer.getDateStart(), offer.getDateEnd()) && (currOffer.getDateStart().compareTo(offer.getDateStart())!=0 || currOffer.getDateEnd().compareTo(offer.getDateEnd())!=0))
                 throw new RuntimeException(String.format("Thời gian từ ngày %s đến ngày %s đã tồn tại!!!", offer.getDateStart(), offer.getDateEnd()));
-
             OfferDAO.getInstance().update(offer);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());

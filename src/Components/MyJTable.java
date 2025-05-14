@@ -136,7 +136,7 @@ public class MyJTable extends JTable {
         scrPn = new JScrollPane(this);
     }
 
-    public List<Object[]> ImportExel(int col){
+    public List<Object[]> ImportExel(int expectedCols) {
         List<Object[]> list = new ArrayList<>();
         JFileChooser chooser = new JFileChooser();
         chooser.setDialogTitle("Chọn tệp để mở");
@@ -147,21 +147,30 @@ public class MyJTable extends JTable {
         if (result == JFileChooser.APPROVE_OPTION) {
             File file = chooser.getSelectedFile();
             try(
-                FileInputStream fileInput = new FileInputStream(file.getAbsoluteFile());
-                Workbook wb = new XSSFWorkbook(fileInput);
+                    FileInputStream fileInput = new FileInputStream(file.getAbsoluteFile());
+                    Workbook wb = new XSSFWorkbook(fileInput);
             ){
                 Sheet sheet = wb.getSheetAt(0);
                 int n = sheet.getLastRowNum();
 
                 for(int i=2; i<=n; i++){
                     Row row = sheet.getRow(i);
-                    Object[] data = new Object[row.getLastCellNum()];
-                    for(int j=0; j<col; j++)
-                        data[j] = row.getCell(j).getStringCellValue();
+                    if(row == null) continue;
+
+                    int cellCount = row.getLastCellNum();
+                    Object[] data = new Object[cellCount];
+
+                    for(int j=0; j<cellCount; j++) {
+                        if(row.getCell(j) != null) {
+                            data[j] = row.getCell(j).toString();
+                        } else {
+                            data[j] = ""; // or null, depending on your needs
+                        }
+                    }
                     list.add(data);
                 }
-            }catch (Exception e){
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception e){
+                JOptionPane.showMessageDialog(null, "Lỗi đọc file: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         }
         else list = null;

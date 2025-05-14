@@ -39,7 +39,8 @@ public class ProductDTO {
             quantity = rs.getInt("product.quantity");
             type = new TypeProductDTO(rs);
             detail = new DetailProductDTO(rs);
-            offerProduct = new OfferProductDTO(rs);
+            OfferDTO of = new OfferDTO(rs);
+            offerProduct.setOffer(of);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -77,7 +78,7 @@ public class ProductDTO {
     }
 
     public Object[] getRowObjects() {
-        return new Object[]{id, type.getName(), toString(), name, String.format("%,.0fđ", price), unit, quantity};
+        return new Object[]{id, type.getName(),offerProduct.getOffer().getValue()+"%", name, String.format("%,.0fđ", price), unit, quantity};
     }
     public Object[] getRowObjectsSell() {
         return new Object[]{id, name, getFormatPrice(), unit, quantity};

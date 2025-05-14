@@ -20,7 +20,6 @@ public class pnStatistic extends JPanel {
     JButton btnOfferBill = new MyJButton(Font.PLAIN, 12, MyColor.Black, MyColor.LightGray, "Thống kê theo khách hàng", SwingConstants.CENTER,SwingConstants.CENTER);
     JButton[] lsBtn = new JButton[]{btnOffer, btnOfferProduct, btnOfferBill};
     JPanel[] lsPn = new JPanel[]{new pnStatisticBill(), new pnStatisticProduct(), new pnStatisticCustomer()};
-
     int currCursor = 0;
 
     public pnStatistic(fManage fmanage) {
@@ -40,10 +39,8 @@ public class pnStatistic extends JPanel {
         btnOfferBill.setPreferredSize(new Dimension(150, 30));
         btnOfferBill.setMaximumSize(new Dimension(150, 30));
         btnOfferBill.setMinimumSize(new Dimension(150, 30));
-
         pnNav.setLayout(new BoxLayout(pnNav,BoxLayout.X_AXIS));
         pnContent.setLayout(new CardLayout());
-
         for(int i=0; i<lsBtn.length; i++) {
             final int I = i;
             lsBtn[i].addActionListener(_ -> {

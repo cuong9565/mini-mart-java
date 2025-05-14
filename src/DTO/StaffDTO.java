@@ -27,6 +27,12 @@ public class StaffDTO {
         this.phone = phone;
         this.state = state;
     }
+    public StaffDTO (int id , String phone, String lastName, String firstName){
+            this.id =id;
+            this.phone= phone;
+            this.lastName = lastName;
+            this.firstName= firstName;
+    }
     public StaffDTO(ResultSet rs){
         try {
             id = rs.getInt("staff.id");

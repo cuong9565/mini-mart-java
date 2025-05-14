@@ -14,6 +14,29 @@ public class ProductDAO {
         return instance;
     }
 
+    public List<ProductDTO> getbyidoffer(int idoffer) {
+        List<ProductDTO> list = new ArrayList<>();
+        Connection con =DataProvider.getInstance().getConnection();
+        String sql = "select * " +
+        "from product " +
+                "left join producttype on product.idProductType = producttype.id " +
+                "left join productdetail on product.idProductDetail = productdetail.id " +
+                "left join offer on product.idOfferProduct = offer.id " +
+                "where product.idOfferProduct=?";
+        try(PreparedStatement smt = con.prepareStatement(sql)){
+            smt.setInt(1, idoffer);
+            ResultSet rs = smt.executeQuery();
+            while (rs.next()){
+               list.add(new ProductDTO(rs));
+            }
+        }
+        catch (Exception e){
+            throw  new RuntimeException(e.getMessage());
+        }
+
+        return list;
+    }
+
     // Check same product
     public boolean isSameProduct(String name, String unit){
         boolean res;
@@ -36,15 +59,12 @@ public class ProductDAO {
     public ProductDTO getItemById(int id) {
         ProductDTO product = new ProductDTO();
         Connection con = DataProvider.getInstance().getConnection();
-        String sql =
-                "select * " +
-                "from product " +
-                "left join producttype on product.idProductType = producttype.id " +
-                "left join productdetail on product.idProductDetail = productdetail.id " +
-                "left join offerproduct on product.idOfferProduct = offerproduct.id " +
-                "left join offer on offerproduct.idOffer = offer.id " +
-                "where product.id = ? " +
-                "order by product.id;";
+        String sql ="SELECT *  \n" +
+                "FROM product \n" +
+                "JOIN producttype ON product.idProductType = producttype.id \n" +
+                "JOIN productdetail ON product.idProductDetail = productdetail.id \n" +
+                "LEFT JOIN offer ON product.idOfferProduct = offer.id \n" +
+                "WHERE product.id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)){
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -62,15 +82,12 @@ public class ProductDAO {
     public List<ProductDTO> load() {
         List<ProductDTO> list = new ArrayList<>();
         Connection con = DataProvider.getInstance().getConnection();
-        String sql =
-                "select * " +
-                "from product " +
-                "join producttype on product.idProductType = producttype.id " +
-                "join productdetail on product.idProductDetail = productdetail.id " +
-                "left join offerproduct on product.idOfferProduct = offerproduct.id " +
-                "left join offer on offerproduct.idOffer = offer.id " +
-                "order by product.id asc;";
-
+        String sql ="select * \n" +
+                "                from product \n" +
+                "                join producttype on product.idProductType = producttype.id \n" +
+                "                join productdetail on product.idProductDetail = productdetail.id \n" +
+                "                left join offer on product.idOfferProduct = offer.id \n" +
+                "                order by product.id asc;";
         try (PreparedStatement ps = con.prepareStatement(sql)){
             ResultSet rs = ps.executeQuery();
             while(rs.next()) list.add(new ProductDTO(rs));
@@ -101,7 +118,6 @@ public class ProductDAO {
         }
         DataProvider.getInstance().CloseConnection(con);
     }
-
     // Update
     public void update(int id, int idProductType, int idOfferProduct, String name, double price, String unit, int quantity){
         Connection con = DataProvider.getInstance().getConnection();
@@ -150,20 +166,34 @@ public class ProductDAO {
         DataProvider.getInstance().CloseConnection(con);
     }
 
-    public int getNumberProduct(){
+    public int getNumberProduct() {
         int res = 0;
-        String sql =
-                "select count(*) as result " +
-                "from product";
-        Connection con = DataProvider.getInstance().getConnection();
-        try (PreparedStatement ps = con.prepareStatement(sql)){
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()) res = rs.getInt("result");
+        String sql = "SELECT count(*) as rs FROM product";
+        Connection conn = DataProvider.getInstance().getConnection();
+        try (PreparedStatement smt = conn.prepareStatement(sql)) {
+            ResultSet rs = smt.executeQuery();
+            if (rs.next()) {
+                res = rs.getInt("rs");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            DataProvider.getInstance().CloseConnection(conn);
         }
-        catch (Exception e){
-            throw new RuntimeException(e.getMessage());
+        return res;
+    }
+
+    public void upoffer(int idproduct, int idoffer) {
+        Connection con = DataProvider.getInstance().getConnection();
+        String sql = "update product set idOfferProduct= ? where id = ?";
+        try (PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setInt(1, idoffer);
+            ps.setInt(2, idproduct);
+            ps.executeUpdate();
+        }
+        catch (Exception e) {
+            throw new RuntimeException();
         }
         DataProvider.getInstance().CloseConnection(con);
-        return res;
     }
 }

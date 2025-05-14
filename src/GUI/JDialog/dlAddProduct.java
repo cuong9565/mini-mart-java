@@ -17,25 +17,24 @@ public class dlAddProduct extends JDialog {
 
     JLabel lbName = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Tên*", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbType = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Loại*", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbDiscount = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Phần trăm giảm giá*", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbDiscountTime = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Thời gian giảm giá*", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbDiscount = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Thêm giảm giá", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbPrice = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Giá bán*", SwingConstants.LEFT, SwingConstants.CENTER);
     JLabel lbUnit = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Đơn vị*", SwingConstants.LEFT, SwingConstants.CENTER);
-    JLabel lbDetail = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Thông tin chi tiết", SwingConstants.LEFT, SwingConstants.CENTER);
-
+    JLabel lbDetail = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Mô tả sản phẩm", SwingConstants.LEFT, SwingConstants.CENTER);
+    JLabel lbValueoffer = new MyJLabel(Font.PLAIN, 14, MyColor.Black, "Phần trăm", SwingConstants.LEFT, SwingConstants.CENTER);
     JTextField tfName = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JComboBox<TypeProductDTO> cbType = new MyJComboBox<>(new TypeProductDTO[]{}, 12);
     JComboBox<OfferProductDTO> cbDiscount = new MyJComboBox<>(new OfferProductDTO[]{},12);
-    JComboBox<OfferDTO> cbOffer = new MyJComboBox<>(new OfferDTO[]{},12);
+    JComboBox<OfferDTO> cbOffer = new MyJComboBox<>(new OfferDTO[]{},12); //
     JSpinner snPrice = new MyJSpinner(100, 100, 1000000000, 100);
     JTextField tfUnit = new MyJTextFieldInput(Font.PLAIN, 14, true);
+    JTextField tfvalueoffer = new MyJTextFieldInput(Font.PLAIN, 14, true);
     MyJTextArea taDetail = new MyJTextArea();
 
     JButton btnSave = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Green, MyColor.LightGreen, "Xác nhận", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnEsc = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Red, MyColor.LightRed, "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
 
     JDialog dialog = this;
-    int posCbDiscount = 0;
     public dlAddProduct(fManage parentFrame, pnProduct parentPanel) {
         super(parentFrame,true);
         setTitle("Thêm sản phẩm");
@@ -43,13 +42,25 @@ public class dlAddProduct extends JDialog {
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-
-        // region setText
+        tfvalueoffer.setEditable(false);
+        OfferDTO chos = new OfferDTO(); chos.setName("Chọn đê");
+        cbOffer.addItem(chos);
+        for(OfferDTO offerDTO : OfferBUS.getInstance().getList()){
+            if(!offerDTO.getStatus(offerDTO.getDateStart().getSqlDate(),offerDTO.getDateEnd().getSqlDate()).equals("Đã kết thúc")) {
+                if (offerDTO.getCategory().equals("Giảm giá sản phẩm")) {
+                    cbOffer.addItem(offerDTO);
+                }
+            }
+        }
+        cbOffer.addActionListener(e -> {
+            if (cbOffer.getSelectedIndex()!=0) {
+                OfferDTO selectedOffer = (OfferDTO) cbOffer.getSelectedItem();
+                tfvalueoffer.setText(String.valueOf(selectedOffer.getValue())+"%");
+            } else {
+                tfvalueoffer.setText(""); // Clear nếu chọn option mặc định
+            }
+        });
         for(TypeProductDTO type: TypeProductBUS.getInstance().getList()) cbType.addItem(type);
-        for(OfferProductDTO offerProduct: OfferProductBUS.getInstance().getListDiscount()) cbDiscount.addItem(offerProduct);
-        for(OfferDTO offer: OfferBUS.getInstance().getListByOfferProduct((OfferProductDTO) cbDiscount.getSelectedItem())) cbOffer.addItem(offer);
-        // endregion
-
         // region setBounds
         pnMain.setBounds(0,0,760,440);
         lbName.setBounds(50,80,200,20);
@@ -57,15 +68,14 @@ public class dlAddProduct extends JDialog {
         lbType.setBounds(270,80,200,20);
         cbType.setBounds(270,100,200,30);
 
-        lbDiscount.setBounds(50,150,200,20);
-        cbDiscount.setBounds(50,170,200,30);
-        lbDiscountTime.setBounds(270,150,200,20);
-        cbOffer.setBounds(270, 170, 200, 30);
-
-        lbPrice.setBounds(50,220,200,20);
-        lbUnit.setBounds(270,220,200,20);
-        snPrice.setBounds(50,240,200,30);
-        tfUnit.setBounds(270,240,200,30);
+        lbDiscount.setBounds(50,220,200,20);
+        cbOffer.setBounds(50,240,200,30);
+        lbValueoffer.setBounds(270,220,200,20);
+        tfvalueoffer.setBounds(270,240,200,30);
+        lbPrice.setBounds(50,150,200,20);
+        lbUnit.setBounds(270,150,200,20);
+        snPrice.setBounds(50,170,200,30);
+        tfUnit.setBounds(270,170,200,30);
 
         lbDetail.setBounds(490,80,200,20);
         taDetail.sp.setBounds(490, 100, 200, 170);
@@ -78,30 +88,20 @@ public class dlAddProduct extends JDialog {
         // endregion
 
         // region setEvent
-        cbDiscount.addActionListener(_ -> {
-           int i = cbDiscount.getSelectedIndex();
-           if(i!=posCbDiscount) {
-               posCbDiscount = i;
-               cbOffer.removeAllItems();
-               for(OfferDTO offer: OfferBUS.getInstance().getListByOfferProduct((OfferProductDTO) cbDiscount.getSelectedItem()))
-                   cbOffer.addItem(offer);
-           }
-        });
+
         btnEsc.addActionListener(_ -> dialog.dispose());
         btnSave.addActionListener(_ -> {
             TypeProductDTO typeSelected = (TypeProductDTO) cbType.getSelectedItem();
-            OfferProductDTO offerProductSelected = (OfferProductDTO) cbDiscount.getSelectedItem();
             OfferDTO offerSelected = (OfferDTO) cbOffer.getSelectedItem();
-
+            int idoffer = offerSelected.getId();
             int idProductType = typeSelected.getId();
             String detail = taDetail.getText();
-            int idOfferProduct = (offerProductSelected.getId()==0?0:OfferProductBUS.getInstance().getIdBy(offerProductSelected.getDiscount(), offerSelected.getId()));
             String name = tfName.getText();
             double price = Double.parseDouble(snPrice.getValue().toString());
             String unit = tfUnit.getText();
             int quantity = 0;
             try {
-                ProductBUS.getInstance().add(idProductType, detail, idOfferProduct, name, price, unit, quantity);
+                ProductBUS.getInstance().add(idProductType, detail,idoffer, name, price, unit, quantity);
                 JOptionPane.showMessageDialog(dialog, "Thêm thông tin sản phẩm thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 parentPanel.loadProduct();
                 dispose();
@@ -110,7 +110,6 @@ public class dlAddProduct extends JDialog {
             }
         });
         // endregion
-
         // region add
         add(lbName);
         add(tfName);
@@ -120,10 +119,10 @@ public class dlAddProduct extends JDialog {
         add(lbUnit);
         add(snPrice);
         add(tfUnit);
-        add(lbDiscount);
-        add(lbDiscountTime);
-        add(cbDiscount);
-        add(cbOffer);
+       add(lbDiscount);
+      add(cbOffer);
+        add(lbValueoffer);
+        add(tfvalueoffer);
         add(lbDetail);
         add(taDetail.sp);
         add(btnSave);

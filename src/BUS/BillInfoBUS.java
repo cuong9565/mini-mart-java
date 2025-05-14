@@ -5,6 +5,7 @@ import DTO.BillInfoDTO;
 import DTO.ProductDTO;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BillInfoBUS {
@@ -39,7 +40,6 @@ public class BillInfoBUS {
 
     public boolean addProduct(int idBill, int idProduct, int quantity){
         ProductDTO product = ProductBUS.getInstance().getItemById(idProduct);
-
         BillInfoDTO billInfoDTO = new BillInfoDTO();
         List<BillInfoDTO> lsBillInfo = BillInfoDAO.getInstance().getList(idBill);
         for(BillInfoDTO billInfo : lsBillInfo)
@@ -55,7 +55,12 @@ public class BillInfoBUS {
         }
 
         int discount = 0;
-        if(product.toString().contains("%")) discount = product.getOfferProduct().getDiscount();
+//        if(product.toString().contains("%"))
+        if (!product.getOfferProduct().getOffer().getDateEnd().getSqlDate().before(new Date())){
+            discount = product.getOfferProduct().getOffer().getValue();
+            System.out.println("vi pham ngay");
+        }
+        System.out.println(discount);
         double total = product.getPrice() * (100 - discount) / 100 * quantity;
         if(billInfoDTO.getId() != 0){ // Nếu có thì cập nhật lại số lượng
             billInfoDTO.setQuantity(quantity);
@@ -73,7 +78,6 @@ public class BillInfoBUS {
 
     public boolean fixQuantityProduct(int idBill, int idProduct, int quantity){
         ProductDTO product = ProductBUS.getInstance().getItemById(idProduct);
-
         BillInfoDTO billInfoDTO = new BillInfoDTO();
         List<BillInfoDTO> lsBillInfo = BillInfoDAO.getInstance().getList(idBill);
         for(BillInfoDTO billInfo : lsBillInfo)

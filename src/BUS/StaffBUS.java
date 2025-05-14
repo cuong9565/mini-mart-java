@@ -10,7 +10,6 @@ import java.util.List;
 public class StaffBUS {
     private static StaffBUS instance = null;
     private List<StaffDTO>list = null;
-
     private StaffBUS() {}
     public static StaffBUS getInstance() {
         if (instance == null) instance = new StaffBUS();
@@ -22,12 +21,13 @@ public class StaffBUS {
         list = StaffDAO.getInstance().load();
         return list;
     }
+    // tìm kiếm theo trường tt và textfiled
     public List<StaffDTO>getStaffListBy(int col, String txt) {
         List<StaffDTO> ls = new ArrayList<>();
         for (StaffDTO staff : list) {
             switch (col) {
-                case 0: if(String.valueOf(staff.getId()).contains(txt)) ls.add(staff); break;
-                case 1: if(staff.getLastName().contains(txt)) ls.add(staff); break;
+                case 0: if(String.valueOf(staff.getId()).contains(txt)) ls.add(staff); break; // contains có chứa nội dung đó là dc
+                case 1: if(staff.getLastName().contains(txt)) ls.add(staff); break;             // equals giống 100 %
                 case 2: if(staff.getFirstName().contains(txt)) ls.add(staff); break;
                 case 3: if(staff.getGender().contains(txt)) ls.add(staff); break;
                 case 4: if(staff.getPhone().contains(txt)) ls.add(staff); break;
@@ -39,6 +39,58 @@ public class StaffBUS {
             }
         }
         return ls;
+    }
+    // Add
+    public void add(StaffDTO staff){
+        try {
+            if (staff.getFirstName().isEmpty() || staff.getLastName().isEmpty() || staff.getPhone().isEmpty() || staff.getAddress().isEmpty() || staff.getPassword().isEmpty())
+                throw new RuntimeException("Không được để trống thông tin!!!");
+
+            if(!staff.getPhone().matches("^0[0-9]{8,10}$"))
+                throw new RuntimeException("Số điện thoại định dạng không hợp lệ!!!");
+
+            if(checkSamePhone(staff.getPhone()))
+                throw new RuntimeException(String.format("Số điện thoại %s đã tồn tại!!!", staff.getPhone()));
+            StaffDAO.getInstance().add(staff);
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+    // update
+    public void UpdateAccount(StaffDTO staff){
+        try {
+            if(staff.getLastName().isEmpty())
+                throw new RuntimeException("Họ khách hàng không được để trống!!!");
+
+            if(staff.getFirstName().isEmpty())
+                throw new RuntimeException("Tên khách hàng không được để trống!!!");
+
+            if(staff.getPhone().isEmpty())
+                throw new RuntimeException("Số điện thoại không được để trống!!!");
+
+            if(staff.getPassword().isEmpty())
+                throw new RuntimeException("Mật khẩu không được để trống!!!");
+
+            if(!staff.getPhone().matches("^0[0-9]{8,10}$"))
+                throw new RuntimeException("Số điện thoại định dạng không hợp lệ!!!");
+            StaffDTO currStaff = StaffDAO.getInstance().GetStaffById(staff.getId());
+            if (checkSamePhone(staff.getPhone()) && !currStaff.getPhone().equals(staff.getPhone()))
+                throw new RuntimeException(String.format("Số điện thoại %s đã tồn tại!!!", staff.getPhone()));
+            StaffDAO.getInstance().UpdateAccount(staff);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    // Delete
+    public void delete(int id){
+        try {
+            StaffDAO.getInstance().delete(id);
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     // Item
@@ -74,26 +126,6 @@ public class StaffBUS {
         return staff;
     }
 
-    // Add
-    public void add(StaffDTO staff){
-        try {
-            if (staff.getFirstName().isEmpty() || staff.getLastName().isEmpty() || staff.getPhone().isEmpty() || staff.getAddress().isEmpty() || staff.getPassword().isEmpty())
-                throw new RuntimeException("Không được để trống thông tin!!!");
-
-            if(!staff.getPhone().matches("^0[0-9]{8,10}$"))
-                throw new RuntimeException("Số điện thoại định dạng không hợp lệ!!!");
-
-            if(checkSamePhone(staff.getPhone()))
-                throw new RuntimeException(String.format("Số điện thoại %s đã tồn tại!!!", staff.getPhone()));
-
-            StaffDAO.getInstance().add(staff);
-        }
-        catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-
-    // update
     public void UpdateStaffPassword(int id, String currPassword, String newPassword, String confirmPassword){
         try {
             if(currPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty())
@@ -109,58 +141,5 @@ public class StaffBUS {
             throw new RuntimeException(e.getMessage());
         }
     }
-    public void UpdateAccount(StaffDTO staff){
-        try {
-            if(staff.getLastName().isEmpty())
-                throw new RuntimeException("Họ khách hàng không được để trống!!!");
 
-            if(staff.getFirstName().isEmpty())
-                throw new RuntimeException("Tên khách hàng không được để trống!!!");
-
-            if(staff.getPhone().isEmpty())
-                throw new RuntimeException("Số điện thoại không được để trống!!!");
-
-            if(staff.getPassword().isEmpty())
-                throw new RuntimeException("Mật khẩu không được để trống!!!");
-
-            if(!staff.getPhone().matches("^0[0-9]{8,10}$"))
-                throw new RuntimeException("Số điện thoại định dạng không hợp lệ!!!");
-
-            StaffDTO currStaff = StaffDAO.getInstance().GetStaffById(staff.getId());
-            if (checkSamePhone(staff.getPhone()) && !currStaff.getPhone().equals(staff.getPhone()))
-                throw new RuntimeException(String.format("Số điện thoại %s đã tồn tại!!!", staff.getPhone()));
-
-            StaffDAO.getInstance().UpdateAccount(staff);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-    public void update(StaffDTO staff){
-        try {
-            if (staff.getFirstName().isEmpty() || staff.getLastName().isEmpty() || staff.getPhone().isEmpty() || staff.getAddress().isEmpty() || staff.getPassword().isEmpty())
-                throw new RuntimeException("Không được để trống thông tin!!!");
-
-            if(!staff.getPhone().matches("^0[0-9]{8,10}$"))
-                throw new RuntimeException("Số điện thoại định dạng không hợp lệ!!!");
-
-            StaffDTO currStaff = StaffDAO.getInstance().GetStaffById(staff.getId());
-            if (checkSamePhone(staff.getPhone()) && !currStaff.getPhone().equals(staff.getPhone()))
-                throw new RuntimeException(String.format("Số điện thoại %s đã tồn tại!!!", staff.getPhone()));
-
-            StaffDAO.getInstance().update(staff);
-        }
-        catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-
-    // Delete
-    public void delete(int id){
-        try {
-            StaffDAO.getInstance().delete(id);
-        }
-        catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
 }
