@@ -262,6 +262,10 @@ public class pnBill extends JPanel {
                             total.add(new com.itextpdf.text.Chunk("\nGiảm giá: ", fontBold));
                             total.add(new com.itextpdf.text.Chunk(bill.getOfferBill().getOffer().getValue() + "%", fontBold));
                         }
+                        else {
+                            total.add(new com.itextpdf.text.Chunk("\nGiảm giá: ", fontBold));
+                            total.add(new com.itextpdf.text.Chunk("Không áp dụng", fontBold));
+                        }
                         double thanhtien = sum*(1-((bill.getOfferBill().getOffer().getValue())*1.0/100));
                         total.add(new com.itextpdf.text.Chunk("\nThành tiền: ", fontBold));
                         total.add(new com.itextpdf.text.Chunk(String.format("%,.0f VNĐ",thanhtien), fontBold));
