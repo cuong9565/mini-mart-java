@@ -58,13 +58,13 @@ public class BillInfoBUS {
 
         int discount = 0;
         if(product.toString().contains("%"))
-//            System.out.println(MyDate.getCurrentDate());
+            System.out.println(MyDate.getCurrentDate());
         if (MyDate.getCurrentDate().bettween(product.getOfferProduct().getOffer().getDateStart(),product.getOfferProduct().getOffer().getDateEnd())){
             discount = product.getOfferProduct().getOffer().getValue();
         }
-//        System.out.println(product.getOfferProduct().getOffer().getValue());
-//        System.out.println(product.getOfferProduct().getOffer().getDateStart());
-//        System.out.println(discount);
+        System.out.println(product.getOfferProduct().getOffer().getValue());
+        System.out.println(product.getOfferProduct().getOffer().getDateStart());
+        System.out.println(discount);
         double total = product.getPrice() * (100 - discount) / 100 * quantity;
         if(billInfoDTO.getId() != 0){ // Nếu có thì cập nhật lại số lượng
             billInfoDTO.setQuantity(quantity);
