@@ -65,9 +65,7 @@ public class pnSell extends JPanel {
     public pnSell(fManage parentFrame, StaffDTO staffLogin) {
         setLayout(null);
         setBackground(MyColor.White);
-
         staffLoginGlobal = staffLogin;
-
         // region setBounds
         pnMain.setBounds(0,0,1170, 750);
         pnInfoCustomer.setBounds(0,0,1160, 70);
@@ -189,7 +187,7 @@ public class pnSell extends JPanel {
                     loadBillInfo();
                 }
                 else JOptionPane.showMessageDialog(thisPn, BillInfoBUS.getInstance().getError(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-            }
+             }
             else JOptionPane.showMessageDialog(thisPn, "Vui lòng chọn mục cần xóa", "Lỗi", JOptionPane.ERROR_MESSAGE);
         });
         btnNewsell.addActionListener(_ -> load());
@@ -302,14 +300,13 @@ public class pnSell extends JPanel {
                        """, customer.getId(), customer.getLastName() + " " + customer.getFirstName(), customer.getPhone()
                 ));
             }
-
             // Thông tin hóa đơn giảm giá
-            if(billDTO.getOfferBill().getId() == 0){
+             if(billDTO.getOfferBill().getOffer().getId() == 0){
                 tfOfferBill.setText("");
             }
             else {
                 OfferBillDTO offerBill = billDTO.getOfferBill();
-                tfOfferBill.setText(offerBill.getDiscount() + "%");
+                tfOfferBill.setText(offerBill.getOffer().getValue() + "%");
             }
         }
         else {

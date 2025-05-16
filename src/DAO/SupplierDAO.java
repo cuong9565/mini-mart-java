@@ -24,6 +24,7 @@ public class SupplierDAO {
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
+
             while (rs.next()) list.add(new SupplierDTO(rs));
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
@@ -31,7 +32,6 @@ public class SupplierDAO {
         DataProvider.getInstance().CloseConnection(con);
         return list;
     }
-
     // Item
     public SupplierDTO getSupplierById(int id) {
         SupplierDTO supplier = new SupplierDTO();

@@ -21,11 +21,10 @@ public class dlSearchOfferBill extends JDialog {
     JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JComboBox<String> cbSearch = new MyJComboBox<>(new String[]{"Mã số", "Ngày bắt đầu", "Ngày kết thúc", "Giảm giá"}, 12);
-    MyJTable tbOfferBill = new MyJTable(new String[]{"Mã số", "Ngày bắt đầu", "Ngày kết thúc", "Giảm giá"}, new int[]{}, new int[]{}, new int[]{});
+    MyJTable tbOfferBill = new MyJTable(new String[]{"Mã số","Tên chương trình", "Ngày bắt đầu", "Ngày kết thúc", "Giảm giá"}, new int[]{}, new int[]{}, new int[]{});
 
     JButton btnSave = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Green, MyColor.LightGreen, "Xác nhận", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnEsc = new MyJButton(Font.BOLD, 14, MyColor.White, MyColor.Red, MyColor.LightRed, "Hủy", SwingConstants.CENTER, SwingConstants.CENTER);
-
     JDialog dialog = this;
 
     public dlSearchOfferBill(fManage parentFrame, pnSell parentPanel) {
@@ -61,6 +60,7 @@ public class dlSearchOfferBill extends JDialog {
             if(i==-1) JOptionPane.showMessageDialog(dialog, "Vui lòng chọn thông tin giảm giá", "Lỗi", JOptionPane.ERROR_MESSAGE);
             else {
                 int idOfferBill = Integer.parseInt(tbOfferBill.getFirstColumn(i));
+                System.out.println(idOfferBill);
                 parentPanel.updateOfferBill(idOfferBill);
                 dialog.dispose();
             }

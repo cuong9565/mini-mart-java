@@ -25,14 +25,15 @@ public class BillBUS {
         list = BillDAO.getInstance().load();
         return list;
     }
-
-    public BillDTO getBillById(int id){
-        for (BillDTO billDTO : load()) {
-            if(billDTO.getId() == id) return billDTO;
+    public void delete(int id){
+        try {
+            BillInfoDAO.getInstance().deleteByIdBill(id);
+            BillDAO.getInstance().delete(id);
         }
-        return new BillDTO();
+        catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
     }
-
     public List<BillDTO> search(int col, String txt){
         List<BillDTO> ls = new ArrayList<>();
         for (BillDTO bill : list) switch (col) {
@@ -43,7 +44,14 @@ public class BillBUS {
         }
         return ls;
     }
+    public BillDTO getBillById(int id){
+        for (BillDTO billDTO : load()) {
+            if(billDTO.getId() == id) return billDTO;
+        }
+        return new BillDTO();
+    }
 
+// hóa đơn chưa thanh toán
     public BillDTO getBillNotPaid(int idStaff){
         for (BillDTO bill : load())
             if(bill.getStaff().getId() == idStaff && bill.getState().equals("Chưa thanh toán"))
@@ -53,7 +61,6 @@ public class BillBUS {
 
     public void addBill(int idStaff){
         if(getBillNotPaid(idStaff).getId()!=0) return; // Đã có Bill trong danh sách
-
         try {BillDAO.getInstance().addBill(idStaff);}
         catch (Exception e) {error = e.getMessage();}
     }
@@ -92,15 +99,6 @@ public class BillBUS {
         return true;
     }
 
-    public void delete(int id){
-        try {
-            BillInfoDAO.getInstance().deleteByIdBill(id);
-            BillDAO.getInstance().delete(id);
-        }
-        catch (Exception e){
-            throw new RuntimeException(e.getMessage());
-        }
-    }
 
     public boolean Pay(int idBill, double price){
         try{
@@ -110,10 +108,10 @@ public class BillBUS {
             error = e.getMessage();
             return false;
         }
-
         try{
             for(BillInfoDTO billInfoS : BillInfoBUS.getInstance().loadByIdBill(idBill)){
                 ProductDTO product = ProductDAO.getInstance().getItemById(billInfoS.getIdProduct());
+                // cập nhật lại số lượng sp
                 ProductDAO.getInstance().updateQuantity(product.getId(), product.getQuantity() - billInfoS.getQuantity());
             }
         }
@@ -126,3 +124,41 @@ public class BillBUS {
 
     public String getError() {return error;}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

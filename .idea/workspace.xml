@@ -4,35 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong update Pay">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d6403069-beff-4c3d-88b1-ee3a1ae2d5ed.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d6403069-beff-4c3d-88b1-ee3a1ae2d5ed.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_21_2025_10_17_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_21_2025_10_17_PM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_22_2025_10_07_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_22_2025_10_07_PM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_22_2025_10_27_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_22_2025_10_27_PM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_25_2025_4_30_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_25_2025_4_30_PM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_27_2025_9_40_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_27_2025_9_40_PM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/CustomerStatisticBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/CustomerStatisticBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BUS/ProductBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/ProductBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/ProductStatisticBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BUS/ProductStatisticBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/BillDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/BillDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/BillInfoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/BillInfoDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/ImportDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/ImportDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/ProductStatisticDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/ProductStatisticDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/SupplierDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/SupplierDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnBill.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnImportOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnImportOrder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnProduct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticBill.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/JPanel/pnStatisticProduct.java" afterDir="false" />
-    </list>
+    <list default="true" id="74a6eaf9-88c5-48d7-8cd8-86ba7116e1b4" name="Changes" comment="Cuong update Pay" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,7 +34,7 @@
   }
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -86,9 +58,9 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;ShowUsagesActions.previewPropertyKey&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Tphu&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/mini-mart-java/mysql-connector-j-9.1.0/mysql-connector-j-9.1.0.jar&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/tphu/java_appilation/mini-mart-java&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -229,21 +201,27 @@
       <workItem from="1745021777075" duration="8874000" />
       <workItem from="1745036031243" duration="64000" />
       <workItem from="1745057496499" duration="6104000" />
-      <workItem from="1745334004478" duration="361000" />
-      <workItem from="1745368177231" duration="5754000" />
-      <workItem from="1745376027828" duration="5785000" />
-      <workItem from="1745381921206" duration="35000" />
-      <workItem from="1745389229057" duration="5261000" />
-      <workItem from="1745401531355" duration="2838000" />
-      <workItem from="1745798601463" duration="2514000" />
-      <workItem from="1745803052893" duration="1247000" />
-      <workItem from="1745826245715" duration="684000" />
-      <workItem from="1745848556238" duration="268000" />
-      <workItem from="1746173598807" duration="165000" />
-      <workItem from="1746278547373" duration="131000" />
-      <workItem from="1746425542141" duration="5752000" />
-      <workItem from="1746431704748" duration="4824000" />
-      <workItem from="1746710830082" duration="348000" />
+      <workItem from="1747329353121" duration="5486000" />
+      <workItem from="1747358245641" duration="2139000" />
+      <workItem from="1747400543654" duration="892000" />
+      <workItem from="1747401499788" duration="61000" />
+      <workItem from="1747401671333" duration="7000" />
+    </task>
+    <task id="LOCAL-00028" summary="Cuong update">
+      <option name="closed" value="true" />
+      <created>1742557798948</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1742557798948</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Cuong update">
+      <option name="closed" value="true" />
+      <created>1742560945357</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1742560945357</updated>
     </task>
     <task id="LOCAL-00030" summary="Cuong update">
       <option name="closed" value="true" />
@@ -613,31 +591,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745036063608</updated>
     </task>
-    <task id="LOCAL-00076" summary="Cuong finish check same info">
+    <task id="LOCAL-00076" summary="Search Or">
       <option name="closed" value="true" />
-      <created>1745404561232</created>
+      <created>1745248703303</created>
       <option name="number" value="00076" />
       <option name="presentableId" value="LOCAL-00076" />
       <option name="project" value="LOCAL" />
-      <updated>1745404561232</updated>
+      <updated>1745248703304</updated>
     </task>
-    <task id="LOCAL-00077" summary="Cuong update Pay">
-      <option name="closed" value="true" />
-      <created>1745766877867</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1745766877867</updated>
-    </task>
-    <task id="LOCAL-00078" summary="Cuong update Pay">
-      <option name="closed" value="true" />
-      <created>1745826691521</created>
-      <option name="number" value="00078" />
-      <option name="presentableId" value="LOCAL-00078" />
-      <option name="project" value="LOCAL" />
-      <updated>1745826691522</updated>
-    </task>
-    <option name="localTasksCounter" value="79" />
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -655,6 +617,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="Cuong update SettingAccountFrame" />
     <MESSAGE value="Cuong fix GetJPanel" />
     <MESSAGE value="Cuong fix MyJTextField" />
     <MESSAGE value="Cuong add JLableError" />
@@ -678,8 +641,18 @@
     <MESSAGE value="Cuong update statistics" />
     <MESSAGE value="Cuong pnImportOrder" />
     <MESSAGE value="Cuong end pnImportOrder" />
-    <MESSAGE value="Cuong finish check same info" />
-    <MESSAGE value="Cuong update Pay" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cuong update Pay" />
+    <MESSAGE value="Search Or" />
+    <option name="LAST_COMMIT_MESSAGE" value="Search Or" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/DTO/BillInfoDTO.java</url>
+          <line>63</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

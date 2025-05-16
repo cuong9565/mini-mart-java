@@ -46,12 +46,12 @@ public class DetailProductDAO {
         DataProvider.getInstance().CloseConnection(con);
     }
 
-    public void update(DetailProductDTO dp) {
+    public void update(String detail ,int id) {
         Connection con = DataProvider.getInstance().getConnection();
         String sql = "update productdetail set detailInfo = ? where id = ?";
         try(PreparedStatement ps = con.prepareStatement(sql)){
-            ps.setString(1, dp.getText());
-            ps.setInt(2, dp.getId());
+            ps.setString(1,detail);
+            ps.setInt(2,id);
             ps.executeUpdate();
         }
         catch (SQLException e) {

@@ -13,7 +13,6 @@ import java.util.List;
 
 public class StaffDAO {
     private static StaffDAO instance = null;
-
     private StaffDAO() {}
     public static StaffDAO getInstance() {
         if (instance == null) instance = new StaffDAO();
@@ -141,58 +140,41 @@ public class StaffDAO {
     }
 
     public List<StaffDTO> load(){
-        List<StaffDTO> list = new ArrayList<>();
+        List<StaffDTO> list =new ArrayList<>();
         String sql = "select * from staff";
-        Connection con = DataProvider.getInstance().getConnection();
-        try(
-                PreparedStatement ps = con.prepareStatement(sql);
-                ResultSet rs = ps.executeQuery();
-        ){
-            while(rs.next()) list.add(new StaffDTO(rs));
-        } catch (Exception e) {
+        Connection conn = DataProvider.getInstance().getConnection();
+        try(PreparedStatement smt = conn.prepareStatement(sql);
+            ResultSet rsl = smt.executeQuery()){
+            while(rsl.next()){
+                list.add(new StaffDTO(rsl));
+            }
+        }
+        catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }
-        DataProvider.getInstance().CloseConnection(con);
+        DataProvider.getInstance().CloseConnection(conn);
         return list;
     }
 
-    public void add(StaffDTO staff) {
-        String sql = "insert into staff(phone, password, firstName, lastName, address, salary, role, gender) values(?,?,?,?,?,?,?,?)";
-        Connection con = DataProvider.getInstance().getConnection();
-        try(PreparedStatement ps = con.prepareStatement(sql)){
-            ps.setString(1, staff.getPhone());
-            ps.setString(2, staff.getPassword());
-            ps.setString(3, staff.getFirstName());
-            ps.setString(4, staff.getLastName());
-            ps.setString(5, staff.getAddress());
-            ps.setDouble(6, staff.getSalary());
-            ps.setString(7, staff.getRole());
-            ps.setString(8, staff.getGender());
-            ps.executeUpdate();
+    public void add(StaffDTO staff){
+        Connection conn = DataProvider.getInstance().getConnection();
+        String sql = "insert into staff (phone,password,firstname, lastname,address,salary,role,gender) value(?,?,?,?,?,?,?,?)";
+        try(PreparedStatement stm = conn.prepareStatement(sql)){
+            stm.setString(1,staff.getPhone());
+            stm.setString(2,staff.getPassword());
+           stm.setString(3,staff.getFirstName());
+           stm.setString(4,staff.getLastName());
+           stm.setString(5,staff.getAddress());
+           stm.setDouble(6,staff.getSalary());
+           stm.setString(7,staff.getRole());
+           stm.setString(8,staff.getGender());
+            stm.executeUpdate();
         }
         catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }
-        DataProvider.getInstance().CloseConnection(con);
-    }
-    public void update(StaffDTO staff) {
-        String sql = "update staff set phone = ?, password = ?, firstName = ?, lastName = ?, address = ?, salary = ?, state = ?, role = ?, gender = ? where id = ?";
-        Connection con = DataProvider.getInstance().getConnection();
-        try (PreparedStatement ps = con.prepareStatement(sql)){
-            ps.setString(1, staff.getPhone());
-            ps.setString(2, staff.getPassword());
-            ps.setString(3, staff.getFirstName());
-            ps.setString(4, staff.getLastName());
-            ps.setString(5, staff.getAddress());
-            ps.setDouble(6, staff.getSalary());
-            ps.setString(7, staff.getState());
-            ps.setString(8, staff.getRole());
-            ps.setString(9, staff.getGender());
-            ps.setInt(10, staff.getId());
-            ps.executeUpdate();
-        }
-        catch (Exception e){
-            throw new RuntimeException(e.getMessage());
+        finally {
+            DataProvider.getInstance().CloseConnection(conn);
         }
     }
 

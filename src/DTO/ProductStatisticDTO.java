@@ -15,17 +15,15 @@ public class ProductStatisticDTO {
         try {
             id = rs.getInt("product.id");
             name = rs.getString("product.name");
-
             date = new MyDate(rs.getDate("bill.dateCreate"));
             double total = rs.getDouble("billinfo.total");
-
             setQ(date.getMm(), total);
         }
         catch (Exception e) {
             System.out.println("Lỗi ProductStatisticDTO; " + e.getMessage());
         }
     }
-    public ProductStatisticDTO(ResultSet rs, int pos) {
+    public ProductStatisticDTO(ResultSet rs,int pos) {
         try {
             id = rs.getInt("product.id");
             name = rs.getString("product.name");

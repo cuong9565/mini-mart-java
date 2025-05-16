@@ -1,5 +1,4 @@
 package GUI.JPanel;
-
 import BUS.BillBUS;
 import BUS.BillInfoBUS;
 import Components.*;
@@ -19,8 +18,8 @@ public class pnBill extends JPanel {
     JPanel pnFunc = new MyJPanel(MyColor.White, "Chức năng");
     JPanel pnSearch = new MyJPanel(MyColor.White, "Tìm kiếm");
     JButton btnDelete = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#F44336"), Color.decode("#FF7568"), "Xóa", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnOut = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Xuất<br>Exel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnPDF = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>IN<br>PDF</html>", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnOut = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Xuất<br>Excel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnPDF = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>In<br>PDF</html>", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnDetail = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Xuất<br>Chi tiết</html>", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
@@ -40,11 +39,11 @@ public class pnBill extends JPanel {
 
         // region setBounds
         pnHeader.setBounds(0,0,1170, 90);
-        pnFunc.setBounds(0,0,300,90);
+        pnFunc.setBounds(0,0,230,90);
         btnDelete.setBounds(15,20,60,60);
         btnOut.setBounds(85,20,60,60);
-        btnDetail.setBounds(155,20,60,60);
-        btnPDF.setBounds(225,20,60,60);
+//        btnDetail.setBounds(155,20,60,60);
+        btnPDF.setBounds(155,20,60,60);
         pnSearch.setBounds(670,0,500,90);
         cbSearch.setBounds(685, 30, 150, 30);
         tfSearch.setBounds(845, 30, 200, 30);
@@ -77,9 +76,9 @@ public class pnBill extends JPanel {
                             String.format("<html>Mã khách hàng: <b>%d</b> --- Tên khách hàng: <b>%s</b> --- Số điện thoại: <b>%s</b></html>", bill.getCustomer().getId(), bill.getCustomer().getLastName() + " " + bill.getCustomer().getFirstName(), bill.getCustomer().getPhone())
                     );
                 else lbCustomer.setText("<html><u>Không có thông tin khách hàng</u></html>");
-                if(bill.getOfferBill().getId()!=0)
+                if(bill.getOfferBill().getOffer().getId()!=0)
                     lbOfferBill.setText(
-                            String.format("<html>Mã giảm giá: <b>%d</b> --- Phần trăm giảm giá: <b>%s</b></html>", bill.getOfferBill().getId(), bill.getOfferBill().getDiscount() + "%")
+                            String.format("<html>Mã giảm giá: <b>%d</b> --- Phần trăm giảm giá: <b>%s</b></html>", bill.getOfferBill().getOffer().getId(), bill.getOfferBill().getOffer().getValue() + "%")
                     );
                 else lbOfferBill.setText("<html><u>Không có thông tin giảm giá</u></html>");
                 tbBillInfo.dftbModel.setRowCount(0);
@@ -241,24 +240,37 @@ public class pnBill extends JPanel {
                             cell.setHorizontalAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
                             table.addCell(cell);
 
-                            cell = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(String.valueOf(data[6]) , fontNormal));
+                            cell = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(String.format("%,.0f", info.getTotal()) , fontNormal));
                             cell.setPadding(5);
                             cell.setHorizontalAlignment(com.itextpdf.text.Element.ALIGN_RIGHT);
                             table.addCell(cell);
                         }
                         document.add(table);
+
                         // Tổng thanh toán
                         com.itextpdf.text.Paragraph total = new com.itextpdf.text.Paragraph();
-                        total.add(new com.itextpdf.text.Chunk("\nTổng tiền: ", fontBold));
-                        total.add(new com.itextpdf.text.Chunk(bill.getPrice() + " VNĐ", fontBold));
-                        total.setAlignment(com.itextpdf.text.Element.ALIGN_RIGHT);
-                        if(bill.getOfferBill().getId() != 0) {
-                            total.add(new com.itextpdf.text.Chunk("\nGiảm giá: ", fontBold));
-                            total.add(new com.itextpdf.text.Chunk(bill.getOfferBill().getDiscount() + "%", fontBold));
-                            double finalAmount = bill.getPrice() * (100 - bill.getOfferBill().getDiscount()) / 100;
-                            total.add(new com.itextpdf.text.Chunk("\nThành tiền: ", fontBold));
-                            total.add(new com.itextpdf.text.Chunk(finalAmount + " VNĐ", fontBold));
+
+                        // Tính tổng từ cột thành tiền
+                        double sum = 0;
+                        for(BillInfoDTO info : billInfos) {
+                            sum += info.getTotal();
                         }
+
+                        total.add(new com.itextpdf.text.Chunk("\nTổng tiền: ", fontBold));
+                        total.add(new com.itextpdf.text.Chunk(String.format("%,.0f VNĐ", sum), fontBold));
+
+                        if(bill.getOfferBill().getOffer().getId()!= 0) {
+                            total.add(new com.itextpdf.text.Chunk("\nGiảm giá: ", fontBold));
+                            total.add(new com.itextpdf.text.Chunk(bill.getOfferBill().getOffer().getValue() + "%", fontBold));
+                        }
+                        else {
+                            total.add(new com.itextpdf.text.Chunk("\nGiảm giá: ", fontBold));
+                            total.add(new com.itextpdf.text.Chunk("Không áp dụng", fontBold));
+                        }
+                        double thanhtien = sum*(1-((bill.getOfferBill().getOffer().getValue())*1.0/100));
+                        total.add(new com.itextpdf.text.Chunk("\nThành tiền: ", fontBold));
+                        total.add(new com.itextpdf.text.Chunk(String.format("%,.0f VNĐ",thanhtien), fontBold));
+                        total.setAlignment(com.itextpdf.text.Element.ALIGN_RIGHT);
                         document.add(total);
                         // Footer
                         com.itextpdf.text.Paragraph thankYou = new com.itextpdf.text.Paragraph("\n\nCẢM ƠN QUÝ KHÁCH ! ", fontHeader);
@@ -283,7 +295,7 @@ public class pnBill extends JPanel {
         add(lbOfferBill);
         add(btnDelete);
         add(btnOut);
-        add(btnDetail);
+//        add(btnDetail);
         add(btnPDF);
         add(pnFunc);
         add(btnRefresh);

@@ -16,6 +16,13 @@ public class CustomerDTO{
         this.gender = gender;
         this.state = state;
     }
+    public CustomerDTO(int id, String phone, String lastName, String firstName ) {
+        this.id = id;
+        this.phone = phone;
+        this.lastName = lastName;
+        this.firstName = firstName;
+    }
+
     public CustomerDTO(ResultSet rs){
         try {
             id = rs.getInt("customer.id");

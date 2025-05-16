@@ -15,8 +15,6 @@ public class OfferBillDTO {
     }
     public OfferBillDTO(ResultSet rs) {
         try{
-            id = rs.getInt("offerbill.id");
-            discount = rs.getInt("offerbill.discount");
             offer = new OfferDTO(rs);
         }
         catch (Exception e) {
@@ -36,6 +34,6 @@ public class OfferBillDTO {
     public String toString() {
         return (this.id!=0)?discount + "%":"Chưa có ưu đãi";
     }
-    public Object[] getObjects() {return new Object[]{id, offer.getDateStart(), offer.getDateEnd(), discount + "%"};}
+    public Object[] getObjects() {return new Object[]{offer.getId(),offer.getName(), offer.getDateStart(), offer.getDateEnd(), offer.getValue()+ "%"};}
 
 }

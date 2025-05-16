@@ -24,7 +24,6 @@ public class ImportInfoDAO {
                 "from importorderdetail " +
                 "where idImportOrder = ?";
         Connection con = DataProvider.getInstance().getConnection();
-
         try(PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idImport);
             ResultSet rs = ps.executeQuery();

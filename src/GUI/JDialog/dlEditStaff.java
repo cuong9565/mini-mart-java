@@ -127,9 +127,10 @@ public class dlEditStaff extends JDialog {
         btnSave.addActionListener(_ -> {
             StaffDTO staffNew = new StaffDTO(staff.getId(), tfPhone.getText(), tfPassword.getText(), tfFirstName.getText(), tfLastName.getText(), (bgGender.radioButtons[0].isSelected()?"Nam":"Nữ"), tfAddress.getText(), (String) cbRole.getSelectedItem(), Double.parseDouble(snSalary.getValue().toString()), tfState.getText());
             try {
-                StaffBUS.getInstance().update(staffNew);
+                StaffBUS.getInstance().UpdateAccount(staffNew);
                 JOptionPane.showMessageDialog(dialog, "Sửa thông tin nhân viên thành công!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
                 parentPanel.loadStaff();
+                dialog.dispose();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(dialog, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }

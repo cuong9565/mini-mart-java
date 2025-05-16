@@ -56,7 +56,7 @@ public class fManage extends JFrame {
                 new pnCustomer(currFrame),
                 new pnBill(),
                 new pnImportOrder(),
-                new pnDiscount(currFrame),
+                new pnOffer(),
                 new pnStaff(currFrame),
                 new pnSupplier(currFrame)};
 

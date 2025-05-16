@@ -25,12 +25,12 @@ public class pnProduct extends JPanel {
     JButton btnAdd = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#4CAF50"), Color.decode("#7ED482"), "Thêm", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnEdit = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#FF9800"), Color.decode("#FFD966"), "Sửa", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnDelete = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#F44336"), Color.decode("#FF7568"), "Xóa", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnIn = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Nhập<br>Exel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnOut = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Xuất<br>Exel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnIn = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Nhập<br>Excel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnOut = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Xuất<br>Excel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnDetail = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Chi tiết</html>", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
-    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Mã", "Loại", "Giảm giá", "Tên sản phẩm", "Giá bán", "Đơn vị", "Số lượng"}, 12);
+    JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Mã", "Loại","Tên sản phẩm", "Giá bán", "Đơn vị", "Số lượng"}, 12);
     JComboBox<String>cbSearchad1 = new MyJComboBox<>(new String[]{"Giá từ","0-99k","Trên 99k",}, 12);
     JComboBox<TypeProductDTO>cbSearchad2 = new MyJComboBox<>(new TypeProductDTO[]{}, 12);
     JCheckBox checkOR = new JCheckBox("Tìm theo OR");
@@ -128,27 +128,85 @@ public class pnProduct extends JPanel {
         });
 
         btnIn.addActionListener(_ -> {
-            List<Object[]> list = tbProduct.ImportExel(5);
-            if(list==null) return;
-            if(JOptionPane.showConfirmDialog(thisPanel, "Bạn có chắc chắn muốn nhập?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION){
+            List<Object[]> list = tbProduct.ImportExel(7); // Đọc tất cả 7 cột từ file Excel
+            if(list == null) return;
+
+            if(JOptionPane.showConfirmDialog(thisPanel, "Bạn có chắc chắn muốn nhập?", "Xác nhận",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+
                 int success = 0;
                 StringBuilder error = new StringBuilder();
                 for (Object[] ob : list) {
                     try {
-                        int idOfferProduct = 0;
-                        int idProductType = TypeProductBUS.getInstance().getItemByName(ob[0].toString()).getId();
-                        String name = ob[1].toString();
-                        double price = Double.parseDouble(ob[2].toString().replace("đ", "").replace(",", ""));
-                        String unit = ob[3].toString();
-                        String detail = ob[4].toString();
-                        ProductBUS.getInstance().add(idProductType, detail, idOfferProduct, name, price, unit, 0);
+                        // Kiểm tra đủ số cột
+                        if(ob.length < 5) {
+                            error.append("Dòng thiếu dữ liệu\n");
+                            continue;
+                        }
+
+                        // Xử lý loại sản phẩm
+                        String productTypeName = ob[1] != null ? ob[1].toString().trim() : "";
+                        if(productTypeName.isEmpty()) {
+                            error.append("Loại sản phẩm không được để trống\n");
+                            continue;
+                        }
+
+                        // Lấy ID loại sản phẩm
+                        int idProductType = TypeProductBUS.getInstance().getItemByName(productTypeName).getId();
+
+                        // Xử lý tên sản phẩm
+                        String name = ob[3] != null ? ob[3].toString().trim() : "";
+                        if(name.isEmpty()) {
+                            error.append("Tên sản phẩm không được để trống\n");
+                            continue;
+                        }
+
+                        // Xử lý giá bán (bỏ ký tự đ, dấu phẩy và chuyển sang số)
+                        double price = 0;
+                        try {
+                            String priceStr = ob[4] != null ? ob[4].toString().replace("đ", "").replace(",", "").trim() : "0";
+                            price = Double.parseDouble(priceStr);
+                        } catch (NumberFormatException e) {
+                            error.append("Giá bán không hợp lệ: ").append(ob[4]).append("\n");
+                            continue;
+                        }
+
+                        // Xử lý đơn vị tính
+                        String unit = ob[5] != null ? ob[5].toString().trim() : "";
+                        if(unit.isEmpty()) {
+                            error.append("Đơn vị tính không được để trống\n");
+                            continue;
+                        }
+
+                        // Xử lý số lượng (nếu cần)
+                        int quantity = 0;
+                        try {
+                            String quantityStr = ob[6] != null ? ob[6].toString().trim() : "0";
+                            quantity = Integer.parseInt(quantityStr);
+                        } catch (NumberFormatException e) {
+                            error.append("Số lượng không hợp lệ: ").append(ob[6]).append("\n");
+                            continue;
+                        }
+
+                        // Thêm sản phẩm
+                        ProductBUS.getInstance().add(
+                                idProductType,
+                                "", // detail (nếu cần lấy từ ob[4] hoặc cột khác)
+                                0,  // idOfferProduct
+                                name,
+                                price,
+                                unit,
+                                quantity
+                        );
                         success++;
-                    }
-                    catch (Exception e) {
-                        error.append(e.getMessage()).append("\n");
+                    } catch (Exception e) {
+                        error.append("Lỗi: ").append(e.getMessage()).append("\n");
                     }
                 }
-                if(!error.isEmpty()) JOptionPane.showMessageDialog(thisPanel, error, "Lỗi", JOptionPane.ERROR_MESSAGE);
+
+                if(!error.isEmpty()) {
+                    JOptionPane.showMessageDialog(thisPanel, error.toString(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
                 JOptionPane.showMessageDialog(thisPanel, "Đã thêm " + success + " sản phẩm", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 loadProduct();
             }
@@ -202,15 +260,18 @@ public class pnProduct extends JPanel {
     }
 
     public void loadProduct()  {
-        ProductBUS.getInstance().load();
-        textChange();
+      for (ProductDTO pro : ProductBUS.getInstance().load()){
+          tbProduct.dftbModel.addRow(pro.getRowObjects());
+      }
+      textChange();
     }
 
     public void textChange(){
         tbProduct.dftbModel.setRowCount(0);
         int col = cbSearch.getSelectedIndex();
         String txt = tfSearch.getText();
-        for(ProductDTO product: ProductBUS.getInstance().getListSearch(col, txt))
+        for(ProductDTO product: ProductBUS.getInstance().getListSearch(col, txt)) {
             tbProduct.dftbModel.addRow(product.getRowObjects());
+        }
     }
 }

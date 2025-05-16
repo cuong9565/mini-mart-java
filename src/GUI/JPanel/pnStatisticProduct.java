@@ -1,6 +1,6 @@
 package GUI.JPanel;
 
-import BUS.ProductStatisticBUS;
+import BUS.TypeProductBUS;
 import Components.*;
 import DTO.ProductStatisticDTO;
 
@@ -98,7 +98,7 @@ public class pnStatisticProduct extends JPanel {
     public void loadImport(){
         double total = 0;
         tbImport.dftbModel.setRowCount(0);
-        for(ProductStatisticDTO p: ProductStatisticBUS.getInstance().loadImportByDate(spStartDate.getMyDate(), spEndDate.getMyDate())){
+        for(ProductStatisticDTO p: TypeProductBUS.ProductStatisticBUS.getInstance().loadImportByDate(spStartDate.getMyDate(), spEndDate.getMyDate())){
             tbImport.dftbModel.addRow(p.getRRowObject());
             total+=p.getTotal();
         }
@@ -108,8 +108,9 @@ public class pnStatisticProduct extends JPanel {
     public void loadExport(){
         double total = 0;
         tbExport.dftbModel.setRowCount(0);
-        for(ProductStatisticDTO p: ProductStatisticBUS.getInstance().loadExportByDate(spStartDate.getMyDate(), spEndDate.getMyDate())){
+        for(ProductStatisticDTO p: TypeProductBUS.ProductStatisticBUS.getInstance().loadExportByDate(spStartDate.getMyDate(), spEndDate.getMyDate())){
             tbExport.dftbModel.addRow(p.getRRowObject());
+            // object id , name , q1,2,3,4, tong
             total+=p.getTotal();
         }
         lbTotalExport.setText(String.format("Tổng cộng: %,.0fđ", total));

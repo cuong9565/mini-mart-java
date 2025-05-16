@@ -5,13 +5,22 @@ import BUS.ImportInfoBUS;
 import Components.*;
 import DTO.ImportDTO;
 import DTO.ImportInfoDTO;
-import GUI.JFrame.fManage;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.awt.Font;
 import java.awt.event.*;
+import java.util.List;
+
 
 public class pnImportOrder extends JPanel {
     JPanel pnHeader = new MyJPanel(MyColor.White);
@@ -19,8 +28,8 @@ public class pnImportOrder extends JPanel {
     JPanel pnFunc = new MyJPanel(MyColor.White, "Chức năng");
     JPanel pnSearch = new MyJPanel(MyColor.White, "Tìm kiếm");
     JButton btnDelete = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#F44336"), Color.decode("#FF7568"), "Xóa", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnOut = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Xuất<br>Exel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
-    JButton btnDetail = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Xuất<br>Chi tiết</html>", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnOut = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>Xuất<br>Excel</html>", SwingConstants.CENTER, SwingConstants.CENTER);
+    JButton btnDetail = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "<html>In<br>PDF</html>", SwingConstants.CENTER, SwingConstants.CENTER);
     JButton btnRefresh = new MyJButton(Font.BOLD, 16, Color.decode("#FFFFFF"), Color.decode("#2196F3"), Color.decode("#64B5F6"), "Làm mới", SwingConstants.CENTER, SwingConstants.CENTER);
     JTextField tfSearch = new MyJTextFieldInput(Font.PLAIN, 14, true);
     JComboBox<String>cbSearch = new MyJComboBox<>(new String[]{"Mã HĐ", "Ngày tạo", "Thành tiền", "Trạng thái"}, 12);
@@ -105,10 +114,154 @@ public class pnImportOrder extends JPanel {
         });
         btnDetail.addActionListener(_ -> {
             int i = tbImport.getSelectedRow();
-            if(i>=0){
-                JOptionPane.showMessageDialog(thisPanel, "Tạo PDF đi!!!");
+            if (i >= 0) {
+                try {
+                    int importId = Integer.parseInt(tbImport.getFirstColumn(i));
+                    ImportDTO importDTO = ImportBUS.getInstance().getImportById(importId);
+                    List<ImportInfoDTO> importDetails = ImportInfoBUS.getInstance().loadByIdImport(importId);
+
+                    // Cho phép người dùng chọn nơi lưu file
+                    JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setDialogTitle("Chọn nơi lưu đơn nhập hàng");
+                    fileChooser.setSelectedFile(new File("DonNhapHang_" + importId + ".pdf"));
+                    int userSelection = fileChooser.showSaveDialog(thisPanel);
+
+                    if (userSelection == JFileChooser.APPROVE_OPTION) {
+                        File fileToSave = fileChooser.getSelectedFile();
+                        String fileName = fileToSave.getAbsolutePath();
+                        if (!fileName.toLowerCase().endsWith(".pdf")) {
+                            fileName += ".pdf";
+                        }
+
+                        // Tạo document PDF
+                        Document document = new Document();
+                        PdfWriter.getInstance(document, new FileOutputStream(fileName));
+                        document.open();
+
+                        // Font Unicode từ Arial
+                        String fontPath = "lib/arial.ttf";
+                        BaseFont baseFont = BaseFont.createFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                        // Các loại font
+                        com.itextpdf.text.Font fontTitle = new com.itextpdf.text.Font(baseFont, 18, com.itextpdf.text.Font.BOLD);
+                        com.itextpdf.text.Font fontHeader = new com.itextpdf.text.Font(baseFont, 14, com.itextpdf.text.Font.BOLD);
+                        com.itextpdf.text.Font fontNormal = new com.itextpdf.text.Font(baseFont, 12);
+                        com.itextpdf.text.Font fontBold = new com.itextpdf.text.Font(baseFont, 12, com.itextpdf.text.Font.BOLD);
+
+                        // Header đơn nhập hàng
+                        Paragraph storeName = new Paragraph("MINI MART", fontTitle);
+                        storeName.setAlignment(Element.ALIGN_CENTER);
+                        document.add(storeName);
+
+                        Paragraph invoiceTitle = new Paragraph("ĐƠN NHẬP HÀNG", fontHeader);
+                        invoiceTitle.setAlignment(Element.ALIGN_CENTER);
+                        document.add(invoiceTitle);
+
+                        // Thông tin chung
+                        Paragraph importInfo = new Paragraph();
+                        importInfo.add(new Chunk("Mã đơn nhập: ", fontBold));
+                        importInfo.add(new Chunk(String.valueOf(importDTO.getId()), fontNormal));
+                        importInfo.add(Chunk.NEWLINE);
+                        importInfo.add(new Chunk("Ngày nhập: ", fontBold));
+                        importInfo.add(new Chunk(importDTO.getDateCreate().toString(), fontNormal));
+                        importInfo.add(Chunk.NEWLINE);
+                        importInfo.add(new Chunk("Nhân viên: ", fontBold));
+                        importInfo.add(new Chunk(importDTO.getStaff().getLastName() + " " + importDTO.getStaff().getFirstName(), fontNormal));
+                        importInfo.add(new Chunk(" - SĐT: " + importDTO.getStaff().getPhone(), fontNormal));
+
+                        if (importDTO.getSupplier().getId() != 0) {
+                            importInfo.add(Chunk.NEWLINE);
+                            importInfo.add(new Chunk("Nhà cung cấp: ", fontBold));
+                            importInfo.add(new Chunk(importDTO.getSupplier().getName(), fontNormal));
+                            importInfo.add(new Chunk(" - SĐT: " + importDTO.getSupplier().getPhone(), fontNormal));
+                        }
+
+                        document.add(importInfo);
+
+                        // Danh sách sản phẩm
+                        Paragraph productTitle = new Paragraph("\nDANH SÁCH SẢN PHẨM", fontBold);
+                        productTitle.setAlignment(Element.ALIGN_CENTER);
+                        document.add(productTitle);
+
+                        // Tạo bảng sản phẩm
+                        PdfPTable table = new PdfPTable(5);
+                        table.setWidthPercentage(100);
+                        table.setWidths(new float[]{2f, 3f, 2f, 1f, 2f});
+                        table.setSpacingBefore(10f);
+                        table.setSpacingAfter(10f);
+
+                        // Header table
+                        PdfPCell cell;
+                        String[] headers = {"Mã SP", "Tên SP", "Đơn giá", "SL", "Thành tiền"};
+                        for (String header : headers) {
+                            cell = new PdfPCell(new Phrase(header, fontBold));
+                            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                            cell.setBackgroundColor(new BaseColor(220, 220, 220));
+                            table.addCell(cell);
+                        }
+
+                        // Content table
+                        double totalAmount = 0;
+                        for (ImportInfoDTO detail : importDetails) {
+                            // Mã SP
+                            cell = new PdfPCell(new Phrase(String.valueOf(detail.getIdProduct()), fontNormal));
+                            cell.setPadding(5);
+                            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                            table.addCell(cell);
+
+                            // Tên SP
+                            cell = new PdfPCell(new Phrase(detail.getNameProduct(), fontNormal));
+                            cell.setPadding(5);
+                            table.addCell(cell);
+
+                            // Đơn giá
+                            cell = new PdfPCell(new Phrase(String.format("%,.0f VNĐ", detail.getPrice()), fontNormal));
+                            cell.setPadding(5);
+                            cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                            table.addCell(cell);
+
+                            // Số lượng
+                            cell = new PdfPCell(new Phrase(String.valueOf(detail.getQuantity()), fontNormal));
+                            cell.setPadding(5);
+                            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                            table.addCell(cell);
+
+                            // Thành tiền
+                            double itemTotal = detail.getPrice() * detail.getQuantity();
+                            totalAmount += itemTotal;
+                            cell = new PdfPCell(new Phrase(String.format("%,.0f VNĐ", itemTotal), fontNormal));
+                            cell.setPadding(5);
+                            cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                            table.addCell(cell);
+                        }
+
+                        document.add(table);
+
+                        // Tổng thanh toán
+                        Paragraph total = new Paragraph();
+                        total.add(new Chunk("\nTổng tiền: ", fontBold));
+                        total.add(new Chunk(String.format("%,.0f VNĐ", totalAmount), fontBold));
+                        total.setAlignment(Element.ALIGN_RIGHT);
+                        document.add(total);
+
+                        // Footer
+                        Paragraph thankYou = new Paragraph("\n\nXIN CẢM ƠN", fontHeader);
+                        thankYou.setAlignment(Element.ALIGN_CENTER);
+                        document.add(thankYou);
+
+                        document.close();
+                        JOptionPane.showMessageDialog(thisPanel, "Xuất file PDF thành công:\n" + fileName);
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(thisPanel,
+                            "Lỗi khi tạo PDF: " + ex.getMessage(),
+                            "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(thisPanel,
+                        "Vui lòng chọn đơn nhập hàng để xuất",
+                        "Thông báo", JOptionPane.WARNING_MESSAGE);
             }
-            else JOptionPane.showMessageDialog(thisPanel, "Vui lòng chọn hóa đơn cần xuất thông tin", "Lỗi", JOptionPane.ERROR_MESSAGE);
         });
         btnRefresh.addActionListener(_ -> {
             tfSearch.setText("");

@@ -27,14 +27,6 @@ public class DetailProductBUS {
         }
     }
 
-    public void update(DetailProductDTO dp) {
-        try {
-            DetailProductDAO.getInstance().update(dp);
-        }
-        catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
 
     public void delete(DetailProductDTO dp) {
         try {

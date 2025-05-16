@@ -85,11 +85,14 @@ public class OfferDAO {
     }
 
     public void add(OfferDTO offer) {
-        String sql = "insert into offer(startDate, endDate) values (?, ?)";
+        String sql = "insert into offer(name,startDate, endDate,category,value) values (?, ?, ? ,? ,?)";
         Connection con = DataProvider.getInstance().getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setDate(1, offer.getDateStart().getSqlDate());
-            ps.setDate(2, offer.getDateEnd().getSqlDate());
+            ps.setString(1,offer.getName());
+            ps.setDate(2, offer.getDateStart().getSqlDate());
+            ps.setDate(3, offer.getDateEnd().getSqlDate());
+            ps.setString(4, offer.getCategory());
+            ps.setInt(5,offer.getValue());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
@@ -99,12 +102,21 @@ public class OfferDAO {
 
     public boolean update(OfferDTO offer) {
         int res = 0;
-        String sql = "update offer set startDate = ?, endDate = ? where id = ?";
+        String sql = "UPDATE offer \n" +
+                "SET name = ?, \n" +
+                "    startDate = ?, \n" +
+                "    endDate = ?, \n" +
+                "    category = ?, \n" +
+                "    value = ? \n" +
+                "WHERE id = ?;\n";
         Connection con = DataProvider.getInstance().getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)){
-            ps.setDate(1, offer.getDateStart().getSqlDate());
-            ps.setDate(2, offer.getDateEnd().getSqlDate());
-            ps.setInt(3, offer.getId());
+            ps.setString(1,offer.getName());
+            ps.setDate(2, offer.getDateStart().getSqlDate());
+            ps.setDate(3, offer.getDateEnd().getSqlDate());
+            ps.setString(4,offer.getCategory());
+            ps.setInt(5,offer.getValue());
+            ps.setInt(6, offer.getId());
             res = ps.executeUpdate();
         }
         catch (SQLException e){

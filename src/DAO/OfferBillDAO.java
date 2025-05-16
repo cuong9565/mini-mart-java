@@ -20,11 +20,8 @@ public class OfferBillDAO {
     public List<OfferBillDTO> getList(){
         List<OfferBillDTO> list = new ArrayList<>();
         Connection con = DataProvider.getInstance().getConnection();
-        String sql =
-                "select * " +
-                "from offerbill, offer " +
-                "where offerbill.idOffer = offer.id " +
-                "order by offerbill.id";
+        String sql = "SELECT * FROM offer WHERE category LIKE '%Giảm giá hóa đơn%' " +
+                "AND CURRENT_DATE BETWEEN startDate AND endDate";
         try(PreparedStatement ps = con.prepareStatement(sql)){
             ResultSet rs = ps.executeQuery();
             while(rs.next()) list.add(new OfferBillDTO(rs));

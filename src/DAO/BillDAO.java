@@ -1,7 +1,7 @@
 package DAO;
 
 import Components.MyDate;
-import DTO.BillDTO;
+import DTO.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -23,8 +23,7 @@ public class BillDAO {
                 "select * " +
                 "from bill " +
                 "join staff on bill.idStaff = staff.id " +
-                "left join offerbill on bill.idOfferBill = offerbill.id " +
-                "left join offer on offerbill.idOffer = offer.id " +
+                "left join offer on offer.id = bill.idOfferBill " +
                 "left join customer on bill.idCustomer = customer.id";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
@@ -35,15 +34,15 @@ public class BillDAO {
         }
         DataProvider.getInstance().CloseConnection(con);
         return list;
+
     }
 
     public void addBill(int idStaff){
         String sql = "insert into bill( idStaff, dateCreate ) values( ?, ? )";
         Connection con = DataProvider.getInstance().getConnection();
-
         try (PreparedStatement ps = con.prepareStatement(sql)){
             ps.setInt(1, idStaff);
-            ps.setDate(2, MyDate.getCurrentDate().getSqlDate());
+            ps.setDate(2, new java.sql.Date(System.currentTimeMillis()));
             ps.executeUpdate();
         }
         catch (Exception e) {
@@ -52,7 +51,6 @@ public class BillDAO {
 
         DataProvider.getInstance().CloseConnection(con);
     }
-
 
     public void updateIdCustomer(int idBill, int idCustomer){
         String sql = "update bill set idCustomer = ? where id = ?";
@@ -63,7 +61,7 @@ public class BillDAO {
             ps.setInt(2, idBill);
             ps.executeUpdate();
         }
-        catch (Exception e){
+        catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -95,18 +93,23 @@ public class BillDAO {
         DataProvider.getInstance().CloseConnection(con);
     }
 
-    public void Pay(int idBill, double price){
+    public void Pay(int idBill, double price) {
         String sql = "update bill set price = ?, state = ? where id = ?";
         Connection con = DataProvider.getInstance().getConnection();
-        try (PreparedStatement ps = con.prepareStatement(sql)){
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setDouble(1, price);
             ps.setString(2, "Đã thanh toán");
             ps.setInt(3, idBill);
             ps.executeUpdate();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         DataProvider.getInstance().CloseConnection(con);
     }
+
+
+
+
+
+
 }
